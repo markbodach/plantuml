@@ -1,0 +1,10 @@
+' src/themes/common/_colors.puml
+
+!$COLOR_BUSINESS               = "#FCF3CF"
+!$COLOR_LOGICAL                = "#D6EAF8"
+!$COLOR_DEPLOYMENT             = "#FAD7A0"
+!$COLOR_TECHNOLOGY             = "#D5F5E3"
+!$COLOR_EXTERNAL               = "#E8DAEF"
+
+!$COLOR_TEXT                   = "#000000"
+!$COLOR_BORDER                 = "#5D6D7E"

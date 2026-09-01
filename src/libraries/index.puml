@@ -1,0 +1,6 @@
+' src/libraries/index.puml
+' Module Entry Point: Libraries
+
+!include stdlib/index.puml
+!include togaf/index.puml
+!include ontario-health/index.puml

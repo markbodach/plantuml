@@ -1,0 +1,5 @@
+' src/themes/togaf/index.puml
+' Module Entry Point: TOGAF Theme Variables
+
+!include _colors.puml
+!include _fonts.puml

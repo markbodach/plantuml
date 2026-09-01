@@ -1,0 +1,6 @@
+' src/themes/index.puml
+' Module Entry Point: Themes Component Pack
+
+!include ./common/index.puml
+!include ./togaf/index.puml
+!include ./ontario-health/index.puml

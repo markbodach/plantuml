@@ -1,0 +1,9 @@
+' src/themes/common/_borders.puml
+
+'---------------------------------------------------------
+' Border Constants
+'---------------------------------------------------------
+
+!$BORDER_THICKNESS      = 1
+!$BORDER_THICKNESS_BOLD = 2
+!$BORDER_THICKNESS_POD  = 2

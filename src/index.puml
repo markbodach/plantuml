@@ -1,0 +1,5 @@
+' src/index.puml
+' Module Entry Point: OH + TOGAF Component Pack
+
+!include themes/index.puml
+!include libraries/index.puml

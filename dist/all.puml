@@ -1,0 +1,127 @@
+' ========================================================
+' Combined PlantUML Library Bundle (SASS-Style Compilation)
+' Generated on: 2026-09-01 17:08:38 EDT
+' ========================================================
+
+' src/all.puml
+' Module Entry Point: OH + TOGAF Component Pack
+
+' --- Importing: src/index.puml ---
+' src/index.puml
+' Module Entry Point: OH + TOGAF Component Pack
+
+' --- Importing: src/themes/index.puml ---
+' src/themes/index.puml
+' Module Entry Point: Themes Component Pack
+
+' --- Importing: src/themes/./common/index.puml ---
+' src/themes/common/index.puml
+' Module Entry Point: Common Theme Variables
+
+' --- Importing: src/themes/./common/_colors.puml ---
+' src/themes/common/_colors.puml
+
+!$COLOR_BUSINESS               = "#FCF3CF"
+!$COLOR_LOGICAL                = "#D6EAF8"
+!$COLOR_DEPLOYMENT             = "#FAD7A0"
+!$COLOR_TECHNOLOGY             = "#D5F5E3"
+!$COLOR_EXTERNAL               = "#E8DAEF"
+
+!$COLOR_TEXT                   = "#000000"
+!$COLOR_BORDER                 = "#5D6D7E"
+' --- End Import: src/themes/./common/_colors.puml ---
+
+' --- Importing: src/themes/./common/_fonts.puml ---
+' src/themes/common/_fonts.puml
+
+'---------------------------------------------------------
+' Font Constants
+'---------------------------------------------------------
+
+!$FONT_NAME           = "Segoe UI"
+!$FONT_SIZE           = 12
+!$FONT_SIZE_TITLE     = 18
+!$FONT_SIZE_LEGEND    = 11
+!$FONT_SIZE_ARROW     = 11
+' --- End Import: src/themes/./common/_fonts.puml ---
+
+
+' --- Importing: src/themes/./common/_skinparam.puml ---
+' --- End Import: src/themes/./common/_skinparam.puml ---
+
+' --- End Import: src/themes/./common/index.puml ---
+
+' --- Importing: src/themes/./togaf/index.puml ---
+' src/themes/togaf/index.puml
+' Module Entry Point: TOGAF Theme Variables
+
+' --- Importing: src/themes/./togaf/_colors.puml ---
+' src/themes/togaf/_colors.puml
+' --- End Import: src/themes/./togaf/_colors.puml ---
+
+' --- Importing: src/themes/./togaf/_fonts.puml ---
+' src/themes/togaf/_fonts.puml
+' --- End Import: src/themes/./togaf/_fonts.puml ---
+
+' --- End Import: src/themes/./togaf/index.puml ---
+
+' --- Importing: src/themes/./ontario-health/index.puml ---
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+
+' --- Importing: src/themes/./ontario-health/_colors.puml ---
+' src/themes/ontario-health/_colors.puml
+' --- End Import: src/themes/./ontario-health/_colors.puml ---
+
+' --- Importing: src/themes/./ontario-health/_fonts.puml ---
+' src/themes/ontario-health/_fonts.puml
+' --- End Import: src/themes/./ontario-health/_fonts.puml ---
+
+' --- End Import: src/themes/./ontario-health/index.puml ---
+
+' --- End Import: src/themes/index.puml ---
+
+' --- Importing: src/libraries/index.puml ---
+' src/libraries/index.puml
+' Module Entry Point: Libraries
+
+' --- Importing: src/libraries/stdlib/index.puml ---
+' src/libraries/stdlib/index.puml
+' Module Entry Point: Libraries / Standard PlantUML Component Pack
+
+' --- End Import: src/libraries/stdlib/index.puml ---
+
+' --- Importing: src/libraries/togaf/index.puml ---
+' src/libraries/togaf/index.puml
+' Module Entry Point: Libraries / TOGAF Component Pack 
+
+' --- Importing: src/libraries/togaf/_business.puml ---
+' --- End Import: src/libraries/togaf/_business.puml ---
+
+' --- Importing: src/libraries/togaf/_logical.puml ---
+' --- End Import: src/libraries/togaf/_logical.puml ---
+
+' --- Importing: src/libraries/togaf/_deployment.puml ---
+' --- End Import: src/libraries/togaf/_deployment.puml ---
+
+' --- Importing: src/libraries/togaf/_technology.puml ---
+' --- End Import: src/libraries/togaf/_technology.puml ---
+
+' --- End Import: src/libraries/togaf/index.puml ---
+
+' --- Importing: src/libraries/ontario-health/index.puml ---
+' src/libraries/ontario-health/index.puml
+' Module Entry Point: Libraries / Ontario Health Component Pack 
+
+' --- Importing: src/libraries/ontario-health/_patterns.puml ---
+' --- End Import: src/libraries/ontario-health/_patterns.puml ---
+
+' --- Importing: src/libraries/ontario-health/_sbbs.puml ---
+' --- End Import: src/libraries/ontario-health/_sbbs.puml ---
+
+' --- End Import: src/libraries/ontario-health/index.puml ---
+
+' --- End Import: src/libraries/index.puml ---
+
+' --- End Import: src/index.puml ---
+

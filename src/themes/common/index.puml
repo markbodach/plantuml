@@ -1,0 +1,7 @@
+' src/themes/common/index.puml
+' Module Entry Point: Common Theme Variables
+
+!include _colors.puml
+!include _fonts.puml
+
+!include _skinparam.puml

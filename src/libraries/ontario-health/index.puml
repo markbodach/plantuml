@@ -1,0 +1,5 @@
+' src/libraries/ontario-health/index.puml
+' Module Entry Point: Libraries / Ontario Health Component Pack 
+
+!include _patterns.puml
+!include _sbbs.puml

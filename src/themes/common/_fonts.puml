@@ -1,0 +1,11 @@
+' src/themes/common/_fonts.puml
+
+'---------------------------------------------------------
+' Font Constants
+'---------------------------------------------------------
+
+!$FONT_NAME           = "Segoe UI"
+!$FONT_SIZE           = 12
+!$FONT_SIZE_TITLE     = 18
+!$FONT_SIZE_LEGEND    = 11
+!$FONT_SIZE_ARROW     = 11

@@ -1,0 +1,7 @@
+' src/libraries/togaf/index.puml
+' Module Entry Point: Libraries / TOGAF Component Pack 
+
+!include _business.puml
+!include _logical.puml
+!include _deployment.puml
+!include _technology.puml
