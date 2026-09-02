@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-01 17:08:38 EDT
+' Generated on: 2026-09-02 07:58:57 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -14,11 +14,11 @@
 ' src/themes/index.puml
 ' Module Entry Point: Themes Component Pack
 
-' --- Importing: src/themes/./common/index.puml ---
+' --- Importing: src/themes/common/index.puml ---
 ' src/themes/common/index.puml
 ' Module Entry Point: Common Theme Variables
 
-' --- Importing: src/themes/./common/_colors.puml ---
+' --- Importing: src/themes/common/_colors.puml ---
 ' src/themes/common/_colors.puml
 
 !$COLOR_BUSINESS               = "#FCF3CF"
@@ -29,9 +29,9 @@
 
 !$COLOR_TEXT                   = "#000000"
 !$COLOR_BORDER                 = "#5D6D7E"
-' --- End Import: src/themes/./common/_colors.puml ---
+' --- End Import: src/themes/common/_colors.puml ---
 
-' --- Importing: src/themes/./common/_fonts.puml ---
+' --- Importing: src/themes/common/_fonts.puml ---
 ' src/themes/common/_fonts.puml
 
 '---------------------------------------------------------
@@ -43,41 +43,41 @@
 !$FONT_SIZE_TITLE     = 18
 !$FONT_SIZE_LEGEND    = 11
 !$FONT_SIZE_ARROW     = 11
-' --- End Import: src/themes/./common/_fonts.puml ---
+' --- End Import: src/themes/common/_fonts.puml ---
 
 
-' --- Importing: src/themes/./common/_skinparam.puml ---
-' --- End Import: src/themes/./common/_skinparam.puml ---
+' --- Importing: src/themes/common/_skinparam.puml ---
+' --- End Import: src/themes/common/_skinparam.puml ---
 
-' --- End Import: src/themes/./common/index.puml ---
+' --- End Import: src/themes/common/index.puml ---
 
-' --- Importing: src/themes/./togaf/index.puml ---
+' --- Importing: src/themes/togaf/index.puml ---
 ' src/themes/togaf/index.puml
 ' Module Entry Point: TOGAF Theme Variables
 
-' --- Importing: src/themes/./togaf/_colors.puml ---
+' --- Importing: src/themes/togaf/_colors.puml ---
 ' src/themes/togaf/_colors.puml
-' --- End Import: src/themes/./togaf/_colors.puml ---
+' --- End Import: src/themes/togaf/_colors.puml ---
 
-' --- Importing: src/themes/./togaf/_fonts.puml ---
+' --- Importing: src/themes/togaf/_fonts.puml ---
 ' src/themes/togaf/_fonts.puml
-' --- End Import: src/themes/./togaf/_fonts.puml ---
+' --- End Import: src/themes/togaf/_fonts.puml ---
 
-' --- End Import: src/themes/./togaf/index.puml ---
+' --- End Import: src/themes/togaf/index.puml ---
 
-' --- Importing: src/themes/./ontario-health/index.puml ---
+' --- Importing: src/themes/ontario-health/index.puml ---
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/themes/./ontario-health/_colors.puml ---
+' --- Importing: src/themes/ontario-health/_colors.puml ---
 ' src/themes/ontario-health/_colors.puml
-' --- End Import: src/themes/./ontario-health/_colors.puml ---
+' --- End Import: src/themes/ontario-health/_colors.puml ---
 
-' --- Importing: src/themes/./ontario-health/_fonts.puml ---
+' --- Importing: src/themes/ontario-health/_fonts.puml ---
 ' src/themes/ontario-health/_fonts.puml
-' --- End Import: src/themes/./ontario-health/_fonts.puml ---
+' --- End Import: src/themes/ontario-health/_fonts.puml ---
 
-' --- End Import: src/themes/./ontario-health/index.puml ---
+' --- End Import: src/themes/ontario-health/index.puml ---
 
 ' --- End Import: src/themes/index.puml ---
 

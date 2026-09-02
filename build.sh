@@ -82,7 +82,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 
 \`\`\`plantuml
 @startuml
-!include https://github.com/markbodach/plantuml
+&excl;include https://github.com/markbodach/plantuml
 
 ' Your custom components are now available globally!
 MyCustomDatabase(db1, "User Database")

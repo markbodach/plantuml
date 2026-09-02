@@ -3,7 +3,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-01 17:08:40 EDT
+* **Generated on:** 2026-09-02 07:58:58 EDT
 
 ## 🚀 How To Use It
 
@@ -11,7 +11,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 
 ```plantuml
 @startuml
-!include https://github.com/markbodach/plantuml
+&excl;include https://github.com/markbodach/plantuml
 
 ' Your custom components are now available globally!
 MyCustomDatabase(db1, "User Database")
@@ -25,14 +25,14 @@ This tree maps out exactly how your source code files were evaluated and sequenc
 src/all.puml (Root Master)
   └── index.puml
     └── themes/index.puml
-      └── ./common/index.puml
+      └── common/index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _skinparam.puml
-      └── ./togaf/index.puml
+      └── togaf/index.puml
         └── _colors.puml
         └── _fonts.puml
-      └── ./ontario-health/index.puml
+      └── ontario-health/index.puml
         └── _colors.puml
         └── _fonts.puml
     └── libraries/index.puml
