@@ -1,6 +1,4 @@
-# Production Distribution Bundle
-
-This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
+# Mark Bodach's PlantUML Distribution Bundle
 
 * **Compiled Bundle:** `all.puml`
 * **Generated on:** 2026-09-08 14:54:20 EDT
@@ -13,8 +11,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 @startuml
 
 ' Archimate and TOGAF
-!define MBOHPuml https://raw.githubusercontent.com/markbodach/plantuml/refs/heads/main/dist
-includeurl MBOHPuml/all.puml
+includeurl https://markbodach.github.io/plantuml/all.puml
 
 
 ' Your custom components are now available globally!
