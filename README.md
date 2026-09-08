@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-08 14:54:20 EDT
+* **Generated on:** 2026-09-08 15:10:50 EDT
 
 ## 🚀 How To Use It
 
@@ -82,9 +82,8 @@ The architecture diagrams in this repository follow these principles:
 
 The repository provides:
 
-- A single source of truth for architecture diagrams.
+- A single source of truth for architecture diagrams colour and styling aligned with Ontario Health's Design System.
 - Consistent styling and notation across all views.
 - Reusable architecture libraries and patterns.
-- Traceability from architecture patterns through implementation technologies.
 - Version-controlled architecture assets suitable for architecture review and governance.
 
