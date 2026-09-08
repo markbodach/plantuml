@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-02 07:58:57 EDT
+' Generated on: 2026-09-08 14:13:21 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -21,11 +21,24 @@
 ' --- Importing: src/themes/common/_colors.puml ---
 ' src/themes/common/_colors.puml
 
-!$COLOR_BUSINESS               = "#FCF3CF"
-!$COLOR_LOGICAL                = "#D6EAF8"
-!$COLOR_DEPLOYMENT             = "#FAD7A0"
-!$COLOR_TECHNOLOGY             = "#D5F5E3"
-!$COLOR_EXTERNAL               = "#E8DAEF"
+!$COLOR_PRIMARY = "#D6EAF8"
+!$COLOR_PRIMARY_LIGHT = "#D6EAF8"
+!$COLOR_PRIMARY_DARK = "#D6EAF8"
+
+!$COLOR_WARNING = "#FCF3CF"
+!$COLOR_WARNING_LIGHT = "#FCF3CF"
+!$COLOR_WARNING_DARK = "#FCF3CF"
+
+!$COLOR_SUCCESS = "#D5F5E3"
+!$COLOR_SUCCESS_LIGHT = "#D5F5E3"
+!$COLOR_SUCCESS_DARK = "#D5F5E3"
+
+!$COLOR_ERROR = "#Red"
+!$COLOR_ERROR_LIGHT = "#Red"
+!$COLOR_ERROR_DARK = "#Red"
+
+
+
 
 !$COLOR_TEXT                   = "#000000"
 !$COLOR_BORDER                 = "#5D6D7E"
@@ -46,7 +59,100 @@
 ' --- End Import: src/themes/common/_fonts.puml ---
 
 
+' --- Importing: src/themes/common/_borders.puml ---
+' src/themes/common/_borders.puml
+
+'---------------------------------------------------------
+' Border Constants
+'---------------------------------------------------------
+
+!$BORDER_THICKNESS      = 1
+!$BORDER_THICKNESS_BOLD = 2
+!$BORDER_THICKNESS_POD  = 2
+' --- End Import: src/themes/common/_borders.puml ---
+
+
+' --- Importing: src/themes/common/_layout.puml ---
+' src/themes/common/_layout.puml
+
+'---------------------------------------------------------
+' Layout Constants
+'---------------------------------------------------------
+
+!$NODE_SEP      = 75
+!$RANK_SEP      = 75
+!$ROUND_CORNER  = 10
+
+$!SHADOWING = false
+$!LINETYPE = ortho
+
+$!DEFAULT_TEXT_ALIGNMENT = center
+
+
+'---------------------------------------------------------
+' Container / Boundary Constants
+'---------------------------------------------------------
+
+!$RECTANGLE_BORDER_COLOR = transparent
+
+
+'---------------------------------------------------------
+' Legend Functions
+'---------------------------------------------------------
+
+' legend right
+' |= TOGAF Category |= Color |
+' | <back:E8DAEF>      </back> | External System |
+' | <back:D6EAF8>      </back> | Logical Component / Service |
+' | <back:FCF3CF>      </back> | Business Information Authority |
+' endlegend
+' --- End Import: src/themes/common/_layout.puml ---
+
+
+' --- Importing: src/themes/common/_icons.puml ---
+' src/themes/common/_icons.puml
+
+'---------------------------------------------------------
+' Icon Constants
+'---------------------------------------------------------
+
+
+'Actors
+!$ACTOR_STYLE = awesome
+
+!$ACTOR_BORDER_COLOR = #0D47A1
+!$ACTOR_BORDER_SIZE = 3
+!$ACTOR_BACKGROUND_COLOR = #90CAF9
+
+' --- End Import: src/themes/common/_icons.puml ---
+
+
 ' --- Importing: src/themes/common/_skinparam.puml ---
+' src/themes/common/_layout.puml
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+
+
+' skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam shadowing $!SHADOWING
+skinparam linetype $!LINETYPE
+skinparam defaultTextAlignment $!DEFAULT_TEXT_ALIGNMENT
+
+
+skinparam nodesep !$NODE_SEP
+skinparam ranksep !$RANK_SEP
+
+
+skinparam rectangleBorderColor !$RECTANGLE_BORDER_COLOR
+
+skinparam actorStyle !$ACTOR_STYLE
+skinparam actorBorderColor !$ACTOR_BORDER_COLOR
+skinparam actorBorderSize !$ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 ' --- End Import: src/themes/common/_skinparam.puml ---
 
 ' --- End Import: src/themes/common/index.puml ---
@@ -95,10 +201,58 @@
 ' src/libraries/togaf/index.puml
 ' Module Entry Point: Libraries / TOGAF Component Pack 
 
+
+' --- Importing: src/libraries/togaf/_functions.puml ---
+' src/libraries/togaf/_functions.puml
+
+'---------------------------------------------------------
+' Helper Functions for TOGAF library integration
+'---------------------------------------------------------
+
+!function $togaf_layer_name($tg_name)
+  !if ($tg_name == "technology")
+
+  !return $first + " " + $last
+!endfunction
+
+!function $ togaf_layer_color($state)
+  !if ($state == "success")
+    !return "#Green"
+  !else
+    !return "#Red"
+  !endif
+!endfunction
+
+' %get_variable_value
+' %set_variable_value
+' %upper
+
+' %invoke_procedure($wrapper)
+' %call_user_func
+
+' %boolval
+
+' !unquoted procedure 
+' !unquoted function  
+' --- End Import: src/libraries/togaf/_functions.puml ---
+
+
 ' --- Importing: src/libraries/togaf/_business.puml ---
 ' --- End Import: src/libraries/togaf/_business.puml ---
 
 ' --- Importing: src/libraries/togaf/_logical.puml ---
+
+' component "Enterprise Identity Provider" as SBB01 #D6EAF8
+' cloud "Identity Provider" as LC01 #E8DAEF
+' database "PanelApp Data Source" as LC06 #D6EAF8
+' node "REST API Pod" as DC01 #FAD7A0
+
+
+' sprite $bProcess jar:archimate/business-process
+' sprite $aService jar:archimate/application-service
+
+' SHAPE CAPTION as ALIAS SPRITE COLOR
+' rectangle "Document\nManagement\nSystem" as DMS <<$aComponent>> #Application
 ' --- End Import: src/libraries/togaf/_logical.puml ---
 
 ' --- Importing: src/libraries/togaf/_deployment.puml ---

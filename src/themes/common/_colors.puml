@@ -1,10 +1,23 @@
 ' src/themes/common/_colors.puml
 
-!$COLOR_BUSINESS               = "#FCF3CF"
-!$COLOR_LOGICAL                = "#D6EAF8"
-!$COLOR_DEPLOYMENT             = "#FAD7A0"
-!$COLOR_TECHNOLOGY             = "#D5F5E3"
-!$COLOR_EXTERNAL               = "#E8DAEF"
+!$COLOR_PRIMARY = "#D6EAF8"
+!$COLOR_PRIMARY_LIGHT = "#D6EAF8"
+!$COLOR_PRIMARY_DARK = "#D6EAF8"
+
+!$COLOR_WARNING = "#FCF3CF"
+!$COLOR_WARNING_LIGHT = "#FCF3CF"
+!$COLOR_WARNING_DARK = "#FCF3CF"
+
+!$COLOR_SUCCESS = "#D5F5E3"
+!$COLOR_SUCCESS_LIGHT = "#D5F5E3"
+!$COLOR_SUCCESS_DARK = "#D5F5E3"
+
+!$COLOR_ERROR = "#Red"
+!$COLOR_ERROR_LIGHT = "#Red"
+!$COLOR_ERROR_DARK = "#Red"
+
+
+
 
 !$COLOR_TEXT                   = "#000000"
 !$COLOR_BORDER                 = "#5D6D7E"

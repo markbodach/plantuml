@@ -1,0 +1,12 @@
+
+' component "Enterprise Identity Provider" as SBB01 #D6EAF8
+' cloud "Identity Provider" as LC01 #E8DAEF
+' database "PanelApp Data Source" as LC06 #D6EAF8
+' node "REST API Pod" as DC01 #FAD7A0
+
+
+' sprite $bProcess jar:archimate/business-process
+' sprite $aService jar:archimate/application-service
+
+' SHAPE CAPTION as ALIAS SPRITE COLOR
+' rectangle "Document\nManagement\nSystem" as DMS <<$aComponent>> #Application

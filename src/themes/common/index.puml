@@ -4,4 +4,10 @@
 !include _colors.puml
 !include _fonts.puml
 
+!include _borders.puml
+
+!include _layout.puml
+
+!include _icons.puml
+
 !include _skinparam.puml
