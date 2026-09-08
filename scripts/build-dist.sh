@@ -107,8 +107,8 @@ rm -f "$TREE_LOG"
 echo "└── Successfully generated production metadata inside '$DIST_README'"
 
 cat << EOF > "$DIST_TREE"
-## 📦 Bundled Architecture Tree
-This tree maps out exactly how your source code files were evaluated and sequenced into this final \`all.puml\` production asset:
+## 📦 Bundled  Repository Tree
+This tree maps out exactly how the source code files were evaluated and sequenced into this final \`all.puml\` production asset:
 
 \`\`\`text
 $TREE_CONTENT

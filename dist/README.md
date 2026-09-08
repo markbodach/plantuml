@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-08 14:13:23 EDT
+* **Generated on:** 2026-09-08 14:54:20 EDT
 
 ## 🚀 How To Use It
 
@@ -23,8 +23,8 @@ MyCustomDatabase(db1, "User Database")
 @enduml
 ```
 
-## 📦 Bundled Architecture Tree
-This tree maps out exactly how your source code files were evaluated and sequenced into this final `all.puml` production asset:
+## 📦 Bundled  Repository Tree
+This tree maps out exactly how the source code files were evaluated and sequenced into this final `all.puml` production asset:
 
 ```text
 src/all.puml (Root Master)
@@ -58,9 +58,13 @@ src/all.puml (Root Master)
 
 # Architecture Diagrams
 
-This repository contains the PlantUML source, reusable themes, libraries, and generated architecture views for solution architecture.
+This repository contains the PlantUML source for:
+* reusable themes
+* libraries
+* architecture views 
+for solution architecture.
 
-The repository is organized to support consistent architecture modeling aligned with TOGAF architecture viewpoints, architecture traceability, and enterprise architecture governance practices.
+The repository is organized to support consistent architecture modeling aligned with TOGAF / ArchiMate architecture viewpoints.
 
 ## Architecture Modeling Principles
 

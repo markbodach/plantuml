@@ -1,5 +1,5 @@
-## 📦 Bundled Architecture Tree
-This tree maps out exactly how your source code files were evaluated and sequenced into this final `all.puml` production asset:
+## 📦 Bundled  Repository Tree
+This tree maps out exactly how the source code files were evaluated and sequenced into this final `all.puml` production asset:
 
 ```text
 src/all.puml (Root Master)
