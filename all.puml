@@ -1,1 +1,4 @@
-!include dist/all.puml
+---
+layout: default
+redirect_to: ./dist/all.uml
+---
