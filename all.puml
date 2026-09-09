@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-09 16:49:50 EDT
+' Generated on: 2026-09-09 17:02:34 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -358,9 +357,3 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 ' --- End Import: src/index.puml ---
 
-=======
----
-layout: default
-redirect_to: ./dist/all.uml
----
->>>>>>> 21a0b707b784309e8b28fff0de199fbbecdb58eb
