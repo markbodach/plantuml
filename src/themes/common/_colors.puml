@@ -1,5 +1,11 @@
 ' src/themes/common/_colors.puml
 
+'---------------------------------------------------------
+' Color Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
 !$COLOR_PRIMARY = "#D6EAF8"
 !$COLOR_PRIMARY_LIGHT = "#D6EAF8"
 !$COLOR_PRIMARY_DARK = "#D6EAF8"

@@ -1,1 +1,7 @@
 ' src/themes/togaf/_colors.puml
+
+!$TOGAF_THEME_ENABLED ?= true
+
+!if ($TOGAF_THEME_ENABLED)
+
+!endif

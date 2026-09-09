@@ -3,7 +3,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-08 15:10:50 EDT
+* **Generated on:** 2026-09-09 11:53:02 EDT
 
 ## 🚀 How To Use It
 
@@ -13,7 +13,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 @startuml
 
 ' Archimate and TOGAF
-!define MBOHPuml https://raw.githubusercontent.com/markbodach/plantuml/refs/heads/main/dist
+!define MBOHPuml https://markbodach.github.io/plantuml
 includeurl MBOHPuml/all.puml
 
 

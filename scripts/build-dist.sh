@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 # Configuration
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENTRY_POINT="src/all.puml"
 DIST_DIR="dist"
 OUTPUT_FILE="$DIST_DIR/all.puml"
@@ -9,6 +11,10 @@ DOC_DIR="docs/dist-auto-generated"
 
 DIST_README="$DOC_DIR/_dist-metadata.md"
 DIST_TREE="$DOC_DIR/_repository-structure.md"
+DIST_DEFAULTVARS="$DOC_DIR/_default-variables.md"
+DIST_SKINPARAMS="$DOC_DIR/_skin-params.md"
+
+
 
 # Ensure output directories exists
 mkdir -p "$DIST_DIR"
@@ -70,6 +76,42 @@ else
     exit 1
 fi
 
+defaultvars=$("$SCRIPT_DIR/extract-default-variables.sh" "$OUTPUT_FILE" )
+cat << EOF > "$DIST_DEFAULTVARS"
+# All Override PlantUML Variables
+This list is generated from the repository's puml source code.  Use these variables before loading the repository.  
+
+\`\`\`plantuml
+@startuml
+
+$defaultvars
+
+@enduml
+\`\`\`
+
+EOF
+
+echo "└── Successfully parsed PlantUML default variables to '$DIST_DEFAULTVARS'"
+
+
+skinparams=$("$SCRIPT_DIR/extract-skinparams.sh" "$OUTPUT_FILE" )
+cat << EOF > "$DIST_SKINPARAMS"
+# All Defined PlantUML skinparam Variables
+This list is generated from the repository's puml source code.  Skin parameters can be re-initialized after including the repository.  
+
+\`\`\`plantuml
+@startuml
+
+$skinparams
+
+@enduml
+\`\`\`
+
+EOF
+
+echo "└── Successfully parsed PlantUML skinparam variables to '$DIST_SKINPARAMS'"
+
+
 # 4. Generate the README.md dynamically inside the dist folder
 TREE_CONTENT=$(cat "$TREE_LOG")
 
@@ -89,7 +131,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 @startuml
 
 ' Archimate and TOGAF
-!define MBOHPuml https://raw.githubusercontent.com/markbodach/plantuml/refs/heads/main/dist
+!define MBOHPuml https://markbodach.github.io/plantuml
 includeurl MBOHPuml/all.puml
 
 
@@ -105,6 +147,7 @@ rm -f "$TREE_LOG"
 
 
 echo "└── Successfully generated production metadata inside '$DIST_README'"
+
 
 cat << EOF > "$DIST_TREE"
 ## 📦 Bundled  Repository Tree

@@ -1,1 +1,7 @@
 ' src/themes/ontario-health/_colors.puml
+
+!$OH_THEME_ENABLED ?= true
+
+!if ($OH_THEME_ENABLED)
+
+!endif

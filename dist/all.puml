@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-08 15:10:48 EDT
+' Generated on: 2026-09-09 11:53:00 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -20,6 +20,12 @@
 
 ' --- Importing: src/themes/common/_colors.puml ---
 ' src/themes/common/_colors.puml
+
+'---------------------------------------------------------
+' Color Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
 
 !$COLOR_PRIMARY = "#D6EAF8"
 !$COLOR_PRIMARY_LIGHT = "#D6EAF8"
@@ -49,13 +55,15 @@
 
 '---------------------------------------------------------
 ' Font Constants
+'
+' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$FONT_NAME           = "Segoe UI"
-!$FONT_SIZE           = 12
-!$FONT_SIZE_TITLE     = 18
-!$FONT_SIZE_LEGEND    = 11
-!$FONT_SIZE_ARROW     = 11
+!$FONT_NAME ?= "Segoe UI"
+!$FONT_SIZE ?= 12
+!$FONT_SIZE_TITLE ?= 18
+!$FONT_SIZE_LEGEND ?= 11
+!$FONT_SIZE_ARROW ?= 11
 ' --- End Import: src/themes/common/_fonts.puml ---
 
 
@@ -64,11 +72,13 @@
 
 '---------------------------------------------------------
 ' Border Constants
+'
+' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$BORDER_THICKNESS      = 1
-!$BORDER_THICKNESS_BOLD = 2
-!$BORDER_THICKNESS_POD  = 2
+!$BORDER_THICKNESS ?= 1
+!$BORDER_THICKNESS_BOLD ?= 2
+!$BORDER_THICKNESS_POD ?= 2
 ' --- End Import: src/themes/common/_borders.puml ---
 
 
@@ -77,23 +87,25 @@
 
 '---------------------------------------------------------
 ' Layout Constants
+'
+' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$NODE_SEP      = 75
-!$RANK_SEP      = 75
-!$ROUND_CORNER  = 10
+!$NODE_SEP ?= 75
+!$RANK_SEP ?= 75
+!$ROUND_CORNER ?= 10
 
-$!SHADOWING = false
-$!LINETYPE = ortho
+$!SHADOWING ?= false
+$!LINETYPE ?= ortho
 
-$!DEFAULT_TEXT_ALIGNMENT = center
+$!DEFAULT_TEXT_ALIGNMENT ?= center
 
 
 '---------------------------------------------------------
 ' Container / Boundary Constants
 '---------------------------------------------------------
 
-!$RECTANGLE_BORDER_COLOR = transparent
+!$RECTANGLE_BORDER_COLOR ?= transparent
 
 
 '---------------------------------------------------------
@@ -114,15 +126,17 @@ $!DEFAULT_TEXT_ALIGNMENT = center
 
 '---------------------------------------------------------
 ' Icon Constants
+'
+' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
 
 'Actors
-!$ACTOR_STYLE = awesome
+!$ACTOR_STYLE ?= awesome
 
-!$ACTOR_BORDER_COLOR = #0D47A1
-!$ACTOR_BORDER_SIZE = 3
-!$ACTOR_BACKGROUND_COLOR = #90CAF9
+!$ACTOR_BORDER_COLOR ?= #0D47A1
+!$ACTOR_BORDER_SIZE ?= 3
+!$ACTOR_BACKGROUND_COLOR ?= #90CAF9
 
 ' --- End Import: src/themes/common/_icons.puml ---
 
@@ -163,6 +177,12 @@ skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 
 ' --- Importing: src/themes/togaf/_colors.puml ---
 ' src/themes/togaf/_colors.puml
+
+!$TOGAF_THEME_ENABLED ?= true
+
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
 ' --- End Import: src/themes/togaf/_colors.puml ---
 
 ' --- Importing: src/themes/togaf/_fonts.puml ---
@@ -177,6 +197,12 @@ skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 
 ' --- Importing: src/themes/ontario-health/_colors.puml ---
 ' src/themes/ontario-health/_colors.puml
+
+!$OH_THEME_ENABLED ?= true
+
+!if ($OH_THEME_ENABLED)
+
+!endif
 ' --- End Import: src/themes/ontario-health/_colors.puml ---
 
 ' --- Importing: src/themes/ontario-health/_fonts.puml ---

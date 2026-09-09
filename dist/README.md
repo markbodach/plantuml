@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-08 15:10:50 EDT
+* **Generated on:** 2026-09-09 11:53:02 EDT
 
 ## 🚀 How To Use It
 
@@ -14,12 +14,60 @@ Simply include the compiled production bundle path using your raw GitHub link at
 @startuml
 
 ' Archimate and TOGAF
-!define MBOHPuml https://raw.githubusercontent.com/markbodach/plantuml/refs/heads/main/dist
+!define MBOHPuml https://markbodach.github.io/plantuml
 includeurl MBOHPuml/all.puml
 
 
 ' Your custom components are now available globally!
 MyCustomDatabase(db1, "User Database")
+@enduml
+```
+
+# All Override PlantUML Variables
+This list is generated from the repository's puml source code.  Use these variables before loading the repository.  
+
+```plantuml
+@startuml
+
+!$ACTOR_BACKGROUND_COLOR = #90CAF9
+!$ACTOR_BORDER_COLOR = #0D47A1
+!$ACTOR_BORDER_SIZE = 3
+!$ACTOR_STYLE = awesome
+!$BORDER_THICKNESS_BOLD = 2
+!$BORDER_THICKNESS_POD = 2
+!$BORDER_THICKNESS = 1
+!$FONT_NAME = "Segoe UI"
+!$FONT_SIZE_ARROW = 11
+!$FONT_SIZE_LEGEND = 11
+!$FONT_SIZE_TITLE = 18
+!$FONT_SIZE = 12
+!$NODE_SEP = 75
+!$OH_THEME_ENABLED = true
+!$RANK_SEP = 75
+!$RECTANGLE_BORDER_COLOR = transparent
+!$ROUND_CORNER = 10
+!$TOGAF_THEME_ENABLED = true
+
+@enduml
+```
+
+# All Defined PlantUML skinparam Variables
+This list is generated from the repository's puml source code.  Skin parameters can be re-initialized after including the repository.  
+
+```plantuml
+@startuml
+
+skinparam shadowing $!SHADOWING
+skinparam linetype $!LINETYPE
+skinparam defaultTextAlignment $!DEFAULT_TEXT_ALIGNMENT
+skinparam nodesep !$NODE_SEP
+skinparam ranksep !$RANK_SEP
+skinparam rectangleBorderColor !$RECTANGLE_BORDER_COLOR
+skinparam actorStyle !$ACTOR_STYLE
+skinparam actorBorderColor !$ACTOR_BORDER_COLOR
+skinparam actorBorderSize !$ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
+
 @enduml
 ```
 
