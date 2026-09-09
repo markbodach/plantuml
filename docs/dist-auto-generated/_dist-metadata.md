@@ -3,7 +3,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-09 15:46:41 EDT
+* **Generated on:** 2026-09-09 15:57:00 EDT
 
 ## 🚀 How To Use It
 
@@ -12,12 +12,12 @@ Simply include the compiled production bundle path using your raw GitHub link at
 ```plantuml
 @startuml
 
-&excl;&dollar;OH_THEME_ENABLED = %true()
-&excl;&dollar;TOGAF_THEME_ENABLED = %true()
+!$OH_THEME_ENABLED = %true()
+!$TOGAF_THEME_ENABLED = %true()
 
 ' Archimate and TOGAF
-&excl;define MBpuml https://markbodach.github.io/plantuml
-&excl;includeurl MBpuml/all.puml
+!define MBpuml https://markbodach.github.io/plantuml
+!includeurl MBpuml/all.puml
 
 
 ' Your custom components are now available globally!
