@@ -4,20 +4,25 @@ set -euo pipefail
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENTRY_POINT="src/all.puml"
-DIST_DIR="dist"
-OUTPUT_FILE="$DIST_DIR/all.puml"
+
+DIST_DIR="" #"dist/"
+
+OUTPUT_FILE="${DIST_DIR}all.puml"
 
 DOC_DIR="docs/dist-auto-generated"
 
-DIST_README="$DOC_DIR/_dist-metadata.md"
-DIST_TREE="$DOC_DIR/_repository-structure.md"
-DIST_DEFAULTVARS="$DOC_DIR/_default-variables.md"
-DIST_SKINPARAMS="$DOC_DIR/_skin-params.md"
+DIST_README="${DOC_DIR}/_dist-metadata.md"
+DIST_TREE="${DOC_DIR}/_repository-structure.md"
+DIST_DEFAULTVARS="${DOC_DIR}/_default-variables.md"
+DIST_SKINPARAMS="${DOC_DIR}/_skin-params.md"
 
 
 
-# Ensure output directories exists
-mkdir -p "$DIST_DIR"
+# Ensure distribution directories exists
+if [ -n "${DIST_DIR:-}" ]; then
+    mkdir -p "$DIST_DIR"
+fi
+
 mkdir -p "$DOC_DIR"
 
 # 1. Write the compiled PUML bundle header with the dynamic Date & Time stamp
@@ -134,7 +139,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 !\$TOGAF_THEME_ENABLED = %true()
 
 ' Archimate and TOGAF
-!define MBpuml https://markbodach.github.io/plantuml
+!define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
 

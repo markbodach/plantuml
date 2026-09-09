@@ -30,7 +30,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
-!$COLOR_WARNING = "#FCF3CF"z
+!$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11

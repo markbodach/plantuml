@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-09 15:57:00 EDT
+* **Generated on:** 2026-09-09 16:49:52 EDT
 
 ## 🚀 How To Use It
 
@@ -17,7 +17,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 !$TOGAF_THEME_ENABLED = %true()
 
 ' Archimate and TOGAF
-!define MBpuml https://markbodach.github.io/plantuml
+!define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
 
@@ -58,7 +58,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
-!$COLOR_WARNING = "#FCF3CF"z
+!$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11
@@ -141,11 +141,17 @@ for solution architecture.
 The repository is organized to support consistent architecture modeling aligned with TOGAF / ArchiMate architecture viewpoints.
 
 Theme Variables 
-↓ Skinparam Initialization 
-↓ TOGAF Theme Mapping 
-↓ Ontario Health Theme Overlay 
-↓ Reusable Libraries 
-↓ Diagram Consumption
+↓ 
+Skinparam Initialization 
+↓ 
+TOGAF Theme Mapping 
+↓ 
+Ontario Health Theme Overlay 
+↓ 
+Reusable Libraries 
+↓ 
+Diagram Consumption
+
 ## Architecture Modeling Principles
 
 The architecture diagrams in this repository follow these principles:
