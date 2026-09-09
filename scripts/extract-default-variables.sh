@@ -50,11 +50,15 @@ awk '
         output = trimmed
         sub(/\?=/, "=", output)
 
-        # Extract variable name for sorting
+        # Extract variable name
         match(trimmed, /^!\$[A-Za-z0-9_]+/)
-        varname = substr(trimmed, RSTART, RLENGTH)
+        varname = substr(trimmed, RSTART + 2, RLENGTH - 2)
 
-        print varname "|" output
+        # Keep first occurrence only
+        if (!(varname in seen)) {
+            seen[varname] = 1
+            print varname "|" output
+        }
     }
 }
 ' "$input_file" |

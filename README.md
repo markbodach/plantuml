@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-09 11:53:02 EDT
+* **Generated on:** 2026-09-09 15:46:41 EDT
 
 ## 🚀 How To Use It
 
@@ -13,13 +13,16 @@ Simply include the compiled production bundle path using your raw GitHub link at
 ```plantuml
 @startuml
 
+&excl;&dollar;OH_THEME_ENABLED = %true()
+&excl;&dollar;TOGAF_THEME_ENABLED = %true()
+
 ' Archimate and TOGAF
-!define MBOHPuml https://markbodach.github.io/plantuml
-includeurl MBOHPuml/all.puml
+&excl;define MBpuml https://markbodach.github.io/plantuml
+&excl;includeurl MBpuml/all.puml
 
 
 ' Your custom components are now available globally!
-MyCustomDatabase(db1, "User Database")
+'MyCustomDatabase(db1, "User Database")
 @enduml
 ```
 
@@ -29,24 +32,47 @@ This list is generated from the repository's puml source code.  Use these variab
 ```plantuml
 @startuml
 
-!$ACTOR_BACKGROUND_COLOR = #90CAF9
-!$ACTOR_BORDER_COLOR = #0D47A1
+!$ACTOR_BACKGROUND_COLOR = "#90CAF9"
+!$ACTOR_BORDER_COLOR = "#0D47A1"
 !$ACTOR_BORDER_SIZE = 3
 !$ACTOR_STYLE = awesome
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
+!$COLOR_BORDER = "#5D6D7E"
+!$COLOR_BUSINESS = $COLOR_WARNING
+!$COLOR_DEPLOYMENT = "#FAD7A0"
+!$COLOR_ERROR_DARK = "Red"
+!$COLOR_ERROR_LIGHT = "Red"
+!$COLOR_ERROR = "Red"
+!$COLOR_EXTERNAL = "#E8DAEF"
+!$COLOR_LOGICAL = $COLOR_PRIMARY
+!$COLOR_NONE = $COLOR_TRANSPARENT
+!$COLOR_PRIMARY_DARK = "#D6EAF8"
+!$COLOR_PRIMARY_LIGHT = "#D6EAF8"
+!$COLOR_PRIMARY = "#D6EAF8"
+!$COLOR_SUCCESS_DARK = "#D5F5E3"
+!$COLOR_SUCCESS_LIGHT = "#D5F5E3"
+!$COLOR_SUCCESS = "#D5F5E3"
+!$COLOR_TECHNOLOGY = $COLOR_SUCCESS
+!$COLOR_TEXT = "#000000"
+!$COLOR_WARNING_DARK = "#FCF3CF"
+!$COLOR_WARNING_LIGHT = "#FCF3CF"
+!$COLOR_WARNING = "#FCF3CF"z
+!$DEFAULT_TEXT_ALIGNMENT = "center"
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11
 !$FONT_SIZE_LEGEND = 11
 !$FONT_SIZE_TITLE = 18
 !$FONT_SIZE = 12
+!$LINETYPE = "ortho"
 !$NODE_SEP = 75
-!$OH_THEME_ENABLED = true
+!$OH_THEME_ENABLED = %true()
 !$RANK_SEP = 75
-!$RECTANGLE_BORDER_COLOR = transparent
+!$RECTANGLE_BORDER_COLOR = $COLOR_NONE
 !$ROUND_CORNER = 10
-!$TOGAF_THEME_ENABLED = true
+!$SHADOWING = %false()
+!$TOGAF_THEME_ENABLED = %true()
 
 @enduml
 ```
@@ -57,16 +83,16 @@ This list is generated from the repository's puml source code.  Skin parameters 
 ```plantuml
 @startuml
 
-skinparam shadowing $!SHADOWING
-skinparam linetype $!LINETYPE
-skinparam defaultTextAlignment $!DEFAULT_TEXT_ALIGNMENT
-skinparam nodesep !$NODE_SEP
-skinparam ranksep !$RANK_SEP
-skinparam rectangleBorderColor !$RECTANGLE_BORDER_COLOR
-skinparam actorStyle !$ACTOR_STYLE
-skinparam actorBorderColor !$ACTOR_BORDER_COLOR
-skinparam actorBorderSize !$ACTOR_BORDER_SIZE
-skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
+skinparam shadowing $SHADOWING
+skinparam linetype $LINETYPE
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+skinparam nodesep $NODE_SEP
+skinparam ranksep $RANK_SEP
+skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
+skinparam actorStyle $ACTOR_STYLE
+skinparam actorBorderColor $ACTOR_BORDER_COLOR
+skinparam actorBorderThickness $ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 @enduml
 ```
@@ -114,6 +140,12 @@ for solution architecture.
 
 The repository is organized to support consistent architecture modeling aligned with TOGAF / ArchiMate architecture viewpoints.
 
+Theme Variables 
+↓ Skinparam Initialization 
+↓ TOGAF Theme Mapping 
+↓ Ontario Health Theme Overlay 
+↓ Reusable Libraries 
+↓ Diagram Consumption
 ## Architecture Modeling Principles
 
 The architecture diagrams in this repository follow these principles:

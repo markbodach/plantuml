@@ -8,18 +8,18 @@
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
-skinparam shadowing $!SHADOWING
-skinparam linetype $!LINETYPE
-skinparam defaultTextAlignment $!DEFAULT_TEXT_ALIGNMENT
+skinparam shadowing $SHADOWING
+skinparam linetype $LINETYPE
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 
-skinparam nodesep !$NODE_SEP
-skinparam ranksep !$RANK_SEP
+skinparam nodesep $NODE_SEP
+skinparam ranksep $RANK_SEP
 
 
-skinparam rectangleBorderColor !$RECTANGLE_BORDER_COLOR
+skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 
-skinparam actorStyle !$ACTOR_STYLE
-skinparam actorBorderColor !$ACTOR_BORDER_COLOR
-skinparam actorBorderSize !$ACTOR_BORDER_SIZE
-skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
+skinparam actorStyle $ACTOR_STYLE
+skinparam actorBorderColor $ACTOR_BORDER_COLOR
+skinparam actorBorderThickness $ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR

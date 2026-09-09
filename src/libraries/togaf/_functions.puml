@@ -4,17 +4,17 @@
 ' Helper Functions for TOGAF library integration
 '---------------------------------------------------------
 
-!function $togaf_layer_name($tg_name)
-  !if ($tg_name == "technology")
+'!function $togaf_layer_name($tg_name)
+'  !if ($tg_name == "technology")
+'
+'  !return $first + " " + $last
+'!endfunction
 
-  !return $first + " " + $last
-!endfunction
-
-!function $ togaf_layer_color($state)
+!function $togaf_layer_color($state)
   !if ($state == "success")
-    !return "#Green"
+    !return "Green"
   !else
-    !return "#Red"
+    !return "Red"
   !endif
 !endfunction
 

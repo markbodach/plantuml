@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-09 11:53:00 EDT
+' Generated on: 2026-09-09 15:46:39 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -27,27 +27,27 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$COLOR_PRIMARY = "#D6EAF8"
-!$COLOR_PRIMARY_LIGHT = "#D6EAF8"
-!$COLOR_PRIMARY_DARK = "#D6EAF8"
+!$COLOR_TRANSPARENT = "#FFFFFF00"
+!$COLOR_NONE ?= $COLOR_TRANSPARENT
 
-!$COLOR_WARNING = "#FCF3CF"
-!$COLOR_WARNING_LIGHT = "#FCF3CF"
-!$COLOR_WARNING_DARK = "#FCF3CF"
+!$COLOR_PRIMARY ?= "#D6EAF8"
+!$COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!$COLOR_PRIMARY_DARK ?= "#D6EAF8"
 
-!$COLOR_SUCCESS = "#D5F5E3"
-!$COLOR_SUCCESS_LIGHT = "#D5F5E3"
-!$COLOR_SUCCESS_DARK = "#D5F5E3"
+!$COLOR_WARNING ?= "#FCF3CF"z
+!$COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!$COLOR_WARNING_DARK ?= "#FCF3CF"
 
-!$COLOR_ERROR = "#Red"
-!$COLOR_ERROR_LIGHT = "#Red"
-!$COLOR_ERROR_DARK = "#Red"
+!$COLOR_SUCCESS ?= "#D5F5E3"
+!$COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!$COLOR_SUCCESS_DARK ?= "#D5F5E3"
 
+!$COLOR_ERROR ?= "Red"
+!$COLOR_ERROR_LIGHT ?= "Red"
+!$COLOR_ERROR_DARK ?= "Red"
 
-
-
-!$COLOR_TEXT                   = "#000000"
-!$COLOR_BORDER                 = "#5D6D7E"
+!$COLOR_TEXT ?= "#000000"
+!$COLOR_BORDER ?= "#5D6D7E"
 ' --- End Import: src/themes/common/_colors.puml ---
 
 ' --- Importing: src/themes/common/_fonts.puml ---
@@ -95,18 +95,17 @@
 !$RANK_SEP ?= 75
 !$ROUND_CORNER ?= 10
 
-$!SHADOWING ?= false
-$!LINETYPE ?= ortho
+!$SHADOWING ?= %false()
+!$LINETYPE ?= "ortho"
 
-$!DEFAULT_TEXT_ALIGNMENT ?= center
+!$DEFAULT_TEXT_ALIGNMENT ?= "center"
 
 
 '---------------------------------------------------------
 ' Container / Boundary Constants
 '---------------------------------------------------------
 
-!$RECTANGLE_BORDER_COLOR ?= transparent
-
+!$RECTANGLE_BORDER_COLOR ?= $COLOR_NONE
 
 '---------------------------------------------------------
 ' Legend Functions
@@ -134,9 +133,9 @@ $!DEFAULT_TEXT_ALIGNMENT ?= center
 'Actors
 !$ACTOR_STYLE ?= awesome
 
-!$ACTOR_BORDER_COLOR ?= #0D47A1
+!$ACTOR_BORDER_COLOR ?= "#0D47A1"
 !$ACTOR_BORDER_SIZE ?= 3
-!$ACTOR_BACKGROUND_COLOR ?= #90CAF9
+!$ACTOR_BACKGROUND_COLOR ?= "#90CAF9"
 
 ' --- End Import: src/themes/common/_icons.puml ---
 
@@ -152,21 +151,21 @@ $!DEFAULT_TEXT_ALIGNMENT ?= center
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
-skinparam shadowing $!SHADOWING
-skinparam linetype $!LINETYPE
-skinparam defaultTextAlignment $!DEFAULT_TEXT_ALIGNMENT
+skinparam shadowing $SHADOWING
+skinparam linetype $LINETYPE
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 
-skinparam nodesep !$NODE_SEP
-skinparam ranksep !$RANK_SEP
+skinparam nodesep $NODE_SEP
+skinparam ranksep $RANK_SEP
 
 
-skinparam rectangleBorderColor !$RECTANGLE_BORDER_COLOR
+skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 
-skinparam actorStyle !$ACTOR_STYLE
-skinparam actorBorderColor !$ACTOR_BORDER_COLOR
-skinparam actorBorderSize !$ACTOR_BORDER_SIZE
-skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
+skinparam actorStyle $ACTOR_STYLE
+skinparam actorBorderColor $ACTOR_BORDER_COLOR
+skinparam actorBorderThickness $ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 ' --- End Import: src/themes/common/_skinparam.puml ---
 
 ' --- End Import: src/themes/common/index.puml ---
@@ -178,15 +177,34 @@ skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 ' --- Importing: src/themes/togaf/_colors.puml ---
 ' src/themes/togaf/_colors.puml
 
-!$TOGAF_THEME_ENABLED ?= true
+!$TOGAF_THEME_ENABLED ?= %true()
 
 !if ($TOGAF_THEME_ENABLED)
+
+'Use Default TOGAF Colours
+!$COLOR_BUSINESS ?= $COLOR_WARNING
+!$COLOR_LOGICAL ?= $COLOR_PRIMARY
+!$COLOR_DEPLOYMENT ?= "#FAD7A0"
+!$COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
+!$COLOR_EXTERNAL ?= "#E8DAEF"
+
+
+' Functional Capabilities = #FCF3CF (light yellow)
+' Logical Components / Services = #D6EAF8 (light blue)
+' External Systems = #E8DAEF (light purple)
+' Deployment Components = #FAD7A0 (light orange)
+' Technology Products / Platforms = #D5F5E3 (light green)
 
 !endif
 ' --- End Import: src/themes/togaf/_colors.puml ---
 
 ' --- Importing: src/themes/togaf/_fonts.puml ---
 ' src/themes/togaf/_fonts.puml
+
+
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
 ' --- End Import: src/themes/togaf/_fonts.puml ---
 
 ' --- End Import: src/themes/togaf/index.puml ---
@@ -198,9 +216,43 @@ skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 ' --- Importing: src/themes/ontario-health/_colors.puml ---
 ' src/themes/ontario-health/_colors.puml
 
-!$OH_THEME_ENABLED ?= true
+!$OH_THEME_ENABLED ?= %true()
 
 !if ($OH_THEME_ENABLED)
+
+'Set OH Colours
+
+!$COLOR_PRIMARY ?= "#D6EAF8"
+!$COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!$COLOR_PRIMARY_DARK ?= "#D6EAF8"
+
+!$COLOR_WARNING ?= "#FCF3CF"
+!$COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!$COLOR_WARNING_DARK ?= "#FCF3CF"
+
+!$COLOR_SUCCESS ?= "#D5F5E3"
+!$COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!$COLOR_SUCCESS_DARK ?= "#D5F5E3"
+
+!$COLOR_ERROR ?= "Red"
+!$COLOR_ERROR_LIGHT ?= "Red"
+!$COLOR_ERROR_DARK ?= "Red"
+
+!$COLOR_TEXT ?= "#000000"
+!$COLOR_BORDER ?= "#5D6D7E"
+
+
+'If there are a lot of variables, this could be moved into a separate _togaf.puml file
+
+!if ($TOGAF_THEME_ENABLED)
+
+    'Set OH Colours to TOGAF
+    !$COLOR_BUSINESS ?= $COLOR_WARNING
+    !$COLOR_LOGICAL ?= $COLOR_PRIMARY
+    !$COLOR_DEPLOYMENT ?= "#FAD7A0"
+    !$COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
+    !$COLOR_EXTERNAL ?= "#E8DAEF"
+!endif 'TOGAF_THEME_ENABLED
 
 !endif
 ' --- End Import: src/themes/ontario-health/_colors.puml ---
@@ -235,17 +287,17 @@ skinparam actorBackgroundColor !$ACTOR_BACKGROUND_COLOR
 ' Helper Functions for TOGAF library integration
 '---------------------------------------------------------
 
-!function $togaf_layer_name($tg_name)
-  !if ($tg_name == "technology")
+'!function $togaf_layer_name($tg_name)
+'  !if ($tg_name == "technology")
+'
+'  !return $first + " " + $last
+'!endfunction
 
-  !return $first + " " + $last
-!endfunction
-
-!function $ togaf_layer_color($state)
+!function $togaf_layer_color($state)
   !if ($state == "success")
-    !return "#Green"
+    !return "Green"
   !else
-    !return "#Red"
+    !return "Red"
   !endif
 !endfunction
 

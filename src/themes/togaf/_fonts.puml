@@ -1,1 +1,6 @@
 ' src/themes/togaf/_fonts.puml
+
+
+!if ($TOGAF_THEME_ENABLED)
+
+!endif

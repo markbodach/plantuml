@@ -130,13 +130,16 @@ Simply include the compiled production bundle path using your raw GitHub link at
 \`\`\`plantuml
 @startuml
 
+&excl;&dollar;OH_THEME_ENABLED = %true()
+&excl;&dollar;TOGAF_THEME_ENABLED = %true()
+
 ' Archimate and TOGAF
-!define MBOHPuml https://markbodach.github.io/plantuml
-includeurl MBOHPuml/all.puml
+&excl;define MBpuml https://markbodach.github.io/plantuml
+&excl;includeurl MBpuml/all.puml
 
 
 ' Your custom components are now available globally!
-MyCustomDatabase(db1, "User Database")
+'MyCustomDatabase(db1, "User Database")
 @enduml
 \`\`\`
 
