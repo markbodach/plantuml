@@ -18,6 +18,9 @@ src/all.puml (Root Master)
       └── ontario-health/index.puml
         └── _colors.puml
         └── _fonts.puml
+      └── common/styles/index.puml
+      └── togaf/styles/index.puml
+      └── ontario-health/styles/index.puml
     └── libraries/index.puml
       └── stdlib/index.puml
       └── togaf/index.puml
@@ -29,4 +32,5 @@ src/all.puml (Root Master)
       └── ontario-health/index.puml
         └── _patterns.puml
         └── _sbbs.puml
+    └── themes/styles.puml
 ```

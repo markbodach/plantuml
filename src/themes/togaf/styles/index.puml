@@ -1,0 +1,6 @@
+!procedure LoadThemeStyles_Togaf()
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
+
+!endprocedure 

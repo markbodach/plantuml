@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-09 17:02:34 EDT
+' Generated on: 2026-09-10 15:49:31 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -12,8 +12,8 @@
 
 ' --- Importing: src/themes/index.puml ---
 ' src/themes/index.puml
-' Module Entry Point: Themes Component Pack
 
+' Module Entry Point: Constants, Procedure and Functions
 ' --- Importing: src/themes/common/index.puml ---
 ' src/themes/common/index.puml
 ' Module Entry Point: Common Theme Variables
@@ -263,6 +263,47 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 ' --- End Import: src/themes/ontario-health/index.puml ---
 
+
+
+' Module Entry Point: Sytles
+' --- Importing: src/themes/common/styles/index.puml ---
+
+
+
+!procedure LoadThemeStyles_Common()
+
+    
+!endprocedure
+' --- End Import: src/themes/common/styles/index.puml ---
+
+' --- Importing: src/themes/togaf/styles/index.puml ---
+!procedure LoadThemeStyles_Togaf()
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
+
+!endprocedure 
+' --- End Import: src/themes/togaf/styles/index.puml ---
+
+' --- Importing: src/themes/ontario-health/styles/index.puml ---
+
+
+!procedure LoadThemeStyles_OntarioHealth()
+
+    !if ($OH_THEME_ENABLED)
+
+    !endif
+!endprocedure 
+' --- End Import: src/themes/ontario-health/styles/index.puml ---
+
+
+!procedure LoadThemeStyles_All()
+
+    LoadThemeStyles_Common()
+    LoadThemeStyles_Togaf()
+    LoadThemeStyles_OntarioHealth()
+
+!endprocedure
 ' --- End Import: src/themes/index.puml ---
 
 ' --- Importing: src/libraries/index.puml ---
@@ -354,6 +395,11 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 ' --- End Import: src/libraries/ontario-health/index.puml ---
 
 ' --- End Import: src/libraries/index.puml ---
+
+
+
+' --- Importing: src/themes/styles.puml ---
+' --- End Import: src/themes/styles.puml ---
 
 ' --- End Import: src/index.puml ---
 

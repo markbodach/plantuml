@@ -1,6 +1,20 @@
 ' src/themes/index.puml
-' Module Entry Point: Themes Component Pack
 
+' Module Entry Point: Constants, Procedure and Functions
 !include common/index.puml
 !include togaf/index.puml
 !include ontario-health/index.puml
+
+
+' Module Entry Point: Sytles
+!include common/styles/index.puml
+!include togaf/styles/index.puml
+!include ontario-health/styles/index.puml
+
+!procedure LoadThemeStyles_All()
+
+    LoadThemeStyles_Common()
+    LoadThemeStyles_Togaf()
+    LoadThemeStyles_OntarioHealth()
+
+!endprocedure
