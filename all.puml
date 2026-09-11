@@ -1,6 +1,6 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-10 15:49:31 EDT
+' Generated on: 2026-09-11 10:57:05 EDT
 ' ========================================================
 
 ' src/all.puml
@@ -64,6 +64,8 @@
 !$FONT_SIZE_TITLE ?= 18
 !$FONT_SIZE_LEGEND ?= 11
 !$FONT_SIZE_ARROW ?= 11
+
+!$FONT_COLOR ?= $COLOR_TEXT
 ' --- End Import: src/themes/common/_fonts.puml ---
 
 
@@ -94,6 +96,10 @@
 !$NODE_SEP ?= 75
 !$RANK_SEP ?= 75
 !$ROUND_CORNER ?= 10
+!$MARGIN ?= 15
+!$PADDING ?= 10
+
+
 
 !$SHADOWING ?= %false()
 !$LINETYPE ?= "ortho"
@@ -138,6 +144,62 @@
 !$ACTOR_BACKGROUND_COLOR ?= "#90CAF9"
 
 ' --- End Import: src/themes/common/_icons.puml ---
+
+
+
+' --- Importing: src/themes/common/_title.puml ---
+
+
+'---------------------------------------------------------
+' Title Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
+!$FONT_STYLE_TITLE ?= "bold"
+
+!$BACKGROUND_COLOR_TITLE ?= $COLOR_PRIMARY_LIGHT
+!$HORIZONTAL_ALIGNMENT_TITLE ?= "center"
+
+!$MARGIN_TITLE ?= 20
+!$PADDING_TITLE ?= 15
+!$ROUND_CORNER_TITLE ?= $ROUND_CORNER
+
+!$LINE_COLOR_TITLE ?= $LINE_COLOR
+!$LINE_SIZE_TITLE ?= $LINE_SIZE
+
+
+
+'---------------------------------------------------------
+' Title Styles
+'---------------------------------------------------------
+
+!procedure WriteThemeStyle_Common_Title()
+<style>
+title {
+    BackgroundColor $BACKGROUND_COLOR_TITLE
+    HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
+    FontSize $FONT_SIZE_TITLE
+    FontColor $FONT_COLOR_TITLE
+    FontStyle $FONT_STYLE_TITLE
+    
+    LineColor $LINE_COLOR_TITLE
+    LineThickness $LINE_SIZE_TITLE
+
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+</style>
+
+!endprocedure
+
+
+'---------------------------------------------------------
+' Title Element
+'---------------------------------------------------------
+' --- End Import: src/themes/common/_title.puml ---
 
 
 ' --- Importing: src/themes/common/_skinparam.puml ---
@@ -272,6 +334,7 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 !procedure LoadThemeStyles_Common()
 
+    WriteThemeStyle_Common_Title()
     
 !endprocedure
 ' --- End Import: src/themes/common/styles/index.puml ---
@@ -395,11 +458,6 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 ' --- End Import: src/libraries/ontario-health/index.puml ---
 
 ' --- End Import: src/libraries/index.puml ---
-
-
-
-' --- Importing: src/themes/styles.puml ---
-' --- End Import: src/themes/styles.puml ---
 
 ' --- End Import: src/index.puml ---
 

@@ -11,6 +11,7 @@ src/all.puml (Root Master)
         └── _borders.puml
         └── _layout.puml
         └── _icons.puml
+        └── _title.puml
         └── _skinparam.puml
       └── togaf/index.puml
         └── _colors.puml
@@ -32,5 +33,4 @@ src/all.puml (Root Master)
       └── ontario-health/index.puml
         └── _patterns.puml
         └── _sbbs.puml
-    └── themes/styles.puml
 ```

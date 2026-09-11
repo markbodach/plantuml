@@ -3,5 +3,6 @@
 
 !procedure LoadThemeStyles_Common()
 
+    WriteThemeStyle_Common_Title()
     
 !endprocedure

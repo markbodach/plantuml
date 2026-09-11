@@ -44,7 +44,7 @@ compile_file() {
     current_dir=$(dirname "$target_file")
 
     if [ ! -f "$target_file" ]; then
-        echo "└── Warning: File not found -> $target_file" >&2
+        echo "└──X Warning: File not found -> $target_file" >&2
         return
     fi
 
@@ -77,7 +77,7 @@ if [ -f "$ENTRY_POINT" ]; then
     compile_file "$ENTRY_POINT" 1
     echo "└── Successfully compiled library into '$OUTPUT_FILE'"
 else
-    echo "└── Error: Master entry point '$ENTRY_POINT' not found!" >&2
+    echo "└─X Error: Master entry point '$ENTRY_POINT' not found!" >&2
     exit 1
 fi
 
@@ -135,16 +135,20 @@ Simply include the compiled production bundle path using your raw GitHub link at
 \`\`\`plantuml
 @startuml
 
+' STEP 1 :: Enable the themes to be used
 !\$OH_THEME_ENABLED = %true()
 !\$TOGAF_THEME_ENABLED = %true()
 
-' Archimate and TOGAF
+' STEP 2 :: Load the Archimate and TOGAF library
 !define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
 
-' Your custom components are now available globally!
-'MyCustomDatabase(db1, "User Database")
+' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
+LoadThemeStyles_All()
+
+
+
 @enduml
 \`\`\`
 

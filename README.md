@@ -4,7 +4,7 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * **Compiled Bundle:** `all.puml`
-* **Generated on:** 2026-09-10 15:49:34 EDT
+* **Generated on:** 2026-09-11 10:57:08 EDT
 
 ## 🚀 How To Use It
 
@@ -13,16 +13,20 @@ Simply include the compiled production bundle path using your raw GitHub link at
 ```plantuml
 @startuml
 
+' STEP 1 :: Enable the themes to be used
 !$OH_THEME_ENABLED = %true()
 !$TOGAF_THEME_ENABLED = %true()
 
-' Archimate and TOGAF
+' STEP 2 :: Load the Archimate and TOGAF library
 !define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
 
-' Your custom components are now available globally!
-'MyCustomDatabase(db1, "User Database")
+' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
+LoadThemeStyles_All()
+
+
+
 @enduml
 ```
 
@@ -36,6 +40,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ACTOR_BORDER_COLOR = "#0D47A1"
 !$ACTOR_BORDER_SIZE = 3
 !$ACTOR_STYLE = awesome
+!$BACKGROUND_COLOR_TITLE = $COLOR_PRIMARY_LIGHT
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
@@ -60,16 +65,27 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
+!$FONT_COLOR_TITLE = $COLOR_PRIMARY
+!$FONT_COLOR = $COLOR_TEXT
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11
 !$FONT_SIZE_LEGEND = 11
 !$FONT_SIZE_TITLE = 18
 !$FONT_SIZE = 12
+!$FONT_STYLE_TITLE = "bold"
+!$HORIZONTAL_ALIGNMENT_TITLE = "center"
+!$LINE_COLOR_TITLE = $LINE_COLOR
+!$LINE_SIZE_TITLE = $LINE_SIZE
 !$LINETYPE = "ortho"
+!$MARGIN_TITLE = 20
+!$MARGIN = 15
 !$NODE_SEP = 75
 !$OH_THEME_ENABLED = %true()
+!$PADDING_TITLE = 15
+!$PADDING = 10
 !$RANK_SEP = 75
 !$RECTANGLE_BORDER_COLOR = $COLOR_NONE
+!$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
 !$SHADOWING = %false()
 !$TOGAF_THEME_ENABLED = %true()
@@ -110,6 +126,7 @@ src/all.puml (Root Master)
         └── _borders.puml
         └── _layout.puml
         └── _icons.puml
+        └── _title.puml
         └── _skinparam.puml
       └── togaf/index.puml
         └── _colors.puml
@@ -131,7 +148,6 @@ src/all.puml (Root Master)
       └── ontario-health/index.puml
         └── _patterns.puml
         └── _sbbs.puml
-    └── themes/styles.puml
 ```
 
 # Architecture Diagrams

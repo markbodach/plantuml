@@ -3,6 +3,3 @@
 
 !include themes/index.puml
 !include libraries/index.puml
-
-
-!include themes/styles.puml
