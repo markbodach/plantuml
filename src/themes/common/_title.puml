@@ -6,6 +6,8 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+component "themes/common/_title :: called"
+
 !$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
 !$FONT_STYLE_TITLE ?= "bold"
 
@@ -26,6 +28,7 @@
 '---------------------------------------------------------
 
 !procedure WriteThemeStyle_Common_Title()
+
 <style>
 title {
     BackgroundColor $BACKGROUND_COLOR_TITLE
