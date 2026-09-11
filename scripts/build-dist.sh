@@ -29,8 +29,15 @@ mkdir -p "$DOC_DIR"
 echo "' ========================================================" > "$OUTPUT_FILE"
 echo "' Combined PlantUML Library Bundle (SASS-Style Compilation)" >> "$OUTPUT_FILE"
 echo "' Generated on: $(date '+%Y-%m-%d %H:%M:%S %Z')" >> "$OUTPUT_FILE"
+
+LAST_COMMIT=$(git rev-parse HEAD)
+LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+echo "' Build Commit Hash: $LAST_COMMIT" >> "$OUTPUT_FILE"
+echo "' Build Commit Comment: $LAST_COMMIT_MESSAGE" >> "$OUTPUT_FILE"
+
 echo "' ========================================================" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
+
 
 # Initialize a temporary file to track the imported tree
 TREE_LOG=$(mktemp)
@@ -127,6 +134,8 @@ This directory contains the production-ready distribution assets compiled via SA
 
 * **Compiled Bundle:** \`all.puml\`
 * **Generated on:** $(date '+%Y-%m-%d %H:%M:%S %Z')
+* **Build Commit Hash: $LAST_COMMIT
+* **Build Commit Comment: $LAST_COMMIT_MESSAGE
 
 ## 🚀 How To Use It
 

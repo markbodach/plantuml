@@ -1,6 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 10:57:05 EDT
+' Generated on: 2026-09-11 11:24:46 EDT
+' Build Commit Hash: b9c7dfc546ccf26918dc882d9fb8114e60522a27
+' Build Commit Comment: title v0.2
 ' ========================================================
 
 ' src/all.puml
@@ -156,6 +158,8 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+component "themes/common/_title :: called"
+
 !$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
 !$FONT_STYLE_TITLE ?= "bold"
 
@@ -176,6 +180,7 @@
 '---------------------------------------------------------
 
 !procedure WriteThemeStyle_Common_Title()
+
 <style>
 title {
     BackgroundColor $BACKGROUND_COLOR_TITLE
@@ -334,6 +339,7 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 !procedure LoadThemeStyles_Common()
 
+    component "LoadThemeStyles_Common :: called"
     WriteThemeStyle_Common_Title()
     
 !endprocedure
