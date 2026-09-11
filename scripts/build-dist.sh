@@ -132,10 +132,10 @@ cat << EOF > "$DIST_README"
 
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
-* **Compiled Bundle:** \`all.puml\`
-* **Generated on:** $(date '+%Y-%m-%d %H:%M:%S %Z')
-* **Build Commit Hash: $LAST_COMMIT
-* **Build Commit Comment: $LAST_COMMIT_MESSAGE
+* Compiled Bundle: **\`all.puml\`**
+* Generated on: **$(date '+%Y-%m-%d %H:%M:%S %Z')**
+* Build Commit Hash: **$LAST_COMMIT**
+* Build Commit Comment: **$LAST_COMMIT_MESSAGE**
 
 ## 🚀 How To Use It
 
@@ -152,11 +152,8 @@ Simply include the compiled production bundle path using your raw GitHub link at
 !define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
-
 ' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
 LoadThemeStyles_All()
-
-
 
 @enduml
 \`\`\`
