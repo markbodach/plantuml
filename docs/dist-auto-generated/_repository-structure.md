@@ -4,33 +4,39 @@ This tree maps out exactly how the source code files were evaluated and sequence
 ```text
 src/all.puml (Root Master)
   └── index.puml
-    └── themes/index.puml
-      └── common/index.puml
+    └── libs/index.puml
+      └── stdlib/vars/index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _borders.puml
         └── _layout.puml
         └── _icons.puml
         └── _title.puml
-        └── _skinparam.puml
-      └── togaf/index.puml
+      └── togaf/vars/index.puml
         └── _colors.puml
         └── _fonts.puml
-      └── ontario-health/index.puml
+      └── ontario-health/vars/index.puml
         └── _colors.puml
         └── _fonts.puml
-      └── common/styles/index.puml
-      └── togaf/styles/index.puml
-      └── ontario-health/styles/index.puml
-    └── libraries/index.puml
-      └── stdlib/index.puml
-      └── togaf/index.puml
+        └── _layout.puml
+      └── stdlib/components/index.puml
+      └── togaf/components/index.puml
         └── _functions.puml
         └── _business.puml
         └── _logical.puml
         └── _deployment.puml
         └── _technology.puml
-      └── ontario-health/index.puml
+      └── ontario-health/components/index.puml
         └── _patterns.puml
         └── _sbbs.puml
+      └── stdlib/theme/index.puml
+      └── togaf/theme/index.puml
+      └── ontario-health/theme/index.puml
+      └── stdlib/skinparam/index.puml
+      └── togaf/skinparam/index.puml
+      └── ontario-health/skinparam/index.puml
+      └── stdlib/styles/index.puml
+        └── _title.puml
+      └── togaf/styles/index.puml
+      └── ontario-health/styles/index.puml
 ```

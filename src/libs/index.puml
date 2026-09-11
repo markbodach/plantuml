@@ -1,0 +1,39 @@
+' src/index.puml
+' Module Entry Point: OH + TOGAF Component Pack
+
+
+'STEP 1 :: VARS includes
+!include stdlib/vars/index.puml
+!include togaf/vars/index.puml
+!include ontario-health/vars/index.puml
+
+'STEP 2 :: COMPONENTS includes
+!include stdlib/components/index.puml
+!include togaf/components/index.puml
+!include ontario-health/components/index.puml
+
+'STEP 3 :: THEME includes
+!include stdlib/theme/index.puml
+!include togaf/theme/index.puml
+!include ontario-health/theme/index.puml
+
+'STEP 4 :: Skin Params includes
+!include stdlib/skinparam/index.puml
+!include togaf/skinparam/index.puml
+!include ontario-health/skinparam/index.puml
+
+'STEP 5 :: STYLES includes
+!include stdlib/styles/index.puml
+!include togaf/styles/index.puml
+!include ontario-health/styles/index.puml
+
+'STEP 6 :: Add to Load_Lib_Styles_All
+
+!procedure Load_Lib_Styles_All()
+
+    Load_Lib_Styles_Common()
+    Load_Lib_Styles_Togaf()
+    Load_Lib_Styles_OntarioHealth()
+
+!endprocedure
+

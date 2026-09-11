@@ -1,9 +1,0 @@
-
-
-
-!procedure LoadThemeStyles_Common()
-
-    component "LoadThemeStyles_Common :: called"
-    WriteThemeStyle_Common_Title()
-    
-!endprocedure

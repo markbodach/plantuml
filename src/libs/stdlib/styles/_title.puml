@@ -1,0 +1,32 @@
+
+
+
+'---------------------------------------------------------
+' Title Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Title()
+
+<style>
+title {
+    BackgroundColor $BACKGROUND_COLOR_TITLE
+    HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
+    FontSize $FONT_SIZE_TITLE
+    FontColor $FONT_COLOR_TITLE
+    FontStyle $FONT_STYLE_TITLE
+    
+    LineColor $LINE_COLOR_TITLE
+    LineThickness $LINE_SIZE_TITLE
+
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+</style>
+
+!endprocedure
+
+
+'---------------------------------------------------------
+' Title Element
+'---------------------------------------------------------

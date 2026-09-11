@@ -1,0 +1,23 @@
+
+
+'---------------------------------------------------------
+' Title Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+component "themes/common/_title :: called"
+
+!$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
+!$FONT_STYLE_TITLE ?= "bold"
+
+!$BACKGROUND_COLOR_TITLE ?= $COLOR_PRIMARY_LIGHT
+!$HORIZONTAL_ALIGNMENT_TITLE ?= "center"
+
+!$MARGIN_TITLE ?= 20
+!$PADDING_TITLE ?= 15
+!$ROUND_CORNER_TITLE ?= $ROUND_CORNER
+
+!$LINE_COLOR_TITLE ?= $LINE_COLOR
+!$LINE_SIZE_TITLE ?= $LINE_SIZE
+

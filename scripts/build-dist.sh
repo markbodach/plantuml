@@ -153,7 +153,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 !includeurl MBpuml/all.puml
 
 ' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
-LoadThemeStyles_All()
+Load_Lib_Styles_All()
 
 @enduml
 \`\`\`

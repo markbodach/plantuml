@@ -1,0 +1,37 @@
+
+'---------------------------------------------------------
+' Layout Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!$NODE_SEP ?= 75
+!$RANK_SEP ?= 75
+!$ROUND_CORNER ?= 10
+!$MARGIN ?= 15
+!$PADDING ?= 10
+
+
+
+!$SHADOWING ?= %false()
+!$LINETYPE ?= "ortho"
+
+!$DEFAULT_TEXT_ALIGNMENT ?= "center"
+
+
+'---------------------------------------------------------
+' Container / Boundary Constants
+'---------------------------------------------------------
+
+!$RECTANGLE_BORDER_COLOR ?= $COLOR_NONE
+
+'---------------------------------------------------------
+' Legend Functions
+'---------------------------------------------------------
+
+' legend right
+' |= TOGAF Category |= Color |
+' | <back:E8DAEF>      </back> | External System |
+' | <back:D6EAF8>      </back> | Logical Component / Service |
+' | <back:FCF3CF>      </back> | Business Information Authority |
+' endlegend

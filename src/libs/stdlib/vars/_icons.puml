@@ -1,0 +1,15 @@
+
+'---------------------------------------------------------
+' Icon Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+
+'Actors
+!$ACTOR_STYLE ?= awesome
+
+!$ACTOR_BORDER_COLOR ?= "#0D47A1"
+!$ACTOR_BORDER_SIZE ?= 3
+!$ACTOR_BACKGROUND_COLOR ?= "#90CAF9"
+

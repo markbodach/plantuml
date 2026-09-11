@@ -1,27 +1,26 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 11:29:24 EDT
-' Build Commit Hash: 9a51bbc38855bea5068c7ad0b9782801f296d1b3
-' Build Commit Comment: added Build Commit information
+' Generated on: 2026-09-11 15:52:16 EDT
+' Build Commit Hash: 1fe2b326088516d2f4e1555b984c47d088c6e8f5
+' Build Commit Comment: Git Commit markdown formating
 ' ========================================================
 
 ' src/all.puml
 ' Module Entry Point: OH + TOGAF Component Pack
 
 ' --- Importing: src/index.puml ---
+
+' --- Importing: src/libs/index.puml ---
 ' src/index.puml
 ' Module Entry Point: OH + TOGAF Component Pack
 
-' --- Importing: src/themes/index.puml ---
-' src/themes/index.puml
 
-' Module Entry Point: Constants, Procedure and Functions
-' --- Importing: src/themes/common/index.puml ---
-' src/themes/common/index.puml
+'STEP 1 :: VARS includes
+' --- Importing: src/libs/stdlib/vars/index.puml ---
+' src/themes/stdlib/index.puml
 ' Module Entry Point: Common Theme Variables
 
-' --- Importing: src/themes/common/_colors.puml ---
-' src/themes/common/_colors.puml
+' --- Importing: src/libs/stdlib/vars/_colors.puml ---
 
 '---------------------------------------------------------
 ' Color Constants
@@ -50,10 +49,9 @@
 
 !$COLOR_TEXT ?= "#000000"
 !$COLOR_BORDER ?= "#5D6D7E"
-' --- End Import: src/themes/common/_colors.puml ---
+' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
-' --- Importing: src/themes/common/_fonts.puml ---
-' src/themes/common/_fonts.puml
+' --- Importing: src/libs/stdlib/vars/_fonts.puml ---
 
 '---------------------------------------------------------
 ' Font Constants
@@ -68,11 +66,10 @@
 !$FONT_SIZE_ARROW ?= 11
 
 !$FONT_COLOR ?= $COLOR_TEXT
-' --- End Import: src/themes/common/_fonts.puml ---
+' --- End Import: src/libs/stdlib/vars/_fonts.puml ---
 
 
-' --- Importing: src/themes/common/_borders.puml ---
-' src/themes/common/_borders.puml
+' --- Importing: src/libs/stdlib/vars/_borders.puml ---
 
 '---------------------------------------------------------
 ' Border Constants
@@ -83,11 +80,10 @@
 !$BORDER_THICKNESS ?= 1
 !$BORDER_THICKNESS_BOLD ?= 2
 !$BORDER_THICKNESS_POD ?= 2
-' --- End Import: src/themes/common/_borders.puml ---
+' --- End Import: src/libs/stdlib/vars/_borders.puml ---
 
 
-' --- Importing: src/themes/common/_layout.puml ---
-' src/themes/common/_layout.puml
+' --- Importing: src/libs/stdlib/vars/_layout.puml ---
 
 '---------------------------------------------------------
 ' Layout Constants
@@ -125,11 +121,10 @@
 ' | <back:D6EAF8>      </back> | Logical Component / Service |
 ' | <back:FCF3CF>      </back> | Business Information Authority |
 ' endlegend
-' --- End Import: src/themes/common/_layout.puml ---
+' --- End Import: src/libs/stdlib/vars/_layout.puml ---
 
 
-' --- Importing: src/themes/common/_icons.puml ---
-' src/themes/common/_icons.puml
+' --- Importing: src/libs/stdlib/vars/_icons.puml ---
 
 '---------------------------------------------------------
 ' Icon Constants
@@ -145,11 +140,11 @@
 !$ACTOR_BORDER_SIZE ?= 3
 !$ACTOR_BACKGROUND_COLOR ?= "#90CAF9"
 
-' --- End Import: src/themes/common/_icons.puml ---
+' --- End Import: src/libs/stdlib/vars/_icons.puml ---
 
 
 
-' --- Importing: src/themes/common/_title.puml ---
+' --- Importing: src/libs/stdlib/vars/_title.puml ---
 
 
 '---------------------------------------------------------
@@ -173,224 +168,116 @@ component "themes/common/_title :: called"
 !$LINE_COLOR_TITLE ?= $LINE_COLOR
 !$LINE_SIZE_TITLE ?= $LINE_SIZE
 
+' --- End Import: src/libs/stdlib/vars/_title.puml ---
 
 
-'---------------------------------------------------------
-' Title Styles
-'---------------------------------------------------------
+' --- End Import: src/libs/stdlib/vars/index.puml ---
 
-!procedure WriteThemeStyle_Common_Title()
-
-<style>
-title {
-    BackgroundColor $BACKGROUND_COLOR_TITLE
-    HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
-    FontSize $FONT_SIZE_TITLE
-    FontColor $FONT_COLOR_TITLE
-    FontStyle $FONT_STYLE_TITLE
-    
-    LineColor $LINE_COLOR_TITLE
-    LineThickness $LINE_SIZE_TITLE
-
-    RoundCorner $ROUND_CORNER_TITLE
-    Margin $MARGIN_TITLE
-    Padding $PADDING_TITLE
-}
-</style>
-
-!endprocedure
-
-
-'---------------------------------------------------------
-' Title Element
-'---------------------------------------------------------
-' --- End Import: src/themes/common/_title.puml ---
-
-
-' --- Importing: src/themes/common/_skinparam.puml ---
-' src/themes/common/_layout.puml
-
-'---------------------------------------------------------
-' skinparam Initialization
-'---------------------------------------------------------
-
-
-' skinparam linetype polyline
-' skinparam linetype ortho
-
-skinparam shadowing $SHADOWING
-skinparam linetype $LINETYPE
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-
-
-skinparam nodesep $NODE_SEP
-skinparam ranksep $RANK_SEP
-
-
-skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
-
-skinparam actorStyle $ACTOR_STYLE
-skinparam actorBorderColor $ACTOR_BORDER_COLOR
-skinparam actorBorderThickness $ACTOR_BORDER_SIZE
-skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
-' --- End Import: src/themes/common/_skinparam.puml ---
-
-' --- End Import: src/themes/common/index.puml ---
-
-' --- Importing: src/themes/togaf/index.puml ---
+' --- Importing: src/libs/togaf/vars/index.puml ---
 ' src/themes/togaf/index.puml
 ' Module Entry Point: TOGAF Theme Variables
 
-' --- Importing: src/themes/togaf/_colors.puml ---
+' --- Importing: src/libs/togaf/vars/_colors.puml ---
 ' src/themes/togaf/_colors.puml
 
-!$TOGAF_THEME_ENABLED ?= %true()
+!$TOGAF_THEME_ENABLED ?= %false()
 
-!if ($TOGAF_THEME_ENABLED)
 
 'Use Default TOGAF Colours
-!$COLOR_BUSINESS ?= $COLOR_WARNING
-!$COLOR_LOGICAL ?= $COLOR_PRIMARY
-!$COLOR_DEPLOYMENT ?= "#FAD7A0"
-!$COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
-!$COLOR_EXTERNAL ?= "#E8DAEF"
+!$TOGAF_COLOR_BUSINESS ?= $COLOR_WARNING
+!$TOGAF_COLOR_LOGICAL ?= $COLOR_PRIMARY
+!$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
+!$TOGAF_COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
+!$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+' --- End Import: src/libs/togaf/vars/_colors.puml ---
 
-
-' Functional Capabilities = #FCF3CF (light yellow)
-' Logical Components / Services = #D6EAF8 (light blue)
-' External Systems = #E8DAEF (light purple)
-' Deployment Components = #FAD7A0 (light orange)
-' Technology Products / Platforms = #D5F5E3 (light green)
-
-!endif
-' --- End Import: src/themes/togaf/_colors.puml ---
-
-' --- Importing: src/themes/togaf/_fonts.puml ---
+' --- Importing: src/libs/togaf/vars/_fonts.puml ---
 ' src/themes/togaf/_fonts.puml
 
 
 !if ($TOGAF_THEME_ENABLED)
 
 !endif
-' --- End Import: src/themes/togaf/_fonts.puml ---
+' --- End Import: src/libs/togaf/vars/_fonts.puml ---
 
-' --- End Import: src/themes/togaf/index.puml ---
+' --- End Import: src/libs/togaf/vars/index.puml ---
 
-' --- Importing: src/themes/ontario-health/index.puml ---
+' --- Importing: src/libs/ontario-health/vars/index.puml ---
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/themes/ontario-health/_colors.puml ---
+' --- Importing: src/libs/ontario-health/vars/_colors.puml ---
 ' src/themes/ontario-health/_colors.puml
 
-!$OH_THEME_ENABLED ?= %true()
+!$OH_THEME_ENABLED ?= %false()
 
-!if ($OH_THEME_ENABLED)
 
 'Set OH Colours
 
-!$COLOR_PRIMARY ?= "#D6EAF8"
-!$COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
-!$COLOR_PRIMARY_DARK ?= "#D6EAF8"
+!$OH_COLOR_PRIMARY ?= "#D6EAF8"
+!$OH_COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!$OH_COLOR_PRIMARY_DARK ?= "#D6EAF8"
 
-!$COLOR_WARNING ?= "#FCF3CF"
-!$COLOR_WARNING_LIGHT ?= "#FCF3CF"
-!$COLOR_WARNING_DARK ?= "#FCF3CF"
+!$OH_COLOR_WARNING ?= "#FCF3CF"
+!$OH_COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!$OH_COLOR_WARNING_DARK ?= "#FCF3CF"
 
-!$COLOR_SUCCESS ?= "#D5F5E3"
-!$COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
-!$COLOR_SUCCESS_DARK ?= "#D5F5E3"
+!$OH_COLOR_SUCCESS ?= "#D5F5E3"
+!$OH_COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!$OH_COLOR_SUCCESS_DARK ?= "#D5F5E3"
 
-!$COLOR_ERROR ?= "Red"
-!$COLOR_ERROR_LIGHT ?= "Red"
-!$COLOR_ERROR_DARK ?= "Red"
+!$OH_COLOR_ERROR ?= "Red"
+!$OH_COLOR_ERROR_LIGHT ?= "Red"
+!$OH_COLOR_ERROR_DARK ?= "Red"
 
-!$COLOR_TEXT ?= "#000000"
-!$COLOR_BORDER ?= "#5D6D7E"
+!$OH_COLOR_TEXT ?= "#000000"
+!$OH_COLOR_BORDER ?= "#5D6D7E"
 
 
-'If there are a lot of variables, this could be moved into a separate _togaf.puml file
+'Set OH Colours to TOGAF
+!$OH_COLOR_BUSINESS ?= $OH_COLOR_WARNING
+!$OH_COLOR_LOGICAL ?= $OH_COLOR_PRIMARY
+!$OH_COLOR_DEPLOYMENT ?= "#FAD7A0"
+!$OH_COLOR_TECHNOLOGY ?= $OH_COLOR_SUCCESS
+!$OH_COLOR_EXTERNAL ?= "#E8DAEF"
+' --- End Import: src/libs/ontario-health/vars/_colors.puml ---
 
-!if ($TOGAF_THEME_ENABLED)
-
-    'Set OH Colours to TOGAF
-    !$COLOR_BUSINESS ?= $COLOR_WARNING
-    !$COLOR_LOGICAL ?= $COLOR_PRIMARY
-    !$COLOR_DEPLOYMENT ?= "#FAD7A0"
-    !$COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
-    !$COLOR_EXTERNAL ?= "#E8DAEF"
-!endif 'TOGAF_THEME_ENABLED
-
-!endif
-' --- End Import: src/themes/ontario-health/_colors.puml ---
-
-' --- Importing: src/themes/ontario-health/_fonts.puml ---
+' --- Importing: src/libs/ontario-health/vars/_fonts.puml ---
 ' src/themes/ontario-health/_fonts.puml
-' --- End Import: src/themes/ontario-health/_fonts.puml ---
+' --- End Import: src/libs/ontario-health/vars/_fonts.puml ---
 
-' --- End Import: src/themes/ontario-health/index.puml ---
-
-
-
-' Module Entry Point: Sytles
-' --- Importing: src/themes/common/styles/index.puml ---
+' --- Importing: src/libs/ontario-health/vars/_layout.puml ---
 
 
+!if ($OH_THEME_ENABLED)
 
-!procedure LoadThemeStyles_Common()
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
 
-    component "LoadThemeStyles_Common :: called"
-    WriteThemeStyle_Common_Title()
-    
-!endprocedure
-' --- End Import: src/themes/common/styles/index.puml ---
+!$OH_MARGIN_TITLE = 20
+!$OH_PADDING_TITLE = 15
+!$OH_ROUND_CORNER_TITLE = 0
 
-' --- Importing: src/themes/togaf/styles/index.puml ---
-!procedure LoadThemeStyles_Togaf()
-!if ($TOGAF_THEME_ENABLED)
+!$OH_LINE_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
+!$OH_LINE_SIZE_TITLE = 5
 
 !endif
+' --- End Import: src/libs/ontario-health/vars/_layout.puml ---
 
-!endprocedure 
-' --- End Import: src/themes/togaf/styles/index.puml ---
-
-' --- Importing: src/themes/ontario-health/styles/index.puml ---
+' --- End Import: src/libs/ontario-health/vars/index.puml ---
 
 
-!procedure LoadThemeStyles_OntarioHealth()
+'STEP 2 :: COMPONENTS includes
+' --- Importing: src/libs/stdlib/components/index.puml ---
+' --- End Import: src/libs/stdlib/components/index.puml ---
 
-    !if ($OH_THEME_ENABLED)
-
-    !endif
-!endprocedure 
-' --- End Import: src/themes/ontario-health/styles/index.puml ---
-
-
-!procedure LoadThemeStyles_All()
-
-    LoadThemeStyles_Common()
-    LoadThemeStyles_Togaf()
-    LoadThemeStyles_OntarioHealth()
-
-!endprocedure
-' --- End Import: src/themes/index.puml ---
-
-' --- Importing: src/libraries/index.puml ---
-' src/libraries/index.puml
-' Module Entry Point: Libraries
-
-' --- Importing: src/libraries/stdlib/index.puml ---
-' src/libraries/stdlib/index.puml
-' Module Entry Point: Libraries / Standard PlantUML Component Pack
-
-' --- End Import: src/libraries/stdlib/index.puml ---
-
-' --- Importing: src/libraries/togaf/index.puml ---
+' --- Importing: src/libs/togaf/components/index.puml ---
 ' src/libraries/togaf/index.puml
 ' Module Entry Point: Libraries / TOGAF Component Pack 
 
 
-' --- Importing: src/libraries/togaf/_functions.puml ---
+' --- Importing: src/libs/togaf/components/_functions.puml ---
 ' src/libraries/togaf/_functions.puml
 
 '---------------------------------------------------------
@@ -422,13 +309,13 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 ' !unquoted procedure 
 ' !unquoted function  
-' --- End Import: src/libraries/togaf/_functions.puml ---
+' --- End Import: src/libs/togaf/components/_functions.puml ---
 
 
-' --- Importing: src/libraries/togaf/_business.puml ---
-' --- End Import: src/libraries/togaf/_business.puml ---
+' --- Importing: src/libs/togaf/components/_business.puml ---
+' --- End Import: src/libs/togaf/components/_business.puml ---
 
-' --- Importing: src/libraries/togaf/_logical.puml ---
+' --- Importing: src/libs/togaf/components/_logical.puml ---
 
 ' component "Enterprise Identity Provider" as SBB01 #D6EAF8
 ' cloud "Identity Provider" as LC01 #E8DAEF
@@ -441,29 +328,219 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 ' SHAPE CAPTION as ALIAS SPRITE COLOR
 ' rectangle "Document\nManagement\nSystem" as DMS <<$aComponent>> #Application
-' --- End Import: src/libraries/togaf/_logical.puml ---
+' --- End Import: src/libs/togaf/components/_logical.puml ---
 
-' --- Importing: src/libraries/togaf/_deployment.puml ---
-' --- End Import: src/libraries/togaf/_deployment.puml ---
+' --- Importing: src/libs/togaf/components/_deployment.puml ---
+' --- End Import: src/libs/togaf/components/_deployment.puml ---
 
-' --- Importing: src/libraries/togaf/_technology.puml ---
-' --- End Import: src/libraries/togaf/_technology.puml ---
+' --- Importing: src/libs/togaf/components/_technology.puml ---
+' --- End Import: src/libs/togaf/components/_technology.puml ---
 
-' --- End Import: src/libraries/togaf/index.puml ---
+' --- End Import: src/libs/togaf/components/index.puml ---
 
-' --- Importing: src/libraries/ontario-health/index.puml ---
+' --- Importing: src/libs/ontario-health/components/index.puml ---
 ' src/libraries/ontario-health/index.puml
 ' Module Entry Point: Libraries / Ontario Health Component Pack 
 
-' --- Importing: src/libraries/ontario-health/_patterns.puml ---
-' --- End Import: src/libraries/ontario-health/_patterns.puml ---
+' --- Importing: src/libs/ontario-health/components/_patterns.puml ---
+' --- End Import: src/libs/ontario-health/components/_patterns.puml ---
 
-' --- Importing: src/libraries/ontario-health/_sbbs.puml ---
-' --- End Import: src/libraries/ontario-health/_sbbs.puml ---
+' --- Importing: src/libs/ontario-health/components/_sbbs.puml ---
+' --- End Import: src/libs/ontario-health/components/_sbbs.puml ---
 
-' --- End Import: src/libraries/ontario-health/index.puml ---
+' --- End Import: src/libs/ontario-health/components/index.puml ---
 
-' --- End Import: src/libraries/index.puml ---
+
+'STEP 3 :: THEME includes
+' --- Importing: src/libs/stdlib/theme/index.puml ---
+
+' THIS FILE SHOULD BE BLANK
+' --- End Import: src/libs/stdlib/theme/index.puml ---
+
+' --- Importing: src/libs/togaf/theme/index.puml ---
+
+!if ($TOGAF_THEME_ENABLED)
+
+'Use Default TOGAF Colours
+!$TOGAF_COLOR_BUSINESS ?= $COLOR_WARNING
+!$TOGAF_COLOR_LOGICAL ?= $COLOR_PRIMARY
+!$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
+!$TOGAF_COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
+!$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+
+
+!endif
+' --- End Import: src/libs/togaf/theme/index.puml ---
+
+' --- Importing: src/libs/ontario-health/theme/index.puml ---
+
+!if ($OH_THEME_ENABLED)
+
+'Set OH Colours
+
+!$COLOR_PRIMARY = $OH_COLOR_PRIMARY
+!$COLOR_PRIMARY_LIGHT = $OH_COLOR_PRIMARY_LIGHT
+!$COLOR_PRIMARY_DARK = $OH_COLOR_PRIMARY_DARK
+
+!$COLOR_WARNING = $OH_COLOR_WARNING
+!$COLOR_WARNING_LIGHT = $OH_COLOR_WARNING_LIGHT
+!$COLOR_WARNING_DARK = $OH_COLOR_WARNING_DARK
+
+!$COLOR_SUCCESS = $OH_COLOR_SUCCESS
+!$COLOR_SUCCESS_LIGHT = $OH_COLOR_SUCCESS_LIGHT
+!$COLOR_SUCCESS_DARK = $OH_COLOR_SUCCESS_DARK
+
+!$COLOR_ERROR = $OH_COLOR_ERROR
+!$COLOR_ERROR_LIGHT = $OH_COLOR_ERROR_LIGHT
+!$COLOR_ERROR_DARK = $OH_COLOR_ERROR_DARK
+
+!$COLOR_TEXT = $OH_COLOR_TEXT
+!$COLOR_BORDER ?= $OH_COLOR_BORDER
+
+
+'If there are a lot of variables, this could be moved into a separate _togaf.puml file
+
+!if ($TOGAF_THEME_ENABLED)
+
+    'Set OH Colours to TOGAF
+    !$TOGAF_COLOR_BUSINESS ?= $OH_COLOR_WARNING
+    !$TOGAF_COLOR_LOGICAL ?= $OH_COLOR_PRIMARY
+    !$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
+    !$TOGAF_COLOR_TECHNOLOGY ?= $OH_COLOR_SUCCESS
+    !$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+
+!endif 'TOGAF_THEME_ENABLED
+
+!endif
+' --- End Import: src/libs/ontario-health/theme/index.puml ---
+
+
+'STEP 4 :: Skin Params includes
+' --- Importing: src/libs/stdlib/skinparam/index.puml ---
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+
+
+' skinparam linetype polyline
+' skinparam linetype ortho
+
+skinparam shadowing $SHADOWING
+skinparam linetype $LINETYPE
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+
+
+skinparam nodesep $NODE_SEP
+skinparam ranksep $RANK_SEP
+
+
+skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
+
+skinparam actorStyle $ACTOR_STYLE
+skinparam actorBorderColor $ACTOR_BORDER_COLOR
+skinparam actorBorderThickness $ACTOR_BORDER_SIZE
+skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
+' --- End Import: src/libs/stdlib/skinparam/index.puml ---
+
+' --- Importing: src/libs/togaf/skinparam/index.puml ---
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+
+' --- End Import: src/libs/togaf/skinparam/index.puml ---
+
+' --- Importing: src/libs/ontario-health/skinparam/index.puml ---
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+
+' --- End Import: src/libs/ontario-health/skinparam/index.puml ---
+
+
+'STEP 5 :: STYLES includes
+' --- Importing: src/libs/stdlib/styles/index.puml ---
+
+
+' --- Importing: src/libs/stdlib/styles/_title.puml ---
+
+
+
+'---------------------------------------------------------
+' Title Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Title()
+
+<style>
+title {
+    BackgroundColor $BACKGROUND_COLOR_TITLE
+    HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
+    FontSize $FONT_SIZE_TITLE
+    FontColor $FONT_COLOR_TITLE
+    FontStyle $FONT_STYLE_TITLE
+    
+    LineColor $LINE_COLOR_TITLE
+    LineThickness $LINE_SIZE_TITLE
+
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+</style>
+
+!endprocedure
+
+
+'---------------------------------------------------------
+' Title Element
+'---------------------------------------------------------
+' --- End Import: src/libs/stdlib/styles/_title.puml ---
+
+
+!procedure Load_Lib_Styles_Stdlib()
+
+    'component "Load_Lib_Styles_Common :: called"
+    
+    Write_Lib_Style_Stdlib_Title()
+    
+!endprocedure
+' --- End Import: src/libs/stdlib/styles/index.puml ---
+
+' --- Importing: src/libs/togaf/styles/index.puml ---
+!procedure Load_Lib_Styles_Togaf()
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
+
+!endprocedure 
+' --- End Import: src/libs/togaf/styles/index.puml ---
+
+' --- Importing: src/libs/ontario-health/styles/index.puml ---
+
+
+!procedure Load_Lib_Styles_OntarioHealth()
+
+    !if ($OH_THEME_ENABLED)
+
+    !endif
+!endprocedure 
+' --- End Import: src/libs/ontario-health/styles/index.puml ---
+
+
+'STEP 6 :: Add to Load_Lib_Styles_All
+
+!procedure Load_Lib_Styles_All()
+
+    Load_Lib_Styles_Common()
+    Load_Lib_Styles_Togaf()
+    Load_Lib_Styles_OntarioHealth()
+
+!endprocedure
+
+' --- End Import: src/libs/index.puml ---
 
 ' --- End Import: src/index.puml ---
 

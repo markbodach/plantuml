@@ -3,9 +3,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-11 11:29:28 EDT**
-* Build Commit Hash: **9a51bbc38855bea5068c7ad0b9782801f296d1b3**
-* Build Commit Comment: **added Build Commit information**
+* Generated on: **2026-09-11 15:52:19 EDT**
+* Build Commit Hash: **1fe2b326088516d2f4e1555b984c47d088c6e8f5**
+* Build Commit Comment: **Git Commit markdown formating**
 
 ## 🚀 How To Use It
 
@@ -23,7 +23,7 @@ Simply include the compiled production bundle path using your raw GitHub link at
 !includeurl MBpuml/all.puml
 
 ' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
-LoadThemeStyles_All()
+Load_Lib_Styles_All()
 
 @enduml
 ```

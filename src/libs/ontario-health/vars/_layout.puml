@@ -1,0 +1,16 @@
+
+
+!if ($OH_THEME_ENABLED)
+
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
+
+!$OH_MARGIN_TITLE = 20
+!$OH_PADDING_TITLE = 15
+!$OH_ROUND_CORNER_TITLE = 0
+
+!$OH_LINE_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
+!$OH_LINE_SIZE_TITLE = 5
+
+!endif
