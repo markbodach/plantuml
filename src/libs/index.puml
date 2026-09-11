@@ -31,7 +31,7 @@
 
 !procedure Load_Lib_Styles_All()
 
-    Load_Lib_Styles_Common()
+    Load_Lib_Styles_Stdlib()
     Load_Lib_Styles_Togaf()
     Load_Lib_Styles_OntarioHealth()
 

@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 15:52:16 EDT
-' Build Commit Hash: 1fe2b326088516d2f4e1555b984c47d088c6e8f5
-' Build Commit Comment: Git Commit markdown formating
+' Generated on: 2026-09-11 15:57:47 EDT
+' Build Commit Hash: 646c85150bb4d4739b9cd2eab46725c368324c1e
+' Build Commit Comment: Refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -502,7 +502,7 @@ title {
 
 !procedure Load_Lib_Styles_Stdlib()
 
-    'component "Load_Lib_Styles_Common :: called"
+    'component "Load_Lib_Styles_Stdlib :: called"
     
     Write_Lib_Style_Stdlib_Title()
     
@@ -534,7 +534,7 @@ title {
 
 !procedure Load_Lib_Styles_All()
 
-    Load_Lib_Styles_Common()
+    Load_Lib_Styles_Stdlib()
     Load_Lib_Styles_Togaf()
     Load_Lib_Styles_OntarioHealth()
 
