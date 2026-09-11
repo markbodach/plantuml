@@ -23,12 +23,13 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_SUCCESS_DARK = "#D5F5E3"
 !$COLOR_SUCCESS_LIGHT = "#D5F5E3"
 !$COLOR_SUCCESS = "#D5F5E3"
+!$COLOR_TEXT_BACKGROUND = "#ffffff"
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
-!$FONT_COLOR_TITLE = $COLOR_PRIMARY
+!$FONT_COLOR_TITLE = $COLOR_TEXT:
 !$FONT_COLOR = $COLOR_TEXT
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11
@@ -38,8 +39,10 @@ This list is generated from the repository's puml source code.  Use these variab
 !$FONT_STYLE_TITLE = "bold"
 !$HORIZONTAL_ALIGNMENT_TITLE = "center"
 !$LINE_COLOR_TITLE = $LINE_COLOR
+!$LINE_COLOR = $COLOR_TEXT
 !$LINE_SIZE_TITLE = $LINE_SIZE
-!$LINETYPE = "ortho"
+!$LINE_SIZE = 2
+!$LINE_TYPE = "ortho"
 !$MARGIN_TITLE = 20
 !$MARGIN = 15
 !$NODE_SEP = 75

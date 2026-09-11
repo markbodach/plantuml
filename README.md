@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-11 15:57:50 EDT**
-* Build Commit Hash: **646c85150bb4d4739b9cd2eab46725c368324c1e**
-* Build Commit Comment: **Refactoring**
+* Generated on: **2026-09-11 16:15:29 EDT**
+* Build Commit Hash: **24afd6f6861a37d7f79b1d535c193ba86e52a40b**
+* Build Commit Comment: **fixed Load_Lib_Styles_Stdlib**
 
 ## 🚀 How To Use It
 
@@ -54,12 +54,13 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_SUCCESS_DARK = "#D5F5E3"
 !$COLOR_SUCCESS_LIGHT = "#D5F5E3"
 !$COLOR_SUCCESS = "#D5F5E3"
+!$COLOR_TEXT_BACKGROUND = "#ffffff"
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
-!$FONT_COLOR_TITLE = $COLOR_PRIMARY
+!$FONT_COLOR_TITLE = $COLOR_TEXT:
 !$FONT_COLOR = $COLOR_TEXT
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11
@@ -69,8 +70,10 @@ This list is generated from the repository's puml source code.  Use these variab
 !$FONT_STYLE_TITLE = "bold"
 !$HORIZONTAL_ALIGNMENT_TITLE = "center"
 !$LINE_COLOR_TITLE = $LINE_COLOR
+!$LINE_COLOR = $COLOR_TEXT
 !$LINE_SIZE_TITLE = $LINE_SIZE
-!$LINETYPE = "ortho"
+!$LINE_SIZE = 2
+!$LINE_TYPE = "ortho"
 !$MARGIN_TITLE = 20
 !$MARGIN = 15
 !$NODE_SEP = 75
@@ -118,7 +121,7 @@ This list is generated from the repository's puml source code.  Skin parameters 
 @startuml
 
 skinparam shadowing $SHADOWING
-skinparam linetype $LINETYPE
+skinparam linetype $LINE_TYPE
 skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP

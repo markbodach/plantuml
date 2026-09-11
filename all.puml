@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 15:57:47 EDT
-' Build Commit Hash: 646c85150bb4d4739b9cd2eab46725c368324c1e
-' Build Commit Comment: Refactoring
+' Generated on: 2026-09-11 16:15:26 EDT
+' Build Commit Hash: 24afd6f6861a37d7f79b1d535c193ba86e52a40b
+' Build Commit Comment: fixed Load_Lib_Styles_Stdlib
 ' ========================================================
 
 ' src/all.puml
@@ -48,6 +48,7 @@
 !$COLOR_ERROR_DARK ?= "Red"
 
 !$COLOR_TEXT ?= "#000000"
+!$COLOR_TEXT_BACKGROUND ?= "#ffffff"
 !$COLOR_BORDER ?= "#5D6D7E"
 ' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
@@ -97,10 +98,10 @@
 !$MARGIN ?= 15
 !$PADDING ?= 10
 
-
-
 !$SHADOWING ?= %false()
-!$LINETYPE ?= "ortho"
+!$LINE_TYPE ?= "ortho"
+!$LINE_COLOR ?= $COLOR_TEXT
+!$LINE_SIZE ?= 2
 
 !$DEFAULT_TEXT_ALIGNMENT ?= "center"
 
@@ -155,7 +156,7 @@
 
 component "themes/common/_title :: called"
 
-!$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
+!$FONT_COLOR_TITLE ?= $COLOR_TEXT:
 !$FONT_STYLE_TITLE ?= "bold"
 
 !$BACKGROUND_COLOR_TITLE ?= $COLOR_PRIMARY_LIGHT
@@ -427,7 +428,7 @@ component "themes/common/_title :: called"
 ' skinparam linetype ortho
 
 skinparam shadowing $SHADOWING
-skinparam linetype $LINETYPE
+skinparam linetype $LINE_TYPE
 skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 
@@ -502,8 +503,6 @@ title {
 
 !procedure Load_Lib_Styles_Stdlib()
 
-    'component "Load_Lib_Styles_Stdlib :: called"
-    
     Write_Lib_Style_Stdlib_Title()
     
 !endprocedure

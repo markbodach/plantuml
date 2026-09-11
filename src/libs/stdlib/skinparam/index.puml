@@ -8,7 +8,7 @@
 ' skinparam linetype ortho
 
 skinparam shadowing $SHADOWING
-skinparam linetype $LINETYPE
+skinparam linetype $LINE_TYPE
 skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 

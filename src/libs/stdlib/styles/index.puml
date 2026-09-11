@@ -4,8 +4,6 @@
 
 !procedure Load_Lib_Styles_Stdlib()
 
-    'component "Load_Lib_Styles_Stdlib :: called"
-    
     Write_Lib_Style_Stdlib_Title()
     
 !endprocedure

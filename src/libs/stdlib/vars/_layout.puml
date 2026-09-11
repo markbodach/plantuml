@@ -11,10 +11,10 @@
 !$MARGIN ?= 15
 !$PADDING ?= 10
 
-
-
 !$SHADOWING ?= %false()
-!$LINETYPE ?= "ortho"
+!$LINE_TYPE ?= "ortho"
+!$LINE_COLOR ?= $COLOR_TEXT
+!$LINE_SIZE ?= 2
 
 !$DEFAULT_TEXT_ALIGNMENT ?= "center"
 

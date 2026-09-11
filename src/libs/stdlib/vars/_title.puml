@@ -8,7 +8,7 @@
 
 component "themes/common/_title :: called"
 
-!$FONT_COLOR_TITLE ?= $COLOR_PRIMARY
+!$FONT_COLOR_TITLE ?= $COLOR_TEXT:
 !$FONT_STYLE_TITLE ?= "bold"
 
 !$BACKGROUND_COLOR_TITLE ?= $COLOR_PRIMARY_LIGHT

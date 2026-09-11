@@ -5,7 +5,7 @@ This list is generated from the repository's puml source code.  Skin parameters 
 @startuml
 
 skinparam shadowing $SHADOWING
-skinparam linetype $LINETYPE
+skinparam linetype $LINE_TYPE
 skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP
