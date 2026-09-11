@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 16:15:26 EDT
-' Build Commit Hash: 24afd6f6861a37d7f79b1d535c193ba86e52a40b
-' Build Commit Comment: fixed Load_Lib_Styles_Stdlib
+' Generated on: 2026-09-11 16:23:14 EDT
+' Build Commit Hash: 3ec0c3f83748859bc2bd2d8a5abc23a9eba4ebb0
+' Build Commit Comment: Variable naming fixes
 ' ========================================================
 
 ' src/all.puml
@@ -48,7 +48,7 @@
 !$COLOR_ERROR_DARK ?= "Red"
 
 !$COLOR_TEXT ?= "#000000"
-!$COLOR_TEXT_BACKGROUND ?= "#ffffff"
+!$COLOR_BODY ?= "#ffffff"
 !$COLOR_BORDER ?= "#5D6D7E"
 ' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
@@ -156,7 +156,7 @@
 
 component "themes/common/_title :: called"
 
-!$FONT_COLOR_TITLE ?= $COLOR_TEXT:
+!$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"
 
 !$BACKGROUND_COLOR_TITLE ?= $COLOR_PRIMARY_LIGHT

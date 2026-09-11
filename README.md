@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-11 16:15:29 EDT**
-* Build Commit Hash: **24afd6f6861a37d7f79b1d535c193ba86e52a40b**
-* Build Commit Comment: **fixed Load_Lib_Styles_Stdlib**
+* Generated on: **2026-09-11 16:23:17 EDT**
+* Build Commit Hash: **3ec0c3f83748859bc2bd2d8a5abc23a9eba4ebb0**
+* Build Commit Comment: **Variable naming fixes**
 
 ## 🚀 How To Use It
 
@@ -43,6 +43,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
+!$COLOR_BODY = "#ffffff"
 !$COLOR_BORDER = "#5D6D7E"
 !$COLOR_ERROR_DARK = "Red"
 !$COLOR_ERROR_LIGHT = "Red"
@@ -54,13 +55,12 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_SUCCESS_DARK = "#D5F5E3"
 !$COLOR_SUCCESS_LIGHT = "#D5F5E3"
 !$COLOR_SUCCESS = "#D5F5E3"
-!$COLOR_TEXT_BACKGROUND = "#ffffff"
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
 !$DEFAULT_TEXT_ALIGNMENT = "center"
-!$FONT_COLOR_TITLE = $COLOR_TEXT:
+!$FONT_COLOR_TITLE = $FONT_COLOR
 !$FONT_COLOR = $COLOR_TEXT
 !$FONT_NAME = "Segoe UI"
 !$FONT_SIZE_ARROW = 11

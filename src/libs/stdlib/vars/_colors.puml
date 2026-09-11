@@ -25,5 +25,5 @@
 !$COLOR_ERROR_DARK ?= "Red"
 
 !$COLOR_TEXT ?= "#000000"
-!$COLOR_TEXT_BACKGROUND ?= "#ffffff"
+!$COLOR_BODY ?= "#ffffff"
 !$COLOR_BORDER ?= "#5D6D7E"
