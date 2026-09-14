@@ -6,7 +6,6 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-component "themes/common/_title :: fc::$FONT_COLOR tc::$TEXT_COLOR"
 
 !$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"
