@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-14 15:23:46 EDT**
-* Build Commit Hash: **de9d53c1c7beba6b3eb57a7e6931cd0ad01a1e10**
-* Build Commit Comment: **Title Component**
+* Generated on: **2026-09-14 15:33:25 EDT**
+* Build Commit Hash: **048fd0d819de892459b2ddc08564aaf93c292ac3**
+* Build Commit Comment: **OH Colour alignment**
 
 ## 🚀 How To Use It
 
@@ -80,22 +80,22 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_COLOR_BORDER = "#5D6D7E"
 !$OH_COLOR_BUSINESS = $OH_COLOR_WARNING
 !$OH_COLOR_DEPLOYMENT = "#FAD7A0"
-!$OH_COLOR_ERROR_DARK = "Red"
-!$OH_COLOR_ERROR_LIGHT = "Red"
+!$OH_COLOR_ERROR_DARK = "#CD0000"
+!$OH_COLOR_ERROR_LIGHT = "#FCEFF0"
 !$OH_COLOR_ERROR = "Red"
 !$OH_COLOR_EXTERNAL = "#E8DAEF"
 !$OH_COLOR_LOGICAL = $OH_COLOR_PRIMARY
-!$OH_COLOR_PRIMARY_DARK = "#D6EAF8"
+!$OH_COLOR_PRIMARY_DARK = "#0D47A1"
 !$OH_COLOR_PRIMARY_LIGHT = "#D6EAF8"
-!$OH_COLOR_PRIMARY = "#D6EAF8"
-!$OH_COLOR_SUCCESS_DARK = "#D5F5E3"
+!$OH_COLOR_PRIMARY = "#1976D2"
+!$OH_COLOR_SUCCESS_DARK = "#118847"
 !$OH_COLOR_SUCCESS_LIGHT = "#D5F5E3"
-!$OH_COLOR_SUCCESS = "#D5F5E3"
+!$OH_COLOR_SUCCESS = "#EAF5EA"
 !$OH_COLOR_TECHNOLOGY = $OH_COLOR_SUCCESS
-!$OH_COLOR_TEXT = "#000000"
-!$OH_COLOR_WARNING_DARK = "#FCF3CF"
-!$OH_COLOR_WARNING_LIGHT = "#FCF3CF"
-!$OH_COLOR_WARNING = "#FCF3CF"
+!$OH_COLOR_TEXT = "#1A1A1A"
+!$OH_COLOR_WARNING_DARK = "#EFB243"
+!$OH_COLOR_WARNING_LIGHT = "#FFFAEB"
+!$OH_COLOR_WARNING = "#EFB243"
 !$OH_THEME_ENABLED = %false()
 !$PADDING_TITLE = 15
 !$PADDING = 10
