@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-14 14:48:31 EDT
-' Build Commit Hash: 7e743d7e79d07f5211301177d240ad271ed01e3b
-' Build Commit Comment: FONT_COLOR fixes 2
+' Generated on: 2026-09-14 15:23:42 EDT
+' Build Commit Hash: de9d53c1c7beba6b3eb57a7e6931cd0ad01a1e10
+' Build Commit Comment: Title Component
 ' ========================================================
 
 ' src/all.puml
@@ -281,9 +281,9 @@
 ' --- Importing: src/libs/ontario-health/vars/_title.puml ---
 
 
-$FONT_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
-$LINE_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
-$ROUND_CORNER_TITLE = 0
+!$FONT_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
+!$LINE_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
+!$ROUND_CORNER_TITLE = 0
 
 ' --- End Import: src/libs/ontario-health/vars/_title.puml ---
 
