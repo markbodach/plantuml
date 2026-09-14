@@ -3,3 +3,8 @@
 ' skinparam Initialization
 '---------------------------------------------------------
 
+!if ($SKINPARAM_ENABLED)
+
+
+
+!endif

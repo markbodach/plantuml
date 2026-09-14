@@ -73,6 +73,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
 !$SHADOWING = %false()
+!$SKINPARAM_ENABLED = %false()
 !$TOGAF_COLOR_BUSINESS = $COLOR_WARNING
 !$TOGAF_COLOR_DEPLOYMENT = "#FAD7A0"
 !$TOGAF_COLOR_EXTERNAL = "#E8DAEF"

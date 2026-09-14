@@ -6,6 +6,7 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _borders.puml
@@ -13,9 +14,11 @@ src/all.puml (Root Master)
         └── _icons.puml
         └── _title.puml
       └── togaf/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
       └── ontario-health/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _layout.puml

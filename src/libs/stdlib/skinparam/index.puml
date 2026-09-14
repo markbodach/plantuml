@@ -7,14 +7,15 @@
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
-skinparam shadowing $SHADOWING
+
 skinparam linetype $LINE_TYPE
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-
-
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP
 
+!if ($SKINPARAM_ENABLED)
+
+skinparam shadowing $SHADOWING
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 
@@ -22,3 +23,5 @@ skinparam actorStyle $ACTOR_STYLE
 skinparam actorBorderColor $ACTOR_BORDER_COLOR
 skinparam actorBorderThickness $ACTOR_BORDER_SIZE
 skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
+
+!endif

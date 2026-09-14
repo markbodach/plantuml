@@ -4,11 +4,11 @@ This list is generated from the repository's puml source code.  Skin parameters 
 ```plantuml
 @startuml
 
-skinparam shadowing $SHADOWING
 skinparam linetype $LINE_TYPE
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP
+skinparam shadowing $SHADOWING
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 skinparam actorStyle $ACTOR_STYLE
 skinparam actorBorderColor $ACTOR_BORDER_COLOR

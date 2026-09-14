@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-11 16:23:17 EDT**
-* Build Commit Hash: **3ec0c3f83748859bc2bd2d8a5abc23a9eba4ebb0**
-* Build Commit Comment: **Variable naming fixes**
+* Generated on: **2026-09-14 09:59:42 EDT**
+* Build Commit Hash: **0754c5ec7f2b821923a3dd72cfb99df51697052a**
+* Build Commit Comment: **Variable name fixes**
 
 ## 🚀 How To Use It
 
@@ -104,6 +104,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
 !$SHADOWING = %false()
+!$SKINPARAM_ENABLED = %false()
 !$TOGAF_COLOR_BUSINESS = $COLOR_WARNING
 !$TOGAF_COLOR_DEPLOYMENT = "#FAD7A0"
 !$TOGAF_COLOR_EXTERNAL = "#E8DAEF"
@@ -120,11 +121,11 @@ This list is generated from the repository's puml source code.  Skin parameters 
 ```plantuml
 @startuml
 
-skinparam shadowing $SHADOWING
 skinparam linetype $LINE_TYPE
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP
+skinparam shadowing $SHADOWING
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 skinparam actorStyle $ACTOR_STYLE
 skinparam actorBorderColor $ACTOR_BORDER_COLOR
@@ -142,6 +143,7 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _borders.puml
@@ -149,9 +151,11 @@ src/all.puml (Root Master)
         └── _icons.puml
         └── _title.puml
       └── togaf/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
       └── ontario-health/vars/index.puml
+        └── _index.puml
         └── _colors.puml
         └── _fonts.puml
         └── _layout.puml

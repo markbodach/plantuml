@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-11 16:23:14 EDT
-' Build Commit Hash: 3ec0c3f83748859bc2bd2d8a5abc23a9eba4ebb0
-' Build Commit Comment: Variable naming fixes
+' Generated on: 2026-09-14 09:59:38 EDT
+' Build Commit Hash: 0754c5ec7f2b821923a3dd72cfb99df51697052a
+' Build Commit Comment: Variable name fixes
 ' ========================================================
 
 ' src/all.puml
@@ -17,8 +17,12 @@
 
 'STEP 1 :: VARS includes
 ' --- Importing: src/libs/stdlib/vars/index.puml ---
-' src/themes/stdlib/index.puml
-' Module Entry Point: Common Theme Variables
+' --- Importing: src/libs/stdlib/vars/_index.puml ---
+
+
+!$SKINPARAM_ENABLED ?= %false()
+' --- End Import: src/libs/stdlib/vars/_index.puml ---
+
 
 ' --- Importing: src/libs/stdlib/vars/_colors.puml ---
 
@@ -178,10 +182,14 @@ component "themes/common/_title :: called"
 ' src/themes/togaf/index.puml
 ' Module Entry Point: TOGAF Theme Variables
 
-' --- Importing: src/libs/togaf/vars/_colors.puml ---
-' src/themes/togaf/_colors.puml
+
+' --- Importing: src/libs/togaf/vars/_index.puml ---
 
 !$TOGAF_THEME_ENABLED ?= %false()
+' --- End Import: src/libs/togaf/vars/_index.puml ---
+
+' --- Importing: src/libs/togaf/vars/_colors.puml ---
+' src/themes/togaf/_colors.puml
 
 
 'Use Default TOGAF Colours
@@ -207,10 +215,14 @@ component "themes/common/_title :: called"
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/libs/ontario-health/vars/_colors.puml ---
-' src/themes/ontario-health/_colors.puml
+' --- Importing: src/libs/ontario-health/vars/_index.puml ---
+
 
 !$OH_THEME_ENABLED ?= %false()
+' --- End Import: src/libs/ontario-health/vars/_index.puml ---
+
+' --- Importing: src/libs/ontario-health/vars/_colors.puml ---
+' src/themes/ontario-health/_colors.puml
 
 
 'Set OH Colours
@@ -427,14 +439,15 @@ component "themes/common/_title :: called"
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
-skinparam shadowing $SHADOWING
+
 skinparam linetype $LINE_TYPE
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-
-
 skinparam nodesep $NODE_SEP
 skinparam ranksep $RANK_SEP
 
+!if ($SKINPARAM_ENABLED)
+
+skinparam shadowing $SHADOWING
+skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
 skinparam rectangleBorderColor $RECTANGLE_BORDER_COLOR
 
@@ -442,6 +455,8 @@ skinparam actorStyle $ACTOR_STYLE
 skinparam actorBorderColor $ACTOR_BORDER_COLOR
 skinparam actorBorderThickness $ACTOR_BORDER_SIZE
 skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
+
+!endif
 ' --- End Import: src/libs/stdlib/skinparam/index.puml ---
 
 ' --- Importing: src/libs/togaf/skinparam/index.puml ---
@@ -450,6 +465,11 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 ' skinparam Initialization
 '---------------------------------------------------------
 
+!if ($SKINPARAM_ENABLED)
+
+
+
+!endif
 ' --- End Import: src/libs/togaf/skinparam/index.puml ---
 
 ' --- Importing: src/libs/ontario-health/skinparam/index.puml ---
@@ -458,6 +478,11 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 ' skinparam Initialization
 '---------------------------------------------------------
 
+!if ($SKINPARAM_ENABLED)
+
+
+
+!endif
 ' --- End Import: src/libs/ontario-health/skinparam/index.puml ---
 
 
