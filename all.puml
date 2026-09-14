@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-14 09:59:38 EDT
-' Build Commit Hash: 0754c5ec7f2b821923a3dd72cfb99df51697052a
-' Build Commit Comment: Variable name fixes
+' Generated on: 2026-09-14 14:16:03 EDT
+' Build Commit Hash: 12bf05ee1085b252321f5f6a312c17617c9518c9
+' Build Commit Comment: Skin Param support
 ' ========================================================
 
 ' src/all.puml
@@ -158,7 +158,7 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-component "themes/common/_title :: called"
+component "themes/common/_title :: fc::$FONT_COLOR tc::$TEXT_COLOR"
 
 !$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"
