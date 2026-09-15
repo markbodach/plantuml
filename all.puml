@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-15 17:25:57 EDT
-' Build Commit Hash: 4db4dcfc5e611e321038d7c1cdca7b84a8850367
+' Generated on: 2026-09-15 17:52:10 EDT
+' Build Commit Hash: af4fbd5844d549f1ba40070814c60bd2c7175092
 ' Build Commit Comment: var fixes
 ' ========================================================
 
@@ -474,6 +474,17 @@
 ' --- Importing: src/libs/ontario-health/components/index.puml ---
 ' src/libraries/ontario-health/index.puml
 ' Module Entry Point: Libraries / Ontario Health Component Pack 
+
+' --- Importing: src/libs/ontario-health/components/_title.puml ---
+
+
+'$get_semantic_text_color("PRIMARY_DARK")
+
+!$BACKGROUND_COLOR_TITLE = $get_semantic_color("PRIMARY_DARK")
+!$FONT_COLOR_TITLE = $get_text_color($BACKGROUND_COLOR_TITLE)
+    
+!$LINE_COLOR_TITLE = $BACKGROUND_COLOR_TITLE
+' --- End Import: src/libs/ontario-health/components/_title.puml ---
 
 ' --- Importing: src/libs/ontario-health/components/_patterns.puml ---
 ' --- End Import: src/libs/ontario-health/components/_patterns.puml ---

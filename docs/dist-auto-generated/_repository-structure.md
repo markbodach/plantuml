@@ -29,6 +29,7 @@ src/all.puml (Root Master)
         └── _functions.puml
         └── _colors.puml
       └── ontario-health/components/index.puml
+        └── _title.puml
         └── _patterns.puml
         └── _sbbs.puml
       └── stdlib/theme/index.puml
