@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-15 16:41:11 EDT**
-* Build Commit Hash: **d2cb2b8508ee1967edc76ad96147eb749ccd632c**
-* Build Commit Comment: **OH Colour alignment**
+* Generated on: **2026-09-15 17:02:38 EDT**
+* Build Commit Hash: **3d7fd926fe98c36d20d53546e2b2424d2af0e34a**
+* Build Commit Comment: **semantic colors**
 
 ## 🚀 How To Use It
 
@@ -49,9 +49,9 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_BORDER = "#5D6D7E"
 !$COLOR_BUSINESS_DARK = $TOGAF_COLOR_BUSINESS
 !$COLOR_BUSINESS_LIGHT = $TOGAF_COLOR_BUSINESS
-!$COLOR_ERROR_DARK = "Red"
-!$COLOR_ERROR_LIGHT = "Red"
-!$COLOR_ERROR = "Red"
+!$COLOR_ERROR_DARK = "#CD0000"
+!$COLOR_ERROR_LIGHT = "#CD0000"
+!$COLOR_ERROR = "#CD0000"
 !$COLOR_HIGHLIGHTED_DARK = $TOGAF_COLOR_HIGHLIGHTED
 !$COLOR_HIGHLIGHTED_LIGHT = $TOGAF_COLOR_HIGHLIGHTED
 !$COLOR_IMPLEMENTATION_DARK = $TOGAF_COLOR_IMPLEMENTATION
@@ -101,9 +101,6 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_COLOR_BUSINESS_LIGHT = "#FFFDC4"
 !$OH_COLOR_BUSINESS = $OH_COLOR_WARNING
 !$OH_COLOR_DEPLOYMENT = "#FAD7A0"
-!$OH_COLOR_EMPHASIS_DARK = "#"
-!$OH_COLOR_EMPHASIS_LIGHT = "#"
-!$OH_COLOR_EMPHASIS = "#9333EA"
 !$OH_COLOR_ERROR_DARK = "#8a0101"
 !$OH_COLOR_ERROR_LIGHT = "#FCEFF0"
 !$OH_COLOR_ERROR = "#CD0000"
@@ -119,7 +116,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_COLOR_NEW_LIGHT = "#DDEDC7"
 !$OH_COLOR_PRIMARY_DARK = "#023451"
 !$OH_COLOR_PRIMARY_LIGHT = "#D6EAF8"
-!$OH_COLOR_PRIMARY = "#"
+!$OH_COLOR_PRIMARY = "#047BC1"
 !$OH_COLOR_STRATEGY_DARK = "#EFB243"
 !$OH_COLOR_STRATEGY_LIGHT = "#F8E5C3"
 !$OH_COLOR_SUCCESS_DARK = "#0F7C41"
