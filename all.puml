@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-15 17:06:06 EDT
-' Build Commit Hash: 34b93b8c1d2a497bd004eb73b9b3d6ae05041a85
+' Generated on: 2026-09-15 17:18:57 EDT
+' Build Commit Hash: 2f335de993e3c45a14ac8e32110f253ebbdca5cc
 ' Build Commit Comment: fixing colors
 ' ========================================================
 
@@ -242,10 +242,10 @@
 
 'Set OH Colours
 
-$OH_COLOR_LABEL ?= "#4D4D4D"
-$OH_COLOR_PLACEHOLDER ?= "#737373"
-$OH_COLOR_DISABLED_MILD ?= "#737373"
-$OH_COLOR_DISABLED_MILD ?= "#4D4D4D"
+!$OH_COLOR_LABEL ?= "#4D4D4D"
+!$OH_COLOR_PLACEHOLDER ?= "#737373"
+!$OH_COLOR_DISABLED_MILD ?= "#737373"
+!$OH_COLOR_DISABLED_MILD ?= "#4D4D4D"
 
 '$OH_COLOR_BRAND_HOVER ?= "#049A5"
 

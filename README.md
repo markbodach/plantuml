@@ -4,8 +4,8 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-15 17:06:11 EDT**
-* Build Commit Hash: **34b93b8c1d2a497bd004eb73b9b3d6ae05041a85**
+* Generated on: **2026-09-15 17:19:01 EDT**
+* Build Commit Hash: **2f335de993e3c45a14ac8e32110f253ebbdca5cc**
 * Build Commit Comment: **fixing colors**
 
 ## 🚀 How To Use It
@@ -101,6 +101,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_COLOR_BUSINESS_LIGHT = "#FFFDC4"
 !$OH_COLOR_BUSINESS = $OH_COLOR_WARNING
 !$OH_COLOR_DEPLOYMENT = "#FAD7A0"
+!$OH_COLOR_DISABLED_MILD = "#737373"
 !$OH_COLOR_ERROR_DARK = "#8a0101"
 !$OH_COLOR_ERROR_LIGHT = "#FCEFF0"
 !$OH_COLOR_ERROR = "#CD0000"
@@ -109,11 +110,13 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_COLOR_HIGHLIGHTED_LIGHT = "#CFEDED"
 !$OH_COLOR_IMPLEMENTATION_DARK = "#F15A22"
 !$OH_COLOR_IMPLEMENTATION_LIGHT = "#FEE1D9"
+!$OH_COLOR_LABEL = "#4D4D4D"
 !$OH_COLOR_LOGICAL = $OH_COLOR_PRIMARY
 !$OH_COLOR_MOTIVATION_DARK = "#B975B7"
 !$OH_COLOR_MOTIVATION_LIGHT = "#F1E3F2"
 !$OH_COLOR_NEW_DARK = "#005700"
 !$OH_COLOR_NEW_LIGHT = "#DDEDC7"
+!$OH_COLOR_PLACEHOLDER = "#737373"
 !$OH_COLOR_PRIMARY_DARK = "#023451"
 !$OH_COLOR_PRIMARY_LIGHT = "#D6EAF8"
 !$OH_COLOR_PRIMARY = "#047BC1"
