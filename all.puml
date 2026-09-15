@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-15 17:02:34 EDT
-' Build Commit Hash: 3d7fd926fe98c36d20d53546e2b2424d2af0e34a
-' Build Commit Comment: semantic colors
+' Generated on: 2026-09-15 17:06:06 EDT
+' Build Commit Hash: 34b93b8c1d2a497bd004eb73b9b3d6ae05041a85
+' Build Commit Comment: fixing colors
 ' ========================================================
 
 ' src/all.puml
@@ -55,7 +55,7 @@
 !$COLOR_BORDER ?= "#5D6D7E"
 
 !$COLOR_TEXT ?= "#000000"
-!$COLOR_TEXT_LIGHT ?= !$COLOR_BODY
+!$COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
 
 ' COLOR_LIGHT

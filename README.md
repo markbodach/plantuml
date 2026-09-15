@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-15 17:02:38 EDT**
-* Build Commit Hash: **3d7fd926fe98c36d20d53546e2b2424d2af0e34a**
-* Build Commit Comment: **semantic colors**
+* Generated on: **2026-09-15 17:06:11 EDT**
+* Build Commit Hash: **34b93b8c1d2a497bd004eb73b9b3d6ae05041a85**
+* Build Commit Comment: **fixing colors**
 
 ## 🚀 How To Use It
 
@@ -71,7 +71,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_SUCCESS = "#D5F5E3"
 !$COLOR_TECHNOLOGY_DARK = $TOGAF_COLOR_TECHNOLOGY
 !$COLOR_TECHNOLOGY_LIGHT = $TOGAF_COLOR_TECHNOLOGY
-!$COLOR_TEXT_LIGHT = !$COLOR_BODY
+!$COLOR_TEXT_LIGHT = $COLOR_BODY
 !$COLOR_TEXT = "#000000"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
