@@ -6,6 +6,13 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+'BackgroundColor $BACKGROUND_COLOR_TITLE
+'FontSize $FONT_SIZE_TITLE
+'FontColor $FONT_COLOR_TITLE
+
+'LineColor $LINE_COLOR_TITLE
+'LineThickness $LINE_SIZE_TITLE
+'get_semantic_text_color(
 
 !$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"

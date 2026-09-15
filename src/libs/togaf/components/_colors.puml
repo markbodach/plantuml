@@ -1,0 +1,17 @@
+
+!function $get_togaf_text_color($togaf_color_name, $togaf_color_mode)
+  ' If $bg_color is light -> pick #1A1A1A (dark text). If dark -> pick #FFFFFF (light text).
+  !return "#?" + $bg_color_name + "?" + "#1A1A1A:#FFFFFF"
+!endfunction
+
+!function $get_togaf_text_color_light($togaf_color_name)
+  
+  !return $get_togaf_text_color($togaf_color_name, "LIGHT")
+
+!endfunction
+
+!function $get_togaf_text_color_dark($togaf_color_name)
+  
+  !return $get_togaf_text_color($togaf_color_name, "DARK")
+
+!endfunction

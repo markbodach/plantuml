@@ -24,12 +24,10 @@ src/all.puml (Root Master)
         └── _layout.puml
         └── _title.puml
       └── stdlib/components/index.puml
+        └── _colors.puml
       └── togaf/components/index.puml
         └── _functions.puml
-        └── _business.puml
-        └── _logical.puml
-        └── _deployment.puml
-        └── _technology.puml
+        └── _colors.puml
       └── ontario-health/components/index.puml
         └── _patterns.puml
         └── _sbbs.puml
@@ -43,4 +41,5 @@ src/all.puml (Root Master)
         └── _title.puml
       └── togaf/styles/index.puml
       └── ontario-health/styles/index.puml
+        └── _title.puml
 ```

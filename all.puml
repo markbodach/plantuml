@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-14 15:33:22 EDT
-' Build Commit Hash: 048fd0d819de892459b2ddc08564aaf93c292ac3
+' Generated on: 2026-09-15 16:41:06 EDT
+' Build Commit Hash: d2cb2b8508ee1967edc76ad96147eb749ccd632c
 ' Build Commit Comment: OH Colour alignment
 ' ========================================================
 
@@ -51,9 +51,16 @@
 !$COLOR_ERROR_LIGHT ?= "Red"
 !$COLOR_ERROR_DARK ?= "Red"
 
-!$COLOR_TEXT ?= "#000000"
+
 !$COLOR_BODY ?= "#ffffff"
 !$COLOR_BORDER ?= "#5D6D7E"
+
+!$COLOR_TEXT ?= "#000000"
+!$COLOR_TEXT_LIGHT ?= !$COLOR_BODY
+
+
+' COLOR_LIGHT
+' COLOR_DARK
 ' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/vars/_fonts.puml ---
@@ -158,6 +165,13 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+'BackgroundColor $BACKGROUND_COLOR_TITLE
+'FontSize $FONT_SIZE_TITLE
+'FontColor $FONT_COLOR_TITLE
+
+'LineColor $LINE_COLOR_TITLE
+'LineThickness $LINE_SIZE_TITLE
+'get_semantic_text_color(
 
 !$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"
@@ -191,12 +205,15 @@
 ' src/themes/togaf/_colors.puml
 
 
-'Use Default TOGAF Colours
-!$TOGAF_COLOR_BUSINESS ?= $COLOR_WARNING
-!$TOGAF_COLOR_LOGICAL ?= $COLOR_PRIMARY
-!$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
-!$TOGAF_COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
-!$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+
+!$TOGAF_COLOR_MOTIVATION ?= "#CCCCFF"
+!$TOGAF_COLOR_STRATEGY ?= "#F5DEAA"
+!$TOGAF_COLOR_BUSINESS ?= "#FFFF99"
+!$TOGAF_COLOR_APPLICATION ?= "#99FFFF"
+!$TOGAF_COLOR_TECHNOLOGY ?= "#AFFFAF"
+!$TOGAF_COLOR_IMPLEMENTATION ?= "#FFE0E0"
+!$TOGAF_COLOR_HIGHLIGHTED ?= "#005DEF"
+!$TOGAF_COLOR_NEW ?= "#005700"
 ' --- End Import: src/libs/togaf/vars/_colors.puml ---
 
 ' --- Importing: src/libs/togaf/vars/_fonts.puml ---
@@ -226,21 +243,39 @@
 
 'Set OH Colours
 
-!$OH_COLOR_PRIMARY ?= "#1976D2"
+$OH_COLOR_LABEL ?= "#4D4D4D"
+$OH_COLOR_PLACEHOLDER ?= "#737373"
+$OH_COLOR_DISABLED_MILD ?= "#737373"
+$OH_COLOR_DISABLED_MILD ?= "#4D4D4D"
+
+'$OH_COLOR_BRAND_HOVER ?= "#049A5"
+
+'FOCUS_COLOR ?= "#F2FBFF"
+'ACCENT_COLOR ?= "#00B2E3" 
+'BRIGHT BLUE
+
+
+!$OH_COLOR_PRIMARY ?= "#"
 !$OH_COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
-!$OH_COLOR_PRIMARY_DARK ?= "#0D47A1"
+!$OH_COLOR_PRIMARY_DARK ?= "#023451"
 
-!$OH_COLOR_WARNING ?= "#EFB243"
-!$OH_COLOR_WARNING_LIGHT ?= "#FFFAEB"
-!$OH_COLOR_WARNING_DARK ?= "#EFB243"
+!$OH_COLOR_WARNING ?= "#FCAF17"
+!$OH_COLOR_WARNING_LIGHT ?= "#EFB243"
+!$OH_COLOR_WARNING_DARK ?= "#FFFAEB"
+'FFFAEB
 
-!$OH_COLOR_SUCCESS ?= "#EAF5EA"
-!$OH_COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
-!$OH_COLOR_SUCCESS_DARK ?= "#118847"
+!$OH_COLOR_SUCCESS ?= "#118847"
+!$OH_COLOR_SUCCESS_LIGHT ?= "#EAF5EA"
+!$OH_COLOR_SUCCESS_DARK ?= "#0F7C41"
 
-!$OH_COLOR_ERROR ?= "Red"
+!$OH_COLOR_ERROR ?= "#CD0000"
 !$OH_COLOR_ERROR_LIGHT ?= "#FCEFF0"
-!$OH_COLOR_ERROR_DARK ?= "#CD0000"
+!$OH_COLOR_ERROR_DARK ?= "#8a0101"
+
+!$OH_COLOR_EMPHASIS ?= "#9333EA"
+'PURPLE
+!$OH_COLOR_EMPHASIS_LIGHT ?= "#"
+!$OH_COLOR_EMPHASIS_DARK ?= "#"
 
 !$OH_COLOR_TEXT ?= "#1A1A1A"
 !$OH_COLOR_BORDER ?= "#5D6D7E"
@@ -252,6 +287,25 @@
 !$OH_COLOR_DEPLOYMENT ?= "#FAD7A0"
 !$OH_COLOR_TECHNOLOGY ?= $OH_COLOR_SUCCESS
 !$OH_COLOR_EXTERNAL ?= "#E8DAEF"
+
+
+!$OH_COLOR_MOTIVATION_LIGHT ?= "#F1E3F2"
+!$OH_COLOR_MOTIVATION_DARK ?= "#B975B7"
+!$OH_COLOR_STRATEGY_LIGHT ?= "#F8E5C3"
+!$OH_COLOR_STRATEGY_DARK ?= "#EFB243"
+!$OH_COLOR_BUSINESS_LIGHT ?= "#FFFDC4"
+!$OH_COLOR_BUSINESS_DARK ?= "#FFD440"
+!$OH_COLOR_APPLICATION_LIGHT ?= "#C5EEFA"
+!$OH_COLOR_APPLICATION_DARK ?= "#3193CC"
+!$OH_COLOR_TECHNOLOGY_LIGHT ?= "#D1EFD4"
+!$OH_COLOR_TECHNOLOGY_DARK ?= "#39B54A"
+!$OH_COLOR_IMPLEMENTATION_LIGHT ?= "#FEE1D9"
+!$OH_COLOR_IMPLEMENTATION_DARK ?= "#F15A22"
+!$OH_COLOR_HIGHLIGHTED_LIGHT ?= "#CFEDED"
+!$OH_COLOR_HIGHLIGHTED_DARK ?= "#0050EF"
+!$OH_COLOR_NEW_LIGHT ?= "#DDEDC7"
+!$OH_COLOR_NEW_DARK ?= "#005700"
+
 ' --- End Import: src/libs/ontario-health/vars/_colors.puml ---
 
 ' --- Importing: src/libs/ontario-health/vars/_fonts.puml ---
@@ -292,6 +346,69 @@
 
 'STEP 2 :: COMPONENTS includes
 ' --- Importing: src/libs/stdlib/components/index.puml ---
+
+' --- Importing: src/libs/stdlib/components/_colors.puml ---
+
+!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+  
+
+  ' Strip the '$' character if it was passed inside the string parameter
+  !$bg = %substr($bg_var_name, 0, 1) == "$" ? %substr($bg_var_name, 1) : $bg_var_name
+  !$dark = %substr($dark_text_var_name, 0, 1) == "$" ? %substr($dark_text_var_name, 1) : $dark_text_var_name
+  !$light = %substr($light_text_var_name, 0, 1) == "$" ? %substr($light_text_var_name, 1) : $light_text_var_name
+
+  ' Look up the actual hex values using the string names
+  !$bg_val = %get_variable_value($bg)
+  !$dark_val = %get_variable_value($dark)
+  !$light_val = %get_variable_value($light)
+
+  ' Construct and return the standard PlantUML selective contrast token
+  !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
+!endfunction
+
+!function $get_semantic_text_color($semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+  ' Strip leading '$' or 'COLOR_' if accidentally included in the string argument
+  !$clean_suffix = %substr($semantic_suffix, 0, 1) == "$" ? %substr($semantic_suffix, 1) : $semantic_suffix
+  !if %substr($clean_suffix, 0, 6) == "COLOR_"
+    !$clean_suffix = %substr($clean_suffix, 6)
+  !endif
+
+  ' Prepend the design system namespace prefix
+  !$full_variable_name = "COLOR_" + $clean_suffix
+
+  ' Call the base contrast function using the constructed variable name
+  !return $get_text_color($full_variable_name, $dark_text_var, $light_text_var)
+!endfunction
+
+
+
+!function $get_color($var_name)
+
+  ' Strip the '$' character if it was passed inside the string parameter
+  !$col = %substr($var_name, 0, 1) == "$" ? %substr($var_name, 1) : $var_name
+  
+  ' Look up the actual hex values using the string names
+  !$col_val = %get_variable_value($col)
+  
+  ' Construct and return the standard PlantUML selective contrast token
+  !return "#?" + $col_val 
+!endfunction
+
+!function $get_semantic_color($semantic_suffix)
+  ' Strip leading '$' or 'COLOR_' if accidentally included in the string argument
+  !$clean_suffix = %substr($semantic_suffix, 0, 1) == "$" ? %substr($semantic_suffix, 1) : $semantic_suffix
+  !if %substr($clean_suffix, 0, 6) == "COLOR_"
+    !$clean_suffix = %substr($clean_suffix, 6)
+  !endif
+
+  ' Prepend the design system namespace prefix
+  !$full_variable_name = "COLOR_" + $clean_suffix
+
+  ' Call the base contrast function using the constructed variable name
+  !return $get_color($full_variable_name)
+!endfunction
+' --- End Import: src/libs/stdlib/components/_colors.puml ---
+
 ' --- End Import: src/libs/stdlib/components/index.puml ---
 
 ' --- Importing: src/libs/togaf/components/index.puml ---
@@ -333,30 +450,26 @@
 ' !unquoted function  
 ' --- End Import: src/libs/togaf/components/_functions.puml ---
 
+' --- Importing: src/libs/togaf/components/_colors.puml ---
 
-' --- Importing: src/libs/togaf/components/_business.puml ---
-' --- End Import: src/libs/togaf/components/_business.puml ---
+!function $get_togaf_text_color($togaf_color_name, $togaf_color_mode)
+  ' If $bg_color is light -> pick #1A1A1A (dark text). If dark -> pick #FFFFFF (light text).
+  !return "#?" + $bg_color_name + "?" + "#1A1A1A:#FFFFFF"
+!endfunction
 
-' --- Importing: src/libs/togaf/components/_logical.puml ---
+!function $get_togaf_text_color_light($togaf_color_name)
+  
+  !return $get_togaf_text_color($togaf_color_name, "LIGHT")
 
-' component "Enterprise Identity Provider" as SBB01 #D6EAF8
-' cloud "Identity Provider" as LC01 #E8DAEF
-' database "PanelApp Data Source" as LC06 #D6EAF8
-' node "REST API Pod" as DC01 #FAD7A0
+!endfunction
 
+!function $get_togaf_text_color_dark($togaf_color_name)
+  
+  !return $get_togaf_text_color($togaf_color_name, "DARK")
 
-' sprite $bProcess jar:archimate/business-process
-' sprite $aService jar:archimate/application-service
+!endfunction
+' --- End Import: src/libs/togaf/components/_colors.puml ---
 
-' SHAPE CAPTION as ALIAS SPRITE COLOR
-' rectangle "Document\nManagement\nSystem" as DMS <<$aComponent>> #Application
-' --- End Import: src/libs/togaf/components/_logical.puml ---
-
-' --- Importing: src/libs/togaf/components/_deployment.puml ---
-' --- End Import: src/libs/togaf/components/_deployment.puml ---
-
-' --- Importing: src/libs/togaf/components/_technology.puml ---
-' --- End Import: src/libs/togaf/components/_technology.puml ---
 
 ' --- End Import: src/libs/togaf/components/index.puml ---
 
@@ -383,12 +496,31 @@
 
 !if ($TOGAF_THEME_ENABLED)
 
-'Use Default TOGAF Colours
-!$TOGAF_COLOR_BUSINESS ?= $COLOR_WARNING
-!$TOGAF_COLOR_LOGICAL ?= $COLOR_PRIMARY
-!$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
-!$TOGAF_COLOR_TECHNOLOGY ?= $COLOR_SUCCESS
-!$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+'This is the surface colour
+
+!$COLOR_MOTIVATION_LIGHT ?= $TOGAF_COLOR_MOTIVATION
+!$COLOR_MOTIVATION_DARK ?= $TOGAF_COLOR_MOTIVATION
+
+!$COLOR_STRATEGY_LIGHT ?= $TOGAF_COLOR_STRATEGY
+!$COLOR_STRATEGY_DARK ?= $TOGAF_COLOR_STRATEGY
+
+!$COLOR_BUSINESS_LIGHT ?= $TOGAF_COLOR_BUSINESS
+!$COLOR_BUSINESS_DARK ?= $TOGAF_COLOR_BUSINESS
+
+!$COLOR_APPLICATION_LIGHT ?= $TOGAF_COLOR_APPLICATION
+!$COLOR_APPLICATION_DARK ?= $TOGAF_COLOR_APPLICATION
+
+!$COLOR_TECHNOLOGY_LIGHT ?= $TOGAF_COLOR_TECHNOLOGY
+!$COLOR_TECHNOLOGY_DARK ?= $TOGAF_COLOR_TECHNOLOGY
+
+!$COLOR_IMPLEMENTATION_LIGHT ?= $TOGAF_COLOR_IMPLEMENTATION
+!$COLOR_IMPLEMENTATION_DARK ?= $TOGAF_COLOR_IMPLEMENTATION
+
+!$COLOR_HIGHLIGHTED_LIGHT ?= $TOGAF_COLOR_HIGHLIGHTED
+!$COLOR_HIGHLIGHTED_DARK ?= $TOGAF_COLOR_HIGHLIGHTED
+
+!$COLOR_NEW_LIGHT ?= $TOGAF_COLOR_NEW
+!$COLOR_NEW_DARK ?= $TOGAF_COLOR_NEW
 
 
 !endif
@@ -422,18 +554,40 @@
 
 'If there are a lot of variables, this could be moved into a separate _togaf.puml file
 
+
 !if ($TOGAF_THEME_ENABLED)
 
-    'Set OH Colours to TOGAF
-    !$TOGAF_COLOR_BUSINESS ?= $OH_COLOR_WARNING
-    !$TOGAF_COLOR_LOGICAL ?= $OH_COLOR_PRIMARY
-    !$TOGAF_COLOR_DEPLOYMENT ?= "#FAD7A0"
-    !$TOGAF_COLOR_TECHNOLOGY ?= $OH_COLOR_SUCCESS
-    !$TOGAF_COLOR_EXTERNAL ?= "#E8DAEF"
+    'This is the surface colour
 
-!endif 'TOGAF_THEME_ENABLED
+    !$COLOR_MOTIVATION_LIGHT ?= $OH_COLOR_MOTIVATION_LIGHT
+    !$COLOR_MOTIVATION_DARK ?= $OH_COLOR_MOTIVATION_DARK
+
+    !$COLOR_STRATEGY_LIGHT ?= $OH_COLOR_STRATEGY_LIGHT
+    !$COLOR_STRATEGY_DARK ?= $OH_COLOR_STRATEGY_DARK
+
+    !$COLOR_BUSINESS_LIGHT ?= $OH_COLOR_BUSINESS_LIGHT
+    !$COLOR_BUSINESS_DARK ?= $OH_COLOR_BUSINESS_DARK
+
+    !$COLOR_APPLICATION_LIGHT ?= $OH_COLOR_APPLICATION_LIGHT
+    !$COLOR_APPLICATION_DARK ?= $OH_COLOR_APPLICATION_DARK
+
+    !$COLOR_TECHNOLOGY_LIGHT ?= $OH_COLOR_TECHNOLOGY_LIGHT
+    !$COLOR_TECHNOLOGY_DARK ?= $OH_COLOR_TECHNOLOGY_DARK
+
+    !$COLOR_IMPLEMENTATION_LIGHT ?= $OH_COLOR_IMPLEMENTATION_LIGHT
+    !$COLOR_IMPLEMENTATION_DARK ?= $OH_COLOR_IMPLEMENTATION_DARK
+
+    !$COLOR_HIGHLIGHTED_LIGHT ?= $OH_COLOR_HIGHLIGHTED_LIGHT
+    !$COLOR_HIGHLIGHTED_DARK ?= $OH_COLOR_HIGHLIGHTED_DARK
+
+    !$COLOR_NEW_LIGHT ?= $OH_COLOR_NEW_LIGHT
+    !$COLOR_NEW_DARK ?= $OH_COLOR_NEW_DARK
+
 
 !endif
+
+!endif
+
 ' --- End Import: src/libs/ontario-health/theme/index.puml ---
 
 
@@ -553,10 +707,34 @@ title {
 ' --- Importing: src/libs/ontario-health/styles/index.puml ---
 
 
+' --- Importing: src/libs/ontario-health/styles/_title.puml ---
+
+Write_Lib_Style_OntarioHealth_Title
+
+!procedure Write_Lib_Style_OntarioHealth_Title()
+
+<style>
+title {
+
+    BackgroundColor $BACKGROUND_COLOR_TITLE
+    FontSize $FONT_SIZE_TITLE
+    FontColor $FONT_COLOR_TITLE
+    
+    LineColor $LINE_COLOR_TITLE
+    LineThickness $LINE_SIZE_TITLE
+
+}
+</style>
+
+!endprocedure
+' --- End Import: src/libs/ontario-health/styles/_title.puml ---
+
+
+
 !procedure Load_Lib_Styles_OntarioHealth()
 
     !if ($OH_THEME_ENABLED)
-
+        Write_Lib_Style_OntarioHealth_Title()
     !endif
 !endprocedure 
 ' --- End Import: src/libs/ontario-health/styles/index.puml ---
