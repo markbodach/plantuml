@@ -6,6 +6,6 @@
 !procedure Load_Lib_Styles_OntarioHealth()
 
     !if ($OH_THEME_ENABLED)
-        Write_Lib_Style_OntarioHealth_Title()
+        ' Write_Lib_Style_OntarioHealth_Title()
     !endif
 !endprocedure 
