@@ -1,3 +1,15 @@
+
+!function $strip_dollar($name)
+
+  !if %substr($name, 0, 1) == "$"
+    !return %substr($name, 1)
+  !endif
+
+  !return $name
+
+!endfunction
+
+
 '
 ' Resolves a PlantUML variable name and validates existence.
 '

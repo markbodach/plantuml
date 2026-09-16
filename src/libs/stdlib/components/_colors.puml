@@ -24,18 +24,13 @@
 '   PRIMARY           -> PRIMARY
 '
 !function $normalize_color_name($name)
-
-  ' Strip leading $
-  !$result = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
-
-  ' Strip leading COLOR_
-  !if %substr($result, 0, 6) == "COLOR_"
-    !return %substr($result, 6)
+  !$clean = $strip_dollar($name)
+  !if %substr($clean, 0, 6) == "COLOR_"
+    !return %substr($clean, 6)
   !endif
-
-  !return $result
-
+  !return $clean
 !endfunction
+
 
 !function $semantic_color_variable($name)
   !return "COLOR_" + $normalize_color_name($name)

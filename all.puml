@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 06:38:00 EDT
-' Build Commit Hash: 04d09e03faf3fb3c52a9eed8e49c76baf6ec3dc6
-' Build Commit Comment: Refactored color functions
+' Generated on: 2026-09-16 09:46:23 EDT
+' Build Commit Hash: e49ae76bfad3ba50c3cafff7ce87c7a5593cc15c
+' Build Commit Comment: Refactoring semantic colors
 ' ========================================================
 
 ' src/all.puml
@@ -346,6 +346,18 @@
 ' --- Importing: src/libs/stdlib/components/index.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
+
+!function $strip_dollar($name)
+
+  !if %substr($name, 0, 1) == "$"
+    !return %substr($name, 1)
+  !endif
+
+  !return $name
+
+!endfunction
+
+
 '
 ' Resolves a PlantUML variable name and validates existence.
 '
@@ -395,18 +407,13 @@
 '   PRIMARY           -> PRIMARY
 '
 !function $normalize_color_name($name)
-
-  ' Strip leading $
-  !$result = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
-
-  ' Strip leading COLOR_
-  !if %substr($result, 0, 6) == "COLOR_"
-    !return %substr($result, 6)
+  !$clean = $strip_dollar($name)
+  !if %substr($clean, 0, 6) == "COLOR_"
+    !return %substr($clean, 6)
   !endif
-
-  !return $result
-
+  !return $clean
 !endfunction
+
 
 !function $semantic_color_variable($name)
   !return "COLOR_" + $normalize_color_name($name)
