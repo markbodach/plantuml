@@ -51,22 +51,15 @@
 
 
 !function $get_color($var_name)
-
-  ' Strip the '$' character if it was passed inside the string parameter
-  !$col = %substr($var_name, 0, 1) == "$" ? %substr($var_name, 1) : $var_name
-  
-  ' Look up the actual hex values using the string names
+  !$col = $strip_dollar($var_name)
   !$col_val = %get_variable_value($col)
-  
-  ' Construct and return the standard PlantUML selective contrast token
-  !return "#?" + $col_val 
+  !return "#?" + $col_val
+
 !endfunction
 
+
 !function $get_semantic_color($semantic_suffix)
-
-
   ' Call the base contrast function using the constructed variable name
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
-
 !endfunction
 
