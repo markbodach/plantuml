@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 11:13:27 EDT
-' Build Commit Hash: 9b4e67e4c4af66ec8fe4fc2ee8dc26aa7aaf201b
-' Build Commit Comment: lint fixes
+' Generated on: 2026-09-16 11:37:17 EDT
+' Build Commit Hash: 5eb82e5ed9131163b48cfea8d38c45fdd1ff7877
+' Build Commit Comment: title css has error
 ' ========================================================
 
 ' src/all.puml
@@ -347,6 +347,23 @@
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
 
+!function $is_variable_name($value)
+
+  !if %substr($value, 0, 1) == "$"
+    !return %true()
+  !endif
+
+  !$new_value = %get_variable_value( $strip_dollar($value) )
+
+  !if "$new_value" == ""
+    !return %false()
+  !endif
+
+  !return %false()
+
+!endfunction
+
+
 !function $strip_dollar($name)
 
   !if %substr($name, 0, 1) == "$"
@@ -366,12 +383,14 @@
 '   $COLOR_PRIMARY
 '
 
-!function $resolve_variable($name)
+!function $resolve_variable($name, $raiseError = %true() )
 
   !$value = %get_variable_value( $strip_dollar($name) )
 
   !if "$value" == ""
-    !error MB_UML :: Unable to resolve variable name ($name): $var
+    !if $raiseError == %true()
+        !error MB_UML :: Unable to resolve variable name ($name): $var
+    !endif
   !endif
 
   !return $value
@@ -430,9 +449,12 @@
 
 
 !function $get_color($var_name)
-  !$col = $strip_dollar($var_name)
-  !$col_val = %get_variable_value($col)
-  !return "#?" + $col_val
+  
+  if $is_variable_name($var_name) == %true()
+    !return = %get_variable_value( $strip_dollar($var_name) )
+  !endif
+  !return $var_name
+  '"#?" + $col_val
 
 !endfunction
 

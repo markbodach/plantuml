@@ -47,9 +47,12 @@
 
 
 !function $get_color($var_name)
-  !$col = $strip_dollar($var_name)
-  !$col_val = %get_variable_value($col)
-  !return "#?" + $col_val
+  
+  if $is_variable_name($var_name) == %true()
+    !return = %get_variable_value( $strip_dollar($var_name) )
+  !endif
+  !return $var_name
+  '"#?" + $col_val
 
 !endfunction
 
