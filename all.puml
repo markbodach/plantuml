@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-15 17:52:10 EDT
-' Build Commit Hash: af4fbd5844d549f1ba40070814c60bd2c7175092
-' Build Commit Comment: var fixes
+' Generated on: 2026-09-16 06:27:56 EDT
+' Build Commit Hash: 4b12c8184547e107deccdddd14307e7241e515a2
+' Build Commit Comment: OH Styling
 ' ========================================================
 
 ' src/all.puml
@@ -345,6 +345,29 @@
 'STEP 2 :: COMPONENTS includes
 ' --- Importing: src/libs/stdlib/components/index.puml ---
 
+' --- Importing: src/libs/stdlib/components/_variables.puml ---
+'
+' Resolves a PlantUML variable name and validates existence.
+'
+' Examples:
+'   COLOR_PRIMARY
+'   $COLOR_PRIMARY
+'
+!function $resolve_variable($name)
+
+  !$var = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
+
+  !$value = %get_variable_value($var)
+
+  !if %boolval("$value" == "")
+    !error MB_UML :: Unable to resolve variable name ($name): $var
+  !endif
+
+  !return $value
+
+!endfunction
+' --- End Import: src/libs/stdlib/components/_variables.puml ---
+
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
 !function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
@@ -356,26 +379,49 @@
   !$light = %substr($light_text_var_name, 0, 1) == "$" ? %substr($light_text_var_name, 1) : $light_text_var_name
 
   ' Look up the actual hex values using the string names
-  !$bg_val = %get_variable_value($bg)
-  !$dark_val = %get_variable_value($dark)
-  !$light_val = %get_variable_value($light)
+  !$bg_val = $resolve_variable($bg)
+  !$dark_val = $resolve_variable($dark)
+  !$light_val = $resolve_variable($light)
 
   ' Construct and return the standard PlantUML selective contrast token
   !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
 !endfunction
 
-!function $get_semantic_text_color($semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
-  ' Strip leading '$' or 'COLOR_' if accidentally included in the string argument
-  !$clean_suffix = %substr($semantic_suffix, 0, 1) == "$" ? %substr($semantic_suffix, 1) : $semantic_suffix
-  !if %substr($clean_suffix, 0, 6) == "COLOR_"
-    !$clean_suffix = %substr($clean_suffix, 6)
+'
+' Normalizes a color variable reference:
+'   COLOR_PRIMARY     -> PRIMARY
+'   $COLOR_PRIMARY    -> PRIMARY
+'   $PRIMARY          -> PRIMARY
+'   PRIMARY           -> PRIMARY
+'
+!function $normalize_color_name($name)
+
+  ' Strip leading $
+  !$result = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
+
+  ' Strip leading COLOR_
+  !if %substr($result, 0, 6) == "COLOR_"
+    !return %substr($result, 6)
   !endif
 
-  ' Prepend the design system namespace prefix
-  !$full_variable_name = "COLOR_" + $clean_suffix
+  !return $result
 
+!endfunction
+
+!function $semantic_color_variable($name)
+  !return "COLOR_" + $normalize_color_name($name)
+!endfunction
+
+
+!function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+  
   ' Call the base contrast function using the constructed variable name
-  !return $get_text_color($full_variable_name, $dark_text_var, $light_text_var)
+  !return $get_text_color(
+    $semantic_color_variable( $semantic_suffix ),
+    $dark_text_var_name,
+    $light_text_var_name
+  )
+
 !endfunction
 
 
@@ -393,18 +439,13 @@
 !endfunction
 
 !function $get_semantic_color($semantic_suffix)
-  ' Strip leading '$' or 'COLOR_' if accidentally included in the string argument
-  !$clean_suffix = %substr($semantic_suffix, 0, 1) == "$" ? %substr($semantic_suffix, 1) : $semantic_suffix
-  !if %substr($clean_suffix, 0, 6) == "COLOR_"
-    !$clean_suffix = %substr($clean_suffix, 6)
-  !endif
 
-  ' Prepend the design system namespace prefix
-  !$full_variable_name = "COLOR_" + $clean_suffix
 
   ' Call the base contrast function using the constructed variable name
-  !return $get_color($full_variable_name)
+  !return $get_color( $semantic_color_variable( $semantic_suffix ) )
+
 !endfunction
+
 ' --- End Import: src/libs/stdlib/components/_colors.puml ---
 
 ' --- End Import: src/libs/stdlib/components/index.puml ---
@@ -478,7 +519,7 @@
 ' --- Importing: src/libs/ontario-health/components/_title.puml ---
 
 
-'$get_semantic_text_color("PRIMARY_DARK")
+' $get_semantic_text_color("PRIMARY_DARK")
 
 !$BACKGROUND_COLOR_TITLE = $get_semantic_color("PRIMARY_DARK")
 !$FONT_COLOR_TITLE = $get_text_color($BACKGROUND_COLOR_TITLE)
@@ -721,18 +762,6 @@ title {
 
 !procedure Write_Lib_Style_OntarioHealth_Title()
 
-<style>
-title {
-
-    BackgroundColor $BACKGROUND_COLOR_TITLE
-    FontSize $FONT_SIZE_TITLE
-    FontColor $FONT_COLOR_TITLE
-    
-    LineColor $LINE_COLOR_TITLE
-    LineThickness $LINE_SIZE_TITLE
-
-}
-</style>
 
 !endprocedure
 ' --- End Import: src/libs/ontario-health/styles/_title.puml ---

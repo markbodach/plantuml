@@ -2,17 +2,5 @@
 
 !procedure Write_Lib_Style_OntarioHealth_Title()
 
-<style>
-title {
-
-    BackgroundColor $BACKGROUND_COLOR_TITLE
-    FontSize $FONT_SIZE_TITLE
-    FontColor $FONT_COLOR_TITLE
-    
-    LineColor $LINE_COLOR_TITLE
-    LineThickness $LINE_SIZE_TITLE
-
-}
-</style>
 
 !endprocedure

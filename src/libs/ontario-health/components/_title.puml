@@ -1,6 +1,6 @@
 
 
-'$get_semantic_text_color("PRIMARY_DARK")
+' $get_semantic_text_color("PRIMARY_DARK")
 
 !$BACKGROUND_COLOR_TITLE = $get_semantic_color("PRIMARY_DARK")
 !$FONT_COLOR_TITLE = $get_text_color($BACKGROUND_COLOR_TITLE)
