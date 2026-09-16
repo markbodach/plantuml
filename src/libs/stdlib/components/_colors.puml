@@ -1,20 +1,20 @@
 
-!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
-  
 
-  ' Strip the '$' character if it was passed inside the string parameter
-  !$bg = %substr($bg_var_name, 0, 1) == "$" ? %substr($bg_var_name, 1) : $bg_var_name
-  !$dark = %substr($dark_text_var_name, 0, 1) == "$" ? %substr($dark_text_var_name, 1) : $dark_text_var_name
-  !$light = %substr($light_text_var_name, 0, 1) == "$" ? %substr($light_text_var_name, 1) : $light_text_var_name
+!function $get_text_color(
+  $bg_var_name,
+  $dark_text_var_name="COLOR_TEXT",
+  $light_text_var_name="COLOR_TEXT_LIGHT"
+)
 
-  ' Look up the actual hex values using the string names
-  !$bg_val = $resolve_variable($bg)
-  !$dark_val = $resolve_variable($dark)
-  !$light_val = $resolve_variable($light)
+  !$bg_val = $resolve_variable($bg_var_name)
+  !$dark_val = $resolve_variable($dark_text_var_name)
+  !$light_val = $resolve_variable($light_text_var_name)
 
-  ' Construct and return the standard PlantUML selective contrast token
   !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
+
 !endfunction
+
+
 
 '
 ' Normalizes a color variable reference:

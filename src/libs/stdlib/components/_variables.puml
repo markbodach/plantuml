@@ -17,16 +17,16 @@
 '   COLOR_PRIMARY
 '   $COLOR_PRIMARY
 '
+
 !function $resolve_variable($name)
 
-  !$var = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
+  !$value = %get_variable_value( $strip_dollar($name) )
 
-  !$value = %get_variable_value($var)
-
-  !if %boolval("$value" == "")
+  !if "$value" == ""
     !error MB_UML :: Unable to resolve variable name ($name): $var
   !endif
 
   !return $value
 
 !endfunction
+

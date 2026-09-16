@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 10:18:51 EDT
-' Build Commit Hash: 3e67f029d28fbc3e00609fc29284e0aad5bc4b59
-' Build Commit Comment: if fixes
+' Generated on: 2026-09-16 10:26:39 EDT
+' Build Commit Hash: 8b9fff373ac51905c96cc0f36c0515d107a6bf6b
+' Build Commit Comment: ternary expression fixes
 ' ========================================================
 
 ' src/all.puml
@@ -365,39 +365,39 @@
 '   COLOR_PRIMARY
 '   $COLOR_PRIMARY
 '
+
 !function $resolve_variable($name)
 
-  !$var = %substr($name, 0, 1) == "$" ? %substr($name, 1) : $name
+  !$value = %get_variable_value( $strip_dollar($name) )
 
-  !$value = %get_variable_value($var)
-
-  !if %boolval("$value" == "")
+  !if "$value" == ""
     !error MB_UML :: Unable to resolve variable name ($name): $var
   !endif
 
   !return $value
 
 !endfunction
+
 ' --- End Import: src/libs/stdlib/components/_variables.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
-!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
-  
 
-  ' Strip the '$' character if it was passed inside the string parameter
-  !$bg = %substr($bg_var_name, 0, 1) == "$" ? %substr($bg_var_name, 1) : $bg_var_name
-  !$dark = %substr($dark_text_var_name, 0, 1) == "$" ? %substr($dark_text_var_name, 1) : $dark_text_var_name
-  !$light = %substr($light_text_var_name, 0, 1) == "$" ? %substr($light_text_var_name, 1) : $light_text_var_name
+!function $get_text_color(
+  $bg_var_name,
+  $dark_text_var_name="COLOR_TEXT",
+  $light_text_var_name="COLOR_TEXT_LIGHT"
+)
 
-  ' Look up the actual hex values using the string names
-  !$bg_val = $resolve_variable($bg)
-  !$dark_val = $resolve_variable($dark)
-  !$light_val = $resolve_variable($light)
+  !$bg_val = $resolve_variable($bg_var_name)
+  !$dark_val = $resolve_variable($dark_text_var_name)
+  !$light_val = $resolve_variable($light_text_var_name)
 
-  ' Construct and return the standard PlantUML selective contrast token
   !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
+
 !endfunction
+
+
 
 '
 ' Normalizes a color variable reference:
