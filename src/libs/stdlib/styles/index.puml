@@ -4,6 +4,6 @@
 
 !procedure Load_Lib_Styles_Stdlib()
 
-    Write_Lib_Style_Stdlib_Title()
+    'Write_Lib_Style_Stdlib_Title()
     
 !endprocedure
