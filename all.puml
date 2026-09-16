@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 11:37:17 EDT
-' Build Commit Hash: 5eb82e5ed9131163b48cfea8d38c45fdd1ff7877
-' Build Commit Comment: title css has error
+' Generated on: 2026-09-16 15:30:01 EDT
+' Build Commit Hash: ce73e9ddd4e8db34a1c29564ab19d4539c053b66
+' Build Commit Comment: fixing variable uses
 ' ========================================================
 
 ' src/all.puml
@@ -164,13 +164,7 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-'BackgroundColor $BACKGROUND_COLOR_TITLE
-'FontSize $FONT_SIZE_TITLE
-'FontColor $FONT_COLOR_TITLE
 
-'LineColor $LINE_COLOR_TITLE
-'LineThickness $LINE_SIZE_TITLE
-'get_semantic_text_color(
 
 !$FONT_COLOR_TITLE ?= $FONT_COLOR
 !$FONT_STYLE_TITLE ?= "bold"
@@ -346,33 +340,37 @@
 ' --- Importing: src/libs/stdlib/components/index.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
-
-!function $is_variable_name($value)
-
-  !if %substr($value, 0, 1) == "$"
+!function $has_dollar($name)
+  !if %substr($name, 0, 1) == "$"
     !return %true()
   !endif
-
-  !$new_value = %get_variable_value( $strip_dollar($value) )
-
-  !if "$new_value" == ""
-    !return %false()
-  !endif
-
   !return %false()
-
 !endfunction
 
 
 !function $strip_dollar($name)
-
-  !if %substr($name, 0, 1) == "$"
+  !if $has_dollar($name) == %true()
     !return %substr($name, 1)
   !endif
-
   !return $name
-
 !endfunction
+
+
+!function $is_variable_name($value)
+
+  !if $has_dollar($value) == %true()
+    !$new_value = %get_variable_value( $strip_dollar($value) )
+
+    !if $new_value == ""
+        !return %false()
+    !endif
+    !return %true()
+  !endif
+  !return %false()
+  
+!endfunction
+
+
 
 
 '
@@ -387,9 +385,9 @@
 
   !$value = %get_variable_value( $strip_dollar($name) )
 
-  !if "$value" == ""
+  !if $value == ""
     !if $raiseError == %true()
-        !error MB_UML :: Unable to resolve variable name ($name): $var
+        !error MB_UML :: Unable to resolve variable name: $name
     !endif
   !endif
 

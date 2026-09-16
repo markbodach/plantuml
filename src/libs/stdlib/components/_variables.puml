@@ -1,30 +1,34 @@
-
-!function $is_variable_name($value)
-
-  !if %substr($value, 0, 1) == "$"
+!function $has_dollar($name)
+  !if %substr($name, 0, 1) == "$"
     !return %true()
   !endif
-
-  !$new_value = %get_variable_value( $strip_dollar($value) )
-
-  !if "$new_value" == ""
-    !return %false()
-  !endif
-
   !return %false()
-
 !endfunction
 
 
 !function $strip_dollar($name)
-
-  !if %substr($name, 0, 1) == "$"
+  !if $has_dollar($name) == %true()
     !return %substr($name, 1)
   !endif
-
   !return $name
-
 !endfunction
+
+
+!function $is_variable_name($value)
+
+  !if $has_dollar($value) == %true()
+    !$new_value = %get_variable_value( $strip_dollar($value) )
+
+    !if $new_value == ""
+        !return %false()
+    !endif
+    !return %true()
+  !endif
+  !return %false()
+  
+!endfunction
+
+
 
 
 '
@@ -39,9 +43,9 @@
 
   !$value = %get_variable_value( $strip_dollar($name) )
 
-  !if "$value" == ""
+  !if $value == ""
     !if $raiseError == %true()
-        !error MB_UML :: Unable to resolve variable name ($name): $var
+        !error MB_UML :: Unable to resolve variable name: $name
     !endif
   !endif
 
