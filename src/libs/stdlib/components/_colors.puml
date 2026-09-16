@@ -1,10 +1,6 @@
 
 
-!function $get_text_color(
-  $bg_var_name,
-  $dark_text_var_name="COLOR_TEXT",
-  $light_text_var_name="COLOR_TEXT_LIGHT"
-)
+!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
   !$bg_val = $resolve_variable($bg_var_name)
   !$dark_val = $resolve_variable($dark_text_var_name)

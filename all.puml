@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 10:26:39 EDT
-' Build Commit Hash: 8b9fff373ac51905c96cc0f36c0515d107a6bf6b
-' Build Commit Comment: ternary expression fixes
+' Generated on: 2026-09-16 10:55:15 EDT
+' Build Commit Hash: 6cf278430a2eb7395ef497d81fe738b4a34bcdd6
+' Build Commit Comment: ternary expression fixes 2
 ' ========================================================
 
 ' src/all.puml
@@ -383,11 +383,7 @@
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
 
-!function $get_text_color(
-  $bg_var_name,
-  $dark_text_var_name="COLOR_TEXT",
-  $light_text_var_name="COLOR_TEXT_LIGHT"
-)
+!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
   !$bg_val = $resolve_variable($bg_var_name)
   !$dark_val = $resolve_variable($dark_text_var_name)
