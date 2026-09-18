@@ -35,9 +35,24 @@
         !return %false()
     !endif
 
-    !return %matches($name, "^\\$[A-Z_][A-Z0-9_]*$")
+    !if $has_dollar($name) == %false()
+        !return %false()
+    !endif
+
+    !$clean = $strip_dollar($name)
+
+    !if $clean == ""
+        !return %false()
+    !endif
+
+    !if $clean != %upper($clean)
+        !return %false()
+    !endif
+
+    !return %true()
 
 !endfunction
+
 
 
 !function $variable_exists_safe($name, $raise_error = %false())

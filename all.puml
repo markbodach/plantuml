@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 16:22:45 EDT
-' Build Commit Hash: c5376b37acb21d0bae8cf0032b8e786f68c3c129
-' Build Commit Comment: fixes
+' Generated on: 2026-09-18 16:27:03 EDT
+' Build Commit Hash: c4f05ab3b6f38990f60ad4f7b92fd5e951e8e52c
+' Build Commit Comment: use %false()
 ' ========================================================
 
 ' src/all.puml
@@ -444,9 +444,24 @@
         !return %false()
     !endif
 
-    !return %matches($name, "^\\$[A-Z_][A-Z0-9_]*$")
+    !if $has_dollar($name) == %false()
+        !return %false()
+    !endif
+
+    !$clean = $strip_dollar($name)
+
+    !if $clean == ""
+        !return %false()
+    !endif
+
+    !if $clean != %upper($clean)
+        !return %false()
+    !endif
+
+    !return %true()
 
 !endfunction
+
 
 
 !function $variable_exists_safe($name, $raise_error = %false())
