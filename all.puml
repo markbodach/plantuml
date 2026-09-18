@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 16:12:44 EDT
-' Build Commit Hash: d036ee1b729922e88848ffabc3d4085a222638d8
-' Build Commit Comment: fine tuning
+' Generated on: 2026-09-18 16:22:45 EDT
+' Build Commit Hash: c5376b37acb21d0bae8cf0032b8e786f68c3c129
+' Build Commit Comment: fixes
 ' ========================================================
 
 ' src/all.puml
@@ -453,7 +453,7 @@
 
     !$variable_name = $to_var_name($name)
 
-    !if !$is_valid_variable_name($variable_name)
+    !if $is_valid_variable_name($variable_name) == %false()
 
         !if $raise_error
             !if $variable_name != %upper($variable_name)
@@ -484,7 +484,7 @@
     !$variable_name = $to_var_name($name)
     !$value = ""
 
-    !if !$variable_exists_safe($variable_name, $raise_error)
+    !if $variable_exists_safe($variable_name, $raise_error) == %false()
 
         !if $raise_error
             !error "MB_UML :: Invalid variable name or undefined variable: " + $variable_name

@@ -44,7 +44,7 @@
 
     !$variable_name = $to_var_name($name)
 
-    !if !$is_valid_variable_name($variable_name)
+    !if $is_valid_variable_name($variable_name) == %false()
 
         !if $raise_error
             !if $variable_name != %upper($variable_name)
@@ -75,7 +75,7 @@
     !$variable_name = $to_var_name($name)
     !$value = ""
 
-    !if !$variable_exists_safe($variable_name, $raise_error)
+    !if $variable_exists_safe($variable_name, $raise_error) == %false()
 
         !if $raise_error
             !error "MB_UML :: Invalid variable name or undefined variable: " + $variable_name
