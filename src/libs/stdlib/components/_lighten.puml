@@ -179,7 +179,7 @@
 !function $lighten_color($background_token, $lighten_token = "LIGHTEN")
 
   !if $is_special_style_token($background_token)
-    !error MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token
+    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token"
   !endif
 
   '

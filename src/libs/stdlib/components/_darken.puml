@@ -156,7 +156,7 @@
 !function $darken_color( $background_token, $darken_token="DARKEN" )
 
   !if $is_special_style_token($background_token)
-    !error MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token
+    !error "MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token"
   !endif
 
 

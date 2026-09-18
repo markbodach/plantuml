@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 12:55:48 EDT
-' Build Commit Hash: 84249a6d36a0d3858ed3a9d225adc5467935d0c6
-' Build Commit Comment: CURRENT, DARKEN, LIGHTEN, AUTO
+' Generated on: 2026-09-18 13:01:38 EDT
+' Build Commit Hash: b5ed4db48f72804bf4a70244f84c35f046f20c7b
+' Build Commit Comment: updated theme-usage.md
 ' ========================================================
 
 ' src/all.puml
@@ -438,7 +438,7 @@
 
   !if $value == ""
     !if $raiseError == %true()
-        !error MB_UML :: Unable to resolve variable name: $name
+        !error "MB_UML :: Unable to resolve variable name: $name"
     !endif
   !endif
 
@@ -801,7 +801,7 @@
 !function $darken_color( $background_token, $darken_token="DARKEN" )
 
   !if $is_special_style_token($background_token)
-    !error MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token
+    !error "MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token"
   !endif
 
 
@@ -1030,7 +1030,7 @@
 !function $lighten_color($background_token, $lighten_token = "LIGHTEN")
 
   !if $is_special_style_token($background_token)
-    !error MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token
+    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token"
   !endif
 
   '
@@ -1083,13 +1083,13 @@
 
   !if $token == "AUTO"
     !if $is_special_style_token($background)
-        !error MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background
+        !error "MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background"
     !endif
     !return $get_semantic_text_color($background)
   
   !elseif $token == "CURRENT"
     !if $is_special_style_token($background)
-        !error MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background
+        !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background"
     !endif
     !return $resolve_style_color($background)
 

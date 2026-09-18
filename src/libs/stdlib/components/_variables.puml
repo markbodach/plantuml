@@ -29,7 +29,7 @@
 
   !if $value == ""
     !if $raiseError == %true()
-        !error MB_UML :: Unable to resolve variable name: $name
+        !error "MB_UML :: Unable to resolve variable name: $name"
     !endif
   !endif
 

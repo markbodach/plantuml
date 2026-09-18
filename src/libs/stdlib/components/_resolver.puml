@@ -4,13 +4,13 @@
 
   !if $token == "AUTO"
     !if $is_special_style_token($background)
-        !error MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background
+        !error "MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background"
     !endif
     !return $get_semantic_text_color($background)
   
   !elseif $token == "CURRENT"
     !if $is_special_style_token($background)
-        !error MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background
+        !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background"
     !endif
     !return $resolve_style_color($background)
 
