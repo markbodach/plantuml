@@ -35,11 +35,7 @@
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
   
   ' Call the base contrast function using the constructed variable name
-  !return $get_text_color(
-    $semantic_color_variable( $semantic_suffix ),
-    $dark_text_var_name,
-    $light_text_var_name
-  )
+  !return $get_text_color( $semantic_color_variable( $semantic_suffix ), $dark_text_var_name, $light_text_var_name )
 
 !endfunction
 

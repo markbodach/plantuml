@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 13:01:38 EDT
-' Build Commit Hash: b5ed4db48f72804bf4a70244f84c35f046f20c7b
-' Build Commit Comment: updated theme-usage.md
+' Generated on: 2026-09-18 13:20:39 EDT
+' Build Commit Hash: c21485e2c5439795ceab66bd10cc2e1de1680f92
+' Build Commit Comment: fixes to error string
 ' ========================================================
 
 ' src/all.puml
@@ -614,11 +614,7 @@
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
   
   ' Call the base contrast function using the constructed variable name
-  !return $get_text_color(
-    $semantic_color_variable( $semantic_suffix ),
-    $dark_text_var_name,
-    $light_text_var_name
-  )
+  !return $get_text_color( $semantic_color_variable( $semantic_suffix ), $dark_text_var_name, $light_text_var_name )
 
 !endfunction
 
