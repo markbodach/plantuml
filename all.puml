@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 16:27:03 EDT
-' Build Commit Hash: c4f05ab3b6f38990f60ad4f7b92fd5e951e8e52c
-' Build Commit Comment: use %false()
+' Generated on: 2026-09-18 16:32:44 EDT
+' Build Commit Hash: 99d6ef0a59c2056b1bba69342f701f9e16dd5959
+' Build Commit Comment: removed %matches
 ' ========================================================
 
 ' src/all.puml
@@ -418,13 +418,13 @@
 
 !function $strip_dollar($name)
 
-    !if $has_dollar($name)
+    !if $has_dollar($name) == %false()
         !return $name
     !endif
 
     !$clean = %substr($name, 1)
 
-    !if $has_dollar($clean)
+    !if $has_dollar($clean) == %true()
         !error "MB_UML :: Variable name has multiple leading dollar signs: " + $name
     !endif
 

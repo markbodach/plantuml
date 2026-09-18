@@ -9,13 +9,13 @@
 
 !function $strip_dollar($name)
 
-    !if $has_dollar($name)
+    !if $has_dollar($name) == %false()
         !return $name
     !endif
 
     !$clean = %substr($name, 1)
 
-    !if $has_dollar($clean)
+    !if $has_dollar($clean) == %true()
         !error "MB_UML :: Variable name has multiple leading dollar signs: " + $name
     !endif
 
