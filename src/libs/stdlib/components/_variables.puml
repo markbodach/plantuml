@@ -1,39 +1,92 @@
+'---------------------------------------------------------
+' Variable Helpers
+'---------------------------------------------------------
+
 !function $has_dollar($name)
-  !if %substr($name, 0, 1) == "$"
-    !return %true()
-  !endif
-  !return %false()
+    !return (%strlen($name) > 0) && (%substr($name, 0, 1) == %chr(36))
 !endfunction
 
 
 !function $strip_dollar($name)
-  !if $has_dollar($name) == %true()
-    !return %substr($name, 1)
-  !endif
-  !return $name
+
+    !if !$has_dollar($name)
+        !return $name
+    !endif
+
+    !$clean = %substr($name, 1)
+
+    !if $has_dollar($clean)
+        !error "MB_UML :: Variable name has multiple leading dollar signs: " + $name
+    !endif
+
+    !return $clean
+
 !endfunction
 
 
+!function $to_var_name($name)
+    !return %chr(36) + $strip_dollar($name)
+!endfunction
+
+
+!function $is_valid_variable_name($name)
+
+    !if $name == ""
+        !return %false()
+    !endif
+
+    !return %matches($name, "^\\$[A-Z_][A-Z0-9_]*$")
+
+!endfunction
+
+
+!function $variable_exists_safe($name, $raise_error = %false())
+
+    !$variable_name = $to_var_name($name)
+
+    !if !$is_valid_variable_name($variable_name)
+
+        !if $raise_error
+            !if $variable_name != %upper($variable_name)
+                !error "MB_UML :: Variable names must be uppercase: " + $variable_name
+            !else
+                !error "MB_UML :: Invalid variable name: " + $variable_name
+            !endif
+        !endif
+
+        !return %false()
+
+    !endif
+
+    !return %variable_exists($variable_name)
+
+!endfunction
 
 
 '
-' Resolves a PlantUML variable name and validates existence.
+' Resolves a dynamically named PlantUML variable.
 '
-' Examples:
+' Accepted inputs:
 '   COLOR_PRIMARY
 '   $COLOR_PRIMARY
 '
-!function $resolve_variable($name, $raiseError = %true() )
+!function $resolve_variable($name, $raise_error = %true())
 
-  !$value = %get_variable_value( $strip_dollar($name) )
+    !$variable_name = $to_var_name($name)
+    !$value = ""
 
-  !if $value == ""
-    !if $raiseError == %true()
-        !error "MB_UML :: Unable to resolve variable name: $name"
+    !if !$variable_exists_safe($variable_name, $raise_error)
+
+        !if $raise_error
+            !error "MB_UML :: Invalid variable name or undefined variable: " + $variable_name
+        !endif
+
+        !return ""
+
     !endif
-  !endif
 
-  !return $value
+    !$value = %get_variable_value($variable_name)
+
+    !return $value
 
 !endfunction
-

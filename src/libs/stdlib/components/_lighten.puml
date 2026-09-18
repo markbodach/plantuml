@@ -48,6 +48,10 @@
 
 !function $clamp_light_color($hex)
 
+  !if ($LIGHTNESS_THRESHOLD < 0) || ($LIGHTNESS_THRESHOLD > 255)
+    !error "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD"
+  !endif
+
   !if !$is_too_light($hex)
     !return $hex
   !endif
@@ -179,7 +183,7 @@
 !function $lighten_color($background_token, $lighten_token = "LIGHTEN")
 
   !if $is_special_style_token($background_token)
-    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token"
+    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token: $background_token"
   !endif
 
   '

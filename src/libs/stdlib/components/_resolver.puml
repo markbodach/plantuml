@@ -1,25 +1,33 @@
 
 
-!function $resolve_style_color($token, $background="")
+!function $resolve_style_color($token, $color="")
+
+  'All special style tokens require a color to resolve against
+  !if $is_special_style_token($token) && $color == ""
+    !error "MB_UML :: SPECIAL[$token] (resolve_style_color) requires a color: $color"
+  !endif
 
   !if $token == "AUTO"
-    !if $is_special_style_token($background)
-        !error "MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background"
+    !if $is_special_style_token($color)
+        !error "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color: $color"
     !endif
-    !return $get_semantic_text_color($background)
+    !return $get_semantic_text_color($color)
   
   !elseif $token == "CURRENT"
-    !if $is_special_style_token($background)
-        !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background"
+    !if $is_special_style_token($color)
+        !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color: $color"
     !endif
-    !return $resolve_style_color($background)
+    !return $resolve_style_color($color)
 
   !elseif %strpos($token,"DARKEN") == 0
-    !return $darken_color($background)
+    !return $darken_color($color, $token)
+
   !elseif %strpos($token,"LIGHTEN") == 0
-    !return $lighten_color($background)
+    !return $lighten_color($color, $token)
+  
   !elseif $is_literal_color($token)
     !return $token
+
   !elseif $ends_with_text($token)
     !$base = %substr($token, 0, %strlen($token)-5)
     !return $get_semantic_text_color($base)

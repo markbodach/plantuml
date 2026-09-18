@@ -43,6 +43,10 @@
 
 !function $clamp_dark_color($hex)
 
+  !if ($DARKNESS_THRESHOLD < 0) || ($DARKNESS_THRESHOLD > 255)
+    !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD"
+  !endif
+
   !if !$is_too_dark($hex)
     !return $hex
   !endif
@@ -82,13 +86,10 @@
   '
   !if $ends_with($token, "_LIGHT")
 
-    !$candidate =
-      %substr( $token,0,%strlen($token)-6 )
+    !$candidate = %substr( $token,0,%strlen($token)-6 )
 
     !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
-
       !return $candidate
-
     !endif
 
 
@@ -98,9 +99,7 @@
   !elseif $ends_with($token, "_DARK")
 
     !$base = %substr( $token, 0, %strlen($token)-5 )
-
     !$candidate = $base + "_DARKEST"
-
     !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
 
       !return $candidate
@@ -156,7 +155,7 @@
 !function $darken_color( $background_token, $darken_token="DARKEN" )
 
   !if $is_special_style_token($background_token)
-    !error "MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token"
+    !error "MB_UML :: DARKEN (darken_color) cannot operate on special token: $background_token"
   !endif
 
 
