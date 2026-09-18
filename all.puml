@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-18 15:48:14 EDT
-' Build Commit Hash: 74165b28bf330bfcb45b429f5203f949a5530367
-' Build Commit Comment: incorrect linting
+' Generated on: 2026-09-18 15:56:32 EDT
+' Build Commit Hash: 0d1fb716ddd3a8ba96fbeb76389708590c1cf4cd
+' Build Commit Comment: fixes to resolve_style_color
 ' ========================================================
 
 ' src/all.puml
@@ -418,7 +418,7 @@
 
 !function $strip_dollar($name)
 
-    !if !$has_dollar($name)
+    !if $has_dollar($name)
         !return $name
     !endif
 

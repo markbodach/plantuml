@@ -9,7 +9,7 @@
 
 !function $strip_dollar($name)
 
-    !if !$has_dollar($name)
+    !if $has_dollar($name)
         !return $name
     !endif
 
