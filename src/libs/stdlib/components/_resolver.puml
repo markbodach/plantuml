@@ -1,0 +1,31 @@
+
+
+!function $resolve_style_color($token, $background="")
+
+  !if $token == "AUTO"
+    !if $is_special_style_token($background)
+        !error MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background
+    !endif
+    !return $get_semantic_text_color($background)
+  
+  !elseif $token == "CURRENT"
+    !if $is_special_style_token($background)
+        !error MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background
+    !endif
+    !return $resolve_style_color($background)
+
+  !elseif %strpos($token,"DARKEN") == 0
+    !return $darken_color($background)
+  !elseif %strpos($token,"LIGHTEN") == 0
+    !return $lighten_color($background)
+  !elseif $is_literal_color($token)
+    !return $token
+  !elseif $ends_with_text($token)
+    !$base = %substr($token, 0, %strlen($token)-5)
+    !return $get_semantic_text_color($base)
+  !else
+    !return $get_semantic_color($token)
+  !endif
+
+!endfunction
+

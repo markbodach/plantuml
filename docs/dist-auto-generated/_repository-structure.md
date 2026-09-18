@@ -24,8 +24,13 @@ src/all.puml (Root Master)
         └── _layout.puml
         └── _title.puml
       └── stdlib/components/index.puml
+        └── _strings.puml
         └── _variables.puml
+        └── _hex.puml
         └── _colors.puml
+        └── _darken.puml
+        └── _lighten.puml
+        └── _resolver.puml
       └── togaf/components/index.puml
         └── _functions.puml
         └── _colors.puml

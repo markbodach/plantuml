@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-16 15:30:04 EDT**
-* Build Commit Hash: **ce73e9ddd4e8db34a1c29564ab19d4539c053b66**
-* Build Commit Comment: **fixing variable uses**
+* Generated on: **2026-09-18 12:43:33 EDT**
+* Build Commit Hash: **402d2ce416ef81077438159cefaec7d8af7e3c2d**
+* Build Commit Comment: **var names**
 
 ## 🚀 How To Use It
 
@@ -200,8 +200,13 @@ src/all.puml (Root Master)
         └── _layout.puml
         └── _title.puml
       └── stdlib/components/index.puml
+        └── _strings.puml
         └── _variables.puml
+        └── _hex.puml
         └── _colors.puml
+        └── _darken.puml
+        └── _lighten.puml
+        └── _resolver.puml
       └── togaf/components/index.puml
         └── _functions.puml
         └── _colors.puml

@@ -1,3 +1,25 @@
+'---------------------------------------------------------
+' Darkening defaults
+'---------------------------------------------------------
+
+' Darkening default
+!$DARKEN_DEFAULT_PERCENT = 20
+
+' RGB luminance floor (0-255)
+!$DARKNESS_THRESHOLD = 32
+
+
+'---------------------------------------------------------
+' Lightening defaults
+'---------------------------------------------------------
+
+' Lightening default
+!$LIGHTEN_DEFAULT_PERCENT = 20
+
+' RGB luminance ceiling (0-255)
+!$LIGHTNESS_THRESHOLD = 223
+
+
 
 '---------------------------------------------------------
 ' Color Constants

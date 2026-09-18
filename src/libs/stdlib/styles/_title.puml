@@ -9,13 +9,13 @@
 
 <style>
 title {
-    BackgroundColor $BACKGROUND_COLOR_TITLE
+    BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $FONT_COLOR_TITLE
+    FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE)
     FontStyle $FONT_STYLE_TITLE
     
-    LineColor $LINE_COLOR_TITLE
+    LineColor $resolve_style_color($LINE_COLOR_TITLE)
     LineThickness $LINE_SIZE_TITLE
 
     RoundCorner $ROUND_CORNER_TITLE

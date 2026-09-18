@@ -1,0 +1,203 @@
+
+'---------------------------------------------------------
+' Parse DARKEN token
+'
+' Supported:
+'   DARKEN
+'   DARKEN_10
+'   DARKEN_20
+'   DARKEN_30
+'---------------------------------------------------------
+
+!function $get_darken_percent($token)
+
+  !if $token == "DARKEN"
+    !return $DARKEN_DEFAULT_PERCENT
+  !endif
+
+  !if %strpos($token, "DARKEN_") == 0
+    !return %intval(%substr($token, 7))
+  !endif
+
+  !return $DARKEN_DEFAULT_PERCENT
+
+!endfunction
+
+
+!function $is_too_dark($hex)
+
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
+
+  !$lum = $rgb_luminance($r,$g,$b)
+
+  !return $lum <= $DARKNESS_THRESHOLD
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Threshold Protection
+'---------------------------------------------------------
+
+!function $clamp_dark_color($hex)
+
+  !if !$is_too_dark($hex)
+    !return $hex
+  !endif
+
+  '
+  ' Return a grayscale colour at the threshold value
+  '
+  !$v = %format("%02X",$DARKNESS_THRESHOLD)
+
+  !return "#" + $v + $v + $v
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Semantic Token Progression
+'
+' LIGHT -> BASE -> DARK -> DARKEST
+'
+' PRIMARY_LIGHT
+'     -> PRIMARY
+'
+' PRIMARY
+'     -> PRIMARY_DARK
+'
+' PRIMARY_DARK
+'     -> PRIMARY_DARKEST
+'
+' PRIMARY_DARKEST
+'     -> RGB darkening fallback
+'---------------------------------------------------------
+
+!function $get_darker_semantic_token($token)
+
+  '
+  ' PRIMARY_LIGHT -> PRIMARY
+  '
+  !if $ends_with($token, "_LIGHT")
+
+    !$candidate =
+      %substr( $token,0,%strlen($token)-6 )
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARK -> PRIMARY_DARKEST
+  '
+  !elseif $ends_with($token, "_DARK")
+
+    !$base = %substr( $token, 0, %strlen($token)-5 )
+
+    !$candidate = $base + "_DARKEST"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARKEST
+  ' No darker semantic promotion available
+  '
+  !elseif $ends_with($token, "_DARKEST")
+
+    !return ""
+
+
+
+  '
+  ' PRIMARY -> PRIMARY_DARK
+  '
+  !else
+
+    !$candidate = $token + "_DARK"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+  !endif
+
+  !return ""
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Darken Resolver
+'
+' Resolution Order:
+'
+'   1. Semantic Promotion
+'      LIGHT -> BASE
+'      BASE -> DARK
+'      DARK -> DARKEST
+'
+'   2. RGB Darken
+'
+'   3. Threshold Clamp
+'---------------------------------------------------------
+
+!function $darken_color( $background_token, $darken_token="DARKEN" )
+
+  !if $is_special_style_token($background_token)
+    !error MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token
+  !endif
+
+
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  !$darker = $get_darker_semantic_token( $background_token )
+
+  !if $darker != ""
+
+    !return $get_semantic_color( $darker )
+
+  !endif
+
+
+  '
+  ' Step 2:
+  ' Resolve current value to a color
+  '
+  !$color = $resolve_style_color( $background_token )
+
+
+  '
+  ' Step 3:
+  ' Determine darkening percentage
+  '
+  !$pct = $get_darken_percent( $darken_token )
+
+
+  '
+  ' Step 4:
+  ' RGB Darkening
+  '
+  !$dark = %darken( $color, $pct )
+
+
+  '
+  ' Step 5:
+  ' Prevent near-black collapse
+  '
+  !return $clamp_dark_color( $dark )
+
+!endfunction

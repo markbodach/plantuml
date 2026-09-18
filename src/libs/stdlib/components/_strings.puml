@@ -1,0 +1,36 @@
+
+
+!function $ends_with($value, $suffix)
+
+  !$suffix_len = %strlen($suffix)
+  !$value_len = %strlen($value)
+
+  !if $value_len < $suffix_len
+    !return %false()
+  !endif
+
+  !return %substr($value, $value_len - $suffix_len, $suffix_len) == $suffix
+
+!endfunction
+
+!function $ends_with_text($value)
+  !return $ends_with($value, "_TEXT")
+
+!endfunction
+
+
+!function $is_special_style_token($token)
+
+  !if $token == "AUTO"
+    !return %true()
+  !elseif $token == "CURRENT"
+    !return %true()
+  !elseif %strpos($token,"DARKEN") == 0
+    !return %true()
+  !elseif %strpos($token,"LIGHTEN") == 0
+    !return %true()
+  !endif
+
+  !return %false()
+
+!endfunction

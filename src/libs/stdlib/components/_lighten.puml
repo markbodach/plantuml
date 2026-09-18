@@ -1,0 +1,225 @@
+
+
+'---------------------------------------------------------
+' Parse LIGHTEN token
+'
+' Supported:
+'   LIGHTEN
+'   LIGHTEN_10
+'   LIGHTEN_20
+'   LIGHTEN_30
+'---------------------------------------------------------
+
+!function $get_lighten_percent($token)
+
+  !if $token == "LIGHTEN"
+    !return $LIGHTEN_DEFAULT_PERCENT
+  !endif
+
+  !if %strpos($token, "LIGHTEN_") == 0
+    !return %intval(%substr($token, 8))
+  !endif
+
+  !return $LIGHTEN_DEFAULT_PERCENT
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Brightness Detection
+'---------------------------------------------------------
+
+!function $is_too_light($hex)
+
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
+
+  !$lum = $rgb_luminance($r, $g, $b)
+
+  !return $lum >= $LIGHTNESS_THRESHOLD
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Threshold Protection
+'---------------------------------------------------------
+
+!function $clamp_light_color($hex)
+
+  !if !$is_too_light($hex)
+    !return $hex
+  !endif
+
+  '
+  ' Return a grayscale color at the threshold value
+  '
+  !$v = %format("%02X", $LIGHTNESS_THRESHOLD)
+
+  !return "#" + $v + $v + $v
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Semantic Token Progression
+'
+' DARKEST -> DARK
+' DARK -> BASE
+' BASE -> LIGHT
+' LIGHT -> LIGHTEST
+'
+' PRIMARY_DARKEST
+'     -> PRIMARY_DARK
+'
+' PRIMARY_DARK
+'     -> PRIMARY
+'
+' PRIMARY
+'     -> PRIMARY_LIGHT
+'
+' PRIMARY_LIGHT
+'     -> PRIMARY_LIGHTEST
+'
+' PRIMARY_LIGHTEST
+'     -> RGB Lightening
+'---------------------------------------------------------
+
+!function $get_lighter_semantic_token($token)
+
+  '
+  ' PRIMARY_DARKEST -> PRIMARY_DARK
+  '
+  !if $ends_with($token, "_DARKEST")
+
+    !$base = %substr($token, 0, %strlen($token) - 8)
+    !$candidate = $base + "_DARK"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARK -> PRIMARY
+  '
+  !elseif $ends_with($token, "_DARK")
+
+    !$candidate = %substr( $token, 0, %strlen($token) - 5 )
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_LIGHTEST
+  ' No lighter semantic promotion available
+  '
+  !elseif $ends_with($token, "_LIGHTEST")
+
+    !return ""
+
+
+  '
+  ' PRIMARY_LIGHT -> PRIMARY_LIGHTEST
+  '
+  !elseif $ends_with($token, "_LIGHT")
+
+    !$candidate = $token + "EST"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY -> PRIMARY_LIGHT
+  '
+  !else
+
+    !$candidate = $token + "_LIGHT"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+  !endif
+
+  !return ""
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Lighten Resolver
+'
+' Resolution Order:
+'
+'   1. Semantic Progression
+'      DARKEST -> DARK
+'      DARK -> BASE
+'      BASE -> LIGHT
+'      LIGHT -> LIGHTEST
+'
+'   2. RGB Lightening
+'
+'   3. Threshold Clamp
+'---------------------------------------------------------
+
+!function $lighten_color($background_token, $lighten_token = "LIGHTEN")
+
+  !if $is_special_style_token($background_token)
+    !error MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token
+  !endif
+
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  !$lighter = $get_lighter_semantic_token( $background_token )
+
+  !if $lighter != ""
+
+    !return $get_semantic_color( $lighter )
+
+  !endif
+
+
+  '
+  ' Step 2:
+  ' Resolve current color
+  '
+  !$color = $resolve_style_color( $background_token )
+
+
+  '
+  ' Step 3:
+  ' Determine lighten percentage
+  '
+  !$pct = $get_lighten_percent( $lighten_token )
+
+
+  '
+  ' Step 4:
+  ' RGB Lightening
+  '
+  !$light = %lighten( $color, $pct )
+
+
+  '
+  ' Step 5:
+  ' Prevent near-white collapse
+  '
+  !return $clamp_light_color( $light )
+
+!endfunction

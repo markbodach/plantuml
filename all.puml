@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-16 15:30:01 EDT
-' Build Commit Hash: ce73e9ddd4e8db34a1c29564ab19d4539c053b66
-' Build Commit Comment: fixing variable uses
+' Generated on: 2026-09-18 12:43:28 EDT
+' Build Commit Hash: 402d2ce416ef81077438159cefaec7d8af7e3c2d
+' Build Commit Comment: var names
 ' ========================================================
 
 ' src/all.puml
@@ -25,6 +25,28 @@
 
 
 ' --- Importing: src/libs/stdlib/vars/_colors.puml ---
+'---------------------------------------------------------
+' Darkening defaults
+'---------------------------------------------------------
+
+' Darkening default
+!$DARKEN_DEFAULT_PERCENT = 20
+
+' RGB luminance floor (0-255)
+!$DARKNESS_THRESHOLD = 32
+
+
+'---------------------------------------------------------
+' Lightening defaults
+'---------------------------------------------------------
+
+' Lightening default
+!$LIGHTEN_DEFAULT_PERCENT = 20
+
+' RGB luminance ceiling (0-255)
+!$LIGHTNESS_THRESHOLD = 223
+
+
 
 '---------------------------------------------------------
 ' Color Constants
@@ -207,6 +229,7 @@
 !$TOGAF_COLOR_IMPLEMENTATION ?= "#FFE0E0"
 !$TOGAF_COLOR_HIGHLIGHTED ?= "#005DEF"
 !$TOGAF_COLOR_NEW ?= "#005700"
+
 ' --- End Import: src/libs/togaf/vars/_colors.puml ---
 
 ' --- Importing: src/libs/togaf/vars/_fonts.puml ---
@@ -327,10 +350,15 @@
 ' --- Importing: src/libs/ontario-health/vars/_title.puml ---
 
 
-!$FONT_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
-!$LINE_COLOR_TITLE = $OH_COLOR_PRIMARY
+'! $FONT_COLOR_TITLE = $OH_COLOR_PRIMARY_DARK
+'! $LINE_COLOR_TITLE = $OH_COLOR_PRIMARY
+
 !$ROUND_CORNER_TITLE = 0
 
+!$BACKGROUND_COLOR_TITLE = "PRIMARY_DARK"
+!$FONT_COLOR_TITLE = "AUTO"
+    
+!$LINE_COLOR_TITLE = "CURRENT" 
 ' --- End Import: src/libs/ontario-health/vars/_title.puml ---
 
 ' --- End Import: src/libs/ontario-health/vars/index.puml ---
@@ -338,6 +366,45 @@
 
 'STEP 2 :: COMPONENTS includes
 ' --- Importing: src/libs/stdlib/components/index.puml ---
+
+' --- Importing: src/libs/stdlib/components/_strings.puml ---
+
+
+!function $ends_with($value, $suffix)
+
+  !$suffix_len = %strlen($suffix)
+  !$value_len = %strlen($value)
+
+  !if $value_len < $suffix_len
+    !return %false()
+  !endif
+
+  !return %substr($value, $value_len - $suffix_len, $suffix_len) == $suffix
+
+!endfunction
+
+!function $ends_with_text($value)
+  !return $ends_with($value, "_TEXT")
+
+!endfunction
+
+
+!function $is_special_style_token($token)
+
+  !if $token == "AUTO"
+    !return %true()
+  !elseif $token == "CURRENT"
+    !return %true()
+  !elseif %strpos($token,"DARKEN") == 0
+    !return %true()
+  !elseif %strpos($token,"LIGHTEN") == 0
+    !return %true()
+  !endif
+
+  !return %false()
+
+!endfunction
+' --- End Import: src/libs/stdlib/components/_strings.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
 !function $has_dollar($name)
@@ -356,21 +423,6 @@
 !endfunction
 
 
-!function $is_variable_name($value)
-
-  !if $has_dollar($value) == %true()
-    !$new_value = %get_variable_value( $strip_dollar($value) )
-
-    !if $new_value == ""
-        !return %false()
-    !endif
-    !return %true()
-  !endif
-  !return %false()
-  
-!endfunction
-
-
 
 
 '
@@ -380,7 +432,6 @@
 '   COLOR_PRIMARY
 '   $COLOR_PRIMARY
 '
-
 !function $resolve_variable($name, $raiseError = %true() )
 
   !$value = %get_variable_value( $strip_dollar($name) )
@@ -397,8 +448,135 @@
 
 ' --- End Import: src/libs/stdlib/components/_variables.puml ---
 
-' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
+' --- Importing: src/libs/stdlib/components/_hex.puml ---
+
+
+'---------------------------------------------------------
+' Hex Helpers
+'
+' Supports:
+'   #RGB
+'   #RRGGBB
+'   #RRGGBBAA
+'---------------------------------------------------------
+
+!function $normalize_hex_rgb($hex)
+
+  !$len = %strlen($hex)
+
+  '
+  ' #RGB -> #RRGGBB
+  '
+  !if $len == 4
+
+    !$r = %substr($hex,1,1)
+    !$g = %substr($hex,2,1)
+    !$b = %substr($hex,3,1)
+
+    !return "#" + $r + $r + $g + $g + $b + $b
+
+  !endif
+
+  '
+  ' #RRGGBBAA -> #RRGGBB
+  '
+  !if $len == 9
+    !return "#" + %substr($hex,1,6)
+  !endif
+
+  '
+  ' Assume #RRGGBB
+  '
+  !return $hex
+
+!endfunction
+
+
+!function $hex_red($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,1,2))
+
+!endfunction
+
+
+!function $hex_green($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,3,2))
+
+!endfunction
+
+
+!function $hex_blue($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,5,2))
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Luminance Calculation
+'---------------------------------------------------------
+
+!function $rgb_luminance($r, $g, $b)
+
+  !return (
+    (0.2126 * $r) +
+    (0.7152 * $g) +
+    (0.0722 * $b)
+  )
+
+!endfunction
+
+
+
+
+!function $is_hex_digit($c)
+  !$c = %upper($c)
+  !if ("0123456789ABCDEF" %contains% $c)
+    !return %true()
+  !endif
+
+  !return %false()
+!endfunction
+
+!function $is_hex_color($value)
+  !if %substr($value,0,1) != "#"
+    !return %false()
+  !endif
+
+  !$len = %strlen($value)
+
+  !if ($len != 4) && ($len != 7) && ($len != 9)
+    !return %false()
+  !endif
+
+  !$i = 1
+  !while ($i < $len)
+
+    !if !$is_hex_digit(%substr($value,$i,1))
+      !return %false()
+    !endif
+    !$i = $i + 1
+  !endwhile
+
+  !return %true()
+
+!endfunction
+
+!function $is_literal_color($value)
+  !return $is_hex_color($value)
+!endfunction
+
+' --- End Import: src/libs/stdlib/components/_hex.puml ---
+
+' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
 !function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
@@ -445,16 +623,14 @@
 !endfunction
 
 
-
-!function $get_color($var_name)
-  
-  if $is_variable_name($var_name) == %true()
-    !return = %get_variable_value( $strip_dollar($var_name) )
+!function $get_color($value)
+  !$resolved = $resolve_variable($value, %false())
+  !if $resolved != ""
+    !return $resolved
   !endif
-  !return $var_name
-  '"#?" + $col_val
-
+  !return $value
 !endfunction
+
 
 
 !function $get_semantic_color($semantic_suffix)
@@ -462,7 +638,477 @@
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
 !endfunction
 
+
+
 ' --- End Import: src/libs/stdlib/components/_colors.puml ---
+
+' --- Importing: src/libs/stdlib/components/_darken.puml ---
+
+'---------------------------------------------------------
+' Parse DARKEN token
+'
+' Supported:
+'   DARKEN
+'   DARKEN_10
+'   DARKEN_20
+'   DARKEN_30
+'---------------------------------------------------------
+
+!function $get_darken_percent($token)
+
+  !if $token == "DARKEN"
+    !return $DARKEN_DEFAULT_PERCENT
+  !endif
+
+  !if %strpos($token, "DARKEN_") == 0
+    !return %intval(%substr($token, 7))
+  !endif
+
+  !return $DARKEN_DEFAULT_PERCENT
+
+!endfunction
+
+
+!function $is_too_dark($hex)
+
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
+
+  !$lum = $rgb_luminance($r,$g,$b)
+
+  !return $lum <= $DARKNESS_THRESHOLD
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Threshold Protection
+'---------------------------------------------------------
+
+!function $clamp_dark_color($hex)
+
+  !if !$is_too_dark($hex)
+    !return $hex
+  !endif
+
+  '
+  ' Return a grayscale colour at the threshold value
+  '
+  !$v = %format("%02X",$DARKNESS_THRESHOLD)
+
+  !return "#" + $v + $v + $v
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Semantic Token Progression
+'
+' LIGHT -> BASE -> DARK -> DARKEST
+'
+' PRIMARY_LIGHT
+'     -> PRIMARY
+'
+' PRIMARY
+'     -> PRIMARY_DARK
+'
+' PRIMARY_DARK
+'     -> PRIMARY_DARKEST
+'
+' PRIMARY_DARKEST
+'     -> RGB darkening fallback
+'---------------------------------------------------------
+
+!function $get_darker_semantic_token($token)
+
+  '
+  ' PRIMARY_LIGHT -> PRIMARY
+  '
+  !if $ends_with($token, "_LIGHT")
+
+    !$candidate =
+      %substr( $token,0,%strlen($token)-6 )
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARK -> PRIMARY_DARKEST
+  '
+  !elseif $ends_with($token, "_DARK")
+
+    !$base = %substr( $token, 0, %strlen($token)-5 )
+
+    !$candidate = $base + "_DARKEST"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARKEST
+  ' No darker semantic promotion available
+  '
+  !elseif $ends_with($token, "_DARKEST")
+
+    !return ""
+
+
+
+  '
+  ' PRIMARY -> PRIMARY_DARK
+  '
+  !else
+
+    !$candidate = $token + "_DARK"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+  !endif
+
+  !return ""
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Darken Resolver
+'
+' Resolution Order:
+'
+'   1. Semantic Promotion
+'      LIGHT -> BASE
+'      BASE -> DARK
+'      DARK -> DARKEST
+'
+'   2. RGB Darken
+'
+'   3. Threshold Clamp
+'---------------------------------------------------------
+
+!function $darken_color( $background_token, $darken_token="DARKEN" )
+
+  !if $is_special_style_token($background_token)
+    !error MB_UML :: DARKEN (darken_color) cannot operate on style token: $background_token
+  !endif
+
+
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  !$darker = $get_darker_semantic_token( $background_token )
+
+  !if $darker != ""
+
+    !return $get_semantic_color( $darker )
+
+  !endif
+
+
+  '
+  ' Step 2:
+  ' Resolve current value to a color
+  '
+  !$color = $resolve_style_color( $background_token )
+
+
+  '
+  ' Step 3:
+  ' Determine darkening percentage
+  '
+  !$pct = $get_darken_percent( $darken_token )
+
+
+  '
+  ' Step 4:
+  ' RGB Darkening
+  '
+  !$dark = %darken( $color, $pct )
+
+
+  '
+  ' Step 5:
+  ' Prevent near-black collapse
+  '
+  !return $clamp_dark_color( $dark )
+
+!endfunction
+' --- End Import: src/libs/stdlib/components/_darken.puml ---
+
+' --- Importing: src/libs/stdlib/components/_lighten.puml ---
+
+
+'---------------------------------------------------------
+' Parse LIGHTEN token
+'
+' Supported:
+'   LIGHTEN
+'   LIGHTEN_10
+'   LIGHTEN_20
+'   LIGHTEN_30
+'---------------------------------------------------------
+
+!function $get_lighten_percent($token)
+
+  !if $token == "LIGHTEN"
+    !return $LIGHTEN_DEFAULT_PERCENT
+  !endif
+
+  !if %strpos($token, "LIGHTEN_") == 0
+    !return %intval(%substr($token, 8))
+  !endif
+
+  !return $LIGHTEN_DEFAULT_PERCENT
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Brightness Detection
+'---------------------------------------------------------
+
+!function $is_too_light($hex)
+
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
+
+  !$lum = $rgb_luminance($r, $g, $b)
+
+  !return $lum >= $LIGHTNESS_THRESHOLD
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Threshold Protection
+'---------------------------------------------------------
+
+!function $clamp_light_color($hex)
+
+  !if !$is_too_light($hex)
+    !return $hex
+  !endif
+
+  '
+  ' Return a grayscale color at the threshold value
+  '
+  !$v = %format("%02X", $LIGHTNESS_THRESHOLD)
+
+  !return "#" + $v + $v + $v
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Semantic Token Progression
+'
+' DARKEST -> DARK
+' DARK -> BASE
+' BASE -> LIGHT
+' LIGHT -> LIGHTEST
+'
+' PRIMARY_DARKEST
+'     -> PRIMARY_DARK
+'
+' PRIMARY_DARK
+'     -> PRIMARY
+'
+' PRIMARY
+'     -> PRIMARY_LIGHT
+'
+' PRIMARY_LIGHT
+'     -> PRIMARY_LIGHTEST
+'
+' PRIMARY_LIGHTEST
+'     -> RGB Lightening
+'---------------------------------------------------------
+
+!function $get_lighter_semantic_token($token)
+
+  '
+  ' PRIMARY_DARKEST -> PRIMARY_DARK
+  '
+  !if $ends_with($token, "_DARKEST")
+
+    !$base = %substr($token, 0, %strlen($token) - 8)
+    !$candidate = $base + "_DARK"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_DARK -> PRIMARY
+  '
+  !elseif $ends_with($token, "_DARK")
+
+    !$candidate = %substr( $token, 0, %strlen($token) - 5 )
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY_LIGHTEST
+  ' No lighter semantic promotion available
+  '
+  !elseif $ends_with($token, "_LIGHTEST")
+
+    !return ""
+
+
+  '
+  ' PRIMARY_LIGHT -> PRIMARY_LIGHTEST
+  '
+  !elseif $ends_with($token, "_LIGHT")
+
+    !$candidate = $token + "EST"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+
+  '
+  ' PRIMARY -> PRIMARY_LIGHT
+  '
+  !else
+
+    !$candidate = $token + "_LIGHT"
+
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+
+      !return $candidate
+
+    !endif
+
+  !endif
+
+  !return ""
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Lighten Resolver
+'
+' Resolution Order:
+'
+'   1. Semantic Progression
+'      DARKEST -> DARK
+'      DARK -> BASE
+'      BASE -> LIGHT
+'      LIGHT -> LIGHTEST
+'
+'   2. RGB Lightening
+'
+'   3. Threshold Clamp
+'---------------------------------------------------------
+
+!function $lighten_color($background_token, $lighten_token = "LIGHTEN")
+
+  !if $is_special_style_token($background_token)
+    !error MB_UML :: LIGHTEN (lighten_color) cannot operate on style token: $background_token
+  !endif
+
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  !$lighter = $get_lighter_semantic_token( $background_token )
+
+  !if $lighter != ""
+
+    !return $get_semantic_color( $lighter )
+
+  !endif
+
+
+  '
+  ' Step 2:
+  ' Resolve current color
+  '
+  !$color = $resolve_style_color( $background_token )
+
+
+  '
+  ' Step 3:
+  ' Determine lighten percentage
+  '
+  !$pct = $get_lighten_percent( $lighten_token )
+
+
+  '
+  ' Step 4:
+  ' RGB Lightening
+  '
+  !$light = %lighten( $color, $pct )
+
+
+  '
+  ' Step 5:
+  ' Prevent near-white collapse
+  '
+  !return $clamp_light_color( $light )
+
+!endfunction
+' --- End Import: src/libs/stdlib/components/_lighten.puml ---
+
+' --- Importing: src/libs/stdlib/components/_resolver.puml ---
+
+
+!function $resolve_style_color($token, $background="")
+
+  !if $token == "AUTO"
+    !if $is_special_style_token($background)
+        !error MB_UML :: AUTO (resolve_style_color) cannot resolve style token: $background
+    !endif
+    !return $get_semantic_text_color($background)
+  
+  !elseif $token == "CURRENT"
+    !if $is_special_style_token($background)
+        !error MB_UML :: CURRENT (resolve_style_color) cannot resolve style token: $background
+    !endif
+    !return $resolve_style_color($background)
+
+  !elseif %strpos($token,"DARKEN") == 0
+    !return $darken_color($background)
+  !elseif %strpos($token,"LIGHTEN") == 0
+    !return $lighten_color($background)
+  !elseif $is_literal_color($token)
+    !return $token
+  !elseif $ends_with_text($token)
+    !$base = %substr($token, 0, %strlen($token)-5)
+    !return $get_semantic_text_color($base)
+  !else
+    !return $get_semantic_color($token)
+  !endif
+
+!endfunction
+
+' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
 ' --- End Import: src/libs/stdlib/components/index.puml ---
 
@@ -535,12 +1181,7 @@
 ' --- Importing: src/libs/ontario-health/components/_title.puml ---
 
 
-' $get_semantic_text_color("PRIMARY_DARK")
 
-!$BACKGROUND_COLOR_TITLE = $get_semantic_color("PRIMARY_DARK")
-!$FONT_COLOR_TITLE = $get_text_color($BACKGROUND_COLOR_TITLE)
-    
-!$LINE_COLOR_TITLE = $BACKGROUND_COLOR_TITLE
 ' --- End Import: src/libs/ontario-health/components/_title.puml ---
 
 ' --- Importing: src/libs/ontario-health/components/_patterns.puml ---
@@ -731,13 +1372,13 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 <style>
 title {
-    BackgroundColor $BACKGROUND_COLOR_TITLE
+    BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $FONT_COLOR_TITLE
+    FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE)
     FontStyle $FONT_STYLE_TITLE
     
-    LineColor $LINE_COLOR_TITLE
+    LineColor $resolve_style_color($LINE_COLOR_TITLE)
     LineThickness $LINE_SIZE_TITLE
 
     RoundCorner $ROUND_CORNER_TITLE
@@ -754,14 +1395,29 @@ title {
 ' --- End Import: src/libs/stdlib/styles/_title.puml ---
 
 
+
+
+!procedure Preload_Lib_Styles_Stdlib()
+
+    
+!endprocedure
+
 !procedure Load_Lib_Styles_Stdlib()
 
-    'Write_Lib_Style_Stdlib_Title()
+    Write_Lib_Style_Stdlib_Title()
     
 !endprocedure
 ' --- End Import: src/libs/stdlib/styles/index.puml ---
 
 ' --- Importing: src/libs/togaf/styles/index.puml ---
+!procedure Preload_Lib_Styles_Togaf()
+!if ($TOGAF_THEME_ENABLED)
+
+!endif
+
+!endprocedure 
+
+
 !procedure Load_Lib_Styles_Togaf()
 !if ($TOGAF_THEME_ENABLED)
 
@@ -775,19 +1431,19 @@ title {
 
 ' --- Importing: src/libs/ontario-health/styles/_title.puml ---
 
-
-!procedure Write_Lib_Style_OntarioHealth_Title()
-
-
-!endprocedure
 ' --- End Import: src/libs/ontario-health/styles/_title.puml ---
 
 
+!procedure Preload_Lib_Styles_OntarioHealth()
+    !if ($OH_THEME_ENABLED)
+        
+    !endif
+!endprocedure
 
 !procedure Load_Lib_Styles_OntarioHealth()
 
     !if ($OH_THEME_ENABLED)
-        ' Write_Lib_Style_OntarioHealth_Title()
+        Write_Lib_Style_OntarioHealth_Title()
     !endif
 !endprocedure 
 ' --- End Import: src/libs/ontario-health/styles/index.puml ---
@@ -796,6 +1452,11 @@ title {
 'STEP 6 :: Add to Load_Lib_Styles_All
 
 !procedure Load_Lib_Styles_All()
+
+    Preload_Lib_Styles_Stdlib()
+    Preload_Lib_Styles_Togaf()
+    Preload_Lib_Styles_OntarioHealth()
+
 
     Load_Lib_Styles_Stdlib()
     Load_Lib_Styles_Togaf()

@@ -1,3 +1,9 @@
 
+!include _strings.puml
 !include _variables.puml
+
+!include _hex.puml
 !include _colors.puml
+!include _darken.puml
+!include _lighten.puml
+!include _resolver.puml

@@ -1,0 +1,124 @@
+
+
+'---------------------------------------------------------
+' Hex Helpers
+'
+' Supports:
+'   #RGB
+'   #RRGGBB
+'   #RRGGBBAA
+'---------------------------------------------------------
+
+!function $normalize_hex_rgb($hex)
+
+  !$len = %strlen($hex)
+
+  '
+  ' #RGB -> #RRGGBB
+  '
+  !if $len == 4
+
+    !$r = %substr($hex,1,1)
+    !$g = %substr($hex,2,1)
+    !$b = %substr($hex,3,1)
+
+    !return "#" + $r + $r + $g + $g + $b + $b
+
+  !endif
+
+  '
+  ' #RRGGBBAA -> #RRGGBB
+  '
+  !if $len == 9
+    !return "#" + %substr($hex,1,6)
+  !endif
+
+  '
+  ' Assume #RRGGBB
+  '
+  !return $hex
+
+!endfunction
+
+
+!function $hex_red($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,1,2))
+
+!endfunction
+
+
+!function $hex_green($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,3,2))
+
+!endfunction
+
+
+!function $hex_blue($hex)
+
+  !$hex = $normalize_hex_rgb($hex)
+
+  !return %intval("0x" + %substr($hex,5,2))
+
+!endfunction
+
+
+'---------------------------------------------------------
+' Luminance Calculation
+'---------------------------------------------------------
+
+!function $rgb_luminance($r, $g, $b)
+
+  !return (
+    (0.2126 * $r) +
+    (0.7152 * $g) +
+    (0.0722 * $b)
+  )
+
+!endfunction
+
+
+
+
+!function $is_hex_digit($c)
+  !$c = %upper($c)
+  !if ("0123456789ABCDEF" %contains% $c)
+    !return %true()
+  !endif
+
+  !return %false()
+!endfunction
+
+!function $is_hex_color($value)
+  !if %substr($value,0,1) != "#"
+    !return %false()
+  !endif
+
+  !$len = %strlen($value)
+
+  !if ($len != 4) && ($len != 7) && ($len != 9)
+    !return %false()
+  !endif
+
+  !$i = 1
+  !while ($i < $len)
+
+    !if !$is_hex_digit(%substr($value,$i,1))
+      !return %false()
+    !endif
+    !$i = $i + 1
+  !endwhile
+
+  !return %true()
+
+!endfunction
+
+!function $is_literal_color($value)
+  !return $is_hex_color($value)
+!endfunction
+
