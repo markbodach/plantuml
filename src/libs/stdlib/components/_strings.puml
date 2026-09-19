@@ -20,8 +20,8 @@
 
 
 !function $is_special_style_token($token)
-
-  !if $token == "AUTO"
+  'token value should not be coming in with a prefix, like being processed by get_semantic_color
+  !if $token == "AUTO" 
     !return %true()
   !elseif $token == "CURRENT"
     !return %true()

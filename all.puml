@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-19 08:09:35 EDT
-' Build Commit Hash: 237ee2ae08f28573a43bd2b4ab0d9426bff3de73
-' Build Commit Comment: strip_dollar fixes
+' Generated on: 2026-09-19 08:32:48 EDT
+' Build Commit Hash: 779128d7b2ab157e469546908f3e0005dd4d8dad
+' Build Commit Comment: fixing title style
 ' ========================================================
 
 ' src/all.puml
@@ -390,8 +390,8 @@
 
 
 !function $is_special_style_token($token)
-
-  !if $token == "AUTO"
+  'token value should not be coming in with a prefix, like being processed by get_semantic_color
+  !if $token == "AUTO" 
     !return %true()
   !elseif $token == "CURRENT"
     !return %true()
@@ -699,6 +699,11 @@
 
 !function $get_semantic_color($semantic_suffix)
   ' Call the base contrast function using the constructed variable name
+  
+  !if $is_special_style_token($semantic_suffix)
+    !return $semantic_suffix
+  !endif
+
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
 !endfunction
 

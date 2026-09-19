@@ -52,6 +52,11 @@
 
 !function $get_semantic_color($semantic_suffix)
   ' Call the base contrast function using the constructed variable name
+  
+  !if $is_special_style_token($semantic_suffix)
+    !return $semantic_suffix
+  !endif
+
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
 !endfunction
 
