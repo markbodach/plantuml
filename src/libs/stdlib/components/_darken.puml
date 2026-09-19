@@ -47,7 +47,7 @@
     !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD"
   !endif
 
-  !if !$is_too_dark($hex)
+  !if $is_too_dark($hex) == %false()
     !return $hex
   !endif
 

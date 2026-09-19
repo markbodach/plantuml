@@ -52,7 +52,7 @@
     !error "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD"
   !endif
 
-  !if !$is_too_light($hex)
+  !if $is_too_light($hex) == %false()
     !return $hex
   !endif
 

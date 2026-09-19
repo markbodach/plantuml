@@ -15,7 +15,6 @@ title {
     FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE)
     FontStyle $FONT_STYLE_TITLE
     
-    LineColor $resolve_style_color($LINE_COLOR_TITLE)
     LineThickness $LINE_SIZE_TITLE
 
     RoundCorner $ROUND_CORNER_TITLE

@@ -108,7 +108,7 @@
   !$i = 1
   !while ($i < $len)
 
-    !if !$is_hex_digit(%substr($value,$i,1))
+    !if $is_hex_digit(%substr($value,$i,1))
       !return %false()
     !endif
     !$i = $i + 1
