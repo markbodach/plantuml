@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-21 17:09:52 EDT
-' Build Commit Hash: 94a93a2b52ff7287226da429fad8a7b93f1635cc
-' Build Commit Comment: fixing OH title style
+' Generated on: 2026-09-21 17:20:26 EDT
+' Build Commit Hash: 86767c342c7d59d217896c22bc5245b3dae6c62b
+' Build Commit Comment: fixing OH title style 2
 ' ========================================================
 
 ' src/all.puml
@@ -436,13 +436,13 @@
 
 !function $strip_dollar($name)
 
-    !if $has_dollar($name) == %false()
+    !if ($has_dollar($name) == %false())
         !return $name
     !endif
 
     !$clean = %substr($name, 1)
 
-    !if $has_dollar($clean) == %true()
+    !if ($has_dollar($clean) == %true())
         !error "MB_UML :: Variable name has multiple leading dollar signs=[$name]"
     !endif
 
@@ -458,11 +458,11 @@
 
 !function $is_valid_variable_name($name)
 
-    !if $name == ""
+    !if ($name == "")
         !return %false()
     !endif
 
-    !if $has_dollar($name) == %false()
+    !if ($has_dollar($name) == %false())
         !return %false()
     !endif
 
@@ -472,7 +472,7 @@
         !return %false()
     !endif
 
-    !if $clean != %upper($clean)
+    !if ($clean != %upper($clean))
         !return %false()
     !endif
 
@@ -486,10 +486,10 @@
 
     !$variable_name = $to_var_name($name)
 
-    !if $is_valid_variable_name($variable_name) == %false()
+    !if ($is_valid_variable_name($variable_name) == %false())
 
-        !if $raise_error
-            !if $variable_name != %upper($variable_name)
+        !if ($raise_error == %true())
+            !if ($variable_name != %upper($variable_name))
                 !error "MB_UML :: Variable names must be uppercase=[$variable_name]"
             !else
                 !error "MB_UML :: Invalid variable name=[$variable_name]"
@@ -517,9 +517,9 @@
     !$variable_name = $to_var_name($name)
     !$value = ""
 
-    !if $variable_exists_safe($variable_name, $raise_error) == %false()
+    !if ($variable_exists_safe($variable_name, $raise_error) == %false())
 
-        !if $raise_error
+        !if ($raise_error == %true())
             !error "MB_UML :: Invalid variable name or undefined variable=[$variable_name]"
         !endif
 
@@ -1172,36 +1172,36 @@
 !function $resolve_style_color($token, $color="")
 
   'All special style tokens require a color to resolve against
-  !if $is_special_style_token($token) == %true() && $color == ""
+  !if ($is_special_style_token($token) == %true()) && ($color == "")
     !error "MB_UML :: SPECIAL[$token] (resolve_style_color) requires a color=[$color]"
   !endif
 
-  !if $token == "" && $color == ""
+  !if ($token == "") && ($color == "")
     !error "MB_UML :: BLANK[$token] (resolve_style_color) requires a token=[$token] or a color=[$color]"
   !endif
 
-  !if $token == "AUTO"
+  !if ($token == "AUTO")
     !if $is_special_style_token($color) == %true()
         !error "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $get_semantic_text_color($color)
   
-  !elseif $token == "CURRENT"
+  !elseif ($token == "CURRENT")
     !if $is_special_style_token($color) == %true()
         !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $resolve_style_color($color)
 
-  !elseif %strpos($token,"DARKEN") == 0
+  !elseif (%strpos($token,"DARKEN") == 0)
     !return $darken_color($color, $token)
 
-  !elseif %strpos($token,"LIGHTEN") == 0
+  !elseif (%strpos($token,"LIGHTEN") == 0)
     !return $lighten_color($color, $token)
   
-  !elseif $is_literal_color($token)
+  !elseif ($is_literal_color($token))
     !return $token
 
-  !elseif $ends_with_text($token) == %true()
+  !elseif ($ends_with_text($token) == %true())
     !$base = %substr($token, 0, %strlen($token)-5)
     !return $get_semantic_text_color($base)
   !else
