@@ -44,7 +44,7 @@
 !function $clamp_dark_color($hex)
 
   !if ($DARKNESS_THRESHOLD < 0) || ($DARKNESS_THRESHOLD > 255)
-    !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD"
+    !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[$DARKNESS_THRESHOLD]"
   !endif
 
   !if $is_too_dark($hex) == %false()
@@ -152,10 +152,10 @@
 '   3. Threshold Clamp
 '---------------------------------------------------------
 
-!function $darken_color( $background_token, $darken_token="DARKEN" )
+!function $darken_color( $token, $darken_token="DARKEN" )
 
-  !if $is_special_style_token($background_token)
-    !error "MB_UML :: DARKEN (darken_color) cannot operate on special token: $background_token"
+  !if $is_special_style_token($token)
+    !error "MB_UML :: DARKEN (darken_color) cannot operate on special token=[$token]"
   !endif
 
 
@@ -163,7 +163,7 @@
   ' Step 1:
   ' Semantic progression
   '
-  !$darker = $get_darker_semantic_token( $background_token )
+  !$darker = $get_darker_semantic_token( $token )
 
   !if $darker != ""
 
@@ -176,7 +176,7 @@
   ' Step 2:
   ' Resolve current value to a color
   '
-  !$color = $resolve_style_color( $background_token )
+  !$color = $resolve_style_color( $token )
 
 
   '

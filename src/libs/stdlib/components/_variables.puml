@@ -16,7 +16,7 @@
     !$clean = %substr($name, 1)
 
     !if $has_dollar($clean) == %true()
-        !error "MB_UML :: Variable name has multiple leading dollar signs: " + $name
+        !error "MB_UML :: Variable name has multiple leading dollar signs=[$name]"
     !endif
 
     !return $clean
@@ -63,9 +63,9 @@
 
         !if $raise_error
             !if $variable_name != %upper($variable_name)
-                !error "MB_UML :: Variable names must be uppercase: " + $variable_name
+                !error "MB_UML :: Variable names must be uppercase=[$variable_name]"
             !else
-                !error "MB_UML :: Invalid variable name: " + $variable_name
+                !error "MB_UML :: Invalid variable name=[$variable_name]"
             !endif
         !endif
 
@@ -93,7 +93,7 @@
     !if $variable_exists_safe($variable_name, $raise_error) == %false()
 
         !if $raise_error
-            !error "MB_UML :: Invalid variable name or undefined variable: " + $variable_name
+            !error "MB_UML :: Invalid variable name or undefined variable=[$variable_name]"
         !endif
 
         !return ""

@@ -49,7 +49,7 @@
 !function $clamp_light_color($hex)
 
   !if ($LIGHTNESS_THRESHOLD < 0) || ($LIGHTNESS_THRESHOLD > 255)
-    !error "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD"
+    !error "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD=[$LIGHTNESS_THRESHOLD]"
   !endif
 
   !if $is_too_light($hex) == %false()
@@ -180,17 +180,17 @@
 '   3. Threshold Clamp
 '---------------------------------------------------------
 
-!function $lighten_color($background_token, $lighten_token = "LIGHTEN")
+!function $lighten_color($token, $lighten_token = "LIGHTEN")
 
-  !if $is_special_style_token($background_token)
-    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token: $background_token"
+  !if $is_special_style_token($token)
+    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[$token]"
   !endif
 
   '
   ' Step 1:
   ' Semantic progression
   '
-  !$lighter = $get_lighter_semantic_token( $background_token )
+  !$lighter = $get_lighter_semantic_token( $token )
 
   !if $lighter != ""
 
@@ -203,7 +203,7 @@
   ' Step 2:
   ' Resolve current color
   '
-  !$color = $resolve_style_color( $background_token )
+  !$color = $resolve_style_color( $token )
 
 
   '

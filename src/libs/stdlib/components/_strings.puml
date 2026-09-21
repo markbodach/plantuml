@@ -1,5 +1,21 @@
 
 
+!function $strip_prefix($value, $prefix)
+
+    !$prefixWithSeparator = $prefix + "_"
+
+    !if %strpos($value, $prefixWithSeparator) == 0
+        !return %substr(
+            $value,
+            %strlen($prefixWithSeparator)
+        )
+    !endif
+
+    !return $value
+
+!endfunction
+
+
 !function $ends_with($value, $suffix)
 
   !$suffix_len = %strlen($suffix)

@@ -87,7 +87,7 @@
 
 !function $is_hex_digit($c)
   !$c = %upper($c)
-  !if ("0123456789ABCDEF" %contains% $c)
+  !if %strpos("0123456789ABCDEF", $c) != -1
     !return %true()
   !endif
 
