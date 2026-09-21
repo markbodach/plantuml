@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-21 11:43:35 EDT
-' Build Commit Hash: 5485b815eba4231892fb3d18e97e6bd8927ec159
-' Build Commit Comment: %contain fixes
+' Generated on: 2026-09-21 17:09:52 EDT
+' Build Commit Hash: 94a93a2b52ff7287226da429fad8a7b93f1635cc
+' Build Commit Comment: fixing OH title style
 ' ========================================================
 
 ' src/all.puml
@@ -406,14 +406,16 @@
 
 
 !function $is_special_style_token($token)
+  !$tokenU = %upper($token)
+
   'token value should not be coming in with a prefix, like being processed by get_semantic_color
-  !if $token == "AUTO" 
+  !if $tokenU == "AUTO" 
     !return %true()
-  !elseif $token == "CURRENT"
+  !elseif $tokenU == "CURRENT"
     !return %true()
-  !elseif %strpos($token,"DARKEN") == 0
+  !elseif %strpos($tokenU,"DARKEN") == 0
     !return %true()
-  !elseif %strpos($token,"LIGHTEN") == 0
+  !elseif %strpos($tokenU,"LIGHTEN") == 0
     !return %true()
   !endif
 
@@ -1170,7 +1172,7 @@
 !function $resolve_style_color($token, $color="")
 
   'All special style tokens require a color to resolve against
-  !if $is_special_style_token($token) && $color == ""
+  !if $is_special_style_token($token) == %true() && $color == ""
     !error "MB_UML :: SPECIAL[$token] (resolve_style_color) requires a color=[$color]"
   !endif
 
@@ -1179,13 +1181,13 @@
   !endif
 
   !if $token == "AUTO"
-    !if $is_special_style_token($color)
+    !if $is_special_style_token($color) == %true()
         !error "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $get_semantic_text_color($color)
   
   !elseif $token == "CURRENT"
-    !if $is_special_style_token($color)
+    !if $is_special_style_token($color) == %true()
         !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $resolve_style_color($color)
@@ -1199,7 +1201,7 @@
   !elseif $is_literal_color($token)
     !return $token
 
-  !elseif $ends_with_text($token)
+  !elseif $ends_with_text($token) == %true()
     !$base = %substr($token, 0, %strlen($token)-5)
     !return $get_semantic_text_color($base)
   !else
@@ -1475,7 +1477,7 @@ title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE)
+    FontColor $resolve_style_color($FONT_COLOR_TITLE)
     FontStyle $FONT_STYLE_TITLE
     
     LineThickness $LINE_SIZE_TITLE

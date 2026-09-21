@@ -36,14 +36,16 @@
 
 
 !function $is_special_style_token($token)
+  !$tokenU = %upper($token)
+
   'token value should not be coming in with a prefix, like being processed by get_semantic_color
-  !if $token == "AUTO" 
+  !if $tokenU == "AUTO" 
     !return %true()
-  !elseif $token == "CURRENT"
+  !elseif $tokenU == "CURRENT"
     !return %true()
-  !elseif %strpos($token,"DARKEN") == 0
+  !elseif %strpos($tokenU,"DARKEN") == 0
     !return %true()
-  !elseif %strpos($token,"LIGHTEN") == 0
+  !elseif %strpos($tokenU,"LIGHTEN") == 0
     !return %true()
   !endif
 
