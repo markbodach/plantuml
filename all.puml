@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-22 16:04:58 EDT
-' Build Commit Hash: a97a05007f8d4b9da0e34e8ebd2421b1e103905e
-' Build Commit Comment: fallbacks
+' Generated on: 2026-09-22 16:08:01 EDT
+' Build Commit Hash: d62787725bb2780fd5416bb16bc37698dc24de9d
+' Build Commit Comment: to_array
 ' ========================================================
 
 ' src/all.puml
@@ -460,42 +460,6 @@
 
 !endfunction
 
-
-
-!function $to_array(
-    $value0="__UNSET__",
-    $value1="__UNSET__",
-    $value2="__UNSET__",
-    $value3="__UNSET__",
-    $value4="__UNSET__",
-    $value5="__UNSET__",
-    $value6="__UNSET__",
-    $value7="__UNSET__"
-)
-
-    !$result = []
-    !$resultIndex = 0
-    !$i = 0
-
-    !while ($i <= 7)
-
-        !$variableName = "$value" + $i
-        !$value = %get_variable_value($variableName)
-
-        !if ($value != "__UNSET__") && ($value != "")
-
-            !$result[$resultIndex] = $value
-            !$resultIndex = $resultIndex + 1
-
-        !endif
-
-        !$i = $i + 1
-
-    !endwhile
-
-    !return $result
-
-!endfunction
 ' --- End Import: src/libs/stdlib/components/_strings.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
