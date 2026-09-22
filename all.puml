@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-22 11:52:09 EDT
-' Build Commit Hash: 8f083c105f22327aeaf890a4a046d6bccf80e50a
-' Build Commit Comment: fixing OH title style 3
+' Generated on: 2026-09-22 12:03:16 EDT
+' Build Commit Hash: c49f2ff10e6ca1d01c9e05782fe392e4061aa6b5
+' Build Commit Comment: brackets for if &&
 ' ========================================================
 
 ' src/all.puml
@@ -443,7 +443,7 @@
     !$clean = %substr($name, 1)
 
     !if ($has_dollar($clean) == %true())
-        !error "MB_UML :: Variable name has multiple leading dollar signs=[$name]"
+        !assert 0 == 1 : "MB_UML :: Variable name has multiple leading dollar signs=[$name]"
     !endif
 
     !return $clean
@@ -490,9 +490,9 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !error "MB_UML :: Variable names must be uppercase=[$variable_name]"
+                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[$variable_name]"
             !else
-                !error "MB_UML :: Invalid variable name=[$variable_name]"
+                !assert 0 == 1 : "MB_UML :: Invalid variable name=[$variable_name]"
             !endif
         !endif
 
@@ -520,7 +520,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error) == %false())
 
         !if ($raise_error == %true())
-            !error "MB_UML :: Invalid variable name or undefined variable=[$variable_name]"
+            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[$variable_name]"
         !endif
 
         !return ""
@@ -776,7 +776,7 @@
 !function $clamp_dark_color($hex)
 
   !if ($DARKNESS_THRESHOLD < 0) || ($DARKNESS_THRESHOLD > 255)
-    !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[$DARKNESS_THRESHOLD]"
+    !assert 0 == 1 : "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[$DARKNESS_THRESHOLD]"
   !endif
 
   !if $is_too_dark($hex) == %false()
@@ -887,7 +887,7 @@
 !function $darken_color( $token, $darken_token="DARKEN" )
 
   !if $is_special_style_token($token)
-    !error "MB_UML :: DARKEN (darken_color) cannot operate on special token=[$token]"
+    !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[$token]"
   !endif
 
 
@@ -986,7 +986,7 @@
 !function $clamp_light_color($hex)
 
   !if ($LIGHTNESS_THRESHOLD < 0) || ($LIGHTNESS_THRESHOLD > 255)
-    !error "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD=[$LIGHTNESS_THRESHOLD]"
+    !assert 0 == 1 : "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD=[$LIGHTNESS_THRESHOLD]"
   !endif
 
   !if $is_too_light($hex) == %false()
@@ -1120,7 +1120,7 @@
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
 
   !if $is_special_style_token($token)
-    !error "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[$token]"
+    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[$token]"
   !endif
 
   '
@@ -1173,22 +1173,22 @@
 
   'All special style tokens require a color to resolve against
   !if ($is_special_style_token($token) == %true()) && ($color == "")
-    !error "MB_UML :: SPECIAL[$token] (resolve_style_color) requires a color=[$color]"
+    !assert 0 == 1 : "MB_UML :: SPECIAL[$token] (resolve_style_color) requires a color=[$color]"
   !endif
 
   !if ($token == "") && ($color == "")
-    !error "MB_UML :: BLANK[$token] (resolve_style_color) requires a token=[$token] or a color=[$color]"
+    !assert 0 == 1 : "MB_UML :: BLANK[$token] (resolve_style_color) requires a token=[$token] or a color=[$color]"
   !endif
 
   !if ($token == "AUTO")
     !if $is_special_style_token($color) == %true()
-        !error "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color=[$color]"
+        !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $get_semantic_text_color($color)
   
   !elseif ($token == "CURRENT")
     !if $is_special_style_token($color) == %true()
-        !error "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color=[$color]"
+        !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color=[$color]"
     !endif
     !return $resolve_style_color($color)
 

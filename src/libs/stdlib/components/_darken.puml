@@ -44,7 +44,7 @@
 !function $clamp_dark_color($hex)
 
   !if ($DARKNESS_THRESHOLD < 0) || ($DARKNESS_THRESHOLD > 255)
-    !error "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[$DARKNESS_THRESHOLD]"
+    !assert 0 == 1 : "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[$DARKNESS_THRESHOLD]"
   !endif
 
   !if $is_too_dark($hex) == %false()
@@ -155,7 +155,7 @@
 !function $darken_color( $token, $darken_token="DARKEN" )
 
   !if $is_special_style_token($token)
-    !error "MB_UML :: DARKEN (darken_color) cannot operate on special token=[$token]"
+    !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[$token]"
   !endif
 
 
