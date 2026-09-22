@@ -61,29 +61,73 @@
 !endfunction
 
 
-!function $to_array($value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET, $value8=$UNSET, $value9=$UNSET)
+!function $to_array(
+    $value0=$UNSET,
+    $value1=$UNSET,
+    $value2=$UNSET,
+    $value3=$UNSET,
+    $value4=$UNSET,
+    $value5=$UNSET,
+    $value6=$UNSET,
+    $value7=$UNSET,
+    $value8=$UNSET,
+    $value9=$UNSET
+)
 
-  !$result = []
-  !$resultIndex = 0
-  !$i = 0
+    !$result = []
+    !$index = 0
 
-  !while ($i <= 9)
-
-    !$variableName = "$value" + $i
-    !$value = %get_variable_value($variableName)
-
-    !if ($value != $UNSET) && ($value != "")
-
-        !$result[$resultIndex] = $value
-        !$resultIndex = $resultIndex + 1
-
+    !if ($value0 != $UNSET) && ($value0 != "")
+        !$result[$index] = $value0
+        !$index = $index + 1
     !endif
 
-    !$i = $i + 1
+    !if ($value1 != $UNSET) && ($value1 != "")
+        !$result[$index] = $value1
+        !$index = $index + 1
+    !endif
 
-  !endwhile
+    !if ($value2 != $UNSET) && ($value2 != "")
+        !$result[$index] = $value2
+        !$index = $index + 1
+    !endif
 
-  !return $result
+    !if ($value3 != $UNSET) && ($value3 != "")
+        !$result[$index] = $value3
+        !$index = $index + 1
+    !endif
+
+    !if ($value4 != $UNSET) && ($value4 != "")
+        !$result[$index] = $value4
+        !$index = $index + 1
+    !endif
+
+    !if ($value5 != $UNSET) && ($value5 != "")
+        !$result[$index] = $value5
+        !$index = $index + 1
+    !endif
+
+    !if ($value6 != $UNSET) && ($value6 != "")
+        !$result[$index] = $value6
+        !$index = $index + 1
+    !endif
+
+    !if ($value7 != $UNSET) && ($value7 != "")
+        !$result[$index] = $value7
+        !$index = $index + 1
+    !endif
+
+    !if ($value8 != $UNSET) && ($value8 != "")
+        !$result[$index] = $value8
+        !$index = $index + 1
+    !endif
+
+    !if ($value9 != $UNSET) && ($value9 != "")
+        !$result[$index] = $value9
+        !$index = $index + 1
+    !endif
+
+    !return $result
 
 !endfunction
 
