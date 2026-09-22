@@ -52,3 +52,10 @@
   !return %false()
 
 !endfunction
+
+
+!function $array_singleton($value)
+    !$tokens = []
+    !$tokens[0] = $value
+    !return $tokens
+!endfunction

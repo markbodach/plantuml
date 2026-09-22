@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-22 13:04:27 EDT
-' Build Commit Hash: d9db4f8a916e3f131a64db5fdc20f7cffdd02e73
-' Build Commit Comment: added asserts
+' Generated on: 2026-09-22 14:53:41 EDT
+' Build Commit Hash: b348280957b640a78bdf72afcb24cd7bde92498f
+' Build Commit Comment: assert messages fixed
 ' ========================================================
 
 ' src/all.puml
@@ -422,6 +422,13 @@
   !return %false()
 
 !endfunction
+
+
+!function $array_singleton($value)
+    !$tokens = []
+    !$tokens[0] = $value
+    !return $tokens
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_strings.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
@@ -727,6 +734,25 @@
 
 
 
+!function $first_color_token($tokens)
+
+    !$i = 0
+
+    !while ($i < %size($tokens))
+
+        !$value = $tokens[$i]
+
+        !if $is_special_style_token($value) == %false()
+            !return $value
+        !endif
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return ""
+
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_darken.puml ---
@@ -1167,49 +1193,87 @@
 ' --- End Import: src/libs/stdlib/components/_lighten.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_resolver.puml ---
+!function $fallback_chain($tokens)
+
+    !$result = ""
+    !$i = 0
+
+    !while $i < %size($tokens)
+        !if $i > 0
+            !$result = $result + " -> "
+        !endif
+        !$result = $result + $tokens[$i]
+        !$i = $i + 1
+    !endwhile
+    !return $result
+
+!endfunction
 
 
-!function $resolve_style_color($token, $color="")
+!function $resolve_style_color($tokenOrColor, $colorIfToken="")
+
+  !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
+  !$colorIfTokenIsSpecial  = $is_special_style_token($colorIfToken)
+  
 
   'All special style tokens require a color to resolve against
-  !if ($is_special_style_token($token) == %true()) && ($color == "")
-    !assert 0 == 1 : "MB_UML :: SPECIAL[" + $token +"] (resolve_style_color) requires a color=[" + $color + "]"
+  !if ($tokenOrColorIsSpecial == %true()) && ($colorIfToken == "")
+    !assert 0 == 1 : "MB_UML :: SPECIAL.BLANK[" + $tokenOrColor +"] (resolve_style_color) requires a colorIfToken=[" + $colorIfToken + "]"
   !endif
 
-  !if ($token == "") && ($color == "")
-    !assert 0 == 1 : "MB_UML :: BLANK[" + $token +"] (resolve_style_color) requires a token=[" + $token +"] or a color=[" + $color + "]"
+  'All special style tokens require a color to resolve against
+  !if ($tokenOrColorIsSpecial == %true()) && ($colorIfTokenIsSpecial == %true()) 
+    !assert 0 == 1 : "MB_UML :: SPECIAL.SPECIAL[" + $tokenOrColor +"] (resolve_style_color) and colorIfToken=[" + $colorIfToken + "] can not be tokens"
   !endif
 
-  !if ($token == "AUTO")
-    !if $is_special_style_token($color) == %true()
-        !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as color=[" + $color + "]"
+  !if ($tokenOrColor == "") && ($colorIfToken == "")
+    !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor +"] (resolve_style_color) requires a tokenOrColor=[" + $tokenOrColor +"] or a colorIfToken=[" + $colorIfToken + "]"
+  !endif
+
+  !if ($tokenOrColor == "AUTO")
+    !if $colorIfTokenIsSpecial == %true()
+        !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as colorIfToken=[" + $colorIfToken + "]"
     !endif
-    !return $get_semantic_text_color($color)
+    !return $get_semantic_text_color($colorIfToken)
   
-  !elseif ($token == "CURRENT")
-    !if $is_special_style_token($color) == %true()
-        !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as color=[" + $color + "]"
+  !elseif ($tokenOrColor == "CURRENT")
+    !if ($colorIfTokenIsSpecial == %true())
+        !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as colorIfToken=[" + $colorIfToken + "]"
     !endif
-    !return $resolve_style_color($color)
+    !return $resolve_style_color($colorIfToken)
 
-  !elseif (%strpos($token,"DARKEN") == 0)
-    !return $darken_color($color, $token)
+  !elseif (%strpos($tokenOrColor,"DARKEN") == 0)
+    !return $darken_color($colorIfToken, $token)
 
-  !elseif (%strpos($token,"LIGHTEN") == 0)
-    !return $lighten_color($color, $token)
+  !elseif (%strpos($tokenOrColor,"LIGHTEN") == 0)
+    !return $lighten_color($colorIfToken, $tokenOrColor)
   
-  !elseif ($is_literal_color($token))
-    !return $token
+  !elseif ($is_literal_color($tokenOrColor))
+    !return $tokenOrColor
 
-  !elseif ($ends_with_text($token) == %true())
-    !$base = %substr($token, 0, %strlen($token)-5)
+  !elseif ($ends_with_text($tokenOrColor) == %true())
+    !$base = %substr($tokenOrColor, 0, %strlen($tokenOrColor)-5)
     !return $get_semantic_text_color($base)
   !else
-    !return $get_semantic_color($token)
+    !return $get_semantic_color($tokenOrColor)
   !endif
 
 !endfunction
 
+
+!function $resolve_style_color_chain($tokenOrColor, $colorIfTokenArray=[])
+
+  !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
+
+  !if $tokenOrColorIsSpecial == %false()
+    !return $resolve_style_color($tokenOrColor)
+
+  !else 
+    !$colorIfToken = $first_color_token($colorIfTokenArray)
+    
+    !return $resolve_style_color($tokenOrColor, $colorIfToken)
+  !endif
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
 ' --- End Import: src/libs/stdlib/components/index.puml ---
@@ -1477,7 +1541,7 @@ title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color($FONT_COLOR_TITLE)
+    FontColor $resolve_style_color_chain($FONT_COLOR_TITLE, [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR] )
     FontStyle $FONT_STYLE_TITLE
     
     LineThickness $LINE_SIZE_TITLE

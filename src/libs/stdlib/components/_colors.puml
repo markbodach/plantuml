@@ -62,3 +62,22 @@
 
 
 
+!function $first_color_token($tokens)
+
+    !$i = 0
+
+    !while ($i < %size($tokens))
+
+        !$value = $tokens[$i]
+
+        !if $is_special_style_token($value) == %false()
+            !return $value
+        !endif
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return ""
+
+!endfunction
