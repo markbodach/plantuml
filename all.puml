@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-22 15:12:09 EDT
-' Build Commit Hash: e9ea75b236398b1c9af9a9e6e2cb312aaf0390ed
-' Build Commit Comment: fallback colors
+' Generated on: 2026-09-22 15:18:52 EDT
+' Build Commit Hash: 731a7aa95f329bd4a97f9248a3eb741feefff4f8
+' Build Commit Comment: improved fallback color support
 ' ========================================================
 
 ' src/all.puml
@@ -1537,12 +1537,13 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
+!$fontColors = [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY]
 <style>
 title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color_chain($FONT_COLOR_TITLE, [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY] )
+    FontColor $resolve_style_color_chain($FONT_COLOR_TITLE, $fontColors )
     FontStyle $FONT_STYLE_TITLE
     
     LineThickness $LINE_SIZE_TITLE

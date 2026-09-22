@@ -7,12 +7,13 @@
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
+!$fontColors = [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY]
 <style>
 title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color_chain($FONT_COLOR_TITLE, [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY] )
+    FontColor $resolve_style_color_chain($FONT_COLOR_TITLE, $fontColors )
     FontStyle $FONT_STYLE_TITLE
     
     LineThickness $LINE_SIZE_TITLE
