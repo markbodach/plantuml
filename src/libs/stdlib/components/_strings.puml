@@ -59,3 +59,67 @@
     !$tokens[0] = $value
     !return $tokens
 !endfunction
+
+
+!function $to_array($value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET, $value8=$UNSET, $value9=$UNSET)
+
+  !$result = []
+  !$resultIndex = 0
+  !$i = 0
+
+  !while ($i <= 9)
+
+    !$variableName = "$value" + $i
+    !$value = %get_variable_value($variableName)
+
+    !if ($value != $UNSET) && ($value != "")
+
+        !$result[$resultIndex] = $value
+        !$resultIndex = $resultIndex + 1
+
+    !endif
+
+    !$i = $i + 1
+
+  !endwhile
+
+  !return $result
+
+!endfunction
+
+
+
+!function $to_array(
+    $value0="__UNSET__",
+    $value1="__UNSET__",
+    $value2="__UNSET__",
+    $value3="__UNSET__",
+    $value4="__UNSET__",
+    $value5="__UNSET__",
+    $value6="__UNSET__",
+    $value7="__UNSET__"
+)
+
+    !$result = []
+    !$resultIndex = 0
+    !$i = 0
+
+    !while ($i <= 7)
+
+        !$variableName = "$value" + $i
+        !$value = %get_variable_value($variableName)
+
+        !if ($value != "__UNSET__") && ($value != "")
+
+            !$result[$resultIndex] = $value
+            !$resultIndex = $resultIndex + 1
+
+        !endif
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return $result
+
+!endfunction

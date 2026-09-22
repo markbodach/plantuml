@@ -48,7 +48,7 @@
     !return $resolve_style_color($colorIfToken)
 
   !elseif (%strpos($tokenOrColor,"DARKEN") == 0)
-    !return $darken_color($colorIfToken, $token)
+    !return $darken_color($colorIfToken, $tokenOrColor)
 
   !elseif (%strpos($tokenOrColor,"LIGHTEN") == 0)
     !return $lighten_color($colorIfToken, $tokenOrColor)

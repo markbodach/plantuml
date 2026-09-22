@@ -1,3 +1,5 @@
 
 
 !$SKINPARAM_ENABLED ?= %false()
+
+!$UNSET = "__UML_UNSET__"

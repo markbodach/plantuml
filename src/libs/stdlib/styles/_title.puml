@@ -7,7 +7,7 @@
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
-!$fontColors = [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY]
+!$fontColors = $to_array($BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY)
 <style>
 title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)

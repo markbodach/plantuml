@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-22 15:18:52 EDT
-' Build Commit Hash: 731a7aa95f329bd4a97f9248a3eb741feefff4f8
-' Build Commit Comment: improved fallback color support
+' Generated on: 2026-09-22 16:04:58 EDT
+' Build Commit Hash: a97a05007f8d4b9da0e34e8ebd2421b1e103905e
+' Build Commit Comment: fallbacks
 ' ========================================================
 
 ' src/all.puml
@@ -21,6 +21,8 @@
 
 
 !$SKINPARAM_ENABLED ?= %false()
+
+!$UNSET = "__UML_UNSET__"
 ' --- End Import: src/libs/stdlib/vars/_index.puml ---
 
 
@@ -430,6 +432,70 @@
     !$tokens[0] = $value
     !return $tokens
 !endfunction
+
+
+!function $to_array($value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET, $value8=$UNSET, $value9=$UNSET)
+
+  !$result = []
+  !$resultIndex = 0
+  !$i = 0
+
+  !while ($i <= 9)
+
+    !$variableName = "$value" + $i
+    !$value = %get_variable_value($variableName)
+
+    !if ($value != $UNSET) && ($value != "")
+
+        !$result[$resultIndex] = $value
+        !$resultIndex = $resultIndex + 1
+
+    !endif
+
+    !$i = $i + 1
+
+  !endwhile
+
+  !return $result
+
+!endfunction
+
+
+
+!function $to_array(
+    $value0="__UNSET__",
+    $value1="__UNSET__",
+    $value2="__UNSET__",
+    $value3="__UNSET__",
+    $value4="__UNSET__",
+    $value5="__UNSET__",
+    $value6="__UNSET__",
+    $value7="__UNSET__"
+)
+
+    !$result = []
+    !$resultIndex = 0
+    !$i = 0
+
+    !while ($i <= 7)
+
+        !$variableName = "$value" + $i
+        !$value = %get_variable_value($variableName)
+
+        !if ($value != "__UNSET__") && ($value != "")
+
+            !$result[$resultIndex] = $value
+            !$resultIndex = $resultIndex + 1
+
+        !endif
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return $result
+
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_strings.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_variables.puml ---
@@ -654,9 +720,10 @@
   !$i = 1
   !while ($i < $len)
 
-    !if $is_hex_digit(%substr($value,$i,1))
-      !return %false()
+    !if ($is_hex_digit(%substr($value,$i,1)) == %false())
+        !return %false()
     !endif
+
     !$i = $i + 1
   !endwhile
 
@@ -1244,7 +1311,7 @@
     !return $resolve_style_color($colorIfToken)
 
   !elseif (%strpos($tokenOrColor,"DARKEN") == 0)
-    !return $darken_color($colorIfToken, $token)
+    !return $darken_color($colorIfToken, $tokenOrColor)
 
   !elseif (%strpos($tokenOrColor,"LIGHTEN") == 0)
     !return $lighten_color($colorIfToken, $tokenOrColor)
@@ -1537,7 +1604,7 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
-!$fontColors = [$BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY]
+!$fontColors = $to_array($BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY)
 <style>
 title {
     BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
