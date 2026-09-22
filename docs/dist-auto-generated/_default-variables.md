@@ -9,6 +9,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ACTOR_BORDER_SIZE = 3
 !$ACTOR_STYLE = awesome
 !$BACKGROUND_COLOR_TITLE = $COLOR_PRIMARY_LIGHT
+!$BACKGROUND_COLOR = $COLOR_PRIMARY_LIGHT
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
