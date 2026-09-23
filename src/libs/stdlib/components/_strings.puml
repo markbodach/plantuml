@@ -55,8 +55,7 @@
 
 
 
-!procedure $build_array($arrayVarName, $value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET, $value8=$UNSET, $value9=$UNSET
-)
+!procedure $build_array($arrayVarName, $value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET, $value8=$UNSET, $value9=$UNSET)
 
   %set_variable_value($arrayVarName, []) 
   !$result = %get_variable_value($arrayVarName)

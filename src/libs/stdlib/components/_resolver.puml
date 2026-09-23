@@ -1,81 +1,121 @@
-!function $fallback_chain($tokens)
+!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="")
 
-    !$result = ""
-    !$i = 0
+  !if ($context0 != "") && ($is_special_style_token($context0) == %false())
+      !return $context0
+  !endif
 
-    !while $i < %size($tokens)
-        !if $i > 0
-            !$result = $result + " -> "
-        !endif
-        !$result = $result + $tokens[$i]
-        !$i = $i + 1
-    !endwhile
-    !return $result
+  !if ($context1 != "") && ($is_special_style_token($context1) == %false())
+      !return $context1
+  !endif
+
+  !if ($context2 != "") && ($is_special_style_token($context2) == %false())
+      !return $context2
+  !endif
+
+  !if ($context3 != "") && ($is_special_style_token($context3) == %false())
+      !return $context3
+  !endif
+
+  !if ($context4 != "") && ($is_special_style_token($context4) == %false())
+      !return $context4
+  !endif
+
+  !return ""
 
 !endfunction
 
 
-!function $resolve_style_color($tokenOrColor, $colorIfToken="")
+
+!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
 
   !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  !$colorIfTokenIsSpecial  = $is_special_style_token($colorIfToken)
-  
 
-  'All special style tokens require a color to resolve against
-  !if ($tokenOrColorIsSpecial == %true()) && ($colorIfToken == "")
-    !assert 0 == 1 : "MB_UML :: SPECIAL.BLANK[" + $tokenOrColor +"] (resolve_style_color) requires a colorIfToken=[" + $colorIfToken + "]"
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
+
+  '
+  ' Validation
+  '
+  !if ($tokenOrColor == "") && ($contextColor == "")
+      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] (resolve_style_color) requires a tokenOrColor or context color"
   !endif
 
-  'All special style tokens require a color to resolve against
-  !if ($tokenOrColorIsSpecial == %true()) && ($colorIfTokenIsSpecial == %true()) 
-    !assert 0 == 1 : "MB_UML :: SPECIAL.SPECIAL[" + $tokenOrColor +"] (resolve_style_color) and colorIfToken=[" + $colorIfToken + "] can not be tokens"
-  !endif
-
-  !if ($tokenOrColor == "") && ($colorIfToken == "")
-    !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor +"] (resolve_style_color) requires a tokenOrColor=[" + $tokenOrColor +"] or a colorIfToken=[" + $colorIfToken + "]"
-  !endif
-
+  '
+  ' AUTO
+  '
   !if ($tokenOrColor == "AUTO")
-    !if $colorIfTokenIsSpecial == %true()
-        !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) cannot resolve special token as colorIfToken=[" + $colorIfToken + "]"
-    !endif
-    !return $get_semantic_text_color($colorIfToken)
-  
+
+      !if ($contextColor == "")
+          !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
+      !endif
+
+      !return $get_semantic_text_color($contextColor)
+
+  '
+  ' CURRENT
+  '
   !elseif ($tokenOrColor == "CURRENT")
-    !if ($colorIfTokenIsSpecial == %true())
-        !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) cannot resolve special token as colorIfToken=[" + $colorIfToken + "]"
-    !endif
-    !return $resolve_style_color($colorIfToken)
 
-  !elseif (%strpos($tokenOrColor,"DARKEN") == 0)
-    !return $darken_color($colorIfToken, $tokenOrColor)
+      !if ($contextColor == "")
+          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color"
+      !endif
 
-  !elseif (%strpos($tokenOrColor,"LIGHTEN") == 0)
-    !return $lighten_color($colorIfToken, $tokenOrColor)
-  
+      !return $resolve_style_color($contextColor)
+
+  '
+  ' DARKEN
+  '
+  !elseif (%strpos($tokenOrColor, "DARKEN") == 0)
+
+      !if ($contextColor == "")
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+      !endif
+
+      !return $darken_color(
+          $contextColor,
+          $tokenOrColor
+      )
+
+  '
+  ' LIGHTEN
+  '
+  !elseif (%strpos($tokenOrColor, "LIGHTEN") == 0)
+
+      !if ($contextColor == "")
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+      !endif
+
+      !return $lighten_color(
+          $contextColor,
+          $tokenOrColor
+      )
+
+  '
+  ' Literal color
+  '
   !elseif ($is_literal_color($tokenOrColor))
-    !return $tokenOrColor
 
+      !return $tokenOrColor
+
+  '
+  ' Semantic text token
+  '
   !elseif ($ends_with_text($tokenOrColor) == %true())
-    !$base = %substr($tokenOrColor, 0, %strlen($tokenOrColor)-5)
-    !return $get_semantic_text_color($base)
+
+      !$base = %substr(
+          $tokenOrColor,
+          0,
+          %strlen($tokenOrColor) - 5
+      )
+
+      !return $get_semantic_text_color($base)
+
+  '
+  ' Semantic color token
+  '
   !else
-    !return $get_semantic_color($tokenOrColor)
+
+      !return $get_semantic_color($tokenOrColor)
+
   !endif
 
-!endfunction
-
-
-!function $resolve_style_color_chain($tokenOrColor, $colorIfTokenArray=[])
-
-  !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-
-  !if $tokenOrColorIsSpecial == %false()
-    !return $resolve_style_color($tokenOrColor)
-
-  !else 
-    !$colorIfToken = $first_color_token($colorIfTokenArray)
-    
-    !return $resolve_style_color($tokenOrColor, $colorIfToken)
-  !endif
 !endfunction
