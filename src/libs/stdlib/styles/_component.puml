@@ -1,0 +1,36 @@
+
+'---------------------------------------------------------
+' Component Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Component()
+
+    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
+    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
+
+    !$ccBackgroundColor = $resolve_style_color($cBackgroundColor, "LIGHTEN")
+    !$ccFontColor = $resolve_style_color($ccBackgroundColor, "AUTO")
+
+<style>
+
+component {
+    BackgroundColor $cBackgroundColor
+    LineColor $cBackgroundColor
+    FontColor $cFontColor
+
+    LineThickness $LINE_SIZE_COMPONENT
+    RoundCorner $ROUND_CORNER_COMPONENT
+    Margin $MARGIN_COMPONENT
+    Padding $PADDING_COMPONENT
+
+}
+
+component component {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+
+</style>
+
+!endprocedure

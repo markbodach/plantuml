@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-25 14:21:21 EDT
-' Build Commit Hash: ceee98f9504dbf81f771b6cdf79c7f1a0a230210
-' Build Commit Comment: luminance function
+' Generated on: 2026-09-25 15:54:19 EDT
+' Build Commit Hash: 99fd821ec6660fca0ffa0f76299461f22df9cc54
+' Build Commit Comment: documentations
 ' ========================================================
 
 ' src/all.puml
@@ -210,6 +210,22 @@
 !$LINE_SIZE_TITLE ?= $LINE_SIZE
 
 ' --- End Import: src/libs/stdlib/vars/_title.puml ---
+
+' --- Importing: src/libs/stdlib/vars/_component.puml ---
+
+!$FONT_COLOR_COMPONENT ?= $FONT_COLOR
+!$FONT_STYLE_COMPONENT ?= ""
+
+!$BACKGROUND_COLOR_COMPONENT ?= $COLOR_PRIMARY
+!$HORIZONTAL_ALIGNMENT_COMPONENT ?= "left"
+
+!$MARGIN_COMPONENT ?= 20
+!$PADDING_COMPONENT ?= 15
+!$ROUND_CORNER_COMPONENT ?= $ROUND_CORNER
+
+!$LINE_COLOR_COMPONENT ?= $LINE_COLOR
+!$LINE_SIZE_COMPONENT ?= $LINE_SIZE
+' --- End Import: src/libs/stdlib/vars/_component.puml ---
 
 
 ' --- End Import: src/libs/stdlib/vars/index.puml ---
@@ -1694,26 +1710,26 @@ skinparam actorBackgroundColor $ACTOR_BACKGROUND_COLOR
 
 
 ' --- Importing: src/libs/stdlib/styles/_title.puml ---
-
-
-
 '---------------------------------------------------------
 ' Title Styles
 '---------------------------------------------------------
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
+!$tBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_TITLE)
+!$tFontColor = $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY )
 
 <style>
 title {
-    BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
+    BackgroundColor $tBackgroundColor
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY )
+    FontColor $tFontColor
     FontStyle $FONT_STYLE_TITLE
-    
-    LineThickness $LINE_SIZE_TITLE
+    LineColor $tBackgroundColor
 
+
+    LineThickness $LINE_SIZE_TITLE
     RoundCorner $ROUND_CORNER_TITLE
     Margin $MARGIN_TITLE
     Padding $PADDING_TITLE
@@ -1727,6 +1743,45 @@ title {
 '---------------------------------------------------------
 ' --- End Import: src/libs/stdlib/styles/_title.puml ---
 
+' --- Importing: src/libs/stdlib/styles/_component.puml ---
+
+'---------------------------------------------------------
+' Component Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Component()
+
+    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
+    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
+
+    !$ccBackgroundColor = $resolve_style_color($cBackgroundColor, "LIGHTEN")
+    !$ccFontColor = $resolve_style_color($ccBackgroundColor, "AUTO")
+
+<style>
+
+component {
+    BackgroundColor $cBackgroundColor
+    LineColor $cBackgroundColor
+    FontColor $cFontColor
+
+    LineThickness $LINE_SIZE_COMPONENT
+    RoundCorner $ROUND_CORNER_COMPONENT
+    Margin $MARGIN_COMPONENT
+    Padding $PADDING_COMPONENT
+
+}
+
+component component {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+
+</style>
+
+!endprocedure
+' --- End Import: src/libs/stdlib/styles/_component.puml ---
+
 
 
 
@@ -1738,6 +1793,7 @@ title {
 !procedure Load_Lib_Styles_Stdlib()
 
     Write_Lib_Style_Stdlib_Title()
+    Write_Lib_Style_Stdlib_Component
     
 !endprocedure
 ' --- End Import: src/libs/stdlib/styles/index.puml ---

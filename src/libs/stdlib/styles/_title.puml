@@ -1,23 +1,23 @@
-
-
-
 '---------------------------------------------------------
 ' Title Styles
 '---------------------------------------------------------
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
+!$tBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_TITLE)
+!$tFontColor = $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY )
 
 <style>
 title {
-    BackgroundColor $resolve_style_color($BACKGROUND_COLOR_TITLE)
+    BackgroundColor $tBackgroundColor
     HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
     FontSize $FONT_SIZE_TITLE
-    FontColor $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY )
+    FontColor $tFontColor
     FontStyle $FONT_STYLE_TITLE
-    
-    LineThickness $LINE_SIZE_TITLE
+    LineColor $tBackgroundColor
 
+
+    LineThickness $LINE_SIZE_TITLE
     RoundCorner $ROUND_CORNER_TITLE
     Margin $MARGIN_TITLE
     Padding $PADDING_TITLE

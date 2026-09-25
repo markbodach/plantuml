@@ -11,4 +11,5 @@
 
 
 !include _title.puml
+!include _component.puml
 
