@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-25 11:11:38 EDT
-' Build Commit Hash: 589e58dd5b766aaf37f6ea2e719f9d0eb3100d42
-' Build Commit Comment: fallback refactor
+' Generated on: 2026-09-25 11:42:25 EDT
+' Build Commit Hash: 7e669aa7858c65d5e8ef20cd5de681358541951b
+' Build Commit Comment: cleanup
 ' ========================================================
 
 ' src/all.puml
@@ -675,7 +675,13 @@
   !$dark_val = $resolve_variable($dark_text_var_name)
   !$light_val = $resolve_variable($light_text_var_name)
 
-  !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
+  !if $is_too_dark($bg_val)
+    !return $light_val
+  !else
+    !return $dark_val
+  !endif
+
+  '!return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
 
 !endfunction
 

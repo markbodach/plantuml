@@ -5,7 +5,13 @@
   !$dark_val = $resolve_variable($dark_text_var_name)
   !$light_val = $resolve_variable($light_text_var_name)
 
-  !return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
+  !if $is_too_dark($bg_val)
+    !return $light_val
+  !else
+    !return $dark_val
+  !endif
+
+  '!return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
 
 !endfunction
 
