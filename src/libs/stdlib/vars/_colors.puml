@@ -1,4 +1,9 @@
 '---------------------------------------------------------
+' Contrast defaults
+'---------------------------------------------------------
+!$CONTRAST_THRESHOLD ?= 128
+
+'---------------------------------------------------------
 ' Darkening defaults
 '---------------------------------------------------------
 
@@ -6,8 +11,7 @@
 !$DARKEN_DEFAULT_PERCENT = 20
 
 ' RGB luminance floor (0-255)
-'!$DARKNESS_THRESHOLD = 32
-!$DARKNESS_THRESHOLD ?= 128
+!$DARKNESS_THRESHOLD = 32
 
 
 '---------------------------------------------------------
@@ -18,8 +22,7 @@
 !$LIGHTEN_DEFAULT_PERCENT = 20
 
 ' RGB luminance ceiling (0-255)
-'!$LIGHTNESS_THRESHOLD = 223
-!$LIGHTNESS_THRESHOLD ?= 128
+!$LIGHTNESS_THRESHOLD = 223
 
 
 

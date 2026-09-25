@@ -1,4 +1,74 @@
 '=========================================================
+' Literal Color Validation
+'
+' Supports:
+'   #RGB
+'   #RRGGBB
+'   #RRGGBBAA
+'=========================================================
+
+!function $is_hex_digit($c)
+
+  !$c = %upper($c)
+
+  !if %strpos("0123456789ABCDEF", $c) != -1
+    !return %true()
+  !endif
+
+  !return %false()
+
+!endfunction
+
+
+!function $is_literal_color($value)
+  '
+  ' Must start with #
+  '
+  !if (%substr($value,0,1) != "#")
+      !return %false()
+  !endif
+
+  !$len = %strlen($value)
+
+  '
+  ' Supported formats:
+  '   #RGB
+  '   #RRGGBB
+  '   #RRGGBBAA
+  '
+  !if ($len != 4) && ($len != 7) && ($len != 9)
+      !return %false()
+  !endif
+
+  !$i = 1
+
+  !while ($i < $len)
+
+      !if ($is_hex_digit(%substr($value,$i,1)) == %false())
+          !return %false()
+      !endif
+
+      !$i = $i + 1
+
+  !endwhile
+
+  !return %true()
+
+!endfunction
+
+
+!function $assert_literal_color($value)
+
+  !if ($is_literal_color($value) == %false())
+    !assert 0==1 : "MB_UML :: Invalid literal color=[" + $value + "]"
+  !endif
+
+  !return $value
+
+!endfunction
+
+
+'=========================================================
 ' Hex Normalization
 '
 ' Supports:
@@ -177,6 +247,12 @@
 !endfunction
 
 
+!function $needs_light_text($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum <= $CONTRAST_THRESHOLD)
+!endfunction
+
+
 '=========================================================
 ' Contrast Text Color Selection
 '
@@ -188,7 +264,7 @@
 
 !function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
 
-    !if ($is_too_dark($backgroundColor))
+    !if ($needs_light_text($backgroundColor))
         !return $lightTextColor
     !endif
 

@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-09-25 12:03:50 EDT**
-* Build Commit Hash: **87163b6fe1222ed78b80e4b0fef0f6dcaec0c830**
-* Build Commit Comment: **is_too_dark refactor of get_text_color**
+* Generated on: **2026-09-25 12:15:27 EDT**
+* Build Commit Hash: **dadc3a10c72503445e451ba0c4bbff743bd68319**
+* Build Commit Comment: **refactor hex**
 
 ## 🚀 How To Use It
 
@@ -273,7 +273,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
-!$DARKNESS_THRESHOLD = 128
+!$CONTRAST_THRESHOLD = 128
 !$DEFAULT_TEXT_ALIGNMENT = "center"
 !$FONT_COLOR_TITLE = $FONT_COLOR
 !$FONT_COLOR = $COLOR_TEXT
@@ -284,7 +284,6 @@ This list is generated from the repository's puml source code.  Use these variab
 !$FONT_SIZE = 12
 !$FONT_STYLE_TITLE = "bold"
 !$HORIZONTAL_ALIGNMENT_TITLE = "center"
-!$LIGHTNESS_THRESHOLD = 128
 !$LINE_COLOR_TITLE = $LINE_COLOR
 !$LINE_COLOR = $COLOR_TEXT
 !$LINE_SIZE_TITLE = $LINE_SIZE

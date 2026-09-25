@@ -46,7 +46,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
-!$DARKNESS_THRESHOLD = 128
+!$CONTRAST_THRESHOLD = 128
 !$DEFAULT_TEXT_ALIGNMENT = "center"
 !$FONT_COLOR_TITLE = $FONT_COLOR
 !$FONT_COLOR = $COLOR_TEXT
@@ -57,7 +57,6 @@ This list is generated from the repository's puml source code.  Use these variab
 !$FONT_SIZE = 12
 !$FONT_STYLE_TITLE = "bold"
 !$HORIZONTAL_ALIGNMENT_TITLE = "center"
-!$LIGHTNESS_THRESHOLD = 128
 !$LINE_COLOR_TITLE = $LINE_COLOR
 !$LINE_COLOR = $COLOR_TEXT
 !$LINE_SIZE_TITLE = $LINE_SIZE
