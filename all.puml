@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-25 13:17:47 EDT
-' Build Commit Hash: ba2ae1ce8ee68ecb32bb45fbf13103748d111d06
-' Build Commit Comment: refactor thresholds
+' Generated on: 2026-09-25 13:36:29 EDT
+' Build Commit Hash: e11d4617c15e849d4a8d18a598083d4200c6f0e8
+' Build Commit Comment: refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -844,6 +844,9 @@
 !endfunction
 
 
+
+
+
 '=========================================================
 ' Contrast Text Color Selection
 '
@@ -863,6 +866,28 @@
 
 !endfunction
 
+'=========================================================
+' AUTO Text Color Resolution
+'
+' Supports:
+'   PRIMARY_DARK
+'   PRIMARY
+'   #023451
+'   #D6EAF8
+'=========================================================
+!function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+
+  !if ($is_literal_color($background))
+    !$dark = $resolve_variable($dark_text_var_name)
+    !$light = $resolve_variable($light_text_var_name)
+
+    !return $get_contrast_text_color($background, $dark, $light)
+
+  !endif
+
+  !return $get_semantic_text_color( $background, $dark_text_var_name, $light_text_var_name )
+
+!endfunction
 
 '=========================================================
 ' Variable-Based Contrast Helper
@@ -888,6 +913,8 @@
     !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 
 !endfunction
+
+
 ' --- End Import: src/libs/stdlib/components/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_darken.puml ---
@@ -1365,11 +1392,10 @@
   '
   !if ($tokenOrColor == "AUTO")
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
-      !endif
-
-      !return $get_semantic_text_color($contextColor)
+    !if ($contextColor == "")
+      !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
+    !endif
+    !return $get_auto_text_color($contextColor)
 
   '
   ' CURRENT

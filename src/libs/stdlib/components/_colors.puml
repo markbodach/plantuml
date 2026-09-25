@@ -67,6 +67,9 @@
 !endfunction
 
 
+
+
+
 '=========================================================
 ' Contrast Text Color Selection
 '
@@ -86,6 +89,28 @@
 
 !endfunction
 
+'=========================================================
+' AUTO Text Color Resolution
+'
+' Supports:
+'   PRIMARY_DARK
+'   PRIMARY
+'   #023451
+'   #D6EAF8
+'=========================================================
+!function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+
+  !if ($is_literal_color($background))
+    !$dark = $resolve_variable($dark_text_var_name)
+    !$light = $resolve_variable($light_text_var_name)
+
+    !return $get_contrast_text_color($background, $dark, $light)
+
+  !endif
+
+  !return $get_semantic_text_color( $background, $dark_text_var_name, $light_text_var_name )
+
+!endfunction
 
 '=========================================================
 ' Variable-Based Contrast Helper
@@ -111,3 +136,5 @@
     !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 
 !endfunction
+
+

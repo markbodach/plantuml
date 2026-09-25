@@ -42,11 +42,10 @@
   '
   !if ($tokenOrColor == "AUTO")
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
-      !endif
-
-      !return $get_semantic_text_color($contextColor)
+    !if ($contextColor == "")
+      !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
+    !endif
+    !return $get_auto_text_color($contextColor)
 
   '
   ' CURRENT
