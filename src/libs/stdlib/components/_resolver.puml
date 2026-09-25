@@ -27,7 +27,7 @@
 
 
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
-  !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
+  '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
 
   '
@@ -101,3 +101,10 @@
 
 !endfunction
  
+
+ !function $resolve_literal_color($tokenOrColor)
+  !$color = $resolve_style_color($tokenOrColor)
+
+  $assert_literal_color($color)
+  !return %upper($color)
+!endfunction

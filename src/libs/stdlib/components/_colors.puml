@@ -55,3 +55,59 @@
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
 !endfunction
 
+
+'=========================================================
+' Darkness / Lightness Detection
+'=========================================================
+
+
+!function $needs_light_text($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum <= $CONTRAST_THRESHOLD)
+!endfunction
+
+
+'=========================================================
+' Contrast Text Color Selection
+'
+' Returns:
+'   dark text color
+'   OR
+'   light text color
+'=========================================================
+
+!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
+
+    !if ($needs_light_text($backgroundColor))
+        !return $lightTextColor
+    !endif
+
+    !return $darkTextColor
+
+!endfunction
+
+
+'=========================================================
+' Variable-Based Contrast Helper
+'
+' Example:
+'
+' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
+'
+' FontColor $get_variable_text_color(
+'     "COLOR_PRIMARY_DARK",
+'     "COLOR_TEXT",
+'     "COLOR_TEXT_LIGHT"
+' )
+'
+'=========================================================
+
+!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+
+    !$bg_val    = $resolve_variable($bg_var_name)
+    !$dark_val  = $resolve_variable($dark_text_var_name)
+    !$light_val = $resolve_variable($light_text_var_name)
+
+    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+
+!endfunction

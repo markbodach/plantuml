@@ -82,34 +82,35 @@
 
 !function $normalize_hex_rgb($hex)
 
-    !$len = %strlen($hex)
+  $assert_literal_color($hex)
+  !$len = %strlen($hex)
 
-    '
-    ' #RGB -> #RRGGBB
-    '
-    !if ($len == 4)
+  '
+  ' #RGB -> #RRGGBB
+  '
+  !if ($len == 4)
 
-        !$r = %substr($hex,1,1)
-        !$g = %substr($hex,2,1)
-        !$b = %substr($hex,3,1)
+    !$r = %substr($hex,1,1)
+    !$g = %substr($hex,2,1)
+    !$b = %substr($hex,3,1)
 
-        !return "#" + $r + $r + $g + $g + $b + $b
+    !return "#" + $r + $r + $g + $g + $b + $b
 
-    !endif
+  !endif
 
-    '
-    ' #RRGGBBAA -> #RRGGBB
-    '
-    !if ($len == 9)
+  '
+  ' #RRGGBBAA -> #RRGGBB
+  '
+  !if ($len == 9)
 
-        !return "#" + %substr($hex,1,6)
+    !return "#" + %substr($hex,1,6)
 
-    !endif
+  !endif
 
-    '
-    ' Assume #RRGGBB
-    '
-    !return $hex
+  '
+  ' Assume #RRGGBB
+  '
+  !return %upper($hex)
 
 !endfunction
 
@@ -157,7 +158,7 @@
     !endif
 
     !assert 0==1 : "MB_UML :: Invalid hex digit=[" + $c + "]"
-
+    !return -1
 !endfunction
 
 
@@ -224,76 +225,3 @@
 
 !endfunction
 
-
-'=========================================================
-' Darkness / Lightness Detection
-'=========================================================
-
-!function $is_too_dark($hex)
-
-  !$lum = $hex_luminance($hex)
-
-  !return ($lum <= $DARKNESS_THRESHOLD)
-
-!endfunction
-
-
-!function $is_too_light($hex)
-
-  !$lum = $hex_luminance($hex)
-
-  !return ($lum >= $LIGHTNESS_THRESHOLD)
-
-!endfunction
-
-
-!function $needs_light_text($hex)
-  !$lum = $hex_luminance($hex)
-  !return ($lum <= $CONTRAST_THRESHOLD)
-!endfunction
-
-
-'=========================================================
-' Contrast Text Color Selection
-'
-' Returns:
-'   dark text color
-'   OR
-'   light text color
-'=========================================================
-
-!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
-
-    !if ($needs_light_text($backgroundColor))
-        !return $lightTextColor
-    !endif
-
-    !return $darkTextColor
-
-!endfunction
-
-
-'=========================================================
-' Variable-Based Contrast Helper
-'
-' Example:
-'
-' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
-'
-' FontColor $get_variable_text_color(
-'     "COLOR_PRIMARY_DARK",
-'     "COLOR_TEXT",
-'     "COLOR_TEXT_LIGHT"
-' )
-'
-'=========================================================
-
-!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
-
-    !$bg_val    = $resolve_variable($bg_var_name)
-    !$dark_val  = $resolve_variable($dark_text_var_name)
-    !$light_val = $resolve_variable($light_text_var_name)
-
-    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
-
-!endfunction

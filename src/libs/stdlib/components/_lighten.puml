@@ -31,13 +31,9 @@
 
 !function $is_too_light($hex)
 
-  !$r = $hex_red($hex)
-  !$g = $hex_green($hex)
-  !$b = $hex_blue($hex)
+  !$lum = $hex_luminance($hex)
 
-  !$lum = $rgb_luminance($r, $g, $b)
-
-  !return $lum >= $LIGHTNESS_THRESHOLD
+  !return ($lum >= $LIGHTNESS_THRESHOLD)
 
 !endfunction
 
@@ -203,7 +199,7 @@
   ' Step 2:
   ' Resolve current color
   '
-  !$color = $resolve_style_color( $token )
+  !$color = $resolve_literal_color( $token )
 
 
   '

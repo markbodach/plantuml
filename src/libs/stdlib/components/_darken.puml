@@ -24,15 +24,12 @@
 !endfunction
 
 
+
 !function $is_too_dark($hex)
 
-  !$r = $hex_red($hex)
-  !$g = $hex_green($hex)
-  !$b = $hex_blue($hex)
+  !$lum = $hex_luminance($hex)
 
-  !$lum = $rgb_luminance($r,$g,$b)
-
-  !return $lum <= $DARKNESS_THRESHOLD
+  !return ($lum <= $DARKNESS_THRESHOLD)
 
 !endfunction
 
@@ -176,7 +173,7 @@
   ' Step 2:
   ' Resolve current value to a color
   '
-  !$color = $resolve_style_color( $token )
+  !$color = $resolve_literal_color( $token )
 
 
   '

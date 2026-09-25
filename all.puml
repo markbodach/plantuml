@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-25 12:15:19 EDT
-' Build Commit Hash: dadc3a10c72503445e451ba0c4bbff743bd68319
-' Build Commit Comment: refactor hex
+' Generated on: 2026-09-25 13:17:47 EDT
+' Build Commit Hash: ba2ae1ce8ee68ecb32bb45fbf13103748d111d06
+' Build Commit Comment: refactor thresholds
 ' ========================================================
 
 ' src/all.puml
@@ -629,34 +629,35 @@
 
 !function $normalize_hex_rgb($hex)
 
-    !$len = %strlen($hex)
+  $assert_literal_color($hex)
+  !$len = %strlen($hex)
 
-    '
-    ' #RGB -> #RRGGBB
-    '
-    !if ($len == 4)
+  '
+  ' #RGB -> #RRGGBB
+  '
+  !if ($len == 4)
 
-        !$r = %substr($hex,1,1)
-        !$g = %substr($hex,2,1)
-        !$b = %substr($hex,3,1)
+    !$r = %substr($hex,1,1)
+    !$g = %substr($hex,2,1)
+    !$b = %substr($hex,3,1)
 
-        !return "#" + $r + $r + $g + $g + $b + $b
+    !return "#" + $r + $r + $g + $g + $b + $b
 
-    !endif
+  !endif
 
-    '
-    ' #RRGGBBAA -> #RRGGBB
-    '
-    !if ($len == 9)
+  '
+  ' #RRGGBBAA -> #RRGGBB
+  '
+  !if ($len == 9)
 
-        !return "#" + %substr($hex,1,6)
+    !return "#" + %substr($hex,1,6)
 
-    !endif
+  !endif
 
-    '
-    ' Assume #RRGGBB
-    '
-    !return $hex
+  '
+  ' Assume #RRGGBB
+  '
+  !return %upper($hex)
 
 !endfunction
 
@@ -704,7 +705,7 @@
     !endif
 
     !assert 0==1 : "MB_UML :: Invalid hex digit=[" + $c + "]"
-
+    !return -1
 !endfunction
 
 
@@ -771,79 +772,6 @@
 
 !endfunction
 
-
-'=========================================================
-' Darkness / Lightness Detection
-'=========================================================
-
-!function $is_too_dark($hex)
-
-  !$lum = $hex_luminance($hex)
-
-  !return ($lum <= $DARKNESS_THRESHOLD)
-
-!endfunction
-
-
-!function $is_too_light($hex)
-
-  !$lum = $hex_luminance($hex)
-
-  !return ($lum >= $LIGHTNESS_THRESHOLD)
-
-!endfunction
-
-
-!function $needs_light_text($hex)
-  !$lum = $hex_luminance($hex)
-  !return ($lum <= $CONTRAST_THRESHOLD)
-!endfunction
-
-
-'=========================================================
-' Contrast Text Color Selection
-'
-' Returns:
-'   dark text color
-'   OR
-'   light text color
-'=========================================================
-
-!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
-
-    !if ($needs_light_text($backgroundColor))
-        !return $lightTextColor
-    !endif
-
-    !return $darkTextColor
-
-!endfunction
-
-
-'=========================================================
-' Variable-Based Contrast Helper
-'
-' Example:
-'
-' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
-'
-' FontColor $get_variable_text_color(
-'     "COLOR_PRIMARY_DARK",
-'     "COLOR_TEXT",
-'     "COLOR_TEXT_LIGHT"
-' )
-'
-'=========================================================
-
-!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
-
-    !$bg_val    = $resolve_variable($bg_var_name)
-    !$dark_val  = $resolve_variable($dark_text_var_name)
-    !$light_val = $resolve_variable($light_text_var_name)
-
-    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
-
-!endfunction
 ' --- End Import: src/libs/stdlib/components/_hex.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
@@ -904,6 +832,62 @@
   !return $get_color( $semantic_color_variable( $semantic_suffix ) )
 !endfunction
 
+
+'=========================================================
+' Darkness / Lightness Detection
+'=========================================================
+
+
+!function $needs_light_text($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum <= $CONTRAST_THRESHOLD)
+!endfunction
+
+
+'=========================================================
+' Contrast Text Color Selection
+'
+' Returns:
+'   dark text color
+'   OR
+'   light text color
+'=========================================================
+
+!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
+
+    !if ($needs_light_text($backgroundColor))
+        !return $lightTextColor
+    !endif
+
+    !return $darkTextColor
+
+!endfunction
+
+
+'=========================================================
+' Variable-Based Contrast Helper
+'
+' Example:
+'
+' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
+'
+' FontColor $get_variable_text_color(
+'     "COLOR_PRIMARY_DARK",
+'     "COLOR_TEXT",
+'     "COLOR_TEXT_LIGHT"
+' )
+'
+'=========================================================
+
+!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+
+    !$bg_val    = $resolve_variable($bg_var_name)
+    !$dark_val  = $resolve_variable($dark_text_var_name)
+    !$light_val = $resolve_variable($light_text_var_name)
+
+    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_darken.puml ---
@@ -933,15 +917,12 @@
 !endfunction
 
 
+
 !function $is_too_dark($hex)
 
-  !$r = $hex_red($hex)
-  !$g = $hex_green($hex)
-  !$b = $hex_blue($hex)
+  !$lum = $hex_luminance($hex)
 
-  !$lum = $rgb_luminance($r,$g,$b)
-
-  !return $lum <= $DARKNESS_THRESHOLD
+  !return ($lum <= $DARKNESS_THRESHOLD)
 
 !endfunction
 
@@ -1085,7 +1066,7 @@
   ' Step 2:
   ' Resolve current value to a color
   '
-  !$color = $resolve_style_color( $token )
+  !$color = $resolve_literal_color( $token )
 
 
   '
@@ -1145,13 +1126,9 @@
 
 !function $is_too_light($hex)
 
-  !$r = $hex_red($hex)
-  !$g = $hex_green($hex)
-  !$b = $hex_blue($hex)
+  !$lum = $hex_luminance($hex)
 
-  !$lum = $rgb_luminance($r, $g, $b)
-
-  !return $lum >= $LIGHTNESS_THRESHOLD
+  !return ($lum >= $LIGHTNESS_THRESHOLD)
 
 !endfunction
 
@@ -1317,7 +1294,7 @@
   ' Step 2:
   ' Resolve current color
   '
-  !$color = $resolve_style_color( $token )
+  !$color = $resolve_literal_color( $token )
 
 
   '
@@ -1373,7 +1350,7 @@
 
 
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
-  !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
+  '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
 
   '
@@ -1447,6 +1424,13 @@
 
 !endfunction
  
+
+ !function $resolve_literal_color($tokenOrColor)
+  !$color = $resolve_style_color($tokenOrColor)
+
+  $assert_literal_color($color)
+  !return %upper($color)
+!endfunction
 ' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
 ' --- End Import: src/libs/stdlib/components/index.puml ---
