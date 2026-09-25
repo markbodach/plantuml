@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-25 13:36:29 EDT
-' Build Commit Hash: e11d4617c15e849d4a8d18a598083d4200c6f0e8
-' Build Commit Comment: refactoring
+' Generated on: 2026-09-25 13:51:14 EDT
+' Build Commit Hash: 9630fe2881aef6a5c8d8163c9020573ee8134fc9
+' Build Commit Comment: fallback fixes
 ' ========================================================
 
 ' src/all.puml
@@ -758,7 +758,8 @@
 '=========================================================
 
 !function $rgb_luminance($r,$g,$b)
-  !return ( (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b) )
+  '!return ( (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b) )
+  !return ( ((299 * $r) + (587 * $g) + (114 * $b)) / 1000)
 !endfunction
 
 
@@ -1501,23 +1502,6 @@
 ' --- End Import: src/libs/togaf/components/_functions.puml ---
 
 ' --- Importing: src/libs/togaf/components/_colors.puml ---
-
-!function $get_togaf_text_color($togaf_color_name, $togaf_color_mode)
-  ' If $bg_color is light -> pick #1A1A1A (dark text). If dark -> pick #FFFFFF (light text).
-  !return "#?" + $bg_color_name + "?" + "#1A1A1A:#FFFFFF"
-!endfunction
-
-!function $get_togaf_text_color_light($togaf_color_name)
-  
-  !return $get_togaf_text_color($togaf_color_name, "LIGHT")
-
-!endfunction
-
-!function $get_togaf_text_color_dark($togaf_color_name)
-  
-  !return $get_togaf_text_color($togaf_color_name, "DARK")
-
-!endfunction
 ' --- End Import: src/libs/togaf/components/_colors.puml ---
 
 
