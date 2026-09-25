@@ -1,19 +1,8 @@
 
-!function $get_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
-
-  !$bg_val = $resolve_variable($bg_var_name)
-  !$dark_val = $resolve_variable($dark_text_var_name)
-  !$light_val = $resolve_variable($light_text_var_name)
-
-  !if $is_too_dark($bg_val)
-    !return $light_val
-  !else
-    !return $dark_val
-  !endif
-
-  '!return "#?" + $bg_val + "?" + $dark_val + ":" + $light_val
-
+!function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+  !return $get_variable_text_color($bg_var_name, $dark_text_var_name, $light_text_var_name )
 !endfunction
+
 
 
 

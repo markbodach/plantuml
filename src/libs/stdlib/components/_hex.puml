@@ -1,125 +1,223 @@
-
-
-'---------------------------------------------------------
-' Hex Helpers
+'=========================================================
+' Hex Normalization
 '
 ' Supports:
 '   #RGB
 '   #RRGGBB
 '   #RRGGBBAA
-'---------------------------------------------------------
+'
+' Returns:
+'   #RRGGBB
+'=========================================================
 
 !function $normalize_hex_rgb($hex)
 
-  !$len = %strlen($hex)
+    !$len = %strlen($hex)
 
-  '
-  ' #RGB -> #RRGGBB
-  '
-  !if $len == 4
+    '
+    ' #RGB -> #RRGGBB
+    '
+    !if ($len == 4)
 
-    !$r = %substr($hex,1,1)
-    !$g = %substr($hex,2,1)
-    !$b = %substr($hex,3,1)
+        !$r = %substr($hex,1,1)
+        !$g = %substr($hex,2,1)
+        !$b = %substr($hex,3,1)
 
-    !return "#" + $r + $r + $g + $g + $b + $b
+        !return "#" + $r + $r + $g + $g + $b + $b
 
-  !endif
+    !endif
 
-  '
-  ' #RRGGBBAA -> #RRGGBB
-  '
-  !if $len == 9
-    !return "#" + %substr($hex,1,6)
-  !endif
+    '
+    ' #RRGGBBAA -> #RRGGBB
+    '
+    !if ($len == 9)
 
-  '
-  ' Assume #RRGGBB
-  '
-  !return $hex
+        !return "#" + %substr($hex,1,6)
+
+    !endif
+
+    '
+    ' Assume #RRGGBB
+    '
+    !return $hex
 
 !endfunction
 
 
+'=========================================================
+' Hex Decoder
+'=========================================================
+
+!function $hex_digit_value($c)
+
+    !$c = %upper($c)
+
+    !if ($c == "0")
+        !return 0
+    !elseif ($c == "1")
+        !return 1
+    !elseif ($c == "2")
+        !return 2
+    !elseif ($c == "3")
+        !return 3
+    !elseif ($c == "4")
+        !return 4
+    !elseif ($c == "5")
+        !return 5
+    !elseif ($c == "6")
+        !return 6
+    !elseif ($c == "7")
+        !return 7
+    !elseif ($c == "8")
+        !return 8
+    !elseif ($c == "9")
+        !return 9
+    !elseif ($c == "A")
+        !return 10
+    !elseif ($c == "B")
+        !return 11
+    !elseif ($c == "C")
+        !return 12
+    !elseif ($c == "D")
+        !return 13
+    !elseif ($c == "E")
+        !return 14
+    !elseif ($c == "F")
+        !return 15
+    !endif
+
+    !assert 0==1 : "MB_UML :: Invalid hex digit=[" + $c + "]"
+
+!endfunction
+
+
+!function $hex_byte_to_int($hexByte)
+
+  !if (%strlen($hexByte) != 2)
+      !assert 0==1 : "MB_UML :: Invalid hex byte=[" + $hexByte + "]"
+  !endif
+
+  !$hi = $hex_digit_value(%substr($hexByte,0,1))
+  !$lo = $hex_digit_value(%substr($hexByte,1,1))
+
+  !return ($hi * 16) + $lo
+
+!endfunction
+
+
+'=========================================================
+' RGB Component Extraction
+'=========================================================
+
 !function $hex_red($hex)
-
   !$hex = $normalize_hex_rgb($hex)
-
-  !return %intval("0x" + %substr($hex,1,2))
+  !return $hex_byte_to_int( %substr($hex,1,2) )
 
 !endfunction
 
 
 !function $hex_green($hex)
-
   !$hex = $normalize_hex_rgb($hex)
-
-  !return %intval("0x" + %substr($hex,3,2))
-
+  !return $hex_byte_to_int( %substr($hex,3,2))
 !endfunction
 
 
 !function $hex_blue($hex)
-
   !$hex = $normalize_hex_rgb($hex)
-
-  !return %intval("0x" + %substr($hex,5,2))
-
-!endfunction
-
-
-'---------------------------------------------------------
-' Luminance Calculation
-'---------------------------------------------------------
-
-!function $rgb_luminance($r, $g, $b)
-
-  !return (
-    (0.2126 * $r) +
-    (0.7152 * $g) +
-    (0.0722 * $b)
-  )
+  !return $hex_byte_to_int(%substr($hex,5,2) )
 
 !endfunction
 
 
+'=========================================================
+' RGB Luminance
+'
+' W3C Relative Luminance Approximation
+'
+' Range:
+'   0   = Black
+'   255 = White
+'=========================================================
 
-
-!function $is_hex_digit($c)
-  !$c = %upper($c)
-  !if %strpos("0123456789ABCDEF", $c) != -1
-    !return %true()
-  !endif
-
-  !return %false()
+!function $rgb_luminance($r,$g,$b)
+  !return ( (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b) )
 !endfunction
 
-!function $is_hex_color($value)
-  !if %substr($value,0,1) != "#"
-    !return %false()
-  !endif
 
-  !$len = %strlen($value)
+!function $hex_luminance($hex)
 
-  !if ($len != 4) && ($len != 7) && ($len != 9)
-    !return %false()
-  !endif
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
 
-  !$i = 1
-  !while ($i < $len)
+  !return $rgb_luminance($r, $g, $b )
 
-    !if ($is_hex_digit(%substr($value,$i,1)) == %false())
-        !return %false()
+!endfunction
+
+
+'=========================================================
+' Darkness / Lightness Detection
+'=========================================================
+
+!function $is_too_dark($hex)
+
+  !$lum = $hex_luminance($hex)
+
+  !return ($lum <= $DARKNESS_THRESHOLD)
+
+!endfunction
+
+
+!function $is_too_light($hex)
+
+  !$lum = $hex_luminance($hex)
+
+  !return ($lum >= $LIGHTNESS_THRESHOLD)
+
+!endfunction
+
+
+'=========================================================
+' Contrast Text Color Selection
+'
+' Returns:
+'   dark text color
+'   OR
+'   light text color
+'=========================================================
+
+!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
+
+    !if ($is_too_dark($backgroundColor))
+        !return $lightTextColor
     !endif
 
-    !$i = $i + 1
-  !endwhile
-
-  !return %true()
+    !return $darkTextColor
 
 !endfunction
 
-!function $is_literal_color($value)
-  !return $is_hex_color($value)
-!endfunction
 
+'=========================================================
+' Variable-Based Contrast Helper
+'
+' Example:
+'
+' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
+'
+' FontColor $get_variable_text_color(
+'     "COLOR_PRIMARY_DARK",
+'     "COLOR_TEXT",
+'     "COLOR_TEXT_LIGHT"
+' )
+'
+'=========================================================
+
+!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+
+    !$bg_val    = $resolve_variable($bg_var_name)
+    !$dark_val  = $resolve_variable($dark_text_var_name)
+    !$light_val = $resolve_variable($light_text_var_name)
+
+    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+
+!endfunction
