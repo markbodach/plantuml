@@ -27,9 +27,7 @@
 
 
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
-
   !$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
 
   '
@@ -70,10 +68,7 @@
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
       !endif
 
-      !return $darken_color(
-          $contextColor,
-          $tokenOrColor
-      )
+      !return $darken_color( $contextColor, $tokenOrColor )
 
   '
   ' LIGHTEN
@@ -84,38 +79,25 @@
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
       !endif
 
-      !return $lighten_color(
-          $contextColor,
-          $tokenOrColor
-      )
+      !return $lighten_color($contextColor, $tokenOrColor )
 
   '
   ' Literal color
   '
   !elseif ($is_literal_color($tokenOrColor))
-
       !return $tokenOrColor
-
   '
   ' Semantic text token
   '
   !elseif ($ends_with_text($tokenOrColor) == %true())
-
-      !$base = %substr(
-          $tokenOrColor,
-          0,
-          %strlen($tokenOrColor) - 5
-      )
-
+      !$base = %substr($tokenOrColor, 0,%strlen($tokenOrColor) - 5 )
       !return $get_semantic_text_color($base)
-
   '
   ' Semantic color token
   '
   !else
-
       !return $get_semantic_color($tokenOrColor)
-
   !endif
 
 !endfunction
+ 

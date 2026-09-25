@@ -114,7 +114,7 @@
       !$index = $index + 1
   !endif
 
-    !return $result
+
 
 !endfunction
 
