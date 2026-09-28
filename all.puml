@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 10:18:51 EDT
-' Build Commit Hash: 785a9dd49cff8c8b6e8d3aeb6979e47aecfe1b60
+' Generated on: 2026-09-28 10:23:24 EDT
+' Build Commit Hash: 253c58bd5a9f7dbe829d63c151a79c49d111493f
 ' Build Commit Comment: style: component composite
 ' ========================================================
 
@@ -1365,7 +1365,7 @@
 ' --- End Import: src/libs/stdlib/components/_lighten.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_resolver.puml ---
-!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="")
+!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
 
   !if ($context0 != "") && ($is_special_style_token($context0) == %false())
       !return $context0
@@ -1407,7 +1407,7 @@
 
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5="", $context6="", $context7="")
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
   '
   ' Validation

@@ -1,4 +1,4 @@
-!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="")
+!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
 
   !if ($context0 != "") && ($is_special_style_token($context0) == %false())
       !return $context0
@@ -40,7 +40,7 @@
 
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5="", $context6="", $context7="")
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
   '
   ' Validation
