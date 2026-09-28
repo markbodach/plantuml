@@ -55,9 +55,7 @@
   '
   ' Return a grayscale color at the threshold value
   '
-  ' FAILS !$v = %format("%02X", $LIGHTNESS_THRESHOLD)
   !$v = $byte_to_hex($LIGHTNESS_THRESHOLD)
-
 
   !return "#" + $v + $v + $v
 

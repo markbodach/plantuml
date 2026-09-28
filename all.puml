@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 11:45:19 EDT
-' Build Commit Hash: abce2d53bba16554be0e3004705aae5b91c7224f
+' Generated on: 2026-09-28 12:02:16 EDT
+' Build Commit Hash: bd78c604ec64de71715b5d6985edc6c9fa3a4e7f
 ' Build Commit Comment: color constrast
 ' ========================================================
 
@@ -812,13 +812,14 @@
 
 
 !function $byte_to_hex($n)
-
-!$hi = $n / 16
-!$lo = $n % 16
-
-!return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
-
+  !$hi = %intval($n / 16)
+  !$tmp = $hi * 16
+  !$lo = $n - $tmp
+  !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
 !endfunction
+
+
+
 ' --- End Import: src/libs/stdlib/components/_hex.puml ---
 
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
@@ -1018,7 +1019,6 @@
   '
   ' Return a grayscale colour at the threshold value
   '
-  ' FAILS !$v = %format("%02X",$DARKNESS_THRESHOLD)
   !$v = $byte_to_hex($DARKNESS_THRESHOLD)
 
 
@@ -1226,9 +1226,7 @@
   '
   ' Return a grayscale color at the threshold value
   '
-  ' FAILS !$v = %format("%02X", $LIGHTNESS_THRESHOLD)
   !$v = $byte_to_hex($LIGHTNESS_THRESHOLD)
-
 
   !return "#" + $v + $v + $v
 
@@ -1800,8 +1798,8 @@ title {
     !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
     !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $cBackgroundColor, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
 
-    !$ccBackgroundColor = $resolve_style_color($cBackgroundColor, "LIGHTEN")
-    !$ccFontColor = $resolve_style_color($ccBackgroundColor, "AUTO")
+    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
+    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
 
 <style>
 

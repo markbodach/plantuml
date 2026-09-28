@@ -249,10 +249,11 @@
 
 
 !function $byte_to_hex($n)
-
-!$hi = $n / 16
-!$lo = $n % 16
-
-!return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
-
+  !$hi = %intval($n / 16)
+  !$tmp = $hi * 16
+  !$lo = $n - $tmp
+  !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
 !endfunction
+
+
+
