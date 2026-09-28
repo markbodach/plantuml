@@ -226,3 +226,33 @@
 
 !endfunction
 
+
+!function $int_to_hex_digit($n)
+
+!if $n < 10
+  !return "" + $n
+!elseif $n == 10
+  !return "A"
+!elseif $n == 11
+  !return "B"
+!elseif $n == 12
+  !return "C"
+!elseif $n == 13
+  !return "D"
+!elseif $n == 14
+  !return "E"
+!else
+  !return "F"
+!endif
+
+!endfunction
+
+
+!function $byte_to_hex($n)
+
+!$hi = $n / 16
+!$lo = $n % 16
+
+!return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
+
+!endfunction

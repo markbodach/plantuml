@@ -51,7 +51,9 @@
   '
   ' Return a grayscale colour at the threshold value
   '
-  !$v = %format("%02X",$DARKNESS_THRESHOLD)
+  ' FAILS !$v = %format("%02X",$DARKNESS_THRESHOLD)
+  !$v = $byte_to_hex($DARKNESS_THRESHOLD)
+
 
   !return "#" + $v + $v + $v
 
