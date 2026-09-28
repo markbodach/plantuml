@@ -47,6 +47,7 @@ src/all.puml (Root Master)
       └── ontario-health/skinparam/index.puml
       └── stdlib/styles/index.puml
         └── _title.puml
+        └── _element.puml
         └── _component.puml
       └── togaf/styles/index.puml
       └── ontario-health/styles/index.puml

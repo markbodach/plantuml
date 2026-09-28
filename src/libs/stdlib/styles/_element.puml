@@ -1,0 +1,37 @@
+
+'---------------------------------------------------------
+' Element Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Element()
+
+    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_ELEMENT)
+    !$cFontColor = $resolve_style_color($FONT_COLOR_ELEMENT, $cBackgroundColor, $BACKGROUND_COLOR_ELEMENT, $BACKGROUND_COLOR, $COLOR_BODY )
+
+    'BACKGROUND_COLOR_ELEMENT_COMPOSITE
+    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
+    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
+
+<style>
+
+element {
+    BackgroundColor $cBackgroundColor
+    LineColor $cBackgroundColor
+    FontColor $cFontColor
+
+    LineThickness $LINE_SIZE_ELEMENT
+    RoundCorner $ROUND_CORNER_ELEMENT
+    Margin $MARGIN_ELEMENT
+    Padding $PADDING_ELEMENT
+
+}
+
+.composite-container {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+
+</style>
+
+!endprocedure

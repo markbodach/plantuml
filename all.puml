@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 12:27:07 EDT
-' Build Commit Hash: 4de06b45586d9c58786a1b6d3ab74a9d48afdbff
-' Build Commit Comment: clamp refactoring
+' Generated on: 2026-09-28 13:50:26 EDT
+' Build Commit Hash: 502f77c0ce5c0261a2a11ad918bcf6d9939ff8e1
+' Build Commit Comment: refactoring colors
 ' ========================================================
 
 ' src/all.puml
@@ -1880,6 +1880,46 @@ title {
 '---------------------------------------------------------
 ' --- End Import: src/libs/stdlib/styles/_title.puml ---
 
+' --- Importing: src/libs/stdlib/styles/_element.puml ---
+
+'---------------------------------------------------------
+' Element Styles
+'---------------------------------------------------------
+
+!procedure Write_Lib_Style_Stdlib_Element()
+
+    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_ELEMENT)
+    !$cFontColor = $resolve_style_color($FONT_COLOR_ELEMENT, $cBackgroundColor, $BACKGROUND_COLOR_ELEMENT, $BACKGROUND_COLOR, $COLOR_BODY )
+
+    'BACKGROUND_COLOR_ELEMENT_COMPOSITE
+    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
+    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
+
+<style>
+
+element {
+    BackgroundColor $cBackgroundColor
+    LineColor $cBackgroundColor
+    FontColor $cFontColor
+
+    LineThickness $LINE_SIZE_ELEMENT
+    RoundCorner $ROUND_CORNER_ELEMENT
+    Margin $MARGIN_ELEMENT
+    Padding $PADDING_ELEMENT
+
+}
+
+.composite-container {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+
+</style>
+
+!endprocedure
+' --- End Import: src/libs/stdlib/styles/_element.puml ---
+
 ' --- Importing: src/libs/stdlib/styles/_component.puml ---
 
 '---------------------------------------------------------
@@ -1888,33 +1928,6 @@ title {
 
 !procedure Write_Lib_Style_Stdlib_Component()
 
-    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
-    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $cBackgroundColor, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
-
-    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
-    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
-
-<style>
-
-component {
-    BackgroundColor $cBackgroundColor
-    LineColor $cBackgroundColor
-    FontColor $cFontColor
-
-    LineThickness $LINE_SIZE_COMPONENT
-    RoundCorner $ROUND_CORNER_COMPONENT
-    Margin $MARGIN_COMPONENT
-    Padding $PADDING_COMPONENT
-
-}
-
-component component {
-    BackgroundColor $ccBackgroundColor
-    LineColor $ccBackgroundColor
-    FontColor $ccFontColor
-}
-
-</style>
 
 !endprocedure
 ' --- End Import: src/libs/stdlib/styles/_component.puml ---
@@ -1930,6 +1943,7 @@ component component {
 !procedure Load_Lib_Styles_Stdlib()
 
     Write_Lib_Style_Stdlib_Title()
+    Write_Lib_Style_Stdlib_Element()
     Write_Lib_Style_Stdlib_Component()
     
 !endprocedure
