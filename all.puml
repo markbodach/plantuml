@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 15:02:44 EDT
-' Build Commit Hash: fef78d22162b181b85e48dcb23dd751d2248373a
-' Build Commit Comment: added element
+' Generated on: 2026-09-28 17:03:34 EDT
+' Build Commit Hash: 762b8d2898d4788fad735e67bcad5b152a68724b
+' Build Commit Comment: fixes
 ' ========================================================
 
 ' src/all.puml
@@ -926,6 +926,10 @@
 
 !function $get_color($value)
 
+  !if ($value == "") 
+    !assert 0 == 1 : "MB_UML :: get_color() received blank value" 
+  !endif
+
   !if ($is_literal_color($value))
       !return %upper($value)
   !endif
@@ -943,6 +947,10 @@
 
 
 !function $get_semantic_color($semantic_suffix)
+
+  !if ($semantic_suffix == "") 
+    !assert 0 == 1 : "MB_UML :: get_semantic_color() received blank semantic suffix" 
+  !endif
 
   !if ($is_literal_color($semantic_suffix))
       !return %upper($semantic_suffix)

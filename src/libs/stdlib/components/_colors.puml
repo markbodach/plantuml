@@ -45,6 +45,10 @@
 
 !function $get_color($value)
 
+  !if ($value == "") 
+    !assert 0 == 1 : "MB_UML :: get_color() received blank value" 
+  !endif
+
   !if ($is_literal_color($value))
       !return %upper($value)
   !endif
@@ -62,6 +66,10 @@
 
 
 !function $get_semantic_color($semantic_suffix)
+
+  !if ($semantic_suffix == "") 
+    !assert 0 == 1 : "MB_UML :: get_semantic_color() received blank semantic suffix" 
+  !endif
 
   !if ($is_literal_color($semantic_suffix))
       !return %upper($semantic_suffix)
