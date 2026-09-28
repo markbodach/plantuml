@@ -20,15 +20,27 @@
       !return $context4
   !endif
 
+  !if ($context5 != "") && ($is_special_style_token($context5) == %false())
+      !return $context5
+  !endif
+
+  !if ($context6 != "") && ($is_special_style_token($context6) == %false())
+      !return $context6
+  !endif
+
+  !if ($context7 != "") && ($is_special_style_token($context7) == %false())
+      !return $context7
+  !endif
+
   !return ""
 
 !endfunction
 
 
 
-!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
+!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5="", $context6="", $context7="")
 
   '
   ' Validation

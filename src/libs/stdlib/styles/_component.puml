@@ -6,7 +6,7 @@
 !procedure Write_Lib_Style_Stdlib_Component()
 
     !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
-    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
+    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $cBackgroundColor, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
 
     !$ccBackgroundColor = $resolve_style_color($cBackgroundColor, "LIGHTEN")
     !$ccFontColor = $resolve_style_color($ccBackgroundColor, "AUTO")

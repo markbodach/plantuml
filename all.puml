@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 10:10:03 EDT
-' Build Commit Hash: 5c24b80e090f3aff5eab415fb73b2ce3e3837e52
-' Build Commit Comment: nesting
+' Generated on: 2026-09-28 10:18:51 EDT
+' Build Commit Hash: 785a9dd49cff8c8b6e8d3aeb6979e47aecfe1b60
+' Build Commit Comment: style: component composite
 ' ========================================================
 
 ' src/all.puml
@@ -1387,15 +1387,27 @@
       !return $context4
   !endif
 
+  !if ($context5 != "") && ($is_special_style_token($context5) == %false())
+      !return $context5
+  !endif
+
+  !if ($context6 != "") && ($is_special_style_token($context6) == %false())
+      !return $context6
+  !endif
+
+  !if ($context7 != "") && ($is_special_style_token($context7) == %false())
+      !return $context7
+  !endif
+
   !return ""
 
 !endfunction
 
 
 
-!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="" )
+!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4)
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5="", $context6="", $context7="")
 
   '
   ' Validation
@@ -1752,7 +1764,7 @@ title {
 !procedure Write_Lib_Style_Stdlib_Component()
 
     !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_COMPONENT)
-    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
+    !$cFontColor = $resolve_style_color($FONT_COLOR_COMPONENT, $cBackgroundColor, $BACKGROUND_COLOR_COMPONENT, $BACKGROUND_COLOR, $COLOR_BODY )
 
     !$ccBackgroundColor = $resolve_style_color($cBackgroundColor, "LIGHTEN")
     !$ccFontColor = $resolve_style_color($ccBackgroundColor, "AUTO")
