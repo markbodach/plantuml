@@ -79,9 +79,13 @@
       !return $semantic_suffix
   !endif
 
-  !return $get_color(
-      $semantic_color_variable($semantic_suffix)
-  )
+  !$candidate = $semantic_color_variable($semantic_suffix)
+
+  !if ($candidate == "COLOR_")
+      !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "]"
+  !endif
+
+  !return $get_color($candidate)
 
 !endfunction
 

@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 17:03:34 EDT
-' Build Commit Hash: 762b8d2898d4788fad735e67bcad5b152a68724b
-' Build Commit Comment: fixes
+' Generated on: 2026-09-28 17:38:29 EDT
+' Build Commit Hash: ac606acd497677ad3ec3a8ccc499cac3252f5f16
+' Build Commit Comment: undefined variables
 ' ========================================================
 
 ' src/all.puml
@@ -960,9 +960,13 @@
       !return $semantic_suffix
   !endif
 
-  !return $get_color(
-      $semantic_color_variable($semantic_suffix)
-  )
+  !$candidate = $semantic_color_variable($semantic_suffix)
+
+  !if ($candidate == "COLOR_")
+      !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "]"
+  !endif
+
+  !return $get_color($candidate)
 
 !endfunction
 
