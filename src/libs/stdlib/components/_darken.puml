@@ -38,7 +38,7 @@
 ' Threshold Protection
 '---------------------------------------------------------
 !function $clamp_dark_color($hex)
-
+    !return $hex
     !$lum = $hex_luminance($hex)
 
     !if ($lum > $DARKNESS_THRESHOLD)

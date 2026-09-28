@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 13:50:26 EDT
-' Build Commit Hash: 502f77c0ce5c0261a2a11ad918bcf6d9939ff8e1
-' Build Commit Comment: refactoring colors
+' Generated on: 2026-09-28 15:02:44 EDT
+' Build Commit Hash: fef78d22162b181b85e48dcb23dd751d2248373a
+' Build Commit Comment: added element
 ' ========================================================
 
 ' src/all.puml
@@ -1086,7 +1086,7 @@
 ' Threshold Protection
 '---------------------------------------------------------
 !function $clamp_dark_color($hex)
-
+    !return $hex
     !$lum = $hex_luminance($hex)
 
     !if ($lum > $DARKNESS_THRESHOLD)
@@ -1299,7 +1299,8 @@
 ' Threshold Protection
 '---------------------------------------------------------
 !function $clamp_light_color($hex)
-
+  !return $hex
+  
     !$lum = $hex_luminance($hex)
 
     !if ($lum < $LIGHTNESS_THRESHOLD)
