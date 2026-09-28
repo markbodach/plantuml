@@ -23,8 +23,16 @@
 
 
 !function $semantic_color_variable($name)
+
+  !if ($is_literal_color($name))
+    !return $name
+  !endif
+
   !return "COLOR_" + $normalize_color_name($name)
+
 !endfunction
+
+
 
 
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
@@ -36,24 +44,40 @@
 
 
 !function $get_color($value)
-  !$resolved = $resolve_variable($value, %false())
-  !if $resolved != ""
-    !return $resolved
+
+  !if ($is_literal_color($value))
+      !return %upper($value)
   !endif
+
+  !$resolved = $resolve_variable($value, %false())
+
+  !if $resolved != ""
+      !return $resolved
+  !endif
+
   !return $value
+
 !endfunction
 
 
 
 !function $get_semantic_color($semantic_suffix)
-  ' Call the base contrast function using the constructed variable name
-  
-  !if $is_special_style_token($semantic_suffix)
-    !return $semantic_suffix
+
+  !if ($is_literal_color($semantic_suffix))
+      !return %upper($semantic_suffix)
   !endif
 
-  !return $get_color( $semantic_color_variable( $semantic_suffix ) )
+  !if $is_special_style_token($semantic_suffix)
+      !return $semantic_suffix
+  !endif
+
+  !return $get_color(
+      $semantic_color_variable($semantic_suffix)
+  )
+
 !endfunction
+
+
 
 
 '=========================================================

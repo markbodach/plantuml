@@ -91,6 +91,10 @@
 
 !function $get_lighter_semantic_token($token)
 
+  !if ($is_literal_color($token))
+      !return ""
+  !endif
+
   '
   ' PRIMARY_DARKEST -> PRIMARY_DARK
   '

@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-09-28 12:13:14 EDT
-' Build Commit Hash: bc57f04cfa67ff275e2a43cfb7b994fc86e65177
-' Build Commit Comment: hex fixes
+' Generated on: 2026-09-28 12:27:07 EDT
+' Build Commit Hash: 4de06b45586d9c58786a1b6d3ab74a9d48afdbff
+' Build Commit Comment: clamp refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -904,8 +904,16 @@
 
 
 !function $semantic_color_variable($name)
+
+  !if ($is_literal_color($name))
+    !return $name
+  !endif
+
   !return "COLOR_" + $normalize_color_name($name)
+
 !endfunction
+
+
 
 
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
@@ -917,24 +925,40 @@
 
 
 !function $get_color($value)
-  !$resolved = $resolve_variable($value, %false())
-  !if $resolved != ""
-    !return $resolved
+
+  !if ($is_literal_color($value))
+      !return %upper($value)
   !endif
+
+  !$resolved = $resolve_variable($value, %false())
+
+  !if $resolved != ""
+      !return $resolved
+  !endif
+
   !return $value
+
 !endfunction
 
 
 
 !function $get_semantic_color($semantic_suffix)
-  ' Call the base contrast function using the constructed variable name
-  
-  !if $is_special_style_token($semantic_suffix)
-    !return $semantic_suffix
+
+  !if ($is_literal_color($semantic_suffix))
+      !return %upper($semantic_suffix)
   !endif
 
-  !return $get_color( $semantic_color_variable( $semantic_suffix ) )
+  !if $is_special_style_token($semantic_suffix)
+      !return $semantic_suffix
+  !endif
+
+  !return $get_color(
+      $semantic_color_variable($semantic_suffix)
+  )
+
 !endfunction
+
+
 
 
 '=========================================================
@@ -1104,6 +1128,10 @@
 '---------------------------------------------------------
 
 !function $get_darker_semantic_token($token)
+
+  !if ($is_literal_color($token))
+      !return ""
+  !endif
 
   '
   ' PRIMARY_LIGHT -> PRIMARY
@@ -1319,6 +1347,10 @@
 '---------------------------------------------------------
 
 !function $get_lighter_semantic_token($token)
+
+  !if ($is_literal_color($token))
+      !return ""
+  !endif
 
   '
   ' PRIMARY_DARKEST -> PRIMARY_DARK
@@ -1876,12 +1908,10 @@ component {
 
 }
 
-component {
-    component {
-        BackgroundColor $ccBackgroundColor
-        LineColor $ccBackgroundColor
-        FontColor $ccFontColor
-    }
+component component {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
 }
 
 </style>
