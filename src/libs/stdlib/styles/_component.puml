@@ -25,10 +25,12 @@ component {
 
 }
 
-component component {
-    BackgroundColor $ccBackgroundColor
-    LineColor $ccBackgroundColor
-    FontColor $ccFontColor
+component {
+    component {
+        BackgroundColor $ccBackgroundColor
+        LineColor $ccBackgroundColor
+        FontColor $ccFontColor
+    }
 }
 
 </style>
