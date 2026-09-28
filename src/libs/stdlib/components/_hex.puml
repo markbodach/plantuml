@@ -162,6 +162,70 @@
 !endfunction
 
 
+'=========================================================
+' Integer -> Hex Digit
+'
+' Input: 0-15
+' Output: 0-F
+'=========================================================
+
+!function $int_to_hex_digit($n)
+
+    !if $n == 0
+        !return "0"
+    !elseif $n == 1
+        !return "1"
+    !elseif $n == 2
+        !return "2"
+    !elseif $n == 3
+        !return "3"
+    !elseif $n == 4
+        !return "4"
+    !elseif $n == 5
+        !return "5"
+    !elseif $n == 6
+        !return "6"
+    !elseif $n == 7
+        !return "7"
+    !elseif $n == 8
+        !return "8"
+    !elseif $n == 9
+        !return "9"
+    !elseif $n == 10
+        !return "A"
+    !elseif $n == 11
+        !return "B"
+    !elseif $n == 12
+        !return "C"
+    !elseif $n == 13
+        !return "D"
+    !elseif $n == 14
+        !return "E"
+    !else
+        !return "F"
+    !endif
+
+!endfunction
+
+'=========================================================
+' Byte -> 2 Digit Hex
+'
+' Input: 0-255
+' Output: 00-FF
+'=========================================================
+
+!function $byte_to_hex($n)
+
+    !$hi = %intval($n / 16)
+    !$lo = $n - ($hi * 16)
+
+    !return $int_to_hex_digit($hi)
+          + $int_to_hex_digit($lo)
+
+!endfunction
+
+
+
 !function $hex_byte_to_int($hexByte)
 
   !if (%strlen($hexByte) != 2)
@@ -227,26 +291,6 @@
 !endfunction
 
 
-!function $int_to_hex_digit($n)
-
-!if $n < 10
-  !return "" + $n
-!elseif $n == 10
-  !return "A"
-!elseif $n == 11
-  !return "B"
-!elseif $n == 12
-  !return "C"
-!elseif $n == 13
-  !return "D"
-!elseif $n == 14
-  !return "E"
-!else
-  !return "F"
-!endif
-
-!endfunction
-
 
 !function $byte_to_hex($n)
   !$hi = %intval($n / 16)
@@ -257,3 +301,15 @@
 
 
 
+'=========================================================
+' RGB -> #RRGGBB
+'=========================================================
+
+!function $rgb_to_hex($r,$g,$b)
+
+    !return "#"
+          + $byte_to_hex($r)
+          + $byte_to_hex($g)
+          + $byte_to_hex($b)
+
+!endfunction

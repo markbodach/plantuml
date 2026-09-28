@@ -37,26 +37,28 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-
 !function $clamp_dark_color($hex)
 
-  !if ($DARKNESS_THRESHOLD < 0) || ($DARKNESS_THRESHOLD > 255)
-    !assert 0 == 1 : "MB_UML :: (clamp_dark_color) Invalid DARKNESS_THRESHOLD=[" + $DARKNESS_THRESHOLD + "]"
-  !endif
+    !$lum = $hex_luminance($hex)
 
-  !if $is_too_dark($hex) == %false()
-    !return $hex
-  !endif
+    !if ($lum > $DARKNESS_THRESHOLD)
+        !return $hex
+    !endif
 
-  '
-  ' Return a grayscale colour at the threshold value
-  '
-  !$v = $byte_to_hex($DARKNESS_THRESHOLD)
+    !$r = $hex_red($hex)
+    !$g = $hex_green($hex)
+    !$b = $hex_blue($hex)
 
+    !$factor = $DARKNESS_THRESHOLD / $lum
 
-  !return "#" + $v + $v + $v
+    !$r = %min(255,%intval($r * $factor))
+    !$g = %min(255,%intval($g * $factor))
+    !$b = %min(255,%intval($b * $factor))
+
+    !return $rgb_to_hex($r,$g,$b)
 
 !endfunction
+
 
 
 '---------------------------------------------------------

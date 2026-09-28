@@ -41,25 +41,28 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-
 !function $clamp_light_color($hex)
 
-  !if ($LIGHTNESS_THRESHOLD < 0) || ($LIGHTNESS_THRESHOLD > 255)
-    !assert 0 == 1 : "MB_UML :: (clamp_light_color) Invalid LIGHTNESS_THRESHOLD=[" + $LIGHTNESS_THRESHOLD + "]"
-  !endif
+    !$lum = $hex_luminance($hex)
 
-  !if $is_too_light($hex) == %false()
-    !return $hex
-  !endif
+    !if ($lum < $LIGHTNESS_THRESHOLD)
+        !return $hex
+    !endif
 
-  '
-  ' Return a grayscale color at the threshold value
-  '
-  !$v = $byte_to_hex($LIGHTNESS_THRESHOLD)
+    !$r = $hex_red($hex)
+    !$g = $hex_green($hex)
+    !$b = $hex_blue($hex)
 
-  !return "#" + $v + $v + $v
+    !$factor = $LIGHTNESS_THRESHOLD / $lum
+
+    !$r = %intval($r * $factor)
+    !$g = %intval($g * $factor)
+    !$b = %intval($b * $factor)
+
+    !return $rgb_to_hex($r,$g,$b)
 
 !endfunction
+
 
 
 '---------------------------------------------------------
