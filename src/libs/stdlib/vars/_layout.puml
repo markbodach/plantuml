@@ -13,8 +13,8 @@
 
 !$SHADOWING ?= %false()
 !$LINE_TYPE ?= "ortho"
-!$LINE_COLOR ?= $COLOR_TEXT
-!$LINE_SIZE ?= 2
+!$COLOR_LINE ?= $COLOR_TEXT
+!$SIZE_LINE ?= 2
 
 !$DEFAULT_TEXT_ALIGNMENT ?= "center"
 
@@ -23,7 +23,7 @@
 ' Container / Boundary Constants
 '---------------------------------------------------------
 
-!$RECTANGLE_BORDER_COLOR ?= $COLOR_NONE
+!$COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
 
 '---------------------------------------------------------
 ' Legend Functions

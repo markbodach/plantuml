@@ -17,12 +17,12 @@ The style framework supports semantic color tokens, computed values, and literal
 
 | Value | Description | Example |
 |---------|-------------|---------|
-| `AUTO` | Automatically derive an appropriate value from context. Typically used for text colors. | `FONT_COLOR_TITLE = "AUTO"` |
-| `CURRENT` | Use the current component's resolved surface/background color. | `LINE_COLOR_TITLE = "CURRENT"` |
-| `DARKEN` | Resolve to the next darker semantic token. Falls back to RGB darkening when no darker semantic token exists. | `LINE_COLOR_TITLE = "DARKEN"` |
-| `DARKEN_n` | Resolve to the next darker semantic token. If no darker semantic token exists, darken the resolved color by *n*%. | `LINE_COLOR_TITLE = "DARKEN_20"` |
-| `LIGHTEN` | Resolve to the next lighter semantic token. Falls back to RGB lightening when no lighter semantic token exists. | `LINE_COLOR_TITLE = "LIGHTEN"` |
-| `LIGHTEN_n` | Resolve to the next lighter semantic token. If no lighter semantic token exists, lighten the resolved color by *n*%. | `LINE_COLOR_TITLE = "LIGHTEN_20"` |
+| `AUTO` | Automatically derive an appropriate value from context. Typically used for text colors. | `COLOR_FONT_TITLE = "AUTO"` |
+| `CURRENT` | Use the current component's resolved surface/background color. | `COLOR_LINE_TITLE = "CURRENT"` |
+| `DARKEN` | Resolve to the next darker semantic token. Falls back to RGB darkening when no darker semantic token exists. | `COLOR_LINE_TITLE = "DARKEN"` |
+| `DARKEN_n` | Resolve to the next darker semantic token. If no darker semantic token exists, darken the resolved color by *n*%. | `COLOR_LINE_TITLE = "DARKEN_20"` |
+| `LIGHTEN` | Resolve to the next lighter semantic token. Falls back to RGB lightening when no lighter semantic token exists. | `COLOR_LINE_TITLE = "LIGHTEN"` |
+| `LIGHTEN_n` | Resolve to the next lighter semantic token. If no lighter semantic token exists, lighten the resolved color by *n*%. | `COLOR_LINE_TITLE = "LIGHTEN_20"` |
 | `*_TEXT` | Use the contrast text color for a semantic token. | `PRIMARY_DARK_TEXT` |
 | Semantic Token | Resolve through the active theme. | `PRIMARY_DARK` |
 | Literal Color | Use directly without transformation. | `#023451` |
@@ -106,9 +106,9 @@ Threshold protection prevents colors from becoming excessively close to pure bla
 ### Configuration
 
 ```plantuml
-!$BACKGROUND_COLOR_TITLE = "PRIMARY_DARK"
-!$FONT_COLOR_TITLE       = "AUTO"
-!$LINE_COLOR_TITLE       = "CURRENT"
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
+!$COLOR_FONT_TITLE       = "AUTO"
+!$COLOR_LINE_TITLE       = "CURRENT"
 ```
 
 ### Result
@@ -126,8 +126,8 @@ LineColor       = PRIMARY_DARK
 ### Configuration
 
 ```plantuml
-!$BACKGROUND_COLOR_TITLE = "PRIMARY"
-!$LINE_COLOR_TITLE       = "DARKEN"
+!$COLOR_BACKGROUND_TITLE = "PRIMARY"
+!$COLOR_LINE_TITLE       = "DARKEN"
 ```
 
 ### Result
@@ -144,8 +144,8 @@ LineColor       = PRIMARY_DARK
 ### Configuration
 
 ```plantuml
-!$BACKGROUND_COLOR_TITLE = "PRIMARY_DARK"
-!$LINE_COLOR_TITLE       = "LIGHTEN"
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
+!$COLOR_LINE_TITLE       = "LIGHTEN"
 ```
 
 ### Result
@@ -162,8 +162,8 @@ LineColor       = PRIMARY
 ### Configuration
 
 ```plantuml
-!$BACKGROUND_COLOR_TITLE = "PRIMARY_DARKEST"
-!$LINE_COLOR_TITLE       = "DARKEN_20"
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARKEST"
+!$COLOR_LINE_TITLE       = "DARKEN_20"
 ```
 
 ### Result
@@ -181,8 +181,8 @@ Threshold protection will be applied if the resulting color becomes too close to
 ### Configuration
 
 ```plantuml
-!$BACKGROUND_COLOR_TITLE = "PRIMARY_LIGHTEST"
-!$LINE_COLOR_TITLE       = "LIGHTEN_20"
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_LIGHTEST"
+!$COLOR_LINE_TITLE       = "LIGHTEN_20"
 ```
 
 ### Result

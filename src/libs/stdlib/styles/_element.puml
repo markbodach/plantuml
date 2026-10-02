@@ -5,10 +5,10 @@
 
 !procedure Write_Lib_Style_Stdlib_Element()
 
-    !$cBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_ELEMENT)
-    !$cFontColor = $resolve_style_color($FONT_COLOR_ELEMENT, $cBackgroundColor, $BACKGROUND_COLOR_ELEMENT, $BACKGROUND_COLOR, $COLOR_BODY )
+    !$cBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_ELEMENT)
+    !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
 
-    'BACKGROUND_COLOR_ELEMENT_COMPOSITE
+    'COLOR_BACKGROUND_ELEMENT_COMPOSITE
     !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
     !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
 
@@ -19,7 +19,7 @@ element {
     LineColor $cBackgroundColor
     FontColor $cFontColor
 
-    LineThickness $LINE_SIZE_ELEMENT
+    LineThickness $SIZE_LINE_ELEMENT
     RoundCorner $ROUND_CORNER_ELEMENT
     Margin $MARGIN_ELEMENT
     Padding $PADDING_ELEMENT

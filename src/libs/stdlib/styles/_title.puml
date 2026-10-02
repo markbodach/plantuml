@@ -4,20 +4,20 @@
 
 !procedure Write_Lib_Style_Stdlib_Title()
 
-!$tBackgroundColor = $resolve_style_color($BACKGROUND_COLOR_TITLE)
-!$tFontColor = $resolve_style_color($FONT_COLOR_TITLE, $BACKGROUND_COLOR_TITLE, $BACKGROUND_COLOR, $COLOR_BODY )
+!$tBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_TITLE)
+!$tFontColor = $resolve_style_color($COLOR_FONT_TITLE, $COLOR_BACKGROUND_TITLE, $COLOR_BACKGROUND, $COLOR_BODY )
 
 <style>
 title {
     BackgroundColor $tBackgroundColor
-    HorizontalAlignment $HORIZONTAL_ALIGNMENT_TITLE
-    FontSize $FONT_SIZE_TITLE
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
     FontColor $tFontColor
-    FontStyle $FONT_STYLE_TITLE
+    FontStyle $STYLE_FONT_TITLE
     LineColor $tBackgroundColor
 
 
-    LineThickness $LINE_SIZE_TITLE
+    LineThickness $SIZE_LINE_TITLE
     RoundCorner $ROUND_CORNER_TITLE
     Margin $MARGIN_TITLE
     Padding $PADDING_TITLE

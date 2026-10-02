@@ -5,10 +5,10 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$FONT_NAME ?= "Segoe UI"
-!$FONT_SIZE ?= 12
-!$FONT_SIZE_TITLE ?= 18
-!$FONT_SIZE_LEGEND ?= 11
-!$FONT_SIZE_ARROW ?= 11
+!$NAME_FONT ?= "Segoe UI"
+!$SIZE_FONT ?= 12
+!$SIZE_FONT_TITLE ?= 18
+!$SIZE_FONT_LEGEND ?= 11
+!$SIZE_FONT_ARROW ?= 11
 
-!$FONT_COLOR ?= $COLOR_TEXT
+!$COLOR_FONT ?= $COLOR_TEXT
