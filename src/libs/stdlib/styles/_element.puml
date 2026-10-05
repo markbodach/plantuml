@@ -16,7 +16,7 @@
 
 element {
     BackgroundColor $cBackgroundColor
-    LineColor $cBackgroundColor
+    LineColor $ccFontColor
     FontColor $cFontColor
 
     LineThickness $SIZE_LINE_ELEMENT
