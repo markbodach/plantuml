@@ -12,6 +12,7 @@ src/all.puml (Root Master)
         └── _borders.puml
         └── _layout.puml
         └── _icons.puml
+        └── _element.puml
         └── _title.puml
         └── _component.puml
       └── togaf/vars/index.puml

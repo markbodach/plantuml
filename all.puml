@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-02 16:31:47 EDT
-' Build Commit Hash: 171aded08b9fe76414fc0434f4646bab3e42df30
-' Build Commit Comment: undefined fixes
+' Generated on: 2026-10-05 10:33:18 EDT
+' Build Commit Hash: 6604090b450ca4b2024adf72d1d236f095a5e72e
+' Build Commit Comment: naming refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -184,6 +184,23 @@
 ' --- End Import: src/libs/stdlib/vars/_icons.puml ---
 
 
+
+' --- Importing: src/libs/stdlib/vars/_element.puml ---
+
+!$COLOR_FONT_ELEMENT ?= $COLOR_FONT
+!$STYLE_FONT_ELEMENT ?= ""
+
+!$COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
+!$COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
+!$ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
+
+!$MARGIN_ELEMENT ?= 20
+!$PADDING_ELEMENT ?= 15
+!$ROUND_CORNER_ELEMENT ?= $ROUND_CORNER
+
+!$COLOR_LINE_ELEMENT ?= $COLOR_LINE
+!$SIZE_LINE_ELEMENT ?= $SIZE_LINE
+' --- End Import: src/libs/stdlib/vars/_element.puml ---
 
 ' --- Importing: src/libs/stdlib/vars/_title.puml ---
 

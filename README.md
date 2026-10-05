@@ -4,9 +4,9 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-10-02 16:31:52 EDT**
-* Build Commit Hash: **171aded08b9fe76414fc0434f4646bab3e42df30**
-* Build Commit Comment: **undefined fixes**
+* Generated on: **2026-10-05 10:33:26 EDT**
+* Build Commit Hash: **6604090b450ca4b2024adf72d1d236f095a5e72e**
+* Build Commit Comment: **naming refactoring**
 
 ## 🚀 How To Use It
 
@@ -710,6 +710,7 @@ This list is generated from the repository's puml source code.  Use these variab
 @startuml
 
 !$ALIGNMENT_HORIZONTAL_COMPONENT = "left"
+!$ALIGNMENT_HORIZONTAL_ELEMENT = "left"
 !$ALIGNMENT_HORIZONTAL_TITLE = "center"
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
@@ -718,6 +719,8 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_APPLICATION_LIGHT = $COLOR_TOGAF_APPLICATION
 !$COLOR_BACKGROUND_ACTOR = "#90CAF9"
 !$COLOR_BACKGROUND_COMPONENT = $COLOR_PRIMARY
+!$COLOR_BACKGROUND_ELEMENT_COMPOSITE = $COLOR_PRIMARY_LIGHT
+!$COLOR_BACKGROUND_ELEMENT = $COLOR_PRIMARY
 !$COLOR_BACKGROUND_TITLE = $COLOR_PRIMARY_LIGHT
 !$COLOR_BACKGROUND = $COLOR_PRIMARY_LIGHT
 !$COLOR_BODY = "#ffffff"
@@ -730,6 +733,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_ERROR_LIGHT = "#CD0000"
 !$COLOR_ERROR = "#CD0000"
 !$COLOR_FONT_COMPONENT = $COLOR_FONT
+!$COLOR_FONT_ELEMENT = $COLOR_FONT
 !$COLOR_FONT_TITLE = $COLOR_FONT
 !$COLOR_FONT = $COLOR_TEXT
 !$COLOR_HIGHLIGHTED_DARK = $COLOR_TOGAF_HIGHLIGHTED
@@ -737,6 +741,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_IMPLEMENTATION_DARK = $COLOR_TOGAF_IMPLEMENTATION
 !$COLOR_IMPLEMENTATION_LIGHT = $COLOR_TOGAF_IMPLEMENTATION
 !$COLOR_LINE_COMPONENT = $COLOR_LINE
+!$COLOR_LINE_ELEMENT = $COLOR_LINE
 !$COLOR_LINE_TITLE = $COLOR_LINE
 !$COLOR_LINE = $COLOR_TEXT
 !$COLOR_MOTIVATION_DARK = $COLOR_TOGAF_MOTIVATION
@@ -809,16 +814,19 @@ This list is generated from the repository's puml source code.  Use these variab
 !$DEFAULT_TEXT_ALIGNMENT = "center"
 !$LINE_TYPE = "ortho"
 !$MARGIN_COMPONENT = 20
+!$MARGIN_ELEMENT = 20
 !$MARGIN_TITLE = 20
 !$MARGIN = 15
 !$NAME_FONT = "Segoe UI"
 !$NODE_SEP = 75
 !$OH_THEME_ENABLED = %false()
 !$PADDING_COMPONENT = 15
+!$PADDING_ELEMENT = 15
 !$PADDING_TITLE = 15
 !$PADDING = 10
 !$RANK_SEP = 75
 !$ROUND_CORNER_COMPONENT = $ROUND_CORNER
+!$ROUND_CORNER_ELEMENT = $ROUND_CORNER
 !$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
 !$SHADOWING = %false()
@@ -828,11 +836,13 @@ This list is generated from the repository's puml source code.  Use these variab
 !$SIZE_FONT_TITLE = 18
 !$SIZE_FONT = 12
 !$SIZE_LINE_COMPONENT = $SIZE_LINE
+!$SIZE_LINE_ELEMENT = $SIZE_LINE
 !$SIZE_LINE_TITLE = $SIZE_LINE
 !$SIZE_LINE = 2
 !$SKINPARAM_ENABLED = %false()
 !$STYLE_ACTOR = awesome
 !$STYLE_FONT_COMPONENT = ""
+!$STYLE_FONT_ELEMENT = ""
 !$STYLE_FONT_TITLE = "bold"
 !$TOGAF_THEME_ENABLED = %false()
 
@@ -873,6 +883,7 @@ src/all.puml (Root Master)
         └── _borders.puml
         └── _layout.puml
         └── _icons.puml
+        └── _element.puml
         └── _title.puml
         └── _component.puml
       └── togaf/vars/index.puml
