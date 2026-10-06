@@ -262,52 +262,63 @@
 '
 '   3. Threshold Clamp
 '---------------------------------------------------------
-
-!function $darken_color( $token, $darken_token="DARKEN" )
+!function $darken_color($token, $darken_token="DARKEN")
 
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "]"
   !endif
 
-
   '
   ' Step 1:
   ' Semantic progression
   '
-  !$darker = $get_darker_semantic_token( $token )
+  !$darker = $get_darker_semantic_token($token)
 
   !if $darker != ""
 
-    !return $get_semantic_color( $darker )
+    !return $get_semantic_color($darker)
 
   !endif
-
 
   '
   ' Step 2:
   ' Resolve current value to a color
   '
-  !$color = $resolve_literal_color( $token )
-
+  !$color = $resolve_literal_color($token)
 
   '
   ' Step 3:
-  ' Determine darkening percentage
+  ' Handle pure white explicitly.
   '
-  !$pct = $get_darken_percent( $darken_token )
+  ' Some PlantUML versions may not reliably
+  ' darken absolute white.
+  '
+  !if (%upper($color) == "#FFFFFF")
 
+      !$color = "#FEFEFE"
+
+  !endif
 
   '
   ' Step 4:
-  ' RGB Darkening
+  ' Determine darkening percentage
   '
-  !$dark = %darken( $color, $pct )
-
+  !$pct = $get_darken_percent($darken_token)
 
   '
   ' Step 5:
+  ' RGB Darkening
+  '
+  !$dark = %darken($color, $pct)
+
+  $assert_literal_color($dark)
+
+  !$dark = $normalize_hex_rgb($dark)
+
+  '
+  ' Step 6:
   ' Prevent near-black collapse
   '
-  !return $normalize_darkness_floor( $dark )
+  !return $normalize_darkness_floor($dark)
 
 !endfunction

@@ -9,7 +9,7 @@
     !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
 
     'COLOR_BACKGROUND_ELEMENT_COMPOSITE
-    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
+    !$ccBackgroundColor = $resolve_style_color("DARKEN", $cBackgroundColor)
     !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
 
 <style>

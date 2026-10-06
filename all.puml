@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 17:21:23 EDT
-' Build Commit Hash: 5c6759b3d804702ef2b84cc9895769a58529f2d8
-' Build Commit Comment: shading refactoring
+' Generated on: 2026-10-06 18:06:58 EDT
+' Build Commit Hash: 54634e714a23a0c237d466fef8120d9f9e1941aa
+' Build Commit Comment: normalize color values
 ' ========================================================
 
 ' src/all.puml
@@ -1318,53 +1318,64 @@
 '
 '   3. Threshold Clamp
 '---------------------------------------------------------
-
-!function $darken_color( $token, $darken_token="DARKEN" )
+!function $darken_color($token, $darken_token="DARKEN")
 
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "]"
   !endif
 
-
   '
   ' Step 1:
   ' Semantic progression
   '
-  !$darker = $get_darker_semantic_token( $token )
+  !$darker = $get_darker_semantic_token($token)
 
   !if $darker != ""
 
-    !return $get_semantic_color( $darker )
+    !return $get_semantic_color($darker)
 
   !endif
-
 
   '
   ' Step 2:
   ' Resolve current value to a color
   '
-  !$color = $resolve_literal_color( $token )
-
+  !$color = $resolve_literal_color($token)
 
   '
   ' Step 3:
-  ' Determine darkening percentage
+  ' Handle pure white explicitly.
   '
-  !$pct = $get_darken_percent( $darken_token )
+  ' Some PlantUML versions may not reliably
+  ' darken absolute white.
+  '
+  !if (%upper($color) == "#FFFFFF")
 
+      !$color = "#FEFEFE"
+
+  !endif
 
   '
   ' Step 4:
-  ' RGB Darkening
+  ' Determine darkening percentage
   '
-  !$dark = %darken( $color, $pct )
-
+  !$pct = $get_darken_percent($darken_token)
 
   '
   ' Step 5:
+  ' RGB Darkening
+  '
+  !$dark = %darken($color, $pct)
+
+  $assert_literal_color($dark)
+
+  !$dark = $normalize_hex_rgb($dark)
+
+  '
+  ' Step 6:
   ' Prevent near-black collapse
   '
-  !return $normalize_darkness_floor( $dark )
+  !return $normalize_darkness_floor($dark)
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_darken.puml ---
@@ -1665,38 +1676,60 @@
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
 
-    !if $is_special_style_token($token)
-        !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
-    !endif
+  !if $is_special_style_token($token)
+    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
+  !endif
 
-    '
-    ' Semantic progression
-    '
-    !$lighter = $get_lighter_semantic_token($token)
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  !$lighter = $get_lighter_semantic_token($token)
 
-    !if $lighter != ""
-        !return $get_semantic_color($lighter)
-    !endif
+  !if $lighter != ""
 
-    '
-    ' Resolve current color
-    '
-    !$color = $resolve_literal_color($token)
+    !return $get_semantic_color($lighter)
 
-    '
-    ' Already near white.
-    ' Do nothing.
-    '
-    !if ($hex_luminance($color) >= $LIGHTNESS_THRESHOLD)
-        !return %lighten($color, 2)
-    !endif
+  !endif
 
-    '
-    ' Lighten normally.
-    '
-    !$pct = $get_lighten_percent($lighten_token)
+  '
+  ' Step 2:
+  ' Resolve current color
+  '
+  !$color = $resolve_literal_color($token)
 
-    !return %lighten($color, $pct)
+  '
+  ' Step 3:
+  ' Handle pure black explicitly.
+  '
+  ' Some PlantUML versions do not properly
+  ' lighten #000000.
+  '
+  !if (%upper($color) == "#000000")
+
+      !$color = "#010101"
+
+  !endif
+
+  '
+  ' Step 4:
+  ' Determine lighten percentage
+  '
+  !$pct = $get_lighten_percent($lighten_token)
+
+  '
+  ' Step 5:
+  ' RGB Lightening
+  '
+  !$light = %lighten($color, $pct)
+
+  !$light = $normalize_hex_rgb($light)
+
+  '
+  ' Step 6:
+  ' Prevent near-white collapse
+  '
+  !return $normalize_lightness_ceiling($light)
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_lighten.puml ---
@@ -2148,7 +2181,7 @@ title {
     !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
 
     'COLOR_BACKGROUND_ELEMENT_COMPOSITE
-    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $cBackgroundColor)
+    !$ccBackgroundColor = $resolve_style_color("DARKEN", $cBackgroundColor)
     !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
 
 <style>
