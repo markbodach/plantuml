@@ -11,7 +11,7 @@
 '---------------------------------------------------------
 
 !function $get_lighten_percent($token)
-
+  !$token = %upper($token)
   !if $token == "LIGHTEN"
     !return $LIGHTEN_DEFAULT_PERCENT
   !endif
@@ -315,30 +315,32 @@
   '
   !$color = $resolve_literal_color($token)
 
-  '
+    '
   ' Step 3:
-  ' Handle pure black explicitly.
-  '
-  ' Some PlantUML versions do not properly
-  ' lighten #000000.
-  '
-  !if (%upper($color) == "#000000")
-
-      !$color = "#010101"
-
-  !endif
-
-  '
-  ' Step 4:
   ' Determine lighten percentage
   '
   !$pct = $get_lighten_percent($lighten_token)
 
   '
-  ' Step 5:
+  ' Step 4:
   ' RGB Lightening
   '
   !$light = %lighten($color, $pct)
+
+  '
+  ' Some PlantUML versions may not properly
+  ' lighten absolute black.
+  '
+  ' If the result did not change, retry using
+  ' a near-black seed value.
+  '
+  !if (%upper($color) == "#000000") && (%upper($light) == "#000000")
+
+      !$light = %lighten("#010101", $pct)
+
+  !endif
+
+  $assert_literal_color($light)
 
   !$light = $normalize_hex_rgb($light)
 
