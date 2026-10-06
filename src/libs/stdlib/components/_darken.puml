@@ -187,7 +187,7 @@
 '---------------------------------------------------------
 
 !function $get_darker_semantic_token($token)
-
+  !$token = %upper($token)
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -298,18 +298,8 @@
   '
   !$dark = %darken($color, $pct)
 
-  '
-  ' Some PlantUML versions may not properly
-  ' darken pure white.
-  '
-  ' Only apply the workaround when:
-  '   input  = #FFFFFF
-  '   output = #FFFFFF
-  '
-  !if (%upper($color) == "#FFFFFF") && (%upper($dark) == "#FFFFFF")
-
-      !$dark = %darken("#FEFEFE", $pct)
-
+  !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
+    !$dark = %darken("#FEFEFE", $pct)
   !endif
 
   $assert_literal_color($dark)

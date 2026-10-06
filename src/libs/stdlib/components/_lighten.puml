@@ -198,7 +198,7 @@
 '---------------------------------------------------------
 
 !function $get_lighter_semantic_token($token)
-
+  !$token = %upper($token)
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -292,7 +292,7 @@
 '---------------------------------------------------------
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
-
+  
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
   !endif
@@ -327,16 +327,9 @@
   '
   !$light = %lighten($color, $pct)
 
-  '
-  ' Some PlantUML versions may not properly
-  ' lighten absolute black.
-  '
-  ' If the result did not change, retry using
-  ' a near-black seed value.
-  '
-  !if (%upper($color) == "#000000") && (%upper($light) == "#000000")
+  !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
 
-      !$light = %lighten("#010101", $pct)
+    !$light = %lighten("#010101", $pct)
 
   !endif
 

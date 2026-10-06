@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 18:23:45 EDT
-' Build Commit Hash: da426c03b4c6e855e3428a281fa022b2246b4fa2
-' Build Commit Comment: edge cases with black and white
+' Generated on: 2026-10-06 18:34:22 EDT
+' Build Commit Hash: 58e4981394ff6a7862b5042426114c136bf9bf9d
+' Build Commit Comment: more edge case fixes
 ' ========================================================
 
 ' src/all.puml
@@ -1243,7 +1243,7 @@
 '---------------------------------------------------------
 
 !function $get_darker_semantic_token($token)
-
+  !$token = %upper($token)
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -1354,18 +1354,8 @@
   '
   !$dark = %darken($color, $pct)
 
-  '
-  ' Some PlantUML versions may not properly
-  ' darken pure white.
-  '
-  ' Only apply the workaround when:
-  '   input  = #FFFFFF
-  '   output = #FFFFFF
-  '
-  !if (%upper($color) == "#FFFFFF") && (%upper($dark) == "#FFFFFF")
-
-      !$dark = %darken("#FEFEFE", $pct)
-
+  !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
+    !$dark = %darken("#FEFEFE", $pct)
   !endif
 
   $assert_literal_color($dark)
@@ -1582,7 +1572,7 @@
 '---------------------------------------------------------
 
 !function $get_lighter_semantic_token($token)
-
+  !$token = %upper($token)
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -1676,7 +1666,7 @@
 '---------------------------------------------------------
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
-
+  
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
   !endif
@@ -1711,16 +1701,9 @@
   '
   !$light = %lighten($color, $pct)
 
-  '
-  ' Some PlantUML versions may not properly
-  ' lighten absolute black.
-  '
-  ' If the result did not change, retry using
-  ' a near-black seed value.
-  '
-  !if (%upper($color) == "#000000") && (%upper($light) == "#000000")
+  !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
 
-      !$light = %lighten("#010101", $pct)
+    !$light = %lighten("#010101", $pct)
 
   !endif
 
