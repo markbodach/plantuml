@@ -38,43 +38,140 @@
 !endfunction
 
 
-'---------------------------------------------------------
-' Threshold Protection
-'---------------------------------------------------------
-!function $normalize_lightness_ceiling($hex)
-  
-    !$lum = $hex_luminance($hex)
 
-    !if ($lum <= 0)
-      !return $hex
+'---------------------------------------------------------
+' Normalize Lightness Ceiling
+'
+' Prevents a color from becoming lighter than the configured
+' lightness ceiling.
+'
+' Behavior:
+'   - Normalizes #RGB and #RRGGBBAA to #RRGGBB.
+'   - Returns compliant colors unchanged.
+'   - Darkens proportionally based on how far the color is
+'     above the lightness ceiling.
+'   - Avoids direct fractional RGB-channel scaling.
+'   - Applies bounded follow-up corrections for rounding.
+'
+' Existing usage remains valid:
+'
+'   $normalize_lightness_ceiling("#D6EAF8")
+'
+'---------------------------------------------------------
+!function $normalize_lightness_ceiling($hex, $lightness_ceiling = $LIGHTNESS_THRESHOLD, $minimum_darken_percent = 1)
+
+    '
+    ' Validate and normalize the input color.
+    '
+    $assert_literal_color($hex)
+
+    !$color = $normalize_hex_rgb($hex)
+    !$lightness = $hex_luminance($color)
+
+    '
+    ' Validate the lightness ceiling.
+    '
+    !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
+        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "]"
     !endif
 
-    !if ($lum < $LIGHTNESS_THRESHOLD)
-        !return $hex
+    '
+    ' Validate the minimum correction.
+    '
+    !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
+        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "]"
     !endif
 
-    !$r = $hex_red($hex)
-    !$g = $hex_green($hex)
-    !$b = $hex_blue($hex)
+    '
+    ' A color with zero calculated lightness cannot exceed
+    ' a valid lightness ceiling.
+    '
+    !if ($lightness <= 0)
+        !return %upper($color)
+    !endif
 
-    !$factor = $LIGHTNESS_THRESHOLD / $lum
-    !$r = %intval($r * $factor)
-    !$g = %intval($g * $factor)
-    !$b = %intval($b * $factor)
-    
-    
-    '!$r = %intval(($r * $LIGHTNESS_THRESHOLD) / $lum)
-    '!$g = %intval(($g * $LIGHTNESS_THRESHOLD) / $lum)
-    '!$b = %intval(($b * $LIGHTNESS_THRESHOLD) / $lum)
+    '
+    ' The color already satisfies the lightness ceiling.
+    '
+    !if ($lightness <= $lightness_ceiling)
+        !return %upper($color)
+    !endif
 
-    !assert ($r >= 0) && ($r <= 255)
-    !assert ($g >= 0) && ($g <= 255)
-    !assert ($b >= 0) && ($b <= 255)
-    !return $rgb_to_hex($r,$g,$b)
+    '
+    ' Determine how far the color exceeds the ceiling.
+    '
+    !$overage = $lightness - $lightness_ceiling
+
+    '
+    ' Convert the overage into a proportional darkening
+    ' percentage.
+    '
+    ' Example:
+    '
+    '   Lightness = 235
+    '   Ceiling   = 223
+    '   Overage   = 12
+    '   Percent   = (12 * 100) / 235
+    '
+    !$darken_percent = %intval( ($overage * 100) / $lightness )
+
+    '
+    ' Apply the configured minimum correction.
+    '
+    !if ($darken_percent < $minimum_darken_percent)
+        !$darken_percent = $minimum_darken_percent
+    !endif
+
+    '
+    ' Protect the PlantUML darkening operation.
+    '
+    !if ($darken_percent > 100)
+        !$darken_percent = 100
+    !endif
+
+    '
+    ' Apply the initial proportional correction.
+    '
+    !$normalized = %darken($color, $darken_percent)
+
+    !$normalized = $normalize_hex_rgb($normalized)
+    !$normalized_lightness = $hex_luminance($normalized)
+
+    '
+    ' PlantUML color calculations and integer rounding may
+    ' leave the result slightly above the lightness ceiling.
+    '
+    ' Apply bounded one-percent corrections until the color
+    ' reaches the configured ceiling.
+    '
+    !$correction_count = 0
+    !$maximum_corrections = 100
+
+    !while ($normalized_lightness > $lightness_ceiling) && ($correction_count < $maximum_corrections)
+
+        !$previous = $normalized
+
+        !$normalized = %darken($normalized,1)
+
+        !$normalized = $normalize_hex_rgb($normalized)
+
+        '
+        ' Stop if PlantUML no longer changes the color.
+        '
+        !if ($normalized == $previous)
+            !$correction_count = $maximum_corrections
+        !else
+            !$normalized_lightness = $hex_luminance($normalized)
+            !$correction_count = $correction_count + 1
+        !endif
+
+    !endwhile
+
+    $assert_literal_color($normalized)
+
+    !return %upper($normalized)
 
 !endfunction
-
-
 
 '---------------------------------------------------------
 ' Semantic Token Progression
@@ -196,48 +293,37 @@
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
 
-  !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
-  !endif
+    !if $is_special_style_token($token)
+        !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
+    !endif
 
-  '
-  ' Step 1:
-  ' Semantic progression
-  '
-  !$lighter = $get_lighter_semantic_token( $token )
+    '
+    ' Semantic progression
+    '
+    !$lighter = $get_lighter_semantic_token($token)
 
-  !if $lighter != ""
+    !if $lighter != ""
+        !return $get_semantic_color($lighter)
+    !endif
 
-    !return $get_semantic_color( $lighter )
+    '
+    ' Resolve current color
+    '
+    !$color = $resolve_literal_color($token)
 
-  !endif
+    '
+    ' Already near white.
+    ' Do nothing.
+    '
+    !if ($hex_luminance($color) >= $LIGHTNESS_THRESHOLD)
+        !return %lighten($color, 2)
+    !endif
 
+    '
+    ' Lighten normally.
+    '
+    !$pct = $get_lighten_percent($lighten_token)
 
-  '
-  ' Step 2:
-  ' Resolve current color
-  '
-  !$color = $resolve_literal_color( $token )
-
-
-  '
-  ' Step 3:
-  ' Determine lighten percentage
-  '
-  !$pct = $get_lighten_percent( $lighten_token )
-
-
-  '
-  ' Step 4:
-  ' RGB Lightening
-  '
-  !$light = %lighten( $color, $pct )
-
-
-  '
-  ' Step 5:
-  ' Prevent near-white collapse
-  '
-  !return $normalize_lightness_ceiling( $light )
+    !return %lighten($color, $pct)
 
 !endfunction

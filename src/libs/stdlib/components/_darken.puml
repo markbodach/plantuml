@@ -35,37 +35,136 @@
 
 
 '---------------------------------------------------------
-' Threshold Protection
+' Normalize Darkness Floor
+'
+' Prevents a color from becoming darker than the configured
+' darkness floor.
+'
+' Behavior:
+'   - Normalizes #RGB and #RRGGBBAA to #RRGGBB.
+'   - Returns compliant colors unchanged.
+'   - Preserves existing zero-lightness safety behavior.
+'   - Lightens proportionally based on how far the color is
+'     below the darkness floor.
+'   - Applies bounded follow-up corrections for rounding.
+'
+' Existing usage remains valid:
+'
+'   $normalize_darkness_floor("#050505")
+'
 '---------------------------------------------------------
-!function $normalize_darkness_floor($hex)
-    
-    !$lum = $hex_luminance($hex)
+!function $normalize_darkness_floor($hex, $darkness_floor = $DARKNESS_THRESHOLD, $minimum_lighten_percent = 1)
 
-    !if ($lum <= 0)
-      !return $hex
+    '
+    ' Validate and normalize the input color.
+    '
+    $assert_literal_color($hex)
+
+    !$color = $normalize_hex_rgb($hex)
+    !$darkness = $hex_luminance($color)
+
+    '
+    ' Validate the darkness floor.
+    '
+    !if ($darkness_floor < 0) || ($darkness_floor > 255)
+        !assert 0 == 1 : "MB_UML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "]"
     !endif
 
-    !if ($lum > $DARKNESS_THRESHOLD)
-        !return $hex
+    '
+    ' Validate the minimum correction.
+    '
+    !if ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100)
+        !assert 0 == 1 : "MB_UML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "]"
     !endif
 
-    !$r = $hex_red($hex)
-    !$g = $hex_green($hex)
-    !$b = $hex_blue($hex)
+    '
+    ' Preserve the existing safety behavior for pure black
+    ' or another color with zero calculated lightness.
+    '
+    !if ($darkness <= 0)
+        !return %upper($color)
+    !endif
 
-    !$factor = $DARKNESS_THRESHOLD / $lum
+    '
+    ' The color already satisfies the darkness floor.
+    '
+    !if ($darkness >= $darkness_floor)
+        !return %upper($color)
+    !endif
 
-    !$r = %min(255,%intval($r * $factor))
-    !$g = %min(255,%intval($g * $factor))
-    !$b = %min(255,%intval($b * $factor))
+    '
+    ' Determine how far the color is below the floor.
+    '
+    !$shortfall = $darkness_floor - $darkness
 
-    !assert ($r >= 0) && ($r <= 255)
-    !assert ($g >= 0) && ($g <= 255)
-    !assert ($b >= 0) && ($b <= 255)
+    '
+    ' Convert the shortfall into a proportional lightening
+    ' percentage.
+    '
+    ' Multiplication occurs before division to avoid losing
+    ' the fractional value through integer truncation.
+    '
+    !$lighten_percent = %intval( ($shortfall * 100) / $darkness_floor )
 
-    !return $rgb_to_hex($r,$g,$b)
+    '
+    ' Apply the configured minimum correction.
+    '
+    !if ($lighten_percent < $minimum_lighten_percent)
+        !$lighten_percent = $minimum_lighten_percent
+    !endif
+
+    '
+    ' Protect the PlantUML lightening operation.
+    '
+    !if ($lighten_percent > 100)
+        !$lighten_percent = 100
+    !endif
+
+    '
+    ' Apply the initial proportional correction.
+    '
+    !$normalized = %lighten( $color, $lighten_percent )
+
+    !$normalized = $normalize_hex_rgb($normalized)
+    !$normalized_darkness = $hex_luminance($normalized)
+
+    '
+    ' PlantUML color calculations and integer rounding may
+    ' leave the result slightly below the darkness floor.
+    '
+    ' Apply bounded one-percent corrections until the color
+    ' reaches the configured floor.
+    '
+    !$correction_count = 0
+    !$maximum_corrections = 100
+
+    !while ($normalized_darkness < $darkness_floor) && ($correction_count < $maximum_corrections)
+
+        !$previous = $normalized
+
+        !$normalized = %lighten($normalized,1)
+
+        !$normalized = $normalize_hex_rgb($normalized)
+
+        '
+        ' Stop if PlantUML no longer changes the color.
+        '
+        !if ($normalized == $previous)
+            !$correction_count = $maximum_corrections
+        !else
+            !$normalized_darkness = $hex_luminance($normalized)
+            !$correction_count = $correction_count + 1
+        !endif
+
+    !endwhile
+
+    $assert_literal_color($normalized)
+
+    !return %upper($normalized)
 
 !endfunction
+
+
 
 
 
