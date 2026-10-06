@@ -14,7 +14,7 @@
 '   PRIMARY           -> PRIMARY
 '
 !function $normalize_color_name($name)
-  !$clean = $strip_dollar($name)
+  !$clean = %upper($strip_dollar($name))
   !if %substr($clean, 0, 6) == "COLOR_"
     !return %substr($clean, 6)
   !endif
@@ -25,7 +25,7 @@
 !function $semantic_color_variable($name)
 
   !if ($is_literal_color($name))
-    !return $name
+    !return %upper($name)
   !endif
 
   !return "COLOR_" + $normalize_color_name($name)

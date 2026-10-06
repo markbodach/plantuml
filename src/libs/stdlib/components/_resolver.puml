@@ -102,7 +102,7 @@
   ' Literal color
   '
   !elseif ($is_literal_color($tokenOrColor))
-      !return $tokenOrColor
+      !return %upper($tokenOrColor)
   '
   ' Semantic text token
   '

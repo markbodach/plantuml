@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 17:12:07 EDT
-' Build Commit Hash: 94e0f59792aa8eafe7ee9d77e5ca3c2cb54653a9
-' Build Commit Comment: multi line typo fix
+' Generated on: 2026-10-06 17:21:23 EDT
+' Build Commit Hash: 5c6759b3d804702ef2b84cc9895769a58529f2d8
+' Build Commit Comment: shading refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -595,40 +595,36 @@
 
 !endfunction
 
-
 !function $is_literal_color($value)
-  '
-  ' Must start with #
-  '
-  !if (%substr($value,0,1) != "#")
-      !return %false()
-  !endif
 
-  !$len = %strlen($value)
+    !$value = %upper($value)
 
-  '
-  ' Supported formats:
-  '   #RGB
-  '   #RRGGBB
-  '   #RRGGBBAA
-  '
-  !if ($len != 4) && ($len != 7) && ($len != 9)
-      !return %false()
-  !endif
+    '
+    ' Must start with #
+    '
+    !if (%substr($value,0,1) != "#")
+        !return %false()
+    !endif
 
-  !$i = 1
+    !$len = %strlen($value)
 
-  !while ($i < $len)
+    !if ($len != 4) && ($len != 7) && ($len != 9)
+        !return %false()
+    !endif
 
-      !if ($is_hex_digit(%substr($value,$i,1)) == %false())
-          !return %false()
-      !endif
+    !$i = 1
 
-      !$i = $i + 1
+    !while ($i < $len)
 
-  !endwhile
+        !if ($is_hex_digit(%substr($value,$i,1)) == %false())
+            !return %false()
+        !endif
 
-  !return %true()
+        !$i = $i + 1
+
+    !endwhile
+
+    !return %true()
 
 !endfunction
 
@@ -895,7 +891,7 @@
 '   PRIMARY           -> PRIMARY
 '
 !function $normalize_color_name($name)
-  !$clean = $strip_dollar($name)
+  !$clean = %upper($strip_dollar($name))
   !if %substr($clean, 0, 6) == "COLOR_"
     !return %substr($clean, 6)
   !endif
@@ -906,7 +902,7 @@
 !function $semantic_color_variable($name)
 
   !if ($is_literal_color($name))
-    !return $name
+    !return %upper($name)
   !endif
 
   !return "COLOR_" + $normalize_color_name($name)
@@ -1810,7 +1806,7 @@
   ' Literal color
   '
   !elseif ($is_literal_color($tokenOrColor))
-      !return $tokenOrColor
+      !return %upper($tokenOrColor)
   '
   ' Semantic text token
   '
