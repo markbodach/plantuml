@@ -272,11 +272,13 @@
   ' Step 1:
   ' Semantic progression
   '
-  !$darker = $get_darker_semantic_token($token)
+  !if (%upper($darken_token) == "DARKEN")
 
-  !if $darker != ""
+    !$darker = $get_darker_semantic_token($token)
 
-    !return $get_semantic_color($darker)
+    !if $darker != ""
+        !return $get_semantic_color($darker)
+    !endif
 
   !endif
 
@@ -299,17 +301,15 @@
   !$dark = %darken($color, $pct)
 
   !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
-    !$dark = %darken("#FEFEFE", $pct)
+
+      !$dark = %darken("#FEFEFE", $pct)
+
   !endif
 
   $assert_literal_color($dark)
 
   !$dark = $normalize_hex_rgb($dark)
 
-  '
-  ' Step 5:
-  ' Prevent near-black collapse
-  '
   !return $normalize_darkness_floor($dark)
 
 !endfunction

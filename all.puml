@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 18:34:22 EDT
-' Build Commit Hash: 58e4981394ff6a7862b5042426114c136bf9bf9d
-' Build Commit Comment: more edge case fixes
+' Generated on: 2026-10-06 18:47:41 EDT
+' Build Commit Hash: d4b5e476e4bb3923a99fbb46909d7d51c3bda0a9
+' Build Commit Comment: more edge cases
 ' ========================================================
 
 ' src/all.puml
@@ -1328,11 +1328,13 @@
   ' Step 1:
   ' Semantic progression
   '
-  !$darker = $get_darker_semantic_token($token)
+  !if (%upper($darken_token) == "DARKEN")
 
-  !if $darker != ""
+    !$darker = $get_darker_semantic_token($token)
 
-    !return $get_semantic_color($darker)
+    !if $darker != ""
+        !return $get_semantic_color($darker)
+    !endif
 
   !endif
 
@@ -1355,17 +1357,15 @@
   !$dark = %darken($color, $pct)
 
   !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
-    !$dark = %darken("#FEFEFE", $pct)
+
+      !$dark = %darken("#FEFEFE", $pct)
+
   !endif
 
   $assert_literal_color($dark)
 
   !$dark = $normalize_hex_rgb($dark)
 
-  '
-  ' Step 5:
-  ' Prevent near-black collapse
-  '
   !return $normalize_darkness_floor($dark)
 
 !endfunction
@@ -1675,11 +1675,13 @@
   ' Step 1:
   ' Semantic progression
   '
-  !$lighter = $get_lighter_semantic_token($token)
+  !if (%upper($lighten_token) == "LIGHTEN")
 
-  !if $lighter != ""
+    !$lighter = $get_lighter_semantic_token($token)
 
-    !return $get_semantic_color($lighter)
+    !if $lighter != ""
+        !return $get_semantic_color($lighter)
+    !endif
 
   !endif
 
@@ -1703,7 +1705,7 @@
 
   !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
 
-    !$light = %lighten("#010101", $pct)
+      !$light = %lighten("#010101", $pct)
 
   !endif
 
@@ -1711,10 +1713,6 @@
 
   !$light = $normalize_hex_rgb($light)
 
-  '
-  ' Step 6:
-  ' Prevent near-white collapse
-  '
   !return $normalize_lightness_ceiling($light)
 
 !endfunction

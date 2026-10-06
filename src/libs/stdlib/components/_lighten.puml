@@ -301,11 +301,13 @@
   ' Step 1:
   ' Semantic progression
   '
-  !$lighter = $get_lighter_semantic_token($token)
+  !if (%upper($lighten_token) == "LIGHTEN")
 
-  !if $lighter != ""
+    !$lighter = $get_lighter_semantic_token($token)
 
-    !return $get_semantic_color($lighter)
+    !if $lighter != ""
+        !return $get_semantic_color($lighter)
+    !endif
 
   !endif
 
@@ -329,7 +331,7 @@
 
   !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
 
-    !$light = %lighten("#010101", $pct)
+      !$light = %lighten("#010101", $pct)
 
   !endif
 
@@ -337,10 +339,6 @@
 
   !$light = $normalize_hex_rgb($light)
 
-  '
-  ' Step 6:
-  ' Prevent near-white collapse
-  '
   !return $normalize_lightness_ceiling($light)
 
 !endfunction
