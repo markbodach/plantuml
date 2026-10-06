@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 15:53:53 EDT
-' Build Commit Hash: a846b6f34f0c6bd7aafe8ed63f7c82cc2f22de2a
-' Build Commit Comment: Refactoring
+' Generated on: 2026-10-06 16:05:58 EDT
+' Build Commit Hash: d3f4de4402bd1b5e7f289e400ea2c8d761b39eb7
+' Build Commit Comment: rgb_to_hex for lighten
 ' ========================================================
 
 ' src/all.puml
@@ -391,7 +391,6 @@
 !$PADDING_OH_TITLE ?= 15
 !$ROUND_OH_CORNER_TITLE ?= 0
 
-!$ROUND_OH_CORNER_TITLE ?= 0
 
 !$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
 !$COLOR_OH_FONT_TITLE ?= "AUTO"
@@ -796,8 +795,7 @@
     !$hi = %intval($n / 16)
     !$lo = $n - ($hi * 16)
 
-    !return $int_to_hex_digit($hi)
-          + $int_to_hex_digit($lo)
+    !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
 
 !endfunction
 
@@ -875,11 +873,7 @@
 '=========================================================
 
 !function $rgb_to_hex($r,$g,$b)
-
-    !return "#"
-          + $byte_to_hex($r)
-          + $byte_to_hex($g)
-          + $byte_to_hex($b)
+  !return "#" + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_hex.puml ---
@@ -1125,6 +1119,10 @@
     !$g = %min(255,%intval($g * $factor))
     !$b = %min(255,%intval($b * $factor))
 
+    !assert ($r >= 0) && ($r <= 255)
+    !assert ($g >= 0) && ($g <= 255)
+    !assert ($b >= 0) && ($b <= 255)
+
     !return $rgb_to_hex($r,$g,$b)
 
 !endfunction
@@ -1337,19 +1335,18 @@
     !$b = $hex_blue($hex)
 
     !$factor = $LIGHTNESS_THRESHOLD / $lum
-
-    '!$r = %intval($r * $factor)
-    '!$g = %intval($g * $factor)
-    '!$b = %intval($b * $factor)
-    !$r = %intval(($r * $LIGHTNESS_THRESHOLD) / $lum)
-    !$g = %intval(($g * $LIGHTNESS_THRESHOLD) / $lum)
-    !$b = %intval(($b * $LIGHTNESS_THRESHOLD) / $lum)
+    !$r = %intval($r * $factor)
+    !$g = %intval($g * $factor)
+    !$b = %intval($b * $factor)
+    
+    
+    '!$r = %intval(($r * $LIGHTNESS_THRESHOLD) / $lum)
+    '!$g = %intval(($g * $LIGHTNESS_THRESHOLD) / $lum)
+    '!$b = %intval(($b * $LIGHTNESS_THRESHOLD) / $lum)
 
     !assert ($r >= 0) && ($r <= 255)
     !assert ($g >= 0) && ($g <= 255)
     !assert ($b >= 0) && ($b <= 255)
-
-
     !return $rgb_to_hex($r,$g,$b)
 
 !endfunction

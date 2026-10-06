@@ -59,6 +59,10 @@
     !$g = %min(255,%intval($g * $factor))
     !$b = %min(255,%intval($b * $factor))
 
+    !assert ($r >= 0) && ($r <= 255)
+    !assert ($g >= 0) && ($g <= 255)
+    !assert ($b >= 0) && ($b <= 255)
+
     !return $rgb_to_hex($r,$g,$b)
 
 !endfunction

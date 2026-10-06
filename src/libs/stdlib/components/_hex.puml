@@ -219,8 +219,7 @@
     !$hi = %intval($n / 16)
     !$lo = $n - ($hi * 16)
 
-    !return $int_to_hex_digit($hi)
-          + $int_to_hex_digit($lo)
+    !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
 
 !endfunction
 
@@ -298,10 +297,6 @@
 '=========================================================
 
 !function $rgb_to_hex($r,$g,$b)
-
-    !return "#"
-          + $byte_to_hex($r)
-          + $byte_to_hex($g)
-          + $byte_to_hex($b)
+  !return "#" + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction
