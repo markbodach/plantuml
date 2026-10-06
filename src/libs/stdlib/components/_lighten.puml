@@ -59,9 +59,17 @@
 
     !$factor = $LIGHTNESS_THRESHOLD / $lum
 
-    !$r = %intval($r * $factor)
-    !$g = %intval($g * $factor)
-    !$b = %intval($b * $factor)
+    '!$r = %intval($r * $factor)
+    '!$g = %intval($g * $factor)
+    '!$b = %intval($b * $factor)
+    !$r = %intval(($r * $LIGHTNESS_THRESHOLD) / $lum)
+    !$g = %intval(($g * $LIGHTNESS_THRESHOLD) / $lum)
+    !$b = %intval(($b * $LIGHTNESS_THRESHOLD) / $lum)
+
+    !assert ($r >= 0) && ($r <= 255)
+    !assert ($g >= 0) && ($g <= 255)
+    !assert ($b >= 0) && ($b <= 255)
+
 
     !return $rgb_to_hex($r,$g,$b)
 

@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-06 14:44:21 EDT
-' Build Commit Hash: 50e1079a59e4d4c3f1bd6d3900b9772b46c584e7
-' Build Commit Comment: Naming convention change
+' Generated on: 2026-10-06 15:53:53 EDT
+' Build Commit Hash: a846b6f34f0c6bd7aafe8ed63f7c82cc2f22de2a
+' Build Commit Comment: Refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -1338,9 +1338,17 @@
 
     !$factor = $LIGHTNESS_THRESHOLD / $lum
 
-    !$r = %intval($r * $factor)
-    !$g = %intval($g * $factor)
-    !$b = %intval($b * $factor)
+    '!$r = %intval($r * $factor)
+    '!$g = %intval($g * $factor)
+    '!$b = %intval($b * $factor)
+    !$r = %intval(($r * $LIGHTNESS_THRESHOLD) / $lum)
+    !$g = %intval(($g * $LIGHTNESS_THRESHOLD) / $lum)
+    !$b = %intval(($b * $LIGHTNESS_THRESHOLD) / $lum)
+
+    !assert ($r >= 0) && ($r <= 255)
+    !assert ($g >= 0) && ($g <= 255)
+    !assert ($b >= 0) && ($b <= 255)
+
 
     !return $rgb_to_hex($r,$g,$b)
 
