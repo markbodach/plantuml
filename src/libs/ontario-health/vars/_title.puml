@@ -1,11 +1,14 @@
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
 
+!$MARGIN_OH_TITLE ?= 20
+!$PADDING_OH_TITLE ?= 15
+!$ROUND_OH_CORNER_TITLE ?= 0
 
-'! $COLOR_FONT_TITLE = $COLOR_OH_PRIMARY_DARK
-'! $COLOR_LINE_TITLE = $COLOR_OH_PRIMARY
+!$ROUND_OH_CORNER_TITLE ?= 0
 
-!$ROUND_CORNER_TITLE = 0
-
-!$BACKGROUND_TITLE = "PRIMARY_DARK"
-!$COLOR_FONT_TITLE = "AUTO"
+!$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
+!$COLOR_OH_FONT_TITLE ?= "AUTO"
     
-!$COLOR_LINE_TITLE = "CURRENT" 
+!$COLOR_OH_LINE_TITLE ?= "CURRENT" 

@@ -1,0 +1,20 @@
+
+
+'---------------------------------------------------------
+' Title Constants Applied
+'---------------------------------------------------------
+
+
+!if ($OH_THEME_ENABLED)
+
+!$MARGIN_TITLE = $MARGIN_OH_TITLE
+!$PADDING_TITLE = $PADDING_OH_TITLE
+
+!$ROUND_CORNER_TITLE = $ROUND_OH_CORNER_TITLE
+
+!$COLOR_BACKGROUND_TITLE = $COLOR_OH_BACKGROUND_TITLE
+!$COLOR_FONT_TITLE = $COLOR_OH_FONT_TITLE
+    
+!$COLOR_LINE_TITLE = $COLOR_OH_LINE_TITLE 
+
+!endif

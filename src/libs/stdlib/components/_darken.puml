@@ -37,9 +37,13 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-!function $clamp_dark_color($hex)
-    !return $hex
+!function $normalize_darkness_floor($hex)
+    
     !$lum = $hex_luminance($hex)
+
+    !if ($lum <= 0)
+      !return $hex
+    !endif
 
     !if ($lum > $DARKNESS_THRESHOLD)
         !return $hex
@@ -201,6 +205,6 @@
   ' Step 5:
   ' Prevent near-black collapse
   '
-  !return $clamp_dark_color( $dark )
+  !return $normalize_darkness_floor( $dark )
 
 !endfunction

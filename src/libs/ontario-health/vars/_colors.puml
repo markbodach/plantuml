@@ -1,12 +1,11 @@
-' src/themes/ontario-health/_colors.puml
 
-
-'Set OH Colours
+'---------------------------------------------------------
+' Color Constants
+'---------------------------------------------------------
 
 !$COLOR_OH_LABEL ?= "#4D4D4D"
 !$COLOR_OH_PLACEHOLDER ?= "#737373"
-!$COLOR_OH_DISABLED_MILD ?= "#737373"
-!$COLOR_OH_DISABLED_MILD ?= "#4D4D4D"
+
 
 '$COLOR_OH_BRAND_HOVER ?= "#049A5"
 

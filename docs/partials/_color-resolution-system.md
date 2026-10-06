@@ -224,7 +224,7 @@ BorderColor DARKEN
 Configured by:
 
 ```plantuml
-!$DARKEN_DEFAULT_PERCENT = 20
+!$DARKEN_DEFAULT_PERCENT = 5
 ```
 
 Equivalent to:

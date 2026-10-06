@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
-' Generated on: 2026-10-05 16:16:18 EDT
-' Build Commit Hash: 151253a550803678aef7874f0a66e8c27cb238e9
+' Generated on: 2026-10-06 14:44:21 EDT
+' Build Commit Hash: 50e1079a59e4d4c3f1bd6d3900b9772b46c584e7
 ' Build Commit Comment: Naming convention change
 ' ========================================================
 
@@ -37,7 +37,7 @@
 '---------------------------------------------------------
 
 ' Darkening default
-!$DARKEN_DEFAULT_PERCENT = 20
+!$DARKEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance floor (0-255)
 !$DARKNESS_THRESHOLD = 32
@@ -48,7 +48,7 @@
 '---------------------------------------------------------
 
 ' Lightening default
-!$LIGHTEN_DEFAULT_PERCENT = 20
+!$LIGHTEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance ceiling (0-255)
 !$LIGHTNESS_THRESHOLD = 223
@@ -90,6 +90,10 @@
 
 ' COLOR_LIGHT
 ' COLOR_DARK
+
+!$COLOR_DISABLED_DARK ?= "#4D4D4D"
+!$COLOR_DISABLED ?= "#737373"
+!$COLOR_DISABLED_LIGHT ?= "#737373"
 ' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/vars/_fonts.puml ---
@@ -295,15 +299,14 @@
 ' --- End Import: src/libs/ontario-health/vars/_index.puml ---
 
 ' --- Importing: src/libs/ontario-health/vars/_colors.puml ---
-' src/themes/ontario-health/_colors.puml
 
-
-'Set OH Colours
+'---------------------------------------------------------
+' Color Constants
+'---------------------------------------------------------
 
 !$COLOR_OH_LABEL ?= "#4D4D4D"
 !$COLOR_OH_PLACEHOLDER ?= "#737373"
-!$COLOR_OH_DISABLED_MILD ?= "#737373"
-!$COLOR_OH_DISABLED_MILD ?= "#4D4D4D"
+
 
 '$COLOR_OH_BRAND_HOVER ?= "#049A5"
 
@@ -365,41 +368,35 @@
 ' --- End Import: src/libs/ontario-health/vars/_colors.puml ---
 
 ' --- Importing: src/libs/ontario-health/vars/_fonts.puml ---
-' src/themes/ontario-health/_fonts.puml
 ' --- End Import: src/libs/ontario-health/vars/_fonts.puml ---
 
 ' --- Importing: src/libs/ontario-health/vars/_layout.puml ---
 
 
-!if ($OH_THEME_ENABLED)
-
 '---------------------------------------------------------
-' Title Constants
+' Layout Constants
 '---------------------------------------------------------
 
-!$MARGIN_OH_TITLE = 20
-!$PADDING_OH_TITLE = 15
-!$ROUND_OH_CORNER_TITLE = 0
 
-!$COLOR_OH_LINE_TITLE = $COLOR_OH_PRIMARY_DARK
-!$SIZE_OH_LINE_TITLE = 5
 
-!endif
 ' --- End Import: src/libs/ontario-health/vars/_layout.puml ---
 
 
 ' --- Importing: src/libs/ontario-health/vars/_title.puml ---
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
 
+!$MARGIN_OH_TITLE ?= 20
+!$PADDING_OH_TITLE ?= 15
+!$ROUND_OH_CORNER_TITLE ?= 0
 
-'! $COLOR_FONT_TITLE = $COLOR_OH_PRIMARY_DARK
-'! $COLOR_LINE_TITLE = $COLOR_OH_PRIMARY
+!$ROUND_OH_CORNER_TITLE ?= 0
 
-!$ROUND_CORNER_TITLE = 0
-
-!$BACKGROUND_TITLE = "PRIMARY_DARK"
-!$COLOR_FONT_TITLE = "AUTO"
+!$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
+!$COLOR_OH_FONT_TITLE ?= "AUTO"
     
-!$COLOR_LINE_TITLE = "CURRENT" 
+!$COLOR_OH_LINE_TITLE ?= "CURRENT" 
 ' --- End Import: src/libs/ontario-health/vars/_title.puml ---
 
 ' --- End Import: src/libs/ontario-health/vars/index.puml ---
@@ -872,14 +869,6 @@
 
 
 
-!function $byte_to_hex($n)
-  !$hi = %intval($n / 16)
-  !$tmp = $hi * 16
-  !$lo = $n - $tmp
-  !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
-!endfunction
-
-
 
 '=========================================================
 ' RGB -> #RRGGBB
@@ -1114,9 +1103,13 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-!function $clamp_dark_color($hex)
-    !return $hex
+!function $normalize_darkness_floor($hex)
+    
     !$lum = $hex_luminance($hex)
+
+    !if ($lum <= 0)
+      !return $hex
+    !endif
 
     !if ($lum > $DARKNESS_THRESHOLD)
         !return $hex
@@ -1278,7 +1271,7 @@
   ' Step 5:
   ' Prevent near-black collapse
   '
-  !return $clamp_dark_color( $dark )
+  !return $normalize_darkness_floor( $dark )
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_darken.puml ---
@@ -1327,10 +1320,13 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-!function $clamp_light_color($hex)
-  !return $hex
+!function $normalize_lightness_ceiling($hex)
   
     !$lum = $hex_luminance($hex)
+
+    !if ($lum <= 0)
+      !return $hex
+    !endif
 
     !if ($lum < $LIGHTNESS_THRESHOLD)
         !return $hex
@@ -1514,7 +1510,7 @@
   ' Step 5:
   ' Prevent near-white collapse
   '
-  !return $clamp_light_color( $light )
+  !return $normalize_lightness_ceiling( $light )
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_lighten.puml ---
@@ -1563,6 +1559,9 @@
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  
+  !$contextAsToken = %upper($contextColor)
+  !$token = %upper($tokenOrColor)
 
   '
   ' Validation
@@ -1574,7 +1573,7 @@
   '
   ' AUTO
   '
-  !if ($tokenOrColor == "AUTO")
+  !if ($token == "AUTO")
 
     !if ($contextColor == "")
       !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
@@ -1584,10 +1583,13 @@
   '
   ' CURRENT
   '
-  !elseif ($tokenOrColor == "CURRENT")
+  !elseif ($token == "CURRENT")
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color"
+      !if ($contextAsToken == "")
+          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT"
+      !endif
+      !if ($contextAsToken == "CURRENT")
+          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) recursively calls CURRENT"
       !endif
 
       !return $resolve_style_color($contextColor)
@@ -1595,7 +1597,7 @@
   '
   ' DARKEN
   '
-  !elseif (%strpos($tokenOrColor, "DARKEN") == 0)
+  !elseif (%strpos($token, "DARKEN") == 0)
 
       !if ($contextColor == "")
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
@@ -1606,7 +1608,7 @@
   '
   ' LIGHTEN
   '
-  !elseif (%strpos($tokenOrColor, "LIGHTEN") == 0)
+  !elseif (%strpos($token, "LIGHTEN") == 0)
 
       !if ($contextColor == "")
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
@@ -1750,6 +1752,14 @@
 ' --- End Import: src/libs/togaf/theme/index.puml ---
 
 ' --- Importing: src/libs/ontario-health/theme/index.puml ---
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+
+' --- Importing: src/libs/ontario-health/theme/_colors.puml ---
+'---------------------------------------------------------
+' Color Constants Applied
+'---------------------------------------------------------
+
 
 !if ($OH_THEME_ENABLED)
 
@@ -1773,6 +1783,11 @@
 
 !$COLOR_TEXT = $COLOR_OH_TEXT
 !$COLOR_BORDER ?= $COLOR_OH_BORDER
+
+
+!$COLOR_DISABLED_DARK = $COLOR_OH_LABEL
+!$COLOR_DISABLED = $COLOR_OH_PLACEHOLDER
+
 
 
 'If there are a lot of variables, this could be moved into a separate _togaf.puml file
@@ -1810,6 +1825,31 @@
 !endif
 
 !endif
+
+' --- End Import: src/libs/ontario-health/theme/_colors.puml ---
+
+' --- Importing: src/libs/ontario-health/theme/_title.puml ---
+
+
+'---------------------------------------------------------
+' Title Constants Applied
+'---------------------------------------------------------
+
+
+!if ($OH_THEME_ENABLED)
+
+!$MARGIN_TITLE = $MARGIN_OH_TITLE
+!$PADDING_TITLE = $PADDING_OH_TITLE
+
+!$ROUND_CORNER_TITLE = $ROUND_OH_CORNER_TITLE
+
+!$COLOR_BACKGROUND_TITLE = $COLOR_OH_BACKGROUND_TITLE
+!$COLOR_FONT_TITLE = $COLOR_OH_FONT_TITLE
+    
+!$COLOR_LINE_TITLE = $COLOR_OH_LINE_TITLE 
+
+!endif
+' --- End Import: src/libs/ontario-health/theme/_title.puml ---
 
 ' --- End Import: src/libs/ontario-health/theme/index.puml ---
 
@@ -1922,7 +1962,7 @@ title {
     !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
 
     'COLOR_BACKGROUND_ELEMENT_COMPOSITE
-    !$ccBackgroundColor = $resolve_style_color("LIGHTEN_10", $COLOR_BACKGROUND_ELEMENT)
+    !$ccBackgroundColor = $resolve_style_color("LIGHTEN", $COLOR_BACKGROUND_ELEMENT)
     !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
 
 <style>

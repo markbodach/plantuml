@@ -41,10 +41,13 @@
 '---------------------------------------------------------
 ' Threshold Protection
 '---------------------------------------------------------
-!function $clamp_light_color($hex)
-  !return $hex
+!function $normalize_lightness_ceiling($hex)
   
     !$lum = $hex_luminance($hex)
+
+    !if ($lum <= 0)
+      !return $hex
+    !endif
 
     !if ($lum < $LIGHTNESS_THRESHOLD)
         !return $hex
@@ -228,6 +231,6 @@
   ' Step 5:
   ' Prevent near-white collapse
   '
-  !return $clamp_light_color( $light )
+  !return $normalize_lightness_ceiling( $light )
 
 !endfunction

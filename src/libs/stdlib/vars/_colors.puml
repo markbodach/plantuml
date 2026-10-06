@@ -8,7 +8,7 @@
 '---------------------------------------------------------
 
 ' Darkening default
-!$DARKEN_DEFAULT_PERCENT = 20
+!$DARKEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance floor (0-255)
 !$DARKNESS_THRESHOLD = 32
@@ -19,7 +19,7 @@
 '---------------------------------------------------------
 
 ' Lightening default
-!$LIGHTEN_DEFAULT_PERCENT = 20
+!$LIGHTEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance ceiling (0-255)
 !$LIGHTNESS_THRESHOLD = 223
@@ -61,3 +61,7 @@
 
 ' COLOR_LIGHT
 ' COLOR_DARK
+
+!$COLOR_DISABLED_DARK ?= "#4D4D4D"
+!$COLOR_DISABLED ?= "#737373"
+!$COLOR_DISABLED_LIGHT ?= "#737373"

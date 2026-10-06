@@ -41,6 +41,9 @@
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  
+  !$contextAsToken = %upper($contextColor)
+  !$token = %upper($tokenOrColor)
 
   '
   ' Validation
@@ -52,7 +55,7 @@
   '
   ' AUTO
   '
-  !if ($tokenOrColor == "AUTO")
+  !if ($token == "AUTO")
 
     !if ($contextColor == "")
       !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
@@ -62,10 +65,13 @@
   '
   ' CURRENT
   '
-  !elseif ($tokenOrColor == "CURRENT")
+  !elseif ($token == "CURRENT")
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color"
+      !if ($contextAsToken == "")
+          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT"
+      !endif
+      !if ($contextAsToken == "CURRENT")
+          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) recursively calls CURRENT"
       !endif
 
       !return $resolve_style_color($contextColor)
@@ -73,7 +79,7 @@
   '
   ' DARKEN
   '
-  !elseif (%strpos($tokenOrColor, "DARKEN") == 0)
+  !elseif (%strpos($token, "DARKEN") == 0)
 
       !if ($contextColor == "")
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
@@ -84,7 +90,7 @@
   '
   ' LIGHTEN
   '
-  !elseif (%strpos($tokenOrColor, "LIGHTEN") == 0)
+  !elseif (%strpos($token, "LIGHTEN") == 0)
 
       !if ($contextColor == "")
           !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"

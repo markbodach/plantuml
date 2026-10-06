@@ -4,8 +4,8 @@
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-10-05 16:16:26 EDT**
-* Build Commit Hash: **151253a550803678aef7874f0a66e8c27cb238e9**
+* Generated on: **2026-10-06 14:44:31 EDT**
+* Build Commit Hash: **50e1079a59e4d4c3f1bd6d3900b9772b46c584e7**
 * Build Commit Comment: **Naming convention change**
 
 ## 🚀 How To Use It
@@ -450,7 +450,7 @@ BorderColor DARKEN
 Configured by:
 
 ```plantuml
-!$DARKEN_DEFAULT_PERCENT = 20
+!$DARKEN_DEFAULT_PERCENT = 5
 ```
 
 Equivalent to:
@@ -729,6 +729,9 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_BORDER = "#5D6D7E"
 !$COLOR_BUSINESS_DARK = $COLOR_TOGAF_BUSINESS
 !$COLOR_BUSINESS_LIGHT = $COLOR_TOGAF_BUSINESS
+!$COLOR_DISABLED_DARK = "#4D4D4D"
+!$COLOR_DISABLED_LIGHT = "#737373"
+!$COLOR_DISABLED = "#737373"
 !$COLOR_ERROR_DARK = "#CD0000"
 !$COLOR_ERROR_LIGHT = "#CD0000"
 !$COLOR_ERROR = "#CD0000"
@@ -751,21 +754,23 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_NONE = $COLOR_TRANSPARENT
 !$COLOR_OH_APPLICATION_DARK = "#3193CC"
 !$COLOR_OH_APPLICATION_LIGHT = "#C5EEFA"
+!$COLOR_OH_BACKGROUND_TITLE = "PRIMARY_DARK"
 !$COLOR_OH_BORDER = "#5D6D7E"
 !$COLOR_OH_BUSINESS_DARK = "#FFD440"
 !$COLOR_OH_BUSINESS_LIGHT = "#FFFDC4"
 !$COLOR_OH_BUSINESS = $COLOR_OH_WARNING
 !$COLOR_OH_DEPLOYMENT = "#FAD7A0"
-!$COLOR_OH_DISABLED_MILD = "#737373"
 !$COLOR_OH_ERROR_DARK = "#8a0101"
 !$COLOR_OH_ERROR_LIGHT = "#FCEFF0"
 !$COLOR_OH_ERROR = "#CD0000"
 !$COLOR_OH_EXTERNAL = "#E8DAEF"
+!$COLOR_OH_FONT_TITLE = "AUTO"
 !$COLOR_OH_HIGHLIGHTED_DARK = "#0050EF"
 !$COLOR_OH_HIGHLIGHTED_LIGHT = "#CFEDED"
 !$COLOR_OH_IMPLEMENTATION_DARK = "#F15A22"
 !$COLOR_OH_IMPLEMENTATION_LIGHT = "#FEE1D9"
 !$COLOR_OH_LABEL = "#4D4D4D"
+!$COLOR_OH_LINE_TITLE = "CURRENT" 
 !$COLOR_OH_LOGICAL = $COLOR_OH_PRIMARY
 !$COLOR_OH_MOTIVATION_DARK = "#B975B7"
 !$COLOR_OH_MOTIVATION_LIGHT = "#F1E3F2"
@@ -815,6 +820,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$LINE_TYPE = "ortho"
 !$MARGIN_COMPONENT = 20
 !$MARGIN_ELEMENT = 20
+!$MARGIN_OH_TITLE = 20
 !$MARGIN_TITLE = 20
 !$MARGIN = 15
 !$NAME_FONT = "Segoe UI"
@@ -822,6 +828,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$OH_THEME_ENABLED = %false()
 !$PADDING_COMPONENT = 15
 !$PADDING_ELEMENT = 15
+!$PADDING_OH_TITLE = 15
 !$PADDING_TITLE = 15
 !$PADDING = 10
 !$RANK_SEP = 75
@@ -829,6 +836,7 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ROUND_CORNER_ELEMENT = $ROUND_CORNER
 !$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
+!$ROUND_OH_CORNER_TITLE = 0
 !$SHADOWING = %false()
 !$SIZE_BORDER_ACTOR = 3
 !$SIZE_FONT_ARROW = 11
@@ -914,6 +922,8 @@ src/all.puml (Root Master)
       └── stdlib/theme/index.puml
       └── togaf/theme/index.puml
       └── ontario-health/theme/index.puml
+        └── _colors.puml
+        └── _title.puml
       └── stdlib/skinparam/index.puml
       └── togaf/skinparam/index.puml
       └── ontario-health/skinparam/index.puml

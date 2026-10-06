@@ -43,6 +43,8 @@ src/all.puml (Root Master)
       └── stdlib/theme/index.puml
       └── togaf/theme/index.puml
       └── ontario-health/theme/index.puml
+        └── _colors.puml
+        └── _title.puml
       └── stdlib/skinparam/index.puml
       └── togaf/skinparam/index.puml
       └── ontario-health/skinparam/index.puml

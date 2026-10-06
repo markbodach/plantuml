@@ -292,14 +292,6 @@
 
 
 
-!function $byte_to_hex($n)
-  !$hi = %intval($n / 16)
-  !$tmp = $hi * 16
-  !$lo = $n - $tmp
-  !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
-!endfunction
-
-
 
 '=========================================================
 ' RGB -> #RRGGBB
