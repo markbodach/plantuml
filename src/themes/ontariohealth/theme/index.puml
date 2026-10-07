@@ -1,6 +1,10 @@
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
+!include _colors.puml
+!include _layout.puml
+!include _title.puml
+
 
 !procedure Preload_Theme_OntarioHealth()
     !if ($Is_Theme_Registered("OntarioHealth"))

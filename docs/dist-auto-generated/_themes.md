@@ -20,6 +20,9 @@ src/themes/ontariohealth/index.puml (Root Master)
     └── _patterns.puml
     └── _sbbs.puml
   └── theme/index.puml
+    └── _colors.puml
+    └── _layout.puml
+    └── _title.puml
   └── skinparam/index.puml
   └── styles/index.puml
     └── _title.puml
