@@ -3,33 +3,517 @@
 
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
+## Core Bundle
+
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-10-06 18:47:47 EDT**
-* Build Commit Hash: **d4b5e476e4bb3923a99fbb46909d7d51c3bda0a9**
-* Build Commit Comment: **more edge cases**
 
-## 🚀 How To Use It
+## Theme Bundles
 
-Simply include the compiled production bundle path using your raw GitHub link at the top of your local diagram files:
+Any discovered theme repositories are compiled as:
+
+```text
+theme-<theme-name>.puml
+```
+
+Example:
+
+```text
+theme-corporate.puml
+theme-panelapp.puml
+```
+
+## Build Metadata
+
+* Generated on: **2026-10-07 16:09:37 EDT**
+* Build Commit Hash: **462e615ed96ba96ec420f99e1e54d48bd6d52dce**
+* Build Commit Comment: **more edges**
+
+## Usage
 
 ```plantuml
 @startuml
 
-' STEP 1 :: Enable the themes to be used
-!$OH_THEME_ENABLED = %true()
-!$TOGAF_THEME_ENABLED = %true()
+!define MBpuml https://markbodach.github.io/plantuml
 
-' STEP 2 :: Load the Archimate and TOGAF library
-!define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
-' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
+!includeurl MBpuml/theme-corporate.puml
+
+Register_Theme("Corporate")
+
 Load_Lib_Styles_All()
 
 @enduml
 ```
 
 
+# Theme Registry Guide
+
+## Overview
+
+The Theme Registry provides a lightweight mechanism for registering and executing one or more themes without modifying the framework loader.
+
+Themes are loaded in the order they are registered, allowing multiple themes to be layered together.
+
+This enables:
+
+- Corporate branding themes
+- Product-specific themes
+- Customer-specific themes
+- Project-level themes
+- Reusable theme packages in separate repositories
+
+The registry is intentionally decoupled from the framework, allowing themes to be distributed independently.
+
+---
+
+# Architecture
+
+The framework processes styles in the following order:
+
+```text
+BEFORE
+    ↓
+StdLib
+    ↓
+TOGAF
+    ↓
+Registered Themes
+    ↓
+AFTER
+```
+
+Where:
+
+| Layer | Responsibility |
+|----------|----------|
+| BEFORE | Framework configuration and variable overrides |
+| StdLib | Core framework variables and styles |
+| TOGAF | Architecture semantics and TOGAF defaults |
+| Registered Themes | Organizational or project themes |
+| AFTER | Final overrides and local customizations |
+
+---
+
+# Registry Implementation
+
+The registry maintains a collection of registered themes.
+
+```plantuml
+!$THEMES ?= []
+```
+
+Theme names are stored in registration order.
+
+Example:
+
+```plantuml
+["Corporate"]
+```
+
+or
+
+```plantuml
+["Corporate", "Product"]
+```
+
+---
+
+# Registering Themes
+
+Themes are registered using:
+
+```plantuml
+Register_Theme($theme)
+```
+
+Example:
+
+```plantuml
+Register_Theme("Corporate")
+```
+
+Multiple themes:
+
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Product")
+```
+
+Execution order:
+
+```text
+Corporate
+    ↓
+Product
+```
+
+The second theme can override settings introduced by the first theme.
+
+---
+
+# Theme Authoring
+
+Each registered theme must provide two procedures.
+
+## Variable Phase
+
+```plantuml
+Preload_Theme_<ThemeName>()
+```
+
+Used for:
+
+- Variables
+- Configuration
+- Theme initialization
+- Semantic mappings
+
+Example:
+
+```plantuml
+!procedure Preload_Theme_Corporate()
+
+    !$SPACING_UNIT = 8
+
+!endprocedure
+```
+
+---
+
+## Style Phase
+
+```plantuml
+Load_Lib_Styles_THEME_<ThemeName>()
+```
+
+Used for:
+
+- Stereotypes
+- Styles
+- Layout defaults
+- Theme-specific formatting
+
+Example:
+
+```plantuml
+!procedure Load_Lib_Styles_THEME_Corporate()
+
+<style>
+
+.card {
+
+    Padding 24
+
+}
+
+</style>
+
+!endprocedure
+```
+
+---
+
+# Theme Invocation
+
+The framework automatically invokes registered themes.
+
+Theme authors do not call these procedures directly.
+
+## Variable Phase
+
+For each registered theme:
+
+```plantuml
+Preload_Theme_<Theme>()
+```
+
+is executed.
+
+For example:
+
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Product")
+```
+
+results in:
+
+```plantuml
+Preload_Theme_Corporate()
+
+Preload_Theme_Product()
+```
+
+---
+
+## Style Phase
+
+For each registered theme:
+
+```plantuml
+Load_Lib_Styles_THEME_<Theme>()
+```
+
+is executed.
+
+For example:
+
+```plantuml
+Load_Lib_Styles_THEME_Corporate()
+
+Load_Lib_Styles_THEME_Product()
+```
+
+---
+
+# Creating a Theme Package
+
+Themes are intended to be distributable and versioned independently from the framework.
+
+A theme package typically consists of:
+
+```text
+theme-repository
+│
+├─ theme.puml
+├─ README.md
+└─ examples
+```
+
+Example:
+
+```plantuml
+Register_Theme("Corporate")
+
+
+!procedure Preload_Theme_Corporate()
+
+    !$SPACING_UNIT = 8
+
+    !$ROUND_2 = 12
+
+!endprocedure
+
+
+!procedure Load_Lib_Styles_THEME_Corporate()
+
+<style>
+
+.card {
+
+    Padding 24
+
+    RoundCorner 12
+
+}
+
+</style>
+
+!endprocedure
+```
+
+No framework files require modification.
+
+---
+
+# Using a Theme
+
+Simply include the theme package.
+
+```plantuml
+!include architecture-toolkit.puml
+
+!include corporate-theme.puml
+
+Load_Lib_Styles_All()
+```
+
+The theme registers itself automatically.
+
+---
+
+# Multiple Theme Composition
+
+Multiple themes may be loaded simultaneously.
+
+Example:
+
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Product")
+Register_Theme("Customer")
+```
+
+Processing:
+
+```text
+StdLib
+    ↓
+TOGAF
+    ↓
+Corporate
+    ↓
+Product
+    ↓
+Customer
+    ↓
+AFTER
+```
+
+This allows:
+
+- Base organizational standards
+- Product-specific customizations
+- Customer-specific branding
+
+without duplication of theme code.
+
+---
+
+# Recommended Theme Design
+
+## Base Theme
+
+Defines broad organizational branding.
+
+Examples:
+
+- Colors
+- Standard spacing
+- Border styles
+- Typography
+
+---
+
+## Product Theme
+
+Extends organizational standards.
+
+Examples:
+
+- Application-specific cards
+- Domain-specific stereotypes
+- Product-specific layouts
+
+---
+
+## Customer Theme
+
+Provides customer customizations.
+
+Examples:
+
+- Branding
+- Logos
+- Colour tweaks
+- Presentation styles
+
+---
+
+# Best Practices
+
+## Register Once
+
+Do:
+
+```plantuml
+Register_Theme("Corporate")
+```
+
+Avoid:
+
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Corporate")
+```
+
+Duplicate registrations will result in duplicate execution.
+
+---
+
+## Use Preload for Variables
+
+Good:
+
+```plantuml
+!procedure Preload_Theme_Corporate()
+
+    !$SPACING_UNIT = 8
+
+!endprocedure
+```
+
+Avoid defining variables during the style phase.
+
+---
+
+## Use Load for Styles
+
+Good:
+
+```plantuml
+!procedure Load_Lib_Styles_THEME_Corporate()
+
+<style>
+
+.card {
+    Padding 24
+}
+
+</style>
+
+!endprocedure
+```
+
+---
+
+## Keep Themes Focused
+
+Prefer:
+
+```text
+Corporate Theme
+    ↓
+Product Theme
+```
+
+over a single monolithic theme.
+
+Smaller themes are easier to maintain and reuse.
+
+---
+
+# Example Layering Strategy
+
+A typical enterprise implementation might look like:
+
+```text
+StdLib
+    ↓
+TOGAF
+    ↓
+Corporate Theme
+    ↓
+Product Theme
+    ↓
+Project Theme
+    ↓
+AFTER
+```
+
+Where:
+
+| Layer | Example Responsibility |
+|----------|----------|
+| StdLib | Core utility framework |
+| TOGAF | Architecture semantics |
+| Corporate Theme | Organizational branding and standards |
+| Product Theme | Product-specific visual patterns |
+| Project Theme | Project-level extensions |
+| AFTER | Diagram-local customization |
+
+This layered approach allows themes to be independently developed, versioned, distributed, and composed while keeping the framework itself stable and unchanged.
 # Theme Usage
 
 The theme provides:
@@ -704,7 +1188,10 @@ The color-resolution system provides:
 Diagram authors can focus on semantic intent while the library handles color resolution, contrast selection, and transformation behavior automatically.
 
 # All Override PlantUML Variables
-This list is generated from the repository's puml source code.  Use these variables before loading the repository.  
+
+This list is generated from the repository's puml source code.
+
+Use these variables before loading the repository.
 
 ```plantuml
 @startuml
@@ -712,6 +1199,11 @@ This list is generated from the repository's puml source code.  Use these variab
 !$ALIGNMENT_HORIZONTAL_COMPONENT = "left"
 !$ALIGNMENT_HORIZONTAL_ELEMENT = "left"
 !$ALIGNMENT_HORIZONTAL_TITLE = "center"
+!$BORDER_0 = 0
+!$BORDER_1 = 1
+!$BORDER_2 = 2
+!$BORDER_3 = 3
+!$BORDER_4 = 4
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
@@ -752,46 +1244,6 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_NEW_DARK = $COLOR_TOGAF_NEW
 !$COLOR_NEW_LIGHT = $COLOR_TOGAF_NEW
 !$COLOR_NONE = $COLOR_TRANSPARENT
-!$COLOR_OH_APPLICATION_DARK = "#3193CC"
-!$COLOR_OH_APPLICATION_LIGHT = "#C5EEFA"
-!$COLOR_OH_BACKGROUND_TITLE = "PRIMARY_DARK"
-!$COLOR_OH_BORDER = "#5D6D7E"
-!$COLOR_OH_BUSINESS_DARK = "#FFD440"
-!$COLOR_OH_BUSINESS_LIGHT = "#FFFDC4"
-!$COLOR_OH_BUSINESS = $COLOR_OH_WARNING
-!$COLOR_OH_DEPLOYMENT = "#FAD7A0"
-!$COLOR_OH_ERROR_DARK = "#8a0101"
-!$COLOR_OH_ERROR_LIGHT = "#FCEFF0"
-!$COLOR_OH_ERROR = "#CD0000"
-!$COLOR_OH_EXTERNAL = "#E8DAEF"
-!$COLOR_OH_FONT_TITLE = "AUTO"
-!$COLOR_OH_HIGHLIGHTED_DARK = "#0050EF"
-!$COLOR_OH_HIGHLIGHTED_LIGHT = "#CFEDED"
-!$COLOR_OH_IMPLEMENTATION_DARK = "#F15A22"
-!$COLOR_OH_IMPLEMENTATION_LIGHT = "#FEE1D9"
-!$COLOR_OH_LABEL = "#4D4D4D"
-!$COLOR_OH_LINE_TITLE = "CURRENT" 
-!$COLOR_OH_LOGICAL = $COLOR_OH_PRIMARY
-!$COLOR_OH_MOTIVATION_DARK = "#B975B7"
-!$COLOR_OH_MOTIVATION_LIGHT = "#F1E3F2"
-!$COLOR_OH_NEW_DARK = "#005700"
-!$COLOR_OH_NEW_LIGHT = "#DDEDC7"
-!$COLOR_OH_PLACEHOLDER = "#737373"
-!$COLOR_OH_PRIMARY_DARK = "#023451"
-!$COLOR_OH_PRIMARY_LIGHT = "#D6EAF8"
-!$COLOR_OH_PRIMARY = "#047BC1"
-!$COLOR_OH_STRATEGY_DARK = "#EFB243"
-!$COLOR_OH_STRATEGY_LIGHT = "#F8E5C3"
-!$COLOR_OH_SUCCESS_DARK = "#0F7C41"
-!$COLOR_OH_SUCCESS_LIGHT = "#EAF5EA"
-!$COLOR_OH_SUCCESS = "#118847"
-!$COLOR_OH_TECHNOLOGY_DARK = "#39B54A"
-!$COLOR_OH_TECHNOLOGY_LIGHT = "#D1EFD4"
-!$COLOR_OH_TECHNOLOGY = $COLOR_OH_SUCCESS
-!$COLOR_OH_TEXT = "#1A1A1A"
-!$COLOR_OH_WARNING_DARK = "#FFFAEB"
-!$COLOR_OH_WARNING_LIGHT = "#EFB243"
-!$COLOR_OH_WARNING = "#FCAF17"
 !$COLOR_PRIMARY_DARK = "#D6EAF8"
 !$COLOR_PRIMARY_LIGHT = "#D6EAF8"
 !$COLOR_PRIMARY = "#D6EAF8"
@@ -817,26 +1269,35 @@ This list is generated from the repository's puml source code.  Use these variab
 !$COLOR_WARNING = "#FCF3CF"
 !$CONTRAST_THRESHOLD = 128
 !$DEFAULT_TEXT_ALIGNMENT = "center"
+!$HEIGHT_LG = 150
+!$HEIGHT_MD = 100
+!$HEIGHT_SM = 75
+!$HEIGHT_XL = 200
+!$HEIGHT_XS = 50
 !$LINE_TYPE = "ortho"
 !$MARGIN_COMPONENT = 20
 !$MARGIN_ELEMENT = 20
-!$MARGIN_OH_TITLE = 20
 !$MARGIN_TITLE = 20
 !$MARGIN = 15
 !$NAME_FONT = "Segoe UI"
 !$NODE_SEP = 75
-!$OH_THEME_ENABLED = %false()
 !$PADDING_COMPONENT = 15
 !$PADDING_ELEMENT = 15
-!$PADDING_OH_TITLE = 15
 !$PADDING_TITLE = 15
 !$PADDING = 10
 !$RANK_SEP = 75
+!$ROUND_0 = 0
+!$ROUND_1 = 5
+!$ROUND_2 = 10
+!$ROUND_3 = 15
+!$ROUND_4 = 20
+!$ROUND_5 = 30
+!$ROUND_CIRCLE = 100
 !$ROUND_CORNER_COMPONENT = $ROUND_CORNER
 !$ROUND_CORNER_ELEMENT = $ROUND_CORNER
 !$ROUND_CORNER_TITLE = $ROUND_CORNER
 !$ROUND_CORNER = 10
-!$ROUND_OH_CORNER_TITLE = 0
+!$ROUND_PILL = 50
 !$SHADOWING = %false()
 !$SIZE_BORDER_ACTOR = 3
 !$SIZE_FONT_ARROW = 11
@@ -848,17 +1309,34 @@ This list is generated from the repository's puml source code.  Use these variab
 !$SIZE_LINE_TITLE = $SIZE_LINE
 !$SIZE_LINE = 2
 !$SKINPARAM_ENABLED = %false()
+!$SPACING_0 = 0
+!$SPACING_1 = ($SPACING_UNIT * 1)
+!$SPACING_2 = ($SPACING_UNIT * 2)
+!$SPACING_3 = ($SPACING_UNIT * 3)
+!$SPACING_4 = ($SPACING_UNIT * 4)
+!$SPACING_5 = ($SPACING_UNIT * 6)
+!$SPACING_UNIT_ENABLED = %true()
+!$SPACING_UNIT = 5
 !$STYLE_ACTOR = awesome
 !$STYLE_FONT_COMPONENT = ""
 !$STYLE_FONT_ELEMENT = ""
 !$STYLE_FONT_TITLE = "bold"
-!$TOGAF_THEME_ENABLED = %false()
+!$THEMES = []
+!$TOGAF_LIB_ENABLED = %false()
+!$WIDTH_LG = 350
+!$WIDTH_MD = 250
+!$WIDTH_SM = 150
+!$WIDTH_XL = 500
+!$WIDTH_XS = 75
+!$WIDTH_XXL = 700
 
 @enduml
 ```
-
 # All Defined PlantUML skinparam Variables
-This list is generated from the repository's puml source code.  Skin parameters can be re-initialized after including the repository.  
+
+This list is generated from the repository's puml source code.
+
+Skin parameters can be re-initialized after including the repository.
 
 ```plantuml
 @startuml
@@ -876,19 +1354,26 @@ skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 
 @enduml
 ```
+## 📦 Bundled Repository Tree
 
-## 📦 Bundled  Repository Tree
-This tree maps out exactly how the source code files were evaluated and sequenced into this final `all.puml` production asset:
+This tree maps out exactly how the source code files were evaluated and sequenced into the final `all.puml` production asset.
 
 ```text
 src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
+      └── stdlib/framework/index.puml
+        └── _registry.puml
+        └── _extensions.puml
       └── stdlib/vars/index.puml
         └── _index.puml
         └── _colors.puml
         └── _fonts.puml
+        └── _spacing.puml
         └── _borders.puml
+        └── _corner.puml
+        └── _width.puml
+        └── _height.puml
         └── _layout.puml
         └── _icons.puml
         └── _element.puml
@@ -898,12 +1383,6 @@ src/all.puml (Root Master)
         └── _index.puml
         └── _colors.puml
         └── _fonts.puml
-      └── ontario-health/vars/index.puml
-        └── _index.puml
-        └── _colors.puml
-        └── _fonts.puml
-        └── _layout.puml
-        └── _title.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
@@ -915,25 +1394,19 @@ src/all.puml (Root Master)
       └── togaf/components/index.puml
         └── _functions.puml
         └── _colors.puml
-      └── ontario-health/components/index.puml
-        └── _title.puml
-        └── _patterns.puml
-        └── _sbbs.puml
       └── stdlib/theme/index.puml
       └── togaf/theme/index.puml
-      └── ontario-health/theme/index.puml
-        └── _colors.puml
-        └── _title.puml
       └── stdlib/skinparam/index.puml
       └── togaf/skinparam/index.puml
-      └── ontario-health/skinparam/index.puml
       └── stdlib/styles/index.puml
+        └── _utilities.puml
+        └── _card.puml
+        └── _panel.puml
+        └── _containers.puml
         └── _title.puml
         └── _element.puml
         └── _component.puml
       └── togaf/styles/index.puml
-      └── ontario-health/styles/index.puml
-        └── _title.puml
 ```
 
 # Architecture Diagrams

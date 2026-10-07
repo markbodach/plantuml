@@ -1,2 +1,2 @@
 
-!$TOGAF_THEME_ENABLED ?= %false()
+!$TOGAF_LIB_ENABLED ?= %false()

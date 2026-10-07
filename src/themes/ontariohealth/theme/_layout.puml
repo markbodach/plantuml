@@ -4,6 +4,7 @@
 '---------------------------------------------------------
 
 
-!if ($OH_THEME_ENABLED)
+!procedure Preload_Theme_OntarioHealth_Layout()
 
-!endif
+
+!endprocedure

@@ -1,0 +1,25 @@
+'---------------------------------------------------------
+' Bootstrap-inspired spacing scale
+'---------------------------------------------------------
+
+!$SPACING_UNIT_ENABLED ?= %true()
+!$SPACING_UNIT ?= 5
+
+
+!if $SPACING_UNIT_ENABLED == %true()
+    !$SPACING_0 ?= 0
+    !$SPACING_1 ?= ($SPACING_UNIT * 1)
+    !$SPACING_2 ?= ($SPACING_UNIT * 2)
+    !$SPACING_3 ?= ($SPACING_UNIT * 3)
+    !$SPACING_4 ?= ($SPACING_UNIT * 4)
+    !$SPACING_5 ?= ($SPACING_UNIT * 6)
+
+!else
+    !$SPACING_0 ?= 0
+    !$SPACING_1 ?= 5
+    !$SPACING_2 ?= 10
+    !$SPACING_3 ?= 15
+    !$SPACING_4 ?= 20
+    !$SPACING_5 ?= 30
+    
+!endif

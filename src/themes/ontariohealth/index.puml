@@ -1,0 +1,17 @@
+
+
+
+'STEP 1 :: VARS includes
+!include vars/index.puml
+
+'STEP 2 :: COMPONENTS includes
+!include components/index.puml
+
+'STEP 3 :: THEME includes
+!include theme/index.puml
+
+'STEP 4 :: Skin Params includes
+!include skinparam/index.puml
+
+'STEP 5 :: STYLES includes
+!include styles/index.puml

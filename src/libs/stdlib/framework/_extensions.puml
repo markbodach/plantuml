@@ -1,0 +1,112 @@
+'=================================================================
+' STYLE EXTENSION HOOKS
+'=================================================================
+'
+' The toolkit provides four optional extension procedures that
+' allow consumers to customize variables and styles without
+' modifying the toolkit source code.
+'
+'=================================================================
+'
+' LOADING ORDER
+'
+'   Preload_Lib_Styles_BEFORE()
+'       ↓
+'   Preload_Lib_Styles_Stdlib()
+'   Preload_Lib_Styles_Togaf()
+'   Registered Theme Preload Procedures
+'       ↓
+'   Preload_Lib_Styles_AFTER()
+'
+'       ↓
+'
+'   Load_Lib_Styles_BEFORE()
+'       ↓
+'   Load_Lib_Styles_Stdlib()
+'   Load_Lib_Styles_Togaf()
+'   Registered Theme Style Procedures
+'       ↓
+'   Load_Lib_Styles_AFTER()
+'
+'=================================================================
+'
+' BEFORE HOOKS
+'
+' Intended for:
+'
+'   - Override toolkit defaults
+'   - Configure variables
+'   - Select active themes
+'   - Replace framework values
+'
+' Example:
+'
+'   !procedure Preload_Lib_Styles_BEFORE()
+'
+'       !$SPACING_UNIT = 8
+'
+'       !$ROUND_2 = 12
+'
+'   !endprocedure
+'
+'=================================================================
+'
+' AFTER HOOKS
+'
+' Intended for:
+'
+'   - Final overrides
+'   - Project-specific stereotypes
+'   - Local utility styles
+'   - Style customizations
+'
+' Example:
+'
+'   !procedure Load_Lib_Styles_AFTER()
+'
+'   <style>
+'
+'   .projectCard {
+'       Padding 20
+'       RoundCorner 10
+'   }
+'
+'   </style>
+'
+'   !endprocedure
+'
+'=================================================================
+'
+' RECOMMENDATIONS
+'
+'   Variables -> PRELOAD hooks
+'
+'   Styles    -> LOAD hooks
+'
+'   BEFORE    -> Configure toolkit behavior
+'
+'   AFTER     -> Override toolkit defaults
+'
+'=================================================================
+'
+' DEFAULT IMPLEMENTATIONS
+'
+' Consumers may redefine these procedures.
+'
+!procedure Preload_Lib_Styles_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Preload_Lib_Styles_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+'
+'=================================================================

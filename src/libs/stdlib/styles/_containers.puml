@@ -1,0 +1,34 @@
+!procedure Write_Lib_Style_Stdlib_Containers()
+
+<style>
+
+
+'=========================================================
+' ARCHITECTURE CONTAINERS
+'=========================================================
+
+.boundary {
+
+    Padding $SPACING_5
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_2
+
+}
+
+.boundaryLg {
+
+    Padding $SPACING_5
+    Margin $SPACING_5
+
+    RoundCorner $ROUND_4
+
+    LineThickness $BORDER_3
+
+}
+
+</style>
+
+!endprocedure

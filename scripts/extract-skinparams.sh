@@ -7,18 +7,47 @@ Usage:
   $(basename "$0") FILE.puml
 
 Description:
-  Extracts all PlantUML skinparam statements, including multiline blocks.
+  Extracts PlantUML skinparam definitions and preserves the
+  first occurrence of each setting.
 
-Examples extracted:
-  skinparam shadowing \$!SHADOWING
-  skinparam BackgroundColor #FFFFFF
+Features:
 
-  skinparam class {
-    BackgroundColor White
-    BorderColor Black
-  }
+  - Supports simple skinparams:
 
-Commented lines beginning with "," or "'" are excluded.
+        skinparam shadowing false
+
+  - Supports block skinparams:
+
+        skinparam class {
+            BackgroundColor White
+            BorderColor Black
+        }
+
+  - Duplicate properties are ignored after first occurrence.
+
+  - Duplicate blocks are merged.
+
+  - Commented lines beginning with "," or "'" are ignored.
+
+  - Output is normalized and grouped by skinparam block.
+
+Examples:
+
+    skinparam class {
+        BackgroundColor White
+    }
+
+    skinparam class {
+        BorderColor Black
+    }
+
+Produces:
+
+    skinparam class {
+        BackgroundColor White
+        BorderColor Black
+    }
+
 EOF
 }
 
@@ -35,65 +64,176 @@ if [[ ! -f "$input_file" ]]; then
 fi
 
 awk '
-function count_character(text, character, copy) {
-  copy = text
-  return gsub(character, "", copy)
-}
 
 BEGIN {
-  in_skinparam_block = 0
-  brace_depth = 0
+
+    in_block = 0
+
+    block_name = ""
+
+    block_count = 0
+    simple_count = 0
+}
+
+#
+# Trim helper
+#
+function trim(s) {
+
+    sub(/^[[:space:]]+/, "", s)
+    sub(/[[:space:]]+$/, "", s)
+
+    return s
 }
 
 {
-  line = $0
+    line = $0
 
-  # Remove leading whitespace for comment detection
-  trimmed = line
-  sub(/^[[:space:]]*/, "", trimmed)
+    trimmed = line
+    sub(/^[[:space:]]*/, "", trimmed)
 
-  # Skip PlantUML comment lines
-  if (substr(trimmed, 1, 1) == "," ||
-      substr(trimmed, 1, 1) == "'\''") {
-    next
-  }
+    #
+    # Ignore comments
+    #
+    first = substr(trimmed,1,1)
 
-  # Continue processing an active multiline skinparam block
-  if (in_skinparam_block) {
-    print line
+    if (first == "," || first == "'\''")
+        next
 
-    brace_depth += count_character(line, "{")
-    brace_depth -= count_character(line, "}")
+    #
+    # Continue processing block
+    #
+    if (in_block) {
 
-    if (brace_depth <= 0) {
-      in_skinparam_block = 0
-      brace_depth = 0
+        #
+        # End block
+        #
+        if (trimmed ~ /^}/) {
+
+            in_block = 0
+            block_name = ""
+
+            next
+        }
+
+        #
+        # Property line
+        #
+        if (match(trimmed,/^([A-Za-z0-9_]+)[[:space:]]+(.*)$/,m)) {
+
+            prop = m[1]
+            value = m[2]
+
+            key = block_name "." prop
+
+            if (!(key in seen_property)) {
+
+                seen_property[key]=1
+
+                property_value[key]=value
+
+                if (!(block_name SUBSEP prop in block_property_order)) {
+
+                    block_property_order[block_name SUBSEP prop]=1
+
+                    property_list[block_name] = property_list[block_name] prop "\n"
+
+                }
+            }
+        }
+
+        next
     }
 
-    next
-  }
+    #
+    # Block Start
+    #
+    if (match(trimmed,
+        /^skinparam[[:space:]]+([A-Za-z0-9_]+)[[:space:]]*{$/,
+        m))
+    {
+        block_name = m[1]
 
-  # Match a skinparam statement/block
-  if (line ~ /^[[:space:]]*skinparam([[:space:]]|$)/) {
-    print line
+        if (!(block_name in seen_block)) {
 
-    opening_braces = count_character(line, "{")
-    closing_braces = count_character(line, "}")
+            seen_block[block_name]=1
 
-    brace_depth = opening_braces - closing_braces
+            block_count++
+            block_order[block_count]=block_name
+        }
 
-    if (brace_depth > 0) {
-      in_skinparam_block = 1
+        in_block = 1
+
+        next
     }
 
-    next
-  }
+    #
+    # Simple skinparam
+    #
+    if (match(trimmed,
+        /^skinparam[[:space:]]+([A-Za-z0-9_]+)[[:space:]]+(.*)$/,
+        m))
+    {
+        param = m[1]
+
+        if (!(param in seen_simple)) {
+
+            seen_simple[param]=1
+
+            simple_count++
+            simple_order[simple_count]=param
+
+            simple_value[param]=trimmed
+        }
+
+        next
+    }
+
 }
 
 END {
-  if (in_skinparam_block) {
-    print "Warning: unterminated skinparam block in " FILENAME > "/dev/stderr"
-    exit 1
-  }
+
+    #
+    # Simple skinparams
+    #
+    for (i=1; i<=simple_count; i++) {
+
+        param = simple_order[i]
+
+        print simple_value[param]
+    }
+
+    #
+    # Blank line between sections
+    #
+    if (simple_count > 0 && block_count > 0)
+        print ""
+
+    #
+    # Block skinparams
+    #
+    for (i=1; i<=block_count; i++) {
+
+        block = block_order[i]
+
+        print "skinparam " block " {"
+
+        n = split(property_list[block], props, "\n")
+
+        for (j=1; j<=n; j++) {
+
+            prop = props[j]
+
+            if (prop == "")
+                continue
+
+            key = block "." prop
+
+            print "    " prop " " property_value[key]
+        }
+
+        print "}"
+        print ""
+    }
 }
 ' "$input_file"

@@ -1,6 +1,7 @@
 
 !include dist-auto-generated/_dist-metadata.md
 
+!include partials/_theme-registry-guide.md
 !include partials/_theme-usage.md
 !include partials/_color-resolution-system.md
 

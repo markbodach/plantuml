@@ -1,0 +1,52 @@
+!procedure Write_Lib_Style_Stdlib_Card()
+
+<style>
+
+
+
+'=========================================================
+' CARD
+'=========================================================
+
+.card {
+
+    Padding $SPACING_3
+    Margin $SPACING_2
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_1
+
+    Shadowing true
+
+}
+
+.cardCompact {
+
+    Padding $SPACING_2
+    Margin $SPACING_1
+
+    RoundCorner $ROUND_1
+
+    LineThickness $BORDER_1
+
+    Shadowing true
+
+}
+
+.cardLg {
+
+    Padding $SPACING_4
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_3
+
+    LineThickness $BORDER_2
+
+    Shadowing true
+
+}
+
+
+</style>
+!endprocedure

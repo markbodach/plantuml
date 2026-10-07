@@ -1,0 +1,233 @@
+'=================================================================
+' THEME REGISTRY
+'=================================================================
+'
+' Provides registration and invocation support for custom themes.
+'
+' Themes are processed in registration order.
+'
+' Example:
+'
+'   Register_Theme("OntarioHealth")
+'   Register_Theme("PanelApp")
+'
+' Execution Order:
+'
+'   OntarioHealth
+'       ↓
+'   PanelApp
+'
+' Each registered theme may provide:
+'
+'   Preload_Theme_<Theme>()
+'
+'       Used for:
+'           - Variables
+'           - Theme initialization
+'           - Configuration
+'
+'   Load_Lib_Styles_THEME_<Theme>()
+'
+'       Used for:
+'           - Styles
+'           - Stereotypes
+'           - Formatting
+'
+'=================================================================
+'
+' REGISTRY
+'
+' Stores registered theme names.
+'
+' Example:
+'
+'   ["OntarioHealth"]
+'
+'   ["OntarioHealth","PanelApp"]
+'
+'=================================================================
+
+!$THEMES ?= []
+
+
+
+!function $theme_registered($theme)
+
+    !foreach $item in $THEMES
+
+        !if ($item == $theme)
+
+            !return %true()
+
+        !endif
+
+    !endforeach
+
+    !return %false()
+
+!endfunction
+
+
+'=========================================================
+' Is Theme Registered
+'
+' Uses %array_contains() when available.
+' Falls back to manual iteration.
+'=========================================================
+
+!function $Is_Theme_Registered($theme)
+
+    '
+    ' Uncomment when all supported versions
+    ' have %array_contains().
+    '
+    '!return %array_contains($THEMES, $theme)
+
+    '
+    ' Compatibility implementation
+    '
+    !return $theme_registered($theme)
+
+!endfunction
+
+'=================================================================
+' REGISTRATION
+'=================================================================
+'
+' Adds a theme to the registry.
+'
+' Example:
+'
+'   Register_Theme("OntarioHealth")
+'
+'=================================================================
+
+!procedure Register_Theme($theme)
+
+    !if ($theme == "") 
+        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank" 
+    !endif
+    !if ($theme_registered($theme) == %false())
+
+        !$THEMES = %array_add($THEMES,$theme)
+
+    !endif
+
+!endprocedure
+
+
+'=================================================================
+' PRELOAD INVOCATION
+'=================================================================
+'
+' Executes:
+'
+'   Preload_Theme_<Theme>()
+'
+' for each registered theme.
+'
+' Example:
+'
+'   Register_Theme("OntarioHealth")
+'   Register_Theme("PanelApp")
+'
+' Executes:
+'
+'   Preload_Theme_OntarioHealth()
+'   Preload_Theme_PanelApp()
+'
+'=================================================================
+
+!procedure Invoke_Preload_Themes()
+
+!foreach $theme in $THEMES
+
+    !$proc = "Preload_Theme_" + $theme
+
+    %invoke_procedure($proc)
+
+!endforeach
+
+!endprocedure
+
+'=================================================================
+' STYLE INVOCATION
+'=================================================================
+'
+' Executes:
+'
+'   Load_Lib_Styles_THEME_<Theme>()
+'
+' for each registered theme.
+'
+' Example:
+'
+'   Register_Theme("OntarioHealth")
+'   Register_Theme("PanelApp")
+'
+' Executes:
+'
+'   Load_Lib_Styles_THEME_OntarioHealth()
+'   Load_Lib_Styles_THEME_PanelApp()
+'
+'=================================================================
+
+!procedure Invoke_Load_Themes()
+
+!foreach $theme in $THEMES
+
+    !$proc = "Load_Lib_Styles_THEME_" + $theme
+
+    %invoke_procedure($proc)
+
+!endforeach
+
+!endprocedure
+
+'=================================================================
+' THEME AUTHORING EXAMPLE
+'=================================================================
+'
+' Register theme:
+'
+'   Register_Theme("OntarioHealth")
+'
+'
+' Variables:
+'
+'   !procedure Preload_Theme_OntarioHealth()
+'
+'       !$COLOR_PRIMARY = $COLOR_OH_PRIMARY
+'
+'   !endprocedure
+'
+'
+' Styles:
+'
+'   !procedure Load_Lib_Styles_THEME_OntarioHealth()
+'
+'   <style>
+'
+'   .ohCard {
+'       Padding 20
+'   }
+'
+'   </style>
+'
+'   !endprocedure
+'
+'=================================================================
+'
+' PROCESSING MODEL
+'
+'   BEFORE
+'       ↓
+'   StdLib
+'       ↓
+'   TOGAF
+'       ↓
+'   Registered Themes
+'       ↓
+'   AFTER
+'
+'=================================================================

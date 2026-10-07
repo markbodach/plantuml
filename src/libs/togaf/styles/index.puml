@@ -1,5 +1,5 @@
 !procedure Preload_Lib_Styles_Togaf()
-!if ($TOGAF_THEME_ENABLED)
+!if ($TOGAF_LIB_ENABLED)
 
 !endif
 
@@ -7,7 +7,7 @@
 
 
 !procedure Load_Lib_Styles_Togaf()
-!if ($TOGAF_THEME_ENABLED)
+!if ($TOGAF_LIB_ENABLED)
 
 !endif
 

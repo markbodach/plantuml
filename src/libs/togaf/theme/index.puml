@@ -1,5 +1,5 @@
 
-!if ($TOGAF_THEME_ENABLED)
+!if ($TOGAF_LIB_ENABLED)
 
 'This is the surface colour
 

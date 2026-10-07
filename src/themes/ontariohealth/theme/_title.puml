@@ -5,7 +5,7 @@
 '---------------------------------------------------------
 
 
-!if ($OH_THEME_ENABLED)
+!procedure Preload_Theme_OntarioHealth_Title()
 
 !$MARGIN_TITLE = $MARGIN_OH_TITLE
 !$PADDING_TITLE = $PADDING_OH_TITLE
@@ -17,4 +17,5 @@
     
 !$COLOR_LINE_TITLE = $COLOR_OH_LINE_TITLE 
 
-!endif
+!endprocedure
+

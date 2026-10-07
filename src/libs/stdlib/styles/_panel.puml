@@ -1,0 +1,48 @@
+!procedure Write_Lib_Style_Stdlib_Panel()
+
+<style>
+
+
+
+'=========================================================
+' PANEL
+'
+' Stronger visual grouping.
+' Ideal for architecture boundaries.
+'=========================================================
+
+.panel {
+
+    Padding $SPACING_4
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_2
+
+}
+
+.panelCompact {
+
+    Padding $SPACING_2
+    Margin $SPACING_2
+
+    RoundCorner $ROUND_1
+
+    LineThickness $BORDER_1
+
+}
+
+.panelLg {
+
+    Padding $SPACING_5
+    Margin $SPACING_4
+
+    RoundCorner $ROUND_3
+
+    LineThickness $BORDER_3
+
+}
+
+</style>
+!endprocedure

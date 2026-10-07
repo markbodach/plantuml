@@ -3,7 +3,7 @@
 '---------------------------------------------------------
 
 
-!if ($OH_THEME_ENABLED)
+!procedure Preload_Theme_OntarioHealth_Colors()
 
 'Set OH Colours
 
@@ -35,7 +35,7 @@
 'If there are a lot of variables, this could be moved into a separate _togaf.puml file
 
 
-!if ($TOGAF_THEME_ENABLED)
+!if ($TOGAF_LIB_ENABLED)
 
     'This is the surface colour
 
@@ -66,5 +66,5 @@
 
 !endif
 
-!endif
+!endprocedure
 

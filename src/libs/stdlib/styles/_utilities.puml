@@ -1,0 +1,156 @@
+!procedure Write_Lib_Style_Stdlib_Utilities()
+
+<style>
+
+'=========================================================
+' PADDING
+'=========================================================
+
+.p0 { Padding $SPACING_0 }
+.p1 { Padding $SPACING_1 }
+.p2 { Padding $SPACING_2 }
+.p3 { Padding $SPACING_3 }
+.p4 { Padding $SPACING_4 }
+.p5 { Padding $SPACING_5 }
+
+'=========================================================
+' DIRECTIONAL PADDING
+'=========================================================
+
+.pt0 { PaddingTop $SPACING_0 }
+.pt1 { PaddingTop $SPACING_1 }
+.pt2 { PaddingTop $SPACING_2 }
+.pt3 { PaddingTop $SPACING_3 }
+.pt4 { PaddingTop $SPACING_4 }
+.pt5 { PaddingTop $SPACING_5 }
+
+.pb0 { PaddingBottom $SPACING_0 }
+.pb1 { PaddingBottom $SPACING_1 }
+.pb2 { PaddingBottom $SPACING_2 }
+.pb3 { PaddingBottom $SPACING_3 }
+.pb4 { PaddingBottom $SPACING_4 }
+.pb5 { PaddingBottom $SPACING_5 }
+
+.pl0 { PaddingLeft $SPACING_0 }
+.pl1 { PaddingLeft $SPACING_1 }
+.pl2 { PaddingLeft $SPACING_2 }
+.pl3 { PaddingLeft $SPACING_3 }
+.pl4 { PaddingLeft $SPACING_4 }
+.pl5 { PaddingLeft $SPACING_5 }
+
+.pr0 { PaddingRight $SPACING_0 }
+.pr1 { PaddingRight $SPACING_1 }
+.pr2 { PaddingRight $SPACING_2 }
+.pr3 { PaddingRight $SPACING_3 }
+.pr4 { PaddingRight $SPACING_4 }
+.pr5 { PaddingRight $SPACING_5 }
+
+'=========================================================
+' MARGIN
+'=========================================================
+
+.m0 { Margin $SPACING_0 }
+.m1 { Margin $SPACING_1 }
+.m2 { Margin $SPACING_2 }
+.m3 { Margin $SPACING_3 }
+.m4 { Margin $SPACING_4 }
+.m5 { Margin $SPACING_5 }
+
+'=========================================================
+' DIRECTIONAL MARGIN
+'=========================================================
+
+.mt0 { MarginTop $SPACING_0 }
+.mt1 { MarginTop $SPACING_1 }
+.mt2 { MarginTop $SPACING_2 }
+.mt3 { MarginTop $SPACING_3 }
+.mt4 { MarginTop $SPACING_4 }
+.mt5 { MarginTop $SPACING_5 }
+
+.mb0 { MarginBottom $SPACING_0 }
+.mb1 { MarginBottom $SPACING_1 }
+.mb2 { MarginBottom $SPACING_2 }
+.mb3 { MarginBottom $SPACING_3 }
+.mb4 { MarginBottom $SPACING_4 }
+.mb5 { MarginBottom $SPACING_5 }
+
+.ml0 { MarginLeft $SPACING_0 }
+.ml1 { MarginLeft $SPACING_1 }
+.ml2 { MarginLeft $SPACING_2 }
+.ml3 { MarginLeft $SPACING_3 }
+.ml4 { MarginLeft $SPACING_4 }
+.ml5 { MarginLeft $SPACING_5 }
+
+.mr0 { MarginRight $SPACING_0 }
+.mr1 { MarginRight $SPACING_1 }
+.mr2 { MarginRight $SPACING_2 }
+.mr3 { MarginRight $SPACING_3 }
+.mr4 { MarginRight $SPACING_4 }
+.mr5 { MarginRight $SPACING_5 }
+
+'=========================================================
+' BORDER THICKNESS
+'=========================================================
+
+.border0 { LineThickness $BORDER_0 }
+.border1 { LineThickness $BORDER_1 }
+.border2 { LineThickness $BORDER_2 }
+.border3 { LineThickness $BORDER_3 }
+.border4 { LineThickness $BORDER_4 }
+.border5 { LineThickness $BORDER_5 }
+
+'=========================================================
+' ROUNDING
+'=========================================================
+
+.rounded0 { RoundCorner $ROUND_0 }
+.rounded1 { RoundCorner $ROUND_1 }
+.rounded2 { RoundCorner $ROUND_2 }
+.rounded3 { RoundCorner $ROUND_3 }
+.rounded4 { RoundCorner $ROUND_4 }
+.rounded5 { RoundCorner $ROUND_5 }
+
+.roundedPill {
+    RoundCorner $ROUND_PILL
+}
+
+.roundedCircle {
+    RoundCorner $ROUND_CIRCLE
+}
+
+'=========================================================
+' SHADOWS
+'=========================================================
+
+.shadow {
+    Shadowing true
+}
+
+.noShadow {
+    Shadowing false
+}
+
+'=========================================================
+' WIDTHS
+'=========================================================
+
+.wXs { MinimumWidth $WIDTH_XS }
+.wSm { MinimumWidth $WIDTH_SM }
+.wMd { MinimumWidth $WIDTH_MD }
+.wLg { MinimumWidth $WIDTH_LG }
+.wXl { MinimumWidth $WIDTH_XL }
+.wXxl { MinimumWidth $WIDTH_XXL }
+
+'=========================================================
+' HEIGHTS
+'=========================================================
+
+.hXs { MinimumHeight $HEIGHT_XS }
+.hSm { MinimumHeight $HEIGHT_SM }
+.hMd { MinimumHeight $HEIGHT_MD }
+.hLg { MinimumHeight $HEIGHT_LG }
+.hXl { MinimumHeight $HEIGHT_XL }
+
+</style>
+
+!endprocedure

@@ -2,27 +2,44 @@
 
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
 
+## Core Bundle
+
 * Compiled Bundle: **`all.puml`**
-* Generated on: **2026-10-06 18:47:47 EDT**
-* Build Commit Hash: **d4b5e476e4bb3923a99fbb46909d7d51c3bda0a9**
-* Build Commit Comment: **more edge cases**
 
-## 🚀 How To Use It
+## Theme Bundles
 
-Simply include the compiled production bundle path using your raw GitHub link at the top of your local diagram files:
+Any discovered theme repositories are compiled as:
+
+```text
+theme-<theme-name>.puml
+```
+
+Example:
+
+```text
+theme-corporate.puml
+theme-panelapp.puml
+```
+
+## Build Metadata
+
+* Generated on: **2026-10-07 16:09:37 EDT**
+* Build Commit Hash: **462e615ed96ba96ec420f99e1e54d48bd6d52dce**
+* Build Commit Comment: **more edges**
+
+## Usage
 
 ```plantuml
 @startuml
 
-' STEP 1 :: Enable the themes to be used
-!$OH_THEME_ENABLED = %true()
-!$TOGAF_THEME_ENABLED = %true()
+!define MBpuml https://markbodach.github.io/plantuml
 
-' STEP 2 :: Load the Archimate and TOGAF library
-!define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
 
-' STEP 3 :: Apply the global styling - only the enabled themes will have styles applied
+!includeurl MBpuml/theme-corporate.puml
+
+Register_Theme("Corporate")
+
 Load_Lib_Styles_All()
 
 @enduml

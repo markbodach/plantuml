@@ -1,0 +1,199 @@
+' ========================================================
+' Combined PlantUML Library Bundle (SASS-Style Compilation)
+' Bundle Name: Theme: ontariohealth
+' Generated on: 2026-10-07 16:09:37 EDT
+' Build Commit Hash: 462e615ed96ba96ec420f99e1e54d48bd6d52dce
+' Build Commit Comment: more edges
+' ========================================================
+
+
+
+
+'STEP 1 :: VARS includes
+' --- Importing: src/themes/ontariohealth/vars/index.puml ---
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+
+' --- Importing: src/themes/ontariohealth/vars/_index.puml ---
+
+
+' --- End Import: src/themes/ontariohealth/vars/_index.puml ---
+
+' --- Importing: src/themes/ontariohealth/vars/_colors.puml ---
+
+'---------------------------------------------------------
+' Color Constants
+'---------------------------------------------------------
+
+!$COLOR_OH_LABEL ?= "#4D4D4D"
+!$COLOR_OH_PLACEHOLDER ?= "#737373"
+
+
+'$COLOR_OH_BRAND_HOVER ?= "#049A5"
+
+'FOCUS_COLOR ?= "#F2FBFF"
+'ACCENT_COLOR ?= "#00B2E3" 
+'BRIGHT BLUE
+
+
+!$COLOR_OH_PRIMARY ?= "#047BC1"
+!$COLOR_OH_PRIMARY_LIGHT ?= "#D6EAF8"
+!$COLOR_OH_PRIMARY_DARK ?= "#023451"
+
+!$COLOR_OH_WARNING ?= "#FCAF17"
+!$COLOR_OH_WARNING_LIGHT ?= "#EFB243"
+!$COLOR_OH_WARNING_DARK ?= "#FFFAEB"
+'FFFAEB
+
+!$COLOR_OH_SUCCESS ?= "#118847"
+!$COLOR_OH_SUCCESS_LIGHT ?= "#EAF5EA"
+!$COLOR_OH_SUCCESS_DARK ?= "#0F7C41"
+
+!$COLOR_OH_ERROR ?= "#CD0000"
+!$COLOR_OH_ERROR_LIGHT ?= "#FCEFF0"
+!$COLOR_OH_ERROR_DARK ?= "#8a0101"
+
+'! $COLOR_OH_EMPHASIS ?= "#9333EA"
+'! $COLOR_OH_EMPHASIS_LIGHT ?= "#"
+'! $COLOR_OH_EMPHASIS_DARK ?= "#"
+
+!$COLOR_OH_TEXT ?= "#1A1A1A"
+!$COLOR_OH_BORDER ?= "#5D6D7E"
+
+
+'Set OH Colours to TOGAF
+!$COLOR_OH_BUSINESS ?= $COLOR_OH_WARNING
+!$COLOR_OH_LOGICAL ?= $COLOR_OH_PRIMARY
+!$COLOR_OH_DEPLOYMENT ?= "#FAD7A0"
+!$COLOR_OH_TECHNOLOGY ?= $COLOR_OH_SUCCESS
+!$COLOR_OH_EXTERNAL ?= "#E8DAEF"
+
+
+!$COLOR_OH_MOTIVATION_LIGHT ?= "#F1E3F2"
+!$COLOR_OH_MOTIVATION_DARK ?= "#B975B7"
+!$COLOR_OH_STRATEGY_LIGHT ?= "#F8E5C3"
+!$COLOR_OH_STRATEGY_DARK ?= "#EFB243"
+!$COLOR_OH_BUSINESS_LIGHT ?= "#FFFDC4"
+!$COLOR_OH_BUSINESS_DARK ?= "#FFD440"
+!$COLOR_OH_APPLICATION_LIGHT ?= "#C5EEFA"
+!$COLOR_OH_APPLICATION_DARK ?= "#3193CC"
+!$COLOR_OH_TECHNOLOGY_LIGHT ?= "#D1EFD4"
+!$COLOR_OH_TECHNOLOGY_DARK ?= "#39B54A"
+!$COLOR_OH_IMPLEMENTATION_LIGHT ?= "#FEE1D9"
+!$COLOR_OH_IMPLEMENTATION_DARK ?= "#F15A22"
+!$COLOR_OH_HIGHLIGHTED_LIGHT ?= "#CFEDED"
+!$COLOR_OH_HIGHLIGHTED_DARK ?= "#0050EF"
+!$COLOR_OH_NEW_LIGHT ?= "#DDEDC7"
+!$COLOR_OH_NEW_DARK ?= "#005700"
+
+' --- End Import: src/themes/ontariohealth/vars/_colors.puml ---
+
+' --- Importing: src/themes/ontariohealth/vars/_fonts.puml ---
+' --- End Import: src/themes/ontariohealth/vars/_fonts.puml ---
+
+' --- Importing: src/themes/ontariohealth/vars/_layout.puml ---
+
+
+'---------------------------------------------------------
+' Layout Constants
+'---------------------------------------------------------
+
+
+
+' --- End Import: src/themes/ontariohealth/vars/_layout.puml ---
+
+
+' --- Importing: src/themes/ontariohealth/vars/_title.puml ---
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
+
+!$MARGIN_OH_TITLE ?= 20
+!$PADDING_OH_TITLE ?= 15
+!$ROUND_OH_CORNER_TITLE ?= 0
+
+
+!$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
+!$COLOR_OH_FONT_TITLE ?= "AUTO"
+    
+!$COLOR_OH_LINE_TITLE ?= "CURRENT" 
+' --- End Import: src/themes/ontariohealth/vars/_title.puml ---
+
+' --- End Import: src/themes/ontariohealth/vars/index.puml ---
+
+
+'STEP 2 :: COMPONENTS includes
+' --- Importing: src/themes/ontariohealth/components/index.puml ---
+' src/libraries/ontario-health/index.puml
+' Module Entry Point: Libraries / Ontario Health Component Pack 
+
+' --- Importing: src/themes/ontariohealth/components/_title.puml ---
+
+
+
+' --- End Import: src/themes/ontariohealth/components/_title.puml ---
+
+' --- Importing: src/themes/ontariohealth/components/_patterns.puml ---
+' --- End Import: src/themes/ontariohealth/components/_patterns.puml ---
+
+' --- Importing: src/themes/ontariohealth/components/_sbbs.puml ---
+' --- End Import: src/themes/ontariohealth/components/_sbbs.puml ---
+
+' --- End Import: src/themes/ontariohealth/components/index.puml ---
+
+
+'STEP 3 :: THEME includes
+' --- Importing: src/themes/ontariohealth/theme/index.puml ---
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+
+
+!procedure Preload_Theme_OntarioHealth()
+    !if ($Is_Theme_Registered("OntarioHealth"))
+        Preload_Theme_OntarioHealth_Colors()
+        Preload_Theme_OntarioHealth_Layout()
+        Preload_Theme_OntarioHealth_Title()
+    !endif
+!endprocedure
+' --- End Import: src/themes/ontariohealth/theme/index.puml ---
+
+
+'STEP 4 :: Skin Params includes
+' --- Importing: src/themes/ontariohealth/skinparam/index.puml ---
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+
+!if ($SKINPARAM_ENABLED)
+
+
+
+!endif
+' --- End Import: src/themes/ontariohealth/skinparam/index.puml ---
+
+
+'STEP 5 :: STYLES includes
+' --- Importing: src/themes/ontariohealth/styles/index.puml ---
+
+
+' --- Importing: src/themes/ontariohealth/styles/_title.puml ---
+
+
+!procedure Write_Lib_Style_OntarioHealth_Title()
+
+!endprocedure 
+' --- End Import: src/themes/ontariohealth/styles/_title.puml ---
+
+
+
+
+
+!procedure Load_Lib_Styles_THEME_OntarioHealth()
+
+    !if ($Is_Theme_Registered("OntarioHealth"))
+        Write_Lib_Style_OntarioHealth_Title()
+    !endif
+!endprocedure 
+' --- End Import: src/themes/ontariohealth/styles/index.puml ---
+
