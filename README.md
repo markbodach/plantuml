@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-08 17:26:26 EDT**
-* Build Commit Hash: **a687f659f06bcd9a845c5fca2bf73d702bfbc3a3**
-* Build Commit Comment: **theme support refactoring**
+* Generated on: **2026-10-08 17:53:33 EDT**
+* Build Commit Hash: **52cefdca51d1eeb413f0c7fd7a961396fc3550ff**
+* Build Commit Comment: **theme_registered error**
 
 ## Usage
 
@@ -388,7 +388,7 @@ Use these variables before loading the repository.
 !$STYLE_FONT_COMPONENT = ""
 !$STYLE_FONT_ELEMENT = ""
 !$STYLE_FONT_TITLE = "bold"
-!$THEMES = []
+!$THEMES = "|"
 !$TOGAF_LIB_ENABLED = %false()
 !$WIDTH_LG = 350
 !$WIDTH_MD = 250

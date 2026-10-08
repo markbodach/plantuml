@@ -132,7 +132,7 @@ Use these variables before loading the repository.
 !$STYLE_FONT_COMPONENT = ""
 !$STYLE_FONT_ELEMENT = ""
 !$STYLE_FONT_TITLE = "bold"
-!$THEMES = []
+!$THEMES = "|"
 !$TOGAF_LIB_ENABLED = %false()
 !$WIDTH_LG = 350
 !$WIDTH_MD = 250

@@ -47,24 +47,18 @@
 '
 '=================================================================
 
-!$THEMES ?= []
+!$THEMES ?= "|"
 
 
 !function $theme_registered($theme)
 
-    !$found = %false()
+    !if ($theme == "")
+        !return %false()
+    !endif
 
-    !foreach $item in $THEMES
-        !if ($item == $theme)
-            !$found = %true()
-        !endif
-    !endforeach
-
-    !return $found
+    !return (%strpos($THEMES, "|" + $theme + "|") >= 0)
 
 !endfunction
-
-
 
 
 '=========================================================
@@ -75,21 +69,9 @@
 '=========================================================
 
 !function $Is_Theme_Registered($theme)
-
-    '
-    ' Uncomment when all supported versions
-    ' have %array_contains().
-    '
-    '!return %array_contains($THEMES, $theme)
-
-    '
-    ' Compatibility implementation
-    '
-    !$result = $theme_registered($theme)
-    !return $result
-
-
+    !return $theme_registered($theme)
 !endfunction
+
 
 '=================================================================
 ' REGISTRATION
@@ -102,7 +84,6 @@
 '   Register_Theme("OntarioHealth")
 '
 '=================================================================
-
 !procedure Register_Theme($theme)
 
     !if ($theme == "")
@@ -111,7 +92,7 @@
 
     !if ($theme_registered($theme) == %false())
 
-        !$THEMES = $THEMES + [$theme]
+        !$THEMES = $THEMES + $theme + "|"
 
     !endif
 
@@ -143,15 +124,20 @@
 
 !procedure Invoke_Preload_Themes()
 
-!foreach $theme in $THEMES
+!foreach $theme in %splitstr($THEMES, "|")
 
-    !$proc = "Preload_Theme_" + $theme
+    !if ($theme != "")
 
-    %invoke_procedure($proc)
+        !$proc = "Preload_Theme_" + $theme
+
+        %invoke_procedure($proc)
+
+    !endif
 
 !endforeach
 
 !endprocedure
+
 
 '=================================================================
 ' STYLE INVOCATION
@@ -177,15 +163,20 @@
 
 !procedure Invoke_Load_Themes()
 
-!foreach $theme in $THEMES
+!foreach $theme in %splitstr($THEMES, "|")
 
-    !$proc = "Load_Lib_Styles_THEME_" + $theme
+    !if ($theme != "")
 
-    %invoke_procedure($proc)
+        !$proc = "Load_Lib_Styles_THEME_" + $theme
+
+        %invoke_procedure($proc)
+
+    !endif
 
 !endforeach
 
 !endprocedure
+
 
 '=================================================================
 ' THEME AUTHORING EXAMPLE
