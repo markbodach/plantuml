@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-08 16:58:48 EDT
-' Build Commit Hash: 77e3b5d0acd91d6e5aaad0827c47dabe2fc34f1d
-' Build Commit Comment: new docs
+' Generated on: 2026-10-08 17:26:26 EDT
+' Build Commit Hash: a687f659f06bcd9a845c5fca2bf73d702bfbc3a3
+' Build Commit Comment: theme support refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -72,15 +72,18 @@
 
 !function $theme_registered($theme)
 
+    !$found = %false()
+
     !foreach $item in $THEMES
         !if ($item == $theme)
             !$found = %true()
         !endif
     !endforeach
 
-    !return %boolval($found)
+    !return $found
 
 !endfunction
+
 
 
 
@@ -122,16 +125,18 @@
 
 !procedure Register_Theme($theme)
 
-    !if ($theme == "") 
-        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank" 
+    !if ($theme == "")
+        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank"
     !endif
+
     !if ($theme_registered($theme) == %false())
 
-        !$THEMES = %array_add($THEMES,$theme)
+        !$THEMES = $THEMES + [$theme]
 
     !endif
 
 !endprocedure
+
 
 
 '=================================================================

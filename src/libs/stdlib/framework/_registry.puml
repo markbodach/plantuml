@@ -52,15 +52,18 @@
 
 !function $theme_registered($theme)
 
+    !$found = %false()
+
     !foreach $item in $THEMES
         !if ($item == $theme)
             !$found = %true()
         !endif
     !endforeach
 
-    !return %boolval($found)
+    !return $found
 
 !endfunction
+
 
 
 
@@ -102,16 +105,18 @@
 
 !procedure Register_Theme($theme)
 
-    !if ($theme == "") 
-        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank" 
+    !if ($theme == "")
+        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank"
     !endif
+
     !if ($theme_registered($theme) == %false())
 
-        !$THEMES = %array_add($THEMES,$theme)
+        !$THEMES = $THEMES + [$theme]
 
     !endif
 
 !endprocedure
+
 
 
 '=================================================================
