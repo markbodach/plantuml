@@ -50,22 +50,18 @@
 !$THEMES ?= []
 
 
-
 !function $theme_registered($theme)
 
     !foreach $item in $THEMES
-
         !if ($item == $theme)
-
-            !return %true()
-
+            !$found = %true()
         !endif
-
     !endforeach
 
-    !return %false()
+    !return %boolval($found)
 
 !endfunction
+
 
 
 '=========================================================
@@ -86,7 +82,9 @@
     '
     ' Compatibility implementation
     '
-    !return $theme_registered($theme)
+    !$result = $theme_registered($theme)
+    !return $result
+
 
 !endfunction
 
