@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-07 16:15:02 EDT
-' Build Commit Hash: e622d6cf0444af3f76f86cc3a1c7d161cc785924
-' Build Commit Comment: massive refactoring to support named themes
+' Generated on: 2026-10-08 16:29:40 EDT
+' Build Commit Hash: a4148a6f51205a49bf02341650bb2d2e4ad4ba7b
+' Build Commit Comment: refactoring fixes
 ' ========================================================
 
 ' src/all.puml

@@ -1,4 +1,6 @@
 
+
+
 # Production Distribution Bundle
 
 This directory contains the production-ready distribution assets compiled via SASS-style dependency architecture.
@@ -24,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-07 16:15:02 EDT**
-* Build Commit Hash: **e622d6cf0444af3f76f86cc3a1c7d161cc785924**
-* Build Commit Comment: **massive refactoring to support named themes**
+* Generated on: **2026-10-08 16:29:40 EDT**
+* Build Commit Hash: **a4148a6f51205a49bf02341650bb2d2e4ad4ba7b**
+* Build Commit Comment: **refactoring fixes**
 
 ## Usage
 
@@ -47,307 +49,124 @@ Load_Lib_Styles_All()
 ```
 
 
-# Theme Registry Guide
+# PlantUML Architecture Framework
 
-## Overview
+## Complete Framework, Theme, Styling, and Troubleshooting Guide
 
-The Theme Registry provides a lightweight mechanism for registering and executing one or more themes without modifying the framework loader.
+This guide is the consolidated reference for using, extending, theming, building, and troubleshooting the PlantUML Architecture Framework. It replaces the earlier collection of overlapping documents with a single ordered narrative.
 
-Themes are loaded in the order they are registered, allowing multiple themes to be layered together.
+The stable core contains **StdLib** and **TOGAF** support. Optional themes are compiled and distributed independently, included statically, registered explicitly, and executed in deterministic registration order.
 
-This enables:
+## Table of Contents
 
-- Corporate branding themes
-- Product-specific themes
-- Customer-specific themes
-- Project-level themes
-- Reusable theme packages in separate repositories
-
-The registry is intentionally decoupled from the framework, allowing themes to be distributed independently.
+1. [Introduction and Design Principles](#chapter-1-introduction-and-design-principles)
+2. [Installation and Quick Start](#chapter-2-installation-and-quick-start)
+3. [Runtime Architecture and Processing Order](#chapter-3-runtime-architecture-and-processing-order)
+4. [Distribution and Repository Structure](#chapter-4-distribution-and-repository-structure)
+5. [Theme Registry](#chapter-5-theme-registry)
+6. [Authoring and Packaging Themes](#chapter-6-authoring-and-packaging-themes)
+7. [Framework Extensibility](#chapter-7-framework-extensibility)
+8. [Utility Stereotypes](#chapter-8-utility-stereotypes)
+9. [Color Resolution](#chapter-9-color-resolution)
+10. [Troubleshooting](#chapter-10-troubleshooting)
+11. [Build and Generated Documentation](#chapter-11-build-and-generated-documentation)
 
 ---
+## Chapter 1: Introduction and Design Principles
 
-# Architecture
+### Purpose
 
-The framework processes styles in the following order:
+The framework provides:
+
+- Architecture-focused PlantUML styling
+- TOGAF-aligned semantic modelling support
+- Registry-based, ordered theme composition
+- Semantic color resolution and contrast-aware text colors
+- Bootstrap-inspired utility stereotypes
+- Reusable architecture components and extension hooks
+- Independently distributable theme bundles
+
+### Architectural Model
 
 ```text
-BEFORE
+Core Framework
     ↓
-StdLib
+Registered Theme(s)
     ↓
-TOGAF
-    ↓
-Registered Themes
-    ↓
-AFTER
+Project Customization
 ```
 
-Where:
+The registry controls **execution**, not file discovery. PlantUML files are loaded statically with `!include` or `!includeurl`; registration controls which already-loaded theme procedures participate in `Load_Lib_Styles_All()`.
 
-| Layer | Responsibility |
-|----------|----------|
-| BEFORE | Framework configuration and variable overrides |
-| StdLib | Core framework variables and styles |
-| TOGAF | Architecture semantics and TOGAF defaults |
-| Registered Themes | Organizational or project themes |
-| AFTER | Final overrides and local customizations |
+### Design Principles
+
+1. Keep the core framework stable.
+2. Keep optional themes outside the core bundle.
+3. Compile each theme as an independently distributable asset.
+4. Make theme composition deterministic through registration order.
+5. Use preload procedures for variables and load procedures for styles.
+6. Prefer semantic tokens and reusable stereotypes over diagram-local literals.
+7. Use BEFORE and AFTER hooks for consumer customization instead of editing framework internals.
+8. Treat registered theme names and generated procedure names as a public contract.
 
 ---
+## Chapter 2: Installation and Quick Start
 
-# Registry Implementation
-
-The registry maintains a collection of registered themes.
+### Core Framework Only
 
 ```plantuml
-!$THEMES ?= []
+@startuml
+
+!define MBpuml https://markbodach.github.io/plantuml
+!includeurl MBpuml/all.puml
+
+Load_Lib_Styles_All()
+
+rectangle "Core Component" <<card>>
+
+@enduml
 ```
 
-Theme names are stored in registration order.
-
-Example:
+### Core Framework with One Theme
 
 ```plantuml
-["Corporate"]
-```
+@startuml
 
-or
+!define MBpuml https://markbodach.github.io/plantuml
+!includeurl MBpuml/all.puml
+!includeurl MBpuml/theme-corporate.puml
 
-```plantuml
-["Corporate", "Product"]
-```
-
----
-
-# Registering Themes
-
-Themes are registered using:
-
-```plantuml
-Register_Theme($theme)
-```
-
-Example:
-
-```plantuml
 Register_Theme("Corporate")
+Load_Lib_Styles_All()
+
+rectangle "Themed Component" <<card>>
+
+@enduml
 ```
 
-Multiple themes:
+A theme bundle may instead self-register. Pick one convention—consumer registration or self-registration—and apply it consistently. Do not document both as the normal path.
+
+### Multiple Themes
 
 ```plantuml
+@startuml
+
+!define MBpuml https://markbodach.github.io/plantuml
+!includeurl MBpuml/all.puml
+!includeurl MBpuml/theme-corporate.puml
+!includeurl MBpuml/theme-product.puml
+
 Register_Theme("Corporate")
 Register_Theme("Product")
+
+Load_Lib_Styles_All()
+
+@enduml
 ```
 
 Execution order:
 
 ```text
-Corporate
-    ↓
-Product
-```
-
-The second theme can override settings introduced by the first theme.
-
----
-
-# Theme Authoring
-
-Each registered theme must provide two procedures.
-
-## Variable Phase
-
-```plantuml
-Preload_Theme_<ThemeName>()
-```
-
-Used for:
-
-- Variables
-- Configuration
-- Theme initialization
-- Semantic mappings
-
-Example:
-
-```plantuml
-!procedure Preload_Theme_Corporate()
-
-    !$SPACING_UNIT = 8
-
-!endprocedure
-```
-
----
-
-## Style Phase
-
-```plantuml
-Load_Lib_Styles_THEME_<ThemeName>()
-```
-
-Used for:
-
-- Stereotypes
-- Styles
-- Layout defaults
-- Theme-specific formatting
-
-Example:
-
-```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
-
-<style>
-
-.card {
-
-    Padding 24
-
-}
-
-</style>
-
-!endprocedure
-```
-
----
-
-# Theme Invocation
-
-The framework automatically invokes registered themes.
-
-Theme authors do not call these procedures directly.
-
-## Variable Phase
-
-For each registered theme:
-
-```plantuml
-Preload_Theme_<Theme>()
-```
-
-is executed.
-
-For example:
-
-```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
-```
-
-results in:
-
-```plantuml
-Preload_Theme_Corporate()
-
-Preload_Theme_Product()
-```
-
----
-
-## Style Phase
-
-For each registered theme:
-
-```plantuml
-Load_Lib_Styles_THEME_<Theme>()
-```
-
-is executed.
-
-For example:
-
-```plantuml
-Load_Lib_Styles_THEME_Corporate()
-
-Load_Lib_Styles_THEME_Product()
-```
-
----
-
-# Creating a Theme Package
-
-Themes are intended to be distributable and versioned independently from the framework.
-
-A theme package typically consists of:
-
-```text
-theme-repository
-│
-├─ theme.puml
-├─ README.md
-└─ examples
-```
-
-Example:
-
-```plantuml
-Register_Theme("Corporate")
-
-
-!procedure Preload_Theme_Corporate()
-
-    !$SPACING_UNIT = 8
-
-    !$ROUND_2 = 12
-
-!endprocedure
-
-
-!procedure Load_Lib_Styles_THEME_Corporate()
-
-<style>
-
-.card {
-
-    Padding 24
-
-    RoundCorner 12
-
-}
-
-</style>
-
-!endprocedure
-```
-
-No framework files require modification.
-
----
-
-# Using a Theme
-
-Simply include the theme package.
-
-```plantuml
-!include architecture-toolkit.puml
-
-!include corporate-theme.puml
-
-Load_Lib_Styles_All()
-```
-
-The theme registers itself automatically.
-
----
-
-# Multiple Theme Composition
-
-Multiple themes may be loaded simultaneously.
-
-Example:
-
-```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
-Register_Theme("Customer")
-```
-
-Processing:
-
-```text
 StdLib
     ↓
 TOGAF
@@ -355,837 +174,85 @@ TOGAF
 Corporate
     ↓
 Product
-    ↓
-Customer
-    ↓
-AFTER
 ```
 
-This allows:
+Later themes may override variables or styles introduced by earlier themes.
 
-- Base organizational standards
-- Product-specific customizations
-- Customer-specific branding
+---
+## Chapter 3: Runtime Architecture and Processing Order
 
-without duplication of theme code.
+`Load_Lib_Styles_All()` executes two phases. The preload phase establishes the values used to generate styles. The load phase emits styles.
+
+```text
+Preload_Lib_Styles_BEFORE()
+    ↓
+Preload_Lib_Styles_Stdlib()
+    ↓
+Preload_Lib_Styles_Togaf()
+    ↓
+Invoke_Preload_Themes()
+    ↓
+Preload_Lib_Styles_AFTER()
+
+Load_Lib_Styles_BEFORE()
+    ↓
+Load_Lib_Styles_Stdlib()
+    ↓
+Load_Lib_Styles_Togaf()
+    ↓
+Invoke_Load_Themes()
+    ↓
+Load_Lib_Styles_AFTER()
+```
+
+| Layer | Responsibility |
+|---|---|
+| BEFORE | Consumer configuration before framework processing |
+| StdLib | Core variables, helpers, utilities, and styles |
+| TOGAF | Architecture semantics and TOGAF defaults |
+| Registered Themes | Organizational, product, customer, or project themes |
+| AFTER | Final variable adjustments and style overrides |
+
+### Why There Are Two Phases
+
+Variables must be resolved before styles reference them. Defining variables inside the load phase is usually too late because style-producing procedures may already have calculated dependent values. Therefore:
+
+- Put configuration, semantic mappings, and derived variables in **Preload** procedures.
+- Put `<style>` blocks and style emission in **Load** procedures.
 
 ---
 
-# Recommended Theme Design
+## Chapter 4: Distribution and Repository Structure
 
-## Base Theme
+### Core Distribution
 
-Defines broad organizational branding.
+The core bundle contains StdLib and TOGAF support:
+
+```text
+all.puml
+```
+
+### Theme Distribution
+
+Every immediate child folder under `src/themes` is compiled independently:
+
+```text
+src/themes/<folder-name>/index.puml
+    ↓
+theme-<folder-name>.puml
+```
 
 Examples:
 
-- Colors
-- Standard spacing
-- Border styles
-- Typography
-
----
-
-## Product Theme
-
-Extends organizational standards.
-
-Examples:
-
-- Application-specific cards
-- Domain-specific stereotypes
-- Product-specific layouts
-
----
-
-## Customer Theme
-
-Provides customer customizations.
-
-Examples:
-
-- Branding
-- Logos
-- Colour tweaks
-- Presentation styles
-
----
-
-# Best Practices
-
-## Register Once
-
-Do:
-
-```plantuml
-Register_Theme("Corporate")
-```
-
-Avoid:
-
-```plantuml
-Register_Theme("Corporate")
-Register_Theme("Corporate")
-```
-
-Duplicate registrations will result in duplicate execution.
-
----
-
-## Use Preload for Variables
-
-Good:
-
-```plantuml
-!procedure Preload_Theme_Corporate()
-
-    !$SPACING_UNIT = 8
-
-!endprocedure
-```
-
-Avoid defining variables during the style phase.
-
----
-
-## Use Load for Styles
-
-Good:
-
-```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
-
-<style>
-
-.card {
-    Padding 24
-}
-
-</style>
-
-!endprocedure
-```
-
----
-
-## Keep Themes Focused
-
-Prefer:
-
 ```text
-Corporate Theme
-    ↓
-Product Theme
+theme-corporate.puml
+theme-product.puml
+theme-customer.puml
 ```
 
-over a single monolithic theme.
+Themes are not embedded in `all.puml`. A diagram includes only the theme bundles it needs.
 
-Smaller themes are easier to maintain and reuse.
-
----
-
-# Example Layering Strategy
-
-A typical enterprise implementation might look like:
-
-```text
-StdLib
-    ↓
-TOGAF
-    ↓
-Corporate Theme
-    ↓
-Product Theme
-    ↓
-Project Theme
-    ↓
-AFTER
-```
-
-Where:
-
-| Layer | Example Responsibility |
-|----------|----------|
-| StdLib | Core utility framework |
-| TOGAF | Architecture semantics |
-| Corporate Theme | Organizational branding and standards |
-| Product Theme | Product-specific visual patterns |
-| Project Theme | Project-level extensions |
-| AFTER | Diagram-local customization |
-
-This layered approach allows themes to be independently developed, versioned, distributed, and composed while keeping the framework itself stable and unchanged.
-# Theme Usage
-
-The theme provides:
-
-- Color standards
-- Font standards
-- Border standards
-- Layout standards
-- Architecture stereotypes
-- Reusable legend definitions
-
-# Color Token Resolution
-
-The style framework supports semantic color tokens, computed values, and literal colors.
-
-## Supported Values
-
-| Value | Description | Example |
-|---------|-------------|---------|
-| `AUTO` | Automatically derive an appropriate value from context. Typically used for text colors. | `COLOR_FONT_TITLE = "AUTO"` |
-| `CURRENT` | Use the current component's resolved surface/background color. | `COLOR_LINE_TITLE = "CURRENT"` |
-| `DARKEN` | Resolve to the next darker semantic token. Falls back to RGB darkening when no darker semantic token exists. | `COLOR_LINE_TITLE = "DARKEN"` |
-| `DARKEN_n` | Resolve to the next darker semantic token. If no darker semantic token exists, darken the resolved color by *n*%. | `COLOR_LINE_TITLE = "DARKEN_20"` |
-| `LIGHTEN` | Resolve to the next lighter semantic token. Falls back to RGB lightening when no lighter semantic token exists. | `COLOR_LINE_TITLE = "LIGHTEN"` |
-| `LIGHTEN_n` | Resolve to the next lighter semantic token. If no lighter semantic token exists, lighten the resolved color by *n*%. | `COLOR_LINE_TITLE = "LIGHTEN_20"` |
-| `*_TEXT` | Use the contrast text color for a semantic token. | `PRIMARY_DARK_TEXT` |
-| Semantic Token | Resolve through the active theme. | `PRIMARY_DARK` |
-| Literal Color | Use directly without transformation. | `#023451` |
-
-## Semantic Progression
-
-Semantic color tokens support the following progression hierarchy:
-
-```text
-LIGHTEST
-    ↑
-LIGHT
-    ↑
-BASE
-    ↑
-DARK
-    ↑
-DARKEST
-```
-
-### Example
-
-```text
-PRIMARY_LIGHTEST
-    ↑
-PRIMARY_LIGHT
-    ↑
-PRIMARY
-    ↑
-PRIMARY_DARK
-    ↑
-PRIMARY_DARKEST
-```
-
-## DARKEN Progression
-
-```text
-PRIMARY_LIGHT     → PRIMARY
-
-PRIMARY           → PRIMARY_DARK
-
-PRIMARY_DARK      → PRIMARY_DARKEST
-
-PRIMARY_DARKEST   → RGB Darkening
-```
-
-## LIGHTEN Progression
-
-```text
-PRIMARY_DARKEST   → PRIMARY_DARK
-
-PRIMARY_DARK      → PRIMARY
-
-PRIMARY           → PRIMARY_LIGHT
-
-PRIMARY_LIGHT     → PRIMARY_LIGHTEST
-
-PRIMARY_LIGHTEST  → RGB Lightening
-```
-
-When a semantic token has no additional lighter or darker variant, the framework falls back to RGB color adjustment using `%lighten()` or `%darken()`.
-
-Threshold protection prevents colors from becoming excessively close to pure black or pure white.
-
-## Resolution Order
-
-| Priority | Rule |
-|----------|------|
-| 1 | `AUTO` |
-| 2 | `CURRENT` |
-| 3 | `DARKEN` / `DARKEN_n` |
-| 4 | `LIGHTEN` / `LIGHTEN_n` |
-| 5 | `*_TEXT` |
-| 6 | Semantic token |
-| 7 | Literal color |
-
-# Examples
-
-## Automatic Text and Border Resolution
-
-### Configuration
-
-```plantuml
-!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
-!$COLOR_FONT_TITLE       = "AUTO"
-!$COLOR_LINE_TITLE       = "CURRENT"
-```
-
-### Result
-
-```text
-BackgroundColor = PRIMARY_DARK
-FontColor       = ContrastText(PRIMARY_DARK)
-LineColor       = PRIMARY_DARK
-```
-
----
-
-## Semantic Darkening
-
-### Configuration
-
-```plantuml
-!$COLOR_BACKGROUND_TITLE = "PRIMARY"
-!$COLOR_LINE_TITLE       = "DARKEN"
-```
-
-### Result
-
-```text
-BackgroundColor = PRIMARY
-LineColor       = PRIMARY_DARK
-```
-
----
-
-## Semantic Lightening
-
-### Configuration
-
-```plantuml
-!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
-!$COLOR_LINE_TITLE       = "LIGHTEN"
-```
-
-### Result
-
-```text
-BackgroundColor = PRIMARY_DARK
-LineColor       = PRIMARY
-```
-
----
-
-## RGB Fallback Darkening
-
-### Configuration
-
-```plantuml
-!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARKEST"
-!$COLOR_LINE_TITLE       = "DARKEN_20"
-```
-
-### Result
-
-```text
-LineColor = %darken(PRIMARY_DARKEST, 20)
-```
-
-Threshold protection will be applied if the resulting color becomes too close to black.
-
----
-
-## RGB Fallback Lightening
-
-### Configuration
-
-```plantuml
-!$COLOR_BACKGROUND_TITLE = "PRIMARY_LIGHTEST"
-!$COLOR_LINE_TITLE       = "LIGHTEN_20"
-```
-
-### Result
-
-```text
-LineColor = %lighten(PRIMARY_LIGHTEST, 20)
-```
-
-Threshold protection will be applied if the resulting color becomes too close to white.
-# Color Resolution
-
-The library provides a layered color-resolution system that supports semantic color tokens, literal colors, automatic contrast selection, and color transformations.
-
-Colors are resolved through the following pipeline:
-
-```text
-Style Directive
-      ↓
-Semantic Resolution
-      ↓
-Literal Color
-      ↓
-RGB Processing
-      ↓
-Contrast Evaluation
-      ↓
-Final Resolved Color
-```
-
-This architecture allows diagrams to remain theme-independent while ensuring consistent, readable, and accessible color usage.
-
----
-
-# Supported Color Formats
-
-| Format | Example | Description |
-|----------|----------|----------|
-| Semantic Token | `PRIMARY` | Theme-defined color |
-| Semantic Variant | `PRIMARY_DARK` | Theme-defined color variant |
-| Short Hex | `#FFF` | Expanded to `#FFFFFF` |
-| RGB Hex | `#023451` | Standard 24-bit RGB color |
-| RGBA Hex | `#FFFFFF00` | Alpha component is ignored during RGB and contrast calculations |
-| AUTO Directive | `AUTO` | Automatically selects a readable text color |
-| CURRENT Directive | `CURRENT` | Uses the current color context |
-| Darken Directive | `DARKEN`, `DARKEN_20` | Darkens the current color context |
-| Lighten Directive | `LIGHTEN`, `LIGHTEN_20` | Lightens the current color context |
-
----
-
-# Color Directives and Transformations
-
-The resolver supports a set of directives that provide inheritance, automatic contrast handling, and dynamic color transformations.
-
-| Directive | Example | Description | Result |
-|------------|------------|------------|------------|
-| `AUTO` | `FontColor AUTO` | Selects a readable text color based on background luminance. | Dark or light text color |
-| `CURRENT` | `LineColor CURRENT` | Uses the current context color without modification. | Current resolved color |
-| `DARKEN` | `BorderColor DARKEN` | Darkens the current context color using the default percentage. | Darker variation |
-| `DARKEN_n` | `BorderColor DARKEN_20` | Darkens the current context color by the specified percentage. | Darker variation |
-| `LIGHTEN` | `BackgroundColor LIGHTEN` | Lightens the current context color using the default percentage. | Lighter variation |
-| `LIGHTEN_n` | `BackgroundColor LIGHTEN_30` | Lightens the current context color by the specified percentage. | Lighter variation |
-
-### Directive Resolution Order
-
-Directives operate against the nearest available color context.
-
-```plantuml
-AUTO
-CURRENT
-DARKEN
-LIGHTEN
-```
-
-Example:
-
-```plantuml
-BackgroundColor PRIMARY
-BorderColor DARKEN
-```
-
-Resolution:
-
-```text
-PRIMARY
-      ↓
-#047BC1
-      ↓
-DARKEN
-      ↓
-20% Darker
-      ↓
-Final Border Color
-```
-
----
-
-# Semantic Colors
-
-Semantic colors provide theme independence.
-
-Instead of specifying literal colors directly:
-
-```plantuml
-BackgroundColor #023451
-```
-
-use semantic tokens:
-
-```plantuml
-BackgroundColor PRIMARY_DARK
-```
-
-The resolver maps semantic tokens to the currently configured theme values.
-
-Example:
-
-```text
-PRIMARY_DARK
-        ↓
-COLOR_PRIMARY_DARK
-        ↓
-#023451
-```
-
-This allows themes to change color palettes without modifying diagrams.
-
----
-
-# Automatic Text Color Selection (AUTO)
-
-The `AUTO` directive automatically selects a readable foreground color based on the luminance of the background color.
-
-`AUTO` supports both semantic tokens and literal colors.
-
-### Semantic Background
-
-```plantuml
-FontColor AUTO
-BackgroundColor PRIMARY_DARK
-```
-
-Resolution:
-
-```text
-PRIMARY_DARK
-      ↓
-#023451
-      ↓
-Luminance = 40
-      ↓
-#FFFFFF
-```
-
-### Literal Background
-
-```plantuml
-FontColor AUTO
-BackgroundColor #FFFFFF
-```
-
-Resolution:
-
-```text
-#FFFFFF
-      ↓
-Luminance = 255
-      ↓
-#1A1A1A
-```
-
----
-
-# CURRENT
-
-The `CURRENT` directive resolves to the active context color.
-
-Example:
-
-```plantuml
-BackgroundColor PRIMARY
-LineColor CURRENT
-```
-
-Resolution:
-
-```text
-PRIMARY
-      ↓
-#047BC1
-      ↓
-CURRENT
-      ↓
-#047BC1
-```
-
-This is useful when multiple style properties should share the same resolved color.
-
----
-
-# Contrast Evaluation
-
-Text contrast is determined using RGB luminance.
-
-Configuration:
-
-```plantuml
-!$CONTRAST_THRESHOLD ?= 128
-```
-
-Rule:
-
-```text
-Luminance ≤ 128  → Light Text
-Luminance > 128  → Dark Text
-```
-
-This evaluation is performed automatically whenever `AUTO` is used.
-
----
-
-# Color Transformations
-
-The resolver supports dynamic color transformations.
-
-## DARKEN
-
-Uses the default darkening percentage.
-
-```plantuml
-BorderColor DARKEN
-```
-
-Configured by:
-
-```plantuml
-!$DARKEN_DEFAULT_PERCENT = 5
-```
-
-Equivalent to:
-
-```plantuml
-BorderColor DARKEN_20
-```
-
----
-
-## DARKEN_n
-
-Applies a specific darkening percentage.
-
-```plantuml
-BorderColor DARKEN_30
-```
-
----
-
-## LIGHTEN
-
-Uses the default lightening percentage.
-
-```plantuml
-BackgroundColor LIGHTEN
-```
-
-Configured by:
-
-```plantuml
-!$LIGHTEN_DEFAULT_PERCENT = 20
-```
-
-Equivalent to:
-
-```plantuml
-BackgroundColor LIGHTEN_20
-```
-
----
-
-## LIGHTEN_n
-
-Applies a specific lightening percentage.
-
-```plantuml
-BackgroundColor LIGHTEN_30
-```
-
----
-
-# Semantic Promotion
-
-Where semantic variants exist, transformations preferentially use semantic variants before performing RGB manipulation.
-
-This preserves theme semantics and improves visual consistency.
-
-| Input | Transformation | Result |
-|---------|---------|---------|
-| `PRIMARY_LIGHT` | `DARKEN` | `PRIMARY` |
-| `PRIMARY` | `DARKEN` | `PRIMARY_DARK` |
-| `PRIMARY_DARK` | `LIGHTEN` | `PRIMARY` |
-| `PRIMARY` | `LIGHTEN` | `PRIMARY_LIGHT` |
-
-Only when no appropriate semantic variant exists will RGB lightening or darkening be applied.
-
----
-
-# Transformation Safety Limits
-
-Color transformations are protected against collapsing into pure black or pure white.
-
-| Variable | Default | Purpose |
-|----------|----------|----------|
-| `DARKNESS_THRESHOLD` | `32` | Prevents excessive darkening |
-| `LIGHTNESS_THRESHOLD` | `223` | Prevents excessive lightening |
-| `CONTRAST_THRESHOLD` | `128` | Controls AUTO text-color selection |
-
-Example:
-
-```text
-#010101
-    ↓ DARKEN
-#202020
-```
-
-instead of:
-
-```text
-#000000
-```
-
-and:
-
-```text
-#FEFEFE
-    ↓ LIGHTEN
-#DFDFDF
-```
-
-instead of:
-
-```text
-#FFFFFF
-```
-
-These limits apply only to transformation operations and are independent of the contrast evaluation used by `AUTO`.
-
----
-
-# Color Validation
-
-All literal colors are validated before RGB processing.
-
-Supported formats:
-
-```plantuml
-#RGB
-#RRGGBB
-#RRGGBBAA
-```
-
-Invalid colors produce descriptive preprocessing errors.
-
-Example:
-
-```plantuml
-#GGGGGG
-```
-
-Produces:
-
-```text
-MB_UML :: Invalid literal color=[#GGGGGG]
-```
-
----
-
-# Resolution Examples
-
-## Semantic Color
-
-```plantuml
-BackgroundColor PRIMARY_DARK
-```
-
-Resolution:
-
-```text
-PRIMARY_DARK
-        ↓
-COLOR_PRIMARY_DARK
-        ↓
-#023451
-```
-
----
-
-## Semantic AUTO Text
-
-```plantuml
-FontColor AUTO
-BackgroundColor PRIMARY_DARK
-```
-
-Resolution:
-
-```text
-PRIMARY_DARK
-        ↓
-#023451
-        ↓
-#FFFFFF
-```
-
----
-
-## Literal AUTO Text
-
-```plantuml
-FontColor AUTO
-BackgroundColor #FFFFFF
-```
-
-Resolution:
-
-```text
-#FFFFFF
-        ↓
-#1A1A1A
-```
-
----
-
-## Darkening
-
-```plantuml
-BorderColor DARKEN_20
-Context = PRIMARY
-```
-
-Resolution:
-
-```text
-PRIMARY
-        ↓
-#047BC1
-        ↓
-20% Darker
-        ↓
-Final Border Color
-```
-
----
-
-## Lightening
-
-```plantuml
-BackgroundColor LIGHTEN_30
-Context = PRIMARY_DARK
-```
-
-Resolution:
-
-```text
-PRIMARY_DARK
-        ↓
-#023451
-        ↓
-30% Lighter
-        ↓
-Final Background Color
-```
-
----
-
-# Summary
-
-The color-resolution system provides:
-
-- Theme-independent semantic colors
-- Automatic contrast-aware text colors
-- Support for literal RGB and RGBA colors
-- Dynamic lightening and darkening
-- Semantic color progression
-- Color validation and normalization
-- Safe transformation limits
-- Consistent, deterministic color resolution
-
-Diagram authors can focus on semantic intent while the library handles color resolution, contrast selection, and transformation behavior automatically.
+### Source Layout
 
 # All Override PlantUML Variables
 
@@ -1332,28 +399,13 @@ Use these variables before loading the repository.
 
 @enduml
 ```
-# All Defined PlantUML skinparam Variables
 
-This list is generated from the repository's puml source code.
 
-Skin parameters can be re-initialized after including the repository.
 
-```plantuml
-@startuml
+### Theme Package Layout
 
-skinparam linetype $LINE_TYPE
-skinparam nodesep $NODE_SEP
-skinparam ranksep $RANK_SEP
-skinparam shadowing $SHADOWING
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
-skinparam actorStyle $STYLE_ACTOR
-skinparam actorBorderColor $COLOR_BORDER_ACTOR
-skinparam actorBorderThickness $SIZE_BORDER_ACTOR
-skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
+`index.puml` is the static package entry point. It includes the package files required to define the theme procedures. The registry does not dynamically include them.
 
-@enduml
-```
 ## 📦 Bundled Repository Tree
 
 This tree maps out exactly how the source code files were evaluated and sequenced into the final `all.puml` production asset.
@@ -1409,69 +461,683 @@ src/all.puml (Root Master)
       └── togaf/styles/index.puml
 ```
 
-# Architecture Diagrams
+---
+## Chapter 5: Theme Registry
 
-This repository contains the PlantUML source for:
-* reusable themes
-* libraries
-* architecture views 
-for solution architecture.
+### Registering a Theme
 
-The repository is organized to support consistent architecture modeling aligned with TOGAF / ArchiMate architecture viewpoints.
+```plantuml
+Register_Theme("Corporate")
+```
 
-Theme Variables 
-↓ 
-Skinparam Initialization 
-↓ 
-TOGAF Theme Mapping 
-↓ 
-Ontario Health Theme Overlay 
-↓ 
-Reusable Libraries 
-↓ 
-Diagram Consumption
+Multiple themes:
 
-## Architecture Modeling Principles
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Product")
+Register_Theme("Project")
+```
 
-The architecture diagrams in this repository follow these principles:
+Duplicate registration is ignored by the guarded `Register_Theme()` implementation.
 
-- Architecture views describe logical, deployment, information, and traceability concerns independently.
-- Architecture patterns are modeled separately from implementation components.
-- Solution Building Blocks (SBBs) represent reusable solution capabilities.
-- Logical Components represent application architecture.
-- Deployment Components represent runtime workloads.
-- Technology Products represent technology implementations.
-- Color, shape, and notation are applied consistently through shared themes and libraries.
+### Required Procedure Names
 
-## Objectives
+Every registered theme must define both procedures below.
 
-The repository provides:
+#### Preload Phase
 
-- A single source of truth for architecture diagrams colour and styling aligned with Ontario Health's Design System.
-- Consistent styling and notation across all views.
-- Reusable architecture libraries and patterns.
-- Version-controlled architecture assets suitable for architecture review and governance.
+```plantuml
+Preload_Lib_Styles_THEME_<ThemeName>()
+```
 
+Use it for variables, semantic mappings, and theme configuration:
 
-# Troubleshooting
+```plantuml
+!procedure Preload_Lib_Styles_THEME_Corporate()
+    !$SPACING_UNIT = 8
+    !$ROUND_2 = 12
+    !$COLOR_PRIMARY = "#123456"
+!endprocedure
+```
 
-The color-resolution system performs validation, normalization, semantic resolution, and contrast evaluation during preprocessing. Most errors occur when an invalid color format, undefined semantic token, or unsupported style directive is encountered.
+#### Load Phase
+
+```plantuml
+Load_Lib_Styles_THEME_<ThemeName>()
+```
+
+Use it for styles and stereotypes:
+
+```plantuml
+!procedure Load_Lib_Styles_THEME_Corporate()
+<style>
+.card {
+    Padding 24
+    RoundCorner 12
+}
+</style>
+!endprocedure
+```
+
+The spelling and casing of `<ThemeName>` must exactly match the value passed to `Register_Theme()`.
+
+### Invocation
+
+Given:
+
+```plantuml
+Register_Theme("Corporate")
+Register_Theme("Product")
+```
+
+`Invoke_Preload_Themes()` dynamically invokes:
+
+```plantuml
+Preload_Lib_Styles_THEME_Corporate()
+Preload_Lib_Styles_THEME_Product()
+```
+
+`Invoke_Load_Themes()` dynamically invokes:
+
+```plantuml
+Load_Lib_Styles_THEME_Corporate()
+Load_Lib_Styles_THEME_Product()
+```
+
+PlantUML does not provide a portable procedure-existence test. Registering a theme whose procedures are absent or misspelled will fail when `%invoke_procedure()` executes. Registration is therefore a contract.
+
+### File Loading versus Theme Execution
+
+The registry cannot dynamically include files. This pattern is invalid as a dynamic loading mechanism:
+
+```plantuml
+!procedure Some_Procedure()
+    !include theme-file.puml
+!endprocedure
+```
+
+Use static includes first, then register:
+
+```plantuml
+!includeurl MBpuml/all.puml
+!includeurl MBpuml/theme-corporate.puml
+
+Register_Theme("Corporate")
+Load_Lib_Styles_All()
+```
+
+Conceptually:
+
+```text
+!include / !includeurl
+    ↓
+Theme procedures are defined
+    ↓
+Register_Theme()
+    ↓
+Registry determines execution order
+    ↓
+Load_Lib_Styles_All()
+```
+
+### Registration Convention
+
+Choose one project-wide convention:
+
+#### Consumer Registration
+
+The bundle defines procedures; the diagram registers the theme:
+
+```plantuml
+!includeurl MBpuml/theme-corporate.puml
+Register_Theme("Corporate")
+```
+
+#### Self-Registration
+
+The bundle calls `Register_Theme("Corporate")`; the diagram only includes it.
+
+Do not mix conventions or the documentation becomes ambiguous. Guarding duplicate registration prevents repeated execution, but it does not fix unclear ownership.
+
+### Best Practices
+
+- Register themes once and in intentional order.
+- Keep theme names stable because they are part of generated procedure names.
+- Avoid spaces, punctuation, and hyphens in registered names; prefer `Corporate`, `ProductDark`, or `CustomerA`.
+- Use preload procedures for variable assignment.
+- Use load procedures for `<style>` output.
+- Keep themes focused and composable.
+- Treat the registry as an execution registry, not a dependency loader.
 
 ---
 
-## Invalid Literal Color
+## Chapter 6: Authoring and Packaging Themes
 
-### Symptom
+### Theme Contract
 
-```text
-MB_UML :: Invalid literal color=[#GGGGGG]
+A registered theme named `Corporate` must define both procedures exactly:
+
+```plantuml
+!procedure Preload_Lib_Styles_THEME_Corporate()
+    ' Variables and semantic mappings
+!endprocedure
+
+!procedure Load_Lib_Styles_THEME_Corporate()
+    ' Styles and stereotypes
+!endprocedure
 ```
 
-### Cause
+Even when a theme has nothing to do in one phase, define an empty procedure. PlantUML has no portable procedure-existence check, and `%invoke_procedure()` will fail if the generated name is absent.
 
-The provided color is not a valid hexadecimal color.
+### Preload Example
 
-Supported formats:
+```plantuml
+!procedure Preload_Lib_Styles_THEME_Corporate()
+    !$COLOR_PRIMARY = "#123456"
+    !$COLOR_PRIMARY_LIGHT = "#D9E3EC"
+    !$COLOR_PRIMARY_DARK = "#0A2438"
+    !$SPACING_UNIT = 8
+    !$ROUND_2 = 12
+!endprocedure
+```
+
+### Load Example
+
+```plantuml
+!procedure Load_Lib_Styles_THEME_Corporate()
+<style>
+.corporateCard {
+    Padding $SPACING_3
+    RoundCorner $ROUND_2
+    Shadowing true
+}
+</style>
+!endprocedure
+```
+
+### Entry Point Example
+
+```plantuml
+' src/themes/corporate/index.puml
+
+!include vars/index.puml
+!include components/index.puml
+!include theme/index.puml
+!include skinparam/index.puml
+!include styles/index.puml
+```
+
+If self-registration is the selected project convention, add this once in the entry point:
+
+```plantuml
+Register_Theme("Corporate")
+```
+
+Otherwise, require consumers to register the included bundle explicitly.
+
+### Naming Rules
+
+- Match the registered name and procedure suffix exactly.
+- Prefer names composed of letters and digits, such as `Corporate`, `ProductDark`, or `CustomerA`.
+- Avoid spaces, punctuation, and hyphens in registered names.
+- Folder names may use repository naming conventions because output files are based on folder names, but the registered procedure suffix must remain a valid, stable PlantUML identifier.
+
+### Composition Guidance
+
+Keep themes focused:
+
+```text
+Corporate Theme
+    ↓
+Product Theme
+    ↓
+Project Theme
+```
+
+A corporate theme should establish broad branding and semantic colors. A product theme should only override product concerns. A project theme should contain the smallest local delta. This avoids monolithic themes and makes reuse practical.
+
+---
+
+## Chapter 7: Framework Extensibility
+### Overview
+
+The framework exposes four optional extension procedures so consumers can configure or override behavior without editing core source files:
+
+```plantuml
+Preload_Lib_Styles_BEFORE()
+Preload_Lib_Styles_AFTER()
+Load_Lib_Styles_BEFORE()
+Load_Lib_Styles_AFTER()
+```
+
+### Processing Order
+
+```text
+Preload_Lib_Styles_BEFORE()
+    ↓
+Preload_Lib_Styles_Stdlib()
+    ↓
+Preload_Lib_Styles_Togaf()
+    ↓
+Invoke_Preload_Themes()
+    ↓
+Preload_Lib_Styles_AFTER()
+
+Load_Lib_Styles_BEFORE()
+    ↓
+Load_Lib_Styles_Stdlib()
+    ↓
+Load_Lib_Styles_Togaf()
+    ↓
+Invoke_Load_Themes()
+    ↓
+Load_Lib_Styles_AFTER()
+```
+
+### Default Implementations
+
+The framework supplies empty defaults:
+
+```plantuml
+!procedure Preload_Lib_Styles_BEFORE()
+!endprocedure
+
+!procedure Preload_Lib_Styles_AFTER()
+!endprocedure
+
+!procedure Load_Lib_Styles_BEFORE()
+!endprocedure
+
+!procedure Load_Lib_Styles_AFTER()
+!endprocedure
+```
+
+Consumers may redefine them before `Load_Lib_Styles_All()` is called.
+
+### Preload Hooks
+
+Preload hooks are for values used when styles are generated.
+
+#### `Preload_Lib_Styles_BEFORE()`
+
+Use this hook to configure the framework before core preload processing:
+
+```plantuml
+!procedure Preload_Lib_Styles_BEFORE()
+    !$SPACING_UNIT = 8
+    !$CONTRAST_THRESHOLD = 140
+    !$SKINPARAM_ENABLED = %true()
+!endprocedure
+```
+
+Typical uses:
+
+- Global sizing and spacing
+- Feature flags
+- Framework defaults that must exist before core processing
+- Variables consumed by core or theme preload procedures
+
+#### `Preload_Lib_Styles_AFTER()`
+
+Use this hook for final variable adjustments after registered themes have run:
+
+```plantuml
+!procedure Preload_Lib_Styles_AFTER()
+    !$PADDING_TITLE = $SPACING_4
+    !$ROUND_CORNER_TITLE = $ROUND_2
+!endprocedure
+```
+
+Typical uses:
+
+- Final project-level variable overrides
+- Derived values based on loaded themes
+- Diagram-specific corrections
+
+### Load Hooks
+
+Load hooks emit `<style>` or other style-related PlantUML statements.
+
+#### `Load_Lib_Styles_BEFORE()`
+
+Use this hook for styles that must be emitted before core styles:
+
+```plantuml
+!procedure Load_Lib_Styles_BEFORE()
+<style>
+.projectBase {
+    Padding 10
+}
+</style>
+!endprocedure
+```
+
+Because core and theme styles load later, they may override these definitions.
+
+#### `Load_Lib_Styles_AFTER()`
+
+Use this hook for final overrides and project stereotypes:
+
+```plantuml
+!procedure Load_Lib_Styles_AFTER()
+<style>
+.projectCard {
+    Padding 24
+    Margin 12
+    RoundCorner 12
+    Shadowing true
+}
+
+.card {
+    Padding 20
+}
+</style>
+!endprocedure
+```
+
+This is the preferred hook for local style customization because it runs last.
+
+### Complete Example
+
+```plantuml
+@startuml
+
+!procedure Preload_Lib_Styles_BEFORE()
+    !$SPACING_UNIT = 8
+!endprocedure
+
+!procedure Preload_Lib_Styles_AFTER()
+    !$PADDING_TITLE = $SPACING_3
+!endprocedure
+
+!procedure Load_Lib_Styles_AFTER()
+<style>
+.projectCard {
+    Padding $SPACING_3
+    Margin $SPACING_2
+    RoundCorner $ROUND_2
+    Shadowing true
+}
+</style>
+!endprocedure
+
+!includeurl MBpuml/all.puml
+Load_Lib_Styles_All()
+
+rectangle "Project Component" <<projectCard>>
+
+@enduml
+```
+
+> Include order matters. Ensure the framework's empty hook definitions do not overwrite consumer definitions in the PlantUML version and include strategy you support. Test the documented ordering with the compiled bundle.
+
+### Rules of Thumb
+
+| Concern | Hook |
+|---|---|
+| Configure before core processing | `Preload_Lib_Styles_BEFORE()` |
+| Final variable override | `Preload_Lib_Styles_AFTER()` |
+| Style emitted before framework styles | `Load_Lib_Styles_BEFORE()` |
+| Final style override or project stereotype | `Load_Lib_Styles_AFTER()` |
+
+- Variables belong in preload hooks.
+- Styles belong in load hooks.
+- BEFORE configures the pipeline.
+- AFTER customizes the result.
+- Registered theme procedures are separate from consumer extension hooks.
+
+---
+
+## Chapter 8: Utility Stereotypes
+### Overview
+
+The standard library offers Bootstrap-inspired utility stereotypes for spacing, borders, rounding, shadows, sizing, and composite containers. Values are variable-driven so themes can change the scale without changing stereotype names.
+
+> PlantUML styles are not a complete CSS cascade. Support and precedence may vary by element type and PlantUML version. Prefer composite stereotypes for production diagrams and test stacked atomic stereotypes in the target renderer.
+
+### Spacing Scale
+
+```plantuml
+!$SPACING_UNIT ?= 5
+!$SPACING_0 ?= 0
+!$SPACING_1 ?= ($SPACING_UNIT * 1)
+!$SPACING_2 ?= ($SPACING_UNIT * 2)
+!$SPACING_3 ?= ($SPACING_UNIT * 3)
+!$SPACING_4 ?= ($SPACING_UNIT * 4)
+!$SPACING_5 ?= ($SPACING_UNIT * 6)
+```
+
+Override the unit before styles are loaded:
+
+```plantuml
+!$SPACING_UNIT = 8
+```
+
+### Padding
+
+| Stereotype | Property |
+|---|---|
+| `<<p0>>` … `<<p5>>` | `Padding` |
+| `<<pt0>>` … `<<pt5>>` | `PaddingTop` |
+| `<<pb0>>` … `<<pb5>>` | `PaddingBottom` |
+| `<<pl0>>` … `<<pl5>>` | `PaddingLeft` |
+| `<<pr0>>` … `<<pr5>>` | `PaddingRight` |
+
+```plantuml
+rectangle "Padded" <<p3>>
+rectangle "Top Padding" <<pt4>>
+```
+
+### Margin
+
+| Stereotype | Property |
+|---|---|
+| `<<m0>>` … `<<m5>>` | `Margin` |
+| `<<mt0>>` … `<<mt5>>` | `MarginTop` |
+| `<<mb0>>` … `<<mb5>>` | `MarginBottom` |
+| `<<ml0>>` … `<<ml5>>` | `MarginLeft` |
+| `<<mr0>>` … `<<mr5>>` | `MarginRight` |
+
+```plantuml
+rectangle "Margin" <<m2>>
+rectangle "Bottom Margin" <<mb3>>
+```
+
+Directional properties are renderer-sensitive. Verify them against the PlantUML version used by the distribution pipeline.
+
+### Border Thickness
+
+```plantuml
+!$BORDER_0 ?= 0
+!$BORDER_1 ?= 1
+!$BORDER_2 ?= 2
+!$BORDER_3 ?= 3
+!$BORDER_4 ?= 4
+```
+
+| Stereotype | Effect |
+|---|---|
+| `<<border0>>` | No line thickness |
+| `<<border1>>` | Thin border |
+| `<<border2>>` | Medium border |
+| `<<border3>>` | Strong border |
+| `<<border4>>` | Heavier border |
+
+If `<<border5>>` is emitted, define `$BORDER_5`; otherwise remove the stereotype. The variable and generated styles must remain synchronized.
+
+### Corner Rounding
+
+```plantuml
+<<rounded0>>
+<<rounded1>>
+<<rounded2>>
+<<rounded3>>
+<<rounded4>>
+<<rounded5>>
+<<roundedPill>>
+<<roundedCircle>>
+```
+
+Backed by:
+
+```plantuml
+!$ROUND_0 ?= 0
+!$ROUND_1 ?= 5
+!$ROUND_2 ?= 10
+!$ROUND_3 ?= 15
+!$ROUND_4 ?= 20
+!$ROUND_5 ?= 30
+!$ROUND_PILL ?= 50
+!$ROUND_CIRCLE ?= 100
+```
+
+PlantUML uses an absolute corner radius, so `roundedCircle` does not guarantee a geometrically perfect circle for every element.
+
+### Shadows
+
+```plantuml
+<<shadow>>
+<<noShadow>>
+```
+
+PlantUML exposes shadowing as a boolean. There are no reliable Bootstrap-style small, medium, and large shadow levels.
+
+### Widths
+
+```plantuml
+<<wXs>>
+<<wSm>>
+<<wMd>>
+<<wLg>>
+<<wXl>>
+<<wXxl>>
+```
+
+These map to `MinimumWidth`, not percentages. Variables:
+
+```plantuml
+!$WIDTH_XS ?= 75
+!$WIDTH_SM ?= 150
+!$WIDTH_MD ?= 250
+!$WIDTH_LG ?= 350
+!$WIDTH_XL ?= 500
+!$WIDTH_XXL ?= 700
+```
+
+### Heights
+
+```plantuml
+<<hXs>>
+<<hSm>>
+<<hMd>>
+<<hLg>>
+<<hXl>>
+```
+
+These map to `MinimumHeight`. Support depends on the rendered element type.
+
+### Cards
+
+Cards are compact visual surfaces with borders, rounding, and shadows.
+
+```plantuml
+rectangle "Default Card" <<card>>
+rectangle "Compact Card" <<cardCompact>>
+rectangle "Large Card" <<cardLg>>
+```
+
+| Stereotype | Intended Use |
+|---|---|
+| `<<card>>` | Default component surface |
+| `<<cardCompact>>` | Dense diagrams |
+| `<<cardLg>>` | Prominent component or summary |
+
+### Panels
+
+Panels provide stronger grouping, normally without shadows.
+
+```plantuml
+package "Default Panel" <<panel>> {
+    rectangle "Component" <<card>>
+}
+
+package "Compact Panel" <<panelCompact>>
+package "Large Panel" <<panelLg>>
+```
+
+### Boundaries
+
+```plantuml
+rectangle "Architecture Boundary" <<boundary>>
+rectangle "Large Boundary" <<boundaryLg>>
+```
+
+Use boundaries for architecture scopes, trust boundaries, domains, deployment zones, or system contexts.
+
+### Combining Stereotypes
+
+```plantuml
+rectangle "Custom" <<card>><<wLg>><<rounded4>>
+```
+
+PlantUML does not provide a full CSS-style merge model. When an atomic utility conflicts with a composite stereotype, precedence can differ by renderer version. Prefer a new composite stereotype when the combination is reused or business-significant.
+
+### Theme Overrides
+
+Theme authors should override variables in their preload procedure:
+
+```plantuml
+!procedure Preload_Lib_Styles_THEME_Corporate()
+    !$SPACING_UNIT = 8
+    !$ROUND_2 = 14
+    !$WIDTH_MD = 300
+!endprocedure
+```
+
+The stereotype API remains unchanged:
+
+```plantuml
+rectangle "Themed" <<card>><<wMd>>
+```
+
+---
+
+## Chapter 9: Color Resolution
+### Overview
+
+The framework resolves style colors through semantic tokens, literal colors, contextual directives, RGB transformations, and contrast evaluation.
+
+```text
+Style Directive
+    ↓
+Semantic Resolution
+    ↓
+Literal Color
+    ↓
+RGB Processing
+    ↓
+Contrast Evaluation
+    ↓
+Final Color
+```
+
+This allows diagrams to express intent such as `PRIMARY_DARK`, `AUTO`, or `DARKEN` while themes supply actual colors.
+
+### Supported Values
+
+| Value | Description | Example |
+|---|---|---|
+| Semantic token | Resolves through `COLOR_<TOKEN>` | `PRIMARY_DARK` |
+| Literal color | Used directly | `#023451` |
+| `AUTO` | Selects readable text from context | `COLOR_FONT_TITLE = "AUTO"` |
+| `CURRENT` | Reuses the current context color | `COLOR_LINE_TITLE = "CURRENT"` |
+| `DARKEN` | Semantic promotion, then RGB fallback | `COLOR_LINE_TITLE = "DARKEN"` |
+| `DARKEN_n` | RGB fallback by `n` percent | `DARKEN_20` |
+| `LIGHTEN` | Semantic promotion, then RGB fallback | `LIGHTEN` |
+| `LIGHTEN_n` | RGB fallback by `n` percent | `LIGHTEN_20` |
+| `*_TEXT` | Contrast text color for a semantic token | `PRIMARY_DARK_TEXT` |
+
+### Literal Color Formats
 
 ```plantuml
 #RGB
@@ -1479,18 +1145,240 @@ Supported formats:
 #RRGGBBAA
 ```
 
-Examples of invalid values:
+`#RGB` expands to `#RRGGBB`. RGB processing ignores the alpha byte in `#RRGGBBAA` and uses the normalized RGB value.
+
+### Semantic Colors
 
 ```plantuml
-#GGGGGG
-#12345
-RGB(255,255,255)
-Blue
+!$COLOR_PRIMARY ?= "#D6EAF8"
+!$COLOR_PRIMARY_DARK ?= "#345678"
 ```
 
-### Resolution
+Then:
 
-Use a valid hexadecimal color:
+```plantuml
+BackgroundColor PRIMARY_DARK
+```
+
+resolves as:
+
+```text
+PRIMARY_DARK
+    ↓
+COLOR_PRIMARY_DARK
+    ↓
+#345678
+```
+
+Semantic tokens keep diagrams independent from a specific palette.
+
+### Resolver Entry Point
+
+```plantuml
+$resolve_style_color($tokenOrColor, $context0, $context1, ...)
+```
+
+The resolver selects the first non-special context color and processes directives against it.
+
+Resolution order:
+
+| Priority | Rule |
+|---|---|
+| 1 | `AUTO` |
+| 2 | `CURRENT` |
+| 3 | `DARKEN` / `DARKEN_n` |
+| 4 | `LIGHTEN` / `LIGHTEN_n` |
+| 5 | Literal color |
+| 6 | `*_TEXT` token |
+| 7 | Semantic color token |
+
+### AUTO
+
+`AUTO` chooses dark or light text according to background luminance.
+
+```plantuml
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
+!$COLOR_FONT_TITLE = "AUTO"
+```
+
+Conceptual result:
+
+```text
+PRIMARY_DARK
+    ↓
+Literal background
+    ↓
+Luminance comparison
+    ↓
+COLOR_TEXT or COLOR_TEXT_LIGHT
+```
+
+Configuration:
+
+```plantuml
+!$CONTRAST_THRESHOLD ?= 128
+```
+
+Rule:
+
+```text
+Luminance ≤ threshold → light text
+Luminance > threshold → dark text
+```
+
+### CURRENT
+
+`CURRENT` returns the nearest usable context color:
+
+```plantuml
+!$COLOR_BACKGROUND_TITLE = "PRIMARY"
+!$COLOR_LINE_TITLE = "CURRENT"
+```
+
+The line resolves to the title background color.
+
+`CURRENT` without context is an error. A context that recursively resolves to `CURRENT` is also rejected.
+
+### Semantic Progression
+
+```text
+LIGHTEST
+    ↑
+LIGHT
+    ↑
+BASE
+    ↑
+DARK
+    ↑
+DARKEST
+```
+
+#### DARKEN
+
+```text
+PRIMARY_LIGHT   → PRIMARY
+PRIMARY         → PRIMARY_DARK
+PRIMARY_DARK    → PRIMARY_DARKEST
+PRIMARY_DARKEST → RGB darkening fallback
+```
+
+#### LIGHTEN
+
+```text
+PRIMARY_DARKEST  → PRIMARY_DARK
+PRIMARY_DARK     → PRIMARY
+PRIMARY          → PRIMARY_LIGHT
+PRIMARY_LIGHT    → PRIMARY_LIGHTEST
+PRIMARY_LIGHTEST → RGB lightening fallback
+```
+
+Plain `DARKEN` and `LIGHTEN` prefer semantic promotion. Percentage forms determine the RGB fallback percentage when semantic promotion is unavailable.
+
+### RGB Transformations
+
+Defaults:
+
+```plantuml
+!$DARKEN_DEFAULT_PERCENT = 5
+!$LIGHTEN_DEFAULT_PERCENT = 5
+```
+
+Examples:
+
+```plantuml
+$resolve_style_color("DARKEN_20", "PRIMARY")
+$resolve_style_color("LIGHTEN_30", "PRIMARY_DARK")
+```
+
+### Transformation Safety
+
+```plantuml
+!$DARKNESS_THRESHOLD = 32
+!$LIGHTNESS_THRESHOLD = 223
+```
+
+The normalization helpers keep transformed colors from becoming excessively close to pure black or white. They apply a proportional correction followed by bounded one-percent adjustments to account for integer rounding.
+
+These thresholds affect transformations, not whether literal black or white may be defined as a theme value.
+
+### Contrast Calculation
+
+The implementation uses an integer luminance approximation:
+
+```text
+(299 × R + 587 × G + 114 × B) / 1000
+```
+
+The result ranges from 0 to 255.
+
+### Examples
+
+#### Automatic Text and Current Border
+
+```plantuml
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARK"
+!$COLOR_FONT_TITLE = "AUTO"
+!$COLOR_LINE_TITLE = "CURRENT"
+```
+
+```text
+BackgroundColor = PRIMARY_DARK
+FontColor       = contrast text for PRIMARY_DARK
+LineColor       = PRIMARY_DARK
+```
+
+#### Semantic Darkening
+
+```plantuml
+!$COLOR_BACKGROUND_TITLE = "PRIMARY"
+!$COLOR_LINE_TITLE = "DARKEN"
+```
+
+If `COLOR_PRIMARY_DARK` exists, the line uses it.
+
+#### RGB Fallback
+
+```plantuml
+!$COLOR_BACKGROUND_TITLE = "PRIMARY_DARKEST"
+!$COLOR_LINE_TITLE = "DARKEN_20"
+```
+
+If no darker semantic token exists, the literal color is darkened and normalized against the darkness floor.
+
+### Validation
+
+Literal colors are validated before channel extraction. Invalid values fail with an assertion such as:
+
+```text
+MB_UML :: Invalid literal color=[#GGGGGG]
+```
+
+Semantic variable names are normalized to uppercase `COLOR_` names. Undefined variables fail when strict resolution is requested.
+
+### Theme Authoring Recommendations
+
+- Define semantic colors as valid hex values.
+- Provide coherent LIGHT, BASE, DARK, and optional LIGHTEST/DARKEST variants.
+- Use semantic tokens in styles rather than theme-specific literals.
+- Use `AUTO` only where a background context is supplied.
+- Test contrast and transformations with the exact PlantUML version used in production.
+
+---
+
+## Chapter 10: Troubleshooting
+### Invalid Literal Color
+
+#### Symptom
+
+```text
+MB_UML :: Invalid literal color=[#GGGGGG]
+```
+
+#### Cause
+
+The value is not valid `#RGB`, `#RRGGBB`, or `#RRGGBBAA` hexadecimal notation.
+
+#### Resolution
 
 ```plantuml
 #FFF
@@ -1498,363 +1386,383 @@ Use a valid hexadecimal color:
 #FFFFFF00
 ```
 
----
+Named colors and `rgb(...)` syntax are not accepted by RGB helper functions unless explicitly resolved before use.
 
-## Undefined Semantic Color
+### Undefined Semantic Color
 
-### Symptom
+#### Symptom
 
 ```text
 MB_UML :: Invalid variable name or undefined variable=[$COLOR_PRIMARY_DARKEST]
 ```
 
-### Cause
+#### Cause
 
-A semantic color token was referenced but no corresponding variable exists.
+A semantic token was used without a corresponding variable.
 
-Example:
+#### Resolution
 
-```plantuml
-BackgroundColor PRIMARY_DARKEST
-```
-
-Requires:
+Define it:
 
 ```plantuml
 !$COLOR_PRIMARY_DARKEST = "#012345"
 ```
 
-### Resolution
+or use an existing token.
 
-Either:
+### AUTO Requires Context
 
-1. Define the semantic color variable:
-
-```plantuml
-!$COLOR_PRIMARY_DARKEST = "#012345"
-```
-
-or
-
-2. Use an existing semantic token:
-
-```plantuml
-PRIMARY
-PRIMARY_DARK
-PRIMARY_LIGHT
-```
-
----
-
-## AUTO Requires a Context Color
-
-### Symptom
+#### Symptom
 
 ```text
 MB_UML :: AUTO (resolve_style_color) requires a context color
 ```
 
-### Cause
-
-The `AUTO` directive selects a text color based on an existing background color. No background color was available in the current resolution context.
-
-Example:
+#### Resolution
 
 ```plantuml
-FontColor AUTO
+$resolve_style_color("AUTO", "PRIMARY_DARK")
 ```
 
-without a corresponding background context.
+In generated styles, resolve the background first and pass it as context for font color.
 
-### Resolution
+### CURRENT Requires Context
 
-Provide a background color context.
-
-Example:
-
-```plantuml
-BackgroundColor PRIMARY_DARK
-FontColor AUTO
-```
-
-or:
-
-```plantuml
-FontColor $resolve_style_color(
-    "AUTO",
-    "PRIMARY_DARK"
-)
-```
-
----
-
-## CURRENT Requires a Context Color
-
-### Symptom
+#### Symptom
 
 ```text
-MB_UML :: CURRENT (resolve_style_color) requires a context color
+MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT
 ```
 
-### Cause
-
-`CURRENT` resolves to the current active color but no context color was supplied.
-
-### Resolution
-
-Ensure a parent or related style property supplies the current color.
-
-Example:
+#### Resolution
 
 ```plantuml
-BackgroundColor PRIMARY
-LineColor CURRENT
+$resolve_style_color("CURRENT", "PRIMARY")
 ```
 
----
+Do not provide `CURRENT` as its own context.
 
-## DARKEN Requires a Context Color
+### DARKEN or LIGHTEN Requires Context
 
-### Symptom
+#### Symptom
 
 ```text
 MB_UML :: DARKEN (resolve_style_color) requires a context color
 ```
 
-### Cause
-
-A darkening directive was used without a source color.
-
-Example:
-
-```plantuml
-BorderColor DARKEN
-```
-
-### Resolution
-
-Provide a context color.
-
-Example:
-
-```plantuml
-BackgroundColor PRIMARY
-BorderColor DARKEN
-```
-
----
-
-## LIGHTEN Requires a Context Color
-
-### Symptom
+or:
 
 ```text
 MB_UML :: LIGHTEN (resolve_style_color) requires a context color
 ```
 
-### Cause
-
-A lightening directive was used without a source color.
-
-### Resolution
-
-Provide a context color.
-
-Example:
+#### Resolution
 
 ```plantuml
-BackgroundColor PRIMARY_DARK
-HeaderColor LIGHTEN
+$resolve_style_color("DARKEN", "PRIMARY")
+$resolve_style_color("LIGHTEN", "PRIMARY_DARK")
 ```
 
----
+### Invalid Hex Byte or Digit
 
-## RGB Processing Error
-
-### Symptom
+#### Symptom
 
 ```text
 MB_UML :: Invalid hex byte=[ABCD]
 ```
 
-or
+or:
 
 ```text
 MB_UML :: Invalid hex digit=[G]
 ```
 
-### Cause
+#### Cause
 
-An invalid hexadecimal value reached the RGB processing subsystem.
+A malformed value reached RGB processing, often through an incorrectly defined semantic variable.
 
-This is typically caused by:
+#### Resolution
 
-- A malformed literal color
-- An incorrectly defined semantic color variable
-- A theme variable containing an invalid value
+Trace the semantic token to its variable and ensure it resolves to valid hex.
 
-### Resolution
+### Invalid Variable Name
 
-Verify all semantic variables resolve to valid hexadecimal colors.
+#### Cause
 
-Example:
+Framework helper functions expect uppercase PlantUML variable names, with or without the leading dollar sign.
 
-```plantuml
-!$COLOR_PRIMARY = "#047BC1"
-```
-
-not:
-
-```plantuml
-!$COLOR_PRIMARY = "BLUE"
-```
-
----
-
-## Expected Literal Color
-
-### Symptom
+Valid:
 
 ```text
-MB_UML :: Expected literal color=[PRIMARY_DARK]
+COLOR_PRIMARY
+$COLOR_PRIMARY
 ```
 
-### Cause
+Invalid:
 
-A function requiring a literal color received an unresolved semantic token.
+```text
+$Color_Primary
+$$COLOR_PRIMARY
+```
 
-### Resolution
+### Theme Procedure Invocation Fails
 
-Use:
+#### Cause
+
+The registry builds procedure names dynamically. A registered theme must define both procedures with exact casing:
 
 ```plantuml
-$resolve_style_color(...)
+Preload_Lib_Styles_THEME_Corporate()
+Load_Lib_Styles_THEME_Corporate()
 ```
 
-or
+for:
 
 ```plantuml
-$resolve_literal_color(...)
+Register_Theme("Corporate")
 ```
 
-before invoking RGB-dependent functionality.
+PlantUML does not provide a portable procedure-existence check before `%invoke_procedure()`.
 
----
+#### Resolution
 
-## Invalid Transformation Threshold
+- Verify the theme bundle was included before registration.
+- Verify the registered name exactly matches the procedure suffix.
+- Verify both preload and load procedures exist, even if one is empty.
 
-### Symptom
+### Theme Was Included but Not Applied
 
-```text
-MB_UML :: Invalid DARKNESS_THRESHOLD=[300]
+Check the complete sequence:
+
+```plantuml
+!includeurl MBpuml/all.puml
+!includeurl MBpuml/theme-corporate.puml
+Register_Theme("Corporate")
+Load_Lib_Styles_All()
 ```
 
-or
+Including a bundle defines its procedures; registration makes it part of the loader; `Load_Lib_Styles_All()` executes the pipeline.
 
-```text
-MB_UML :: Invalid LIGHTNESS_THRESHOLD=[-1]
+### Theme Executed Twice
+
+Use the guarded registry implementation so `Register_Theme()` ignores duplicate names. Also choose either self-registration or consumer registration, not both.
+
+### Include Inside Procedure Does Not Behave Dynamically
+
+`!include` is a static preprocessing mechanism. The registry can control execution only after files are included. Put includes in the theme entry point, not inside preload/load procedures.
+
+### Unexpected Utility Style Result
+
+PlantUML does not implement a full CSS cascade. Stacked stereotypes can conflict or vary by element type.
+
+#### Resolution
+
+- Test against the production PlantUML version.
+- Prefer `<<card>>`, `<<panel>>`, or another composite.
+- Create a project composite when a combination is reused.
+- Confirm directional padding, margin, and minimum-height support for the element type.
+
+### Undefined `$BORDER_5`
+
+If styles emit:
+
+```plantuml
+.border5 { LineThickness $BORDER_5 }
 ```
 
-### Cause
+then variables must define:
 
-Transformation thresholds must be within the RGB luminance range.
-
-Valid range:
-
-```text
-0 - 255
+```plantuml
+!$BORDER_5 ?= 5
 ```
 
-### Resolution
+Otherwise remove `border5`. Generated style definitions and variable inventories must remain synchronized.
 
-Use values within the supported range.
+### Unexpected AUTO Text Color
 
-Example:
+Inspect luminance and threshold:
+
+```plantuml
+!log $hex_luminance("#345678")
+!log $get_auto_text_color("#345678")
+```
+
+Adjust only after checking accessibility and the full palette:
+
+```plantuml
+!$CONTRAST_THRESHOLD = 140
+```
+
+### Transformation Threshold Errors
+
+Thresholds must be between 0 and 255:
 
 ```plantuml
 !$DARKNESS_THRESHOLD = 32
 !$LIGHTNESS_THRESHOLD = 223
 ```
 
----
+Darken and lighten percentages must be between 0 and 100.
 
-## Unexpected Text Color from AUTO
+### Build Does Not Discover Themes
 
-### Symptom
+The build must point to the actual source folder:
 
-Text appears darker or lighter than expected.
-
-### Cause
-
-`AUTO` uses luminance-based contrast selection.
-
-Configuration:
-
-```plantuml
-!$CONTRAST_THRESHOLD = 128
+```bash
+THEMES_DIR="src/themes"
 ```
 
-Rule:
+Each immediate child folder must contain:
 
 ```text
-Luminance ≤ Threshold → Light Text
-Luminance > Threshold → Dark Text
+src/themes/<folder-name>/index.puml
 ```
 
-### Resolution
+Add diagnostics:
 
-Inspect the background color:
+```bash
+printf 'Theme root: %s\n' "$THEMES_DIR"
+find "$THEMES_DIR" -type f -name index.puml -print
+```
+
+The expected output name is:
+
+```text
+theme-<folder-name>.puml
+```
+
+### AWK Unexpected Newline
+
+AWK does not accept a bare assignment split across lines:
+
+```awk
+property_list[block_name] =
+    property_list[block_name] prop "\n"
+```
+
+Use one line or an explicit continuation:
+
+```awk
+property_list[block_name] = property_list[block_name] prop "\n"
+```
+
+### Diagnostic Helpers
 
 ```plantuml
-!log $hex_luminance("#023451")
+!log $is_literal_color("#345678")
+!log $hex_red("#345678")
+!log $hex_green("#345678")
+!log $hex_blue("#345678")
+!log $hex_luminance("#345678")
+!log $get_auto_text_color("#345678")
+!log $resolve_style_color("AUTO", "PRIMARY_DARK")
+!log $Is_Theme_Registered("Corporate")
 ```
 
-and adjust the threshold if required:
-
-```plantuml
-!$CONTRAST_THRESHOLD = 140
-```
+Use diagnostics temporarily; remove them from distributed bundles unless intentional.
 
 ---
 
-## Diagnostic Helpers
+## Chapter 11: Build and Generated Documentation
 
-Helpful troubleshooting statements:
+### Build Outputs
 
-### Validate a Color
+A normal distribution build produces:
 
-```plantuml
-!log $is_literal_color("#023451")
+```text
+all.puml
+theme-<folder-name>.puml
+docs/dist-auto-generated/_dist-metadata.md
+docs/dist-auto-generated/_repository-structure.md
+docs/dist-auto-generated/_default-variables.md
+docs/dist-auto-generated/_skin-params.md
 ```
 
-### Inspect RGB Components
+### Theme Discovery
 
-```plantuml
-!log $hex_red("#023451")
-!log $hex_green("#023451")
-!log $hex_blue("#023451")
+Configure the source root:
+
+```bash
+THEMES_DIR="src/themes"
 ```
 
-### Inspect Luminance
+The build should iterate over immediate child directories and compile each existing `index.puml` into `theme-<folder-name>.puml`. Missing entry points should be reported and skipped rather than silently ignored.
 
-```plantuml
-!log $hex_luminance("#023451")
+### SASS-Style Compilation
+
+The compiler recursively expands static `!include` directives, removes diagram delimiters such as `@startuml` and `@enduml`, and writes import-boundary comments into the compiled bundle. This is source flattening, not PlantUML runtime module discovery.
+
+### Generated Variable Reference
+
+The default-variable extractor:
+
+- Recognizes `!$VARIABLE ?= value`
+- Ignores commented lines
+- Keeps the first definition of each variable
+- Sorts output alphabetically
+- Rewrites `?=` as `=` for documentation
+
+“First occurrence wins” represents the first documented default in bundle order, not necessarily the final effective value after overrides.
+
+### Generated Skinparam Reference
+
+The skinparam extractor:
+
+- Keeps the first occurrence of each simple skinparam
+- Merges duplicate blocks by block name
+- Keeps the first occurrence of each nested property
+- Ignores commented lines
+- Reconstructs normalized blocks
+
+For example, separate `skinparam class` blocks containing new properties are merged, while later duplicates of `class.BackgroundColor` are ignored.
+
+### Build Metadata
+
+Every generated bundle should record:
+
+- Generation timestamp
+- Commit hash
+- Commit message
+- Bundle name
+
+This makes distributed files traceable to source.
+
+### Validation Checklist
+
+Before publishing a distribution:
+
+1. Confirm `all.puml` contains only core modules.
+2. Confirm every theme folder with an entry point produced a bundle.
+3. Render a core-only smoke test.
+4. Render one test for each theme bundle.
+5. Render a multi-theme composition test.
+6. Confirm registered names match procedure suffixes.
+7. Check generated default-variable and skinparam references.
+8. Ensure there are no organization-specific references in core documentation unless intentionally generic.
+
+---
+
+## Appendix: Documentation Map
+
+This book supersedes the previously separated introductory, registry, extensibility, utility, color-resolution, and troubleshooting documents. Generated inventories remain separate because they are build artifacts:
+
+| Generated Reference | Location |
+|---|---|
+| Default Variables | `docs/dist-auto-generated/_default-variables.md` |
+| Skin Parameters | `docs/dist-auto-generated/_skin-params.md` |
+| Repository Structure | `docs/dist-auto-generated/_repository-structure.md` |
+| Distribution Metadata | `docs/dist-auto-generated/_dist-metadata.md` |
+
+## Closing Guidance
+
+The framework is strongest when boundaries remain strict:
+
+```text
+Static includes define available code.
+The registry controls theme execution.
+Preload procedures configure values.
+Load procedures emit styles.
+AFTER hooks apply the final project delta.
 ```
 
-### Inspect AUTO Resolution
-
-```plantuml
-!log $get_auto_text_color("#FFFFFF")
-!log $get_auto_text_color("#023451")
-```
-
-### Inspect Final Resolution
-
-```plantuml
-!log $resolve_style_color(
-    "AUTO",
-    "PRIMARY_DARK"
-)
-```
-
-These diagnostics are useful when troubleshooting theme configuration, semantic color mappings, and contrast behavior.
+That separation keeps the core upgradeable, themes distributable, composition deterministic, and diagrams focused on architecture rather than styling mechanics.
