@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-09 13:19:56 EDT**
-* Build Commit Hash: **13420edd28dd88ec92beb68b1648ab13a6734989**
-* Build Commit Comment: **New Text Module**
+* Generated on: **2026-10-09 16:28:05 EDT**
+* Build Commit Hash: **c41ed04fd2f1de8876fe60257acb0f1b1f7168af**
+* Build Commit Comment: **text module refactoring**
 
 ## Usage
 
@@ -70,7 +70,8 @@ The stable core contains **StdLib** and **TOGAF** support. Optional themes are c
 9. [Color Resolution](#chapter-9-color-resolution)
 10. [Text Utilities](#chapter-10-text-utilities)
 11. [Troubleshooting](#chapter-11-troubleshooting)
-12. [Build and Generated Documentation](#chapter-12-build-and-generated-documentation)
+12. [Debugging and Diagnostics](#chapter-12-debugging-and-diagnostics)
+13. [Build and Generated Documentation](#chapter-13-build-and-generated-documentation)
 
 ---
 ## Chapter 1: Introduction and Design Principles
@@ -2005,6 +2006,10 @@ property_list[block_name] = property_list[block_name] prop "\n"
 
 ### Diagnostic Helpers
 
+Simple diagnostic output can be produced directly using PlantUML logging functions.
+
+Examples:
+
 ```plantuml
 !log $is_literal_color("#345678")
 !log $hex_red("#345678")
@@ -2016,6 +2021,50 @@ property_list[block_name] = property_list[block_name] prop "\n"
 !log $Is_Theme_Registered("Corporate")
 ```
 
-Use diagnostics temporarily; remove them from distributed bundles unless intentional.
+These diagnostics are useful for validating assumptions during development and troubleshooting.
+
+For more advanced runtime inspection, framework diagnostics, variable inspection, and color debugging, see:
+
+```text
+Chapter 12: Debugging and Diagnostics
+```
+
+The debugging utilities provide reusable helpers for inspecting:
+
+- Variables and resolved values
+- Style and color resolution
+- Theme execution
+- Runtime configuration
+- Generated framework output
+
+Use diagnostics temporarily during investigation and remove them from production diagrams unless intentionally documenting framework behavior.
+
+---
+
+### Troubleshooting Workflow
+
+When troubleshooting framework behavior, the recommended progression is:
+
+```text
+Observe the Symptom
+    ↓
+Review the Relevant Error Message
+    ↓
+Validate Theme Registration
+    ↓
+Validate Variable Values
+    ↓
+Validate Color Resolution
+    ↓
+Use Debugging Utilities
+    ↓
+Apply the Resolution
+```
+
+For runtime inspection of variables, colors, and generated content, use the diagnostics described in:
+
+```text
+Chapter 12: Debugging and Diagnostics
+```
 
 ---

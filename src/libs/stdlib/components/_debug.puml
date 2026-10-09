@@ -1,0 +1,273 @@
+'=================================================================
+' DEBUG UTILITIES
+'=================================================================
+'
+' PURPOSE
+'
+'   Provides reusable debugging helpers for:
+'
+'       - Variable inspection
+'       - Color inspection
+'       - Style troubleshooting
+'       - Theme debugging
+'       - Diagnostic output
+'
+' DESIGN GOALS
+'
+'   - Simple to use
+'   - PlantUML compatible
+'   - Rectangle-friendly output
+'   - Theme troubleshooting support
+'   - Framework diagnostics
+'
+' NOTES
+'
+'   Functions return formatted text suitable for:
+'
+'       rectangle
+'       note
+'       title
+'       legend
+'
+'   Most helpers are intended for temporary debugging
+'   and should not normally appear in production diagrams.
+'
+'=================================================================
+
+
+
+'=================================================================
+' Debug Color
+'
+' Displays background, font, and line colors.
+'
+' Example:
+'
+' rectangle $debug_color(
+'     "Web UI",
+'     $cBackgroundColor,
+'     $cFontColor,
+'     $cLineColor
+' )
+'
+'=================================================================
+!function $debug_color( $name, $backgroundColor, $fontColor, $lineColor )
+
+    !return $surround($name) + "\nBackground = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variables (Flat Array)
+'
+' Input Format:
+'
+' [
+'   "Name1","Value1",
+'   "Name2","Value2"
+' ]
+'
+' Example:
+'
+' rectangle $debug_variables_flat([
+'     "COLOR_PRIMARY", $COLOR_PRIMARY,
+'     "COLOR_TEXT", $COLOR_TEXT,
+'     "ROUND_2", $ROUND_2
+' ])
+'
+'=================================================================
+!function $debug_variables_flat($pairs)
+
+    !$result = ""
+
+    !$count = %size($pairs)
+
+    !$i = 0
+
+    !while ($i < $count)
+
+        !$name = $pairs[$i]
+        !$value = $pairs[$i + 1]
+
+        !$result = $result + $name + " = " + $value + "\n"
+
+        !$i = $i + 2
+
+    !endwhile
+
+    !return $result
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variables (Nested Array)
+'
+' Input Format:
+'
+' [
+'   ["Name1","Value1"],
+'   ["Name2","Value2"]
+' ]
+'
+' Example:
+'
+' rectangle $debug_variables_nested([
+'     ["COLOR_PRIMARY",$COLOR_PRIMARY],
+'     ["COLOR_TEXT",$COLOR_TEXT],
+'     ["ROUND_2",$ROUND_2]
+' ])
+'
+' NOTES
+'
+'   Nested array support may vary between PlantUML
+'   versions. Prefer the flat-array implementation
+'   when maximum compatibility is required.
+'
+'=================================================================
+!function $debug_variables_nested($pairs)
+
+    !$result = ""
+
+    !$count = %size($pairs)
+
+    !$i = 0
+
+    !while ($i < $count)
+
+        !$pair = $pairs[$i]
+
+        !$name = $pair[0]
+        !$value = $pair[1]
+
+        !$result = $result + $name + " = " + $value + "\n"
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return $result
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Panel
+'
+' Adds a title to any debug content.
+'
+' Example:
+'
+' rectangle $debug_panel(
+'     "Web UI",
+'     $debug_variables_flat([
+'         "COLOR_PRIMARY",$COLOR_PRIMARY,
+'         "COLOR_TEXT",$COLOR_TEXT
+'     ])
+' )
+'
+'=================================================================
+!function $debug_panel( $title, $content )
+
+    !return $surround($title) + "\n" + $content
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variable
+'
+' Convenience helper for displaying a single value.
+'
+' Example:
+'
+' rectangle $debug_variable(
+'     "COLOR_PRIMARY",
+'     $COLOR_PRIMARY
+' )
+'
+'=================================================================
+!function $debug_variable( $name, $value )
+
+    !return $name + " = " + $value
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Style
+'
+' Displays a complete style context.
+'
+' Useful during style generation and color resolution.
+'
+' Example:
+'
+' rectangle $debug_style(
+'     "Web UI",
+'     $cBackgroundColor,
+'     $cFontColor,
+'     $cLineColor
+' )
+'
+'=================================================================
+!function $debug_style( $name, $backgroundColor="", $fontColor="", $lineColor="")
+
+    !return $debug_panel( $name, "Background = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor )
+
+!endfunction
+
+
+
+'=================================================================
+' EXAMPLES
+'=================================================================
+'
+' Single Variable
+'
+' rectangle $debug_variable(
+'     "ROUND_2",
+'     $ROUND_2
+' )
+'
+'
+' Color Diagnostic
+'
+' rectangle $debug_color(
+'     "Primary Theme",
+'     $COLOR_PRIMARY,
+'     $COLOR_TEXT,
+'     $COLOR_BORDER
+' )
+'
+'
+' Flat Variable List
+'
+' rectangle $debug_panel(
+'     "Theme Variables",
+'     $debug_variables_flat([
+'         "COLOR_PRIMARY",$COLOR_PRIMARY,
+'         "COLOR_TEXT",$COLOR_TEXT,
+'         "ROUND_2",$ROUND_2
+'     ])
+' )
+'
+'
+' Nested Variable List
+'
+' rectangle $debug_panel(
+'     "Theme Variables",
+'     $debug_variables_nested([
+'         ["COLOR_PRIMARY",$COLOR_PRIMARY],
+'         ["COLOR_TEXT",$COLOR_TEXT],
+'         ["ROUND_2",$ROUND_2]
+'     ])
+' )
+'
+'=================================================================
