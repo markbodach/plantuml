@@ -1,0 +1,355 @@
+'=================================================================
+' TEXT UTILITIES
+'=================================================================
+'
+' PURPOSE
+'
+'   Provides reusable text-formatting helpers for:
+'
+'       - String repetition
+'       - Horizontal padding
+'       - Vertical spacing
+'       - Content framing
+'       - Text centering
+'
+' DESIGN GOALS
+'
+'   - PlantUML compatibility first
+'   - No arrays
+'   - No !foreach
+'   - No collection functions
+'   - No version-sensitive features
+'   - Composable utility functions
+'
+' COMPATIBILITY
+'
+'   Uses:
+'
+'       !function
+'       !while
+'       %strlen()
+'       %intval()
+'
+'   Avoids:
+'
+'       !foreach
+'       Arrays
+'       %array_*
+'       %splitstr()
+'
+' FORMATTING MODEL
+'
+'   PlantUML renders padding most reliably when horizontal
+'   padding is placed INSIDE line boundaries.
+'
+'   Preferred:
+'
+'       \n
+'           TEXT
+'       \n
+'
+'   Avoid:
+'
+'       \nTEXT\n
+'
+'   The high-level helpers in this module implement the
+'   preferred rendering pattern automatically.
+'
+'=================================================================
+
+
+
+'=================================================================
+' Repeat Text
+'
+' Repeats a string N times.
+'
+' Example:
+'
+'   $repeat("-",5)
+'
+' Returns:
+'
+'   -----
+'
+'=================================================================
+!function $repeat($text, $count)
+
+    !$result = ""
+
+    !while ($count > 0)
+
+        !$result = $result + $text
+
+        !$count = $count - 1
+
+    !endwhile
+
+    !return $result
+
+!endfunction
+
+
+
+'=================================================================
+' New Line
+'
+' Returns one or more newline characters.
+'
+' Examples:
+'
+'   $nl()
+'
+'   $nl(2)
+'
+'=================================================================
+!function $nl($count = 1)
+
+    !return $repeat("\n", $count)
+
+!endfunction
+
+
+
+'=================================================================
+' Pad Left
+'
+' Adds padding characters to the left side of a string.
+'
+' Example:
+'
+'   $pad_left("TEXT",4)
+'
+' Returns:
+'
+'       TEXT
+'
+'=================================================================
+!function $pad_left($text, $count, $padding = " ")
+
+    !return $repeat($padding, $count) + $text
+
+!endfunction
+
+
+
+'=================================================================
+' Pad Right
+'
+' Adds padding characters to the right side of a string.
+'
+' Example:
+'
+'   $pad_right("TEXT",4)
+'
+' Returns:
+'
+'   TEXT
+'
+'=================================================================
+!function $pad_right($text, $count, $padding = " ")
+
+    !return $text + $repeat($padding, $count)
+
+!endfunction
+
+
+
+'=================================================================
+' Pad Both Sides
+'
+' Adds equal padding to both sides of a string.
+'
+' Example:
+'
+'   $pad_both("TEXT",4)
+'
+' Returns:
+'
+'       TEXT
+'
+'=================================================================
+!function $pad_both($text, $count, $padding = " ")
+
+    !$pad = $repeat($padding, $count)
+
+    !return $pad + $text + $pad
+
+!endfunction
+
+
+
+'=================================================================
+' Center Text
+'
+' Centers text within a target width.
+'
+' NOTES
+'
+'   This applies left padding only.
+'
+'   The goal is visual alignment rather than exact
+'   monospaced centering.
+'
+' Example:
+'
+'   $center_text("TITLE",40)
+'
+'=================================================================
+!function $center_text($text, $width = 40, $padding = " " )
+
+    !$length = %strlen($text)
+
+    !if ($length >= $width)
+
+        !return $text
+
+    !endif
+
+    !$left = %intval(($width - $length) / 2)
+
+    !return $pad_left($text, $left, $padding )
+
+!endfunction
+
+
+
+'=================================================================
+' Line Above
+'
+' Adds one or more blank lines before text.
+'
+' Example:
+'
+'   $line_above("TEXT")
+'
+' Result:
+'
+'   <blank line>
+'   TEXT
+'
+'=================================================================
+!function $line_above($text, $count = 1)
+
+    !return $nl($count) + $text
+
+!endfunction
+
+
+
+'=================================================================
+' Line Below
+'
+' Adds one or more blank lines after text.
+'
+' Example:
+'
+'   $line_below("TEXT")
+'
+' Result:
+'
+'   TEXT
+'   <blank line>
+'
+'=================================================================
+!function $line_below( $text, $count = 1 )
+
+    !return $text + $nl($count)
+
+!endfunction
+
+
+
+'=================================================================
+' Line Wrap
+'
+' Adds blank lines above and below text.
+'
+' Example:
+'
+'   $line_wrap("TEXT")
+'
+' Result:
+'
+'   <blank line>
+'   TEXT
+'   <blank line>
+'
+'=================================================================
+!function $line_wrap( $text, $count = 1 )
+
+    !$lines = $nl($count)
+
+    !return $lines + $text + $lines
+
+!endfunction
+
+
+
+'=================================================================
+' Surround
+'
+' High-level formatting helper.
+'
+' Adds:
+'
+'   - Blank lines above
+'   - Blank lines below
+'   - Horizontal padding INSIDE those boundaries
+'
+' This is the preferred formatting helper for:
+'
+'   - Notes
+'   - Legends
+'   - Titles
+'   - Diagnostics
+'   - Generated markdown content
+'
+' Example:
+'
+'   $surround("TEXT")
+'
+' Returns:
+'
+'   \n
+'       TEXT
+'   \n
+'
+'=================================================================
+!function $surround( $text, $horizontal = 4, $vertical = 1, $padding = " " )
+
+    !$body = $pad_both( $text, $horizontal, $padding )
+
+    !$lines = $nl($vertical)
+
+    !return $lines + $body + $lines
+
+!endfunction
+
+
+
+'=================================================================
+' Framed Title
+'
+' Convenience helper for common banner/title formatting.
+'
+' Combines:
+'
+'   - Centering
+'   - Internal padding
+'   - Vertical spacing
+'
+' Example:
+'
+'   title $framed_title(
+'       "Architecture Overview"
+'   )
+'
+'=================================================================
+!function $framed_title( $text, $width = 60, $horizontal = 2, $vertical = 1 )
+
+    !$centered = $center_text( $text, $width )
+
+    !return $surround( $centered, $horizontal, $vertical )
+
+!endfunction

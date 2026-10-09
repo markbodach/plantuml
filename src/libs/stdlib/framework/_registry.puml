@@ -181,7 +181,7 @@
         !if ($theme != "")
 
             !$proc = $prefix + $theme
-
+            !log "Invoking Theme " + $prefix + "=[" + $theme + "]"
             %invoke_procedure($proc)
 
         !endif

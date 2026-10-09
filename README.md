@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-09 11:00:02 EDT**
-* Build Commit Hash: **8ce46b178c158b8f7f2e998804e038d7e7df33af**
-* Build Commit Comment: **refactor invoke functions**
+* Generated on: **2026-10-09 13:07:53 EDT**
+* Build Commit Hash: **b6af4354616f12478d6bb2bbfcaa270518eab1f2**
+* Build Commit Comment: **document cleanup**
 
 ## Usage
 
@@ -68,8 +68,9 @@ The stable core contains **StdLib** and **TOGAF** support. Optional themes are c
 7. [Framework Extensibility](#chapter-7-framework-extensibility)
 8. [Utility Stereotypes](#chapter-8-utility-stereotypes)
 9. [Color Resolution](#chapter-9-color-resolution)
-10. [Troubleshooting](#chapter-10-troubleshooting)
-11. [Build and Generated Documentation](#chapter-11-build-and-generated-documentation)
+10. [Text Utilities](#chapter-10-text-utilities)
+11. [Troubleshooting](#chapter-11-troubleshooting)
+12. [Build and Generated Documentation](#chapter-12-build-and-generated-documentation)
 
 ---
 ## Chapter 1: Introduction and Design Principles
@@ -1364,8 +1365,363 @@ Semantic variable names are normalized to uppercase `COLOR_` names. Undefined va
 - Test contrast and transformations with the exact PlantUML version used in production.
 
 ---
+## Chapter 10: Text Utilities
 
-## Chapter 10: Troubleshooting
+### Overview
+
+The Text Utilities library provides reusable formatting helpers for generating consistent textual content throughout the framework.
+
+Typical use cases include:
+
+- Diagram titles
+- Notes
+- Legends
+- Diagnostic output
+- Generated documentation
+- Build metadata
+- Framework-generated content
+
+The utilities are intentionally lightweight and prioritize maximum PlantUML compatibility.
+
+The implementation uses only broadly supported preprocessor features and avoids collection and iteration constructs that may vary across PlantUML versions.
+
+### Design Goals
+
+The Text Utilities library was designed to:
+
+1. Produce predictable rendering across PlantUML runtimes.
+2. Eliminate repeated string-formatting logic.
+3. Encourage consistent spacing and layout conventions.
+4. Simplify generation of titles, notes, legends, and documentation content.
+5. Provide higher-level formatting abstractions built on simple primitives.
+6. Avoid dependency on advanced or version-sensitive PlantUML features.
+
+### Formatting Model
+
+PlantUML generally renders whitespace more consistently when horizontal padding exists **inside** vertical spacing boundaries.
+
+Preferred:
+
+```text
+
+    TEXT
+
+```
+
+Instead of:
+
+```text
+
+TEXT
+
+```
+
+For this reason, the library promotes framed-content helpers such as:
+
+```plantuml
+$surround()
+```
+
+and
+
+```plantuml
+$framed_title()
+```
+
+over manual combinations of spacing functions.
+
+Consumers should prefer expressing formatting intent through reusable helpers rather than embedding literal spacing within diagrams.
+
+---
+
+### Utility Categories
+
+The module is organized into three groups.
+
+| Category | Purpose |
+|---|---|
+| Primitive Utilities | String generation and repetition |
+| Horizontal Formatting | Padding and alignment |
+| Vertical Formatting | Line spacing and framing |
+
+---
+
+### Primitive Utilities
+
+Primitive utilities provide the basic building blocks used by higher-level formatting functions.
+
+#### Repeat Text
+
+```plantuml
+$repeat("-",10)
+```
+
+Result:
+
+```text
+----------
+```
+
+#### Generate New Lines
+
+```plantuml
+$nl(2)
+```
+
+Result:
+
+```text
+<newline>
+<newline>
+```
+
+Most consumers should not use these primitives directly unless authoring new formatting utilities.
+
+---
+
+### Horizontal Formatting
+
+Horizontal formatting utilities control spacing around text.
+
+#### Left Padding
+
+```plantuml
+$pad_left("Title",4)
+```
+
+Result:
+
+```text
+    Title
+```
+
+#### Right Padding
+
+```plantuml
+$pad_right("Title",4)
+```
+
+Result:
+
+```text
+Title
+```
+
+#### Symmetric Padding
+
+```plantuml
+$pad_both("Title",4)
+```
+
+Result:
+
+```text
+    Title
+```
+
+#### Centering
+
+```plantuml
+$center_text(
+    "Architecture Overview",
+    60
+)
+```
+
+Result:
+
+```text
+                   Architecture Overview
+```
+
+Centering is intended for visual alignment rather than exact monospaced positioning.
+
+---
+
+### Vertical Formatting
+
+Vertical formatting utilities control line spacing around content.
+
+#### Add Lines Above
+
+```plantuml
+$line_above("Heading")
+```
+
+#### Add Lines Below
+
+```plantuml
+$line_below("Heading")
+```
+
+#### Add Lines Above and Below
+
+```plantuml
+$line_wrap("Heading")
+```
+
+These helpers are useful when constructing larger text blocks, but most diagram content should use framed-content helpers instead.
+
+---
+
+### Framed Content
+
+#### Surround
+
+`$surround()` is the preferred helper for notes, legends, generated content, and diagnostic output.
+
+It combines:
+
+- Vertical spacing
+- Horizontal spacing
+- Internal padding
+
+Example:
+
+```plantuml
+$surround("Architecture Overview")
+```
+
+Result:
+
+```text
+
+    Architecture Overview
+
+```
+
+The helper automatically applies spacing using the library's preferred rendering model.
+
+Additional spacing can be configured:
+
+```plantuml
+$surround(
+    "CONFIDENTIAL",
+    8,
+    2
+)
+```
+
+Result:
+
+```text
+
+
+        CONFIDENTIAL
+
+
+```
+
+---
+
+### Diagram Titles
+
+#### Framed Title
+
+`$framed_title()` is the preferred helper for formatting diagram titles.
+
+It combines:
+
+- Centering
+- Horizontal padding
+- Vertical spacing
+
+Example:
+
+```plantuml
+title $framed_title(
+    "Architecture Overview"
+)
+```
+
+A custom width and spacing may also be supplied:
+
+```plantuml
+title $framed_title(
+    "Logical Component View",
+    80,
+    4,
+    2
+)
+```
+
+Consumers should prefer `framed_title()` over manually composing centering and spacing helpers.
+
+---
+
+### Common Usage Patterns
+
+#### Diagram Title
+
+```plantuml
+title $framed_title(
+    "Logical Component View"
+)
+```
+
+#### Note Header
+
+```plantuml
+note
+
+$surround("Design Notes")
+
+All requests are validated before processing.
+
+end note
+```
+
+#### Legend Header
+
+```plantuml
+legend
+
+$surround("Legend")
+
+|= Type |= Description |
+| Component | Service |
+
+endlegend
+```
+
+#### Section Separator
+
+```plantuml
+note
+
+$line_wrap("-----------------------------------")
+
+end note
+```
+
+#### Diagnostic Output
+
+```plantuml
+note
+
+$center_text(
+    "BUILD INFORMATION",
+    60
+)
+
+end note
+```
+
+---
+
+### Best Practices
+
+- Prefer `$surround()` for framed content.
+- Prefer `$framed_title()` for diagram titles.
+- Use primitive helpers only when authoring new formatting utilities.
+- Express formatting intent through reusable functions rather than embedding literal whitespace.
+- Apply a consistent formatting approach across diagrams, themes, and generated documentation.
+- Keep generated content readable and deterministic by reusing framework-provided helpers.
+
+---
+
+
+## Chapter 11: Troubleshooting
 ### Invalid Literal Color
 
 #### Symptom
@@ -1662,107 +2018,3 @@ property_list[block_name] = property_list[block_name] prop "\n"
 Use diagnostics temporarily; remove them from distributed bundles unless intentional.
 
 ---
-
-## Chapter 11: Build and Generated Documentation
-
-### Build Outputs
-
-A normal distribution build produces:
-
-```text
-all.puml
-theme-<folder-name>.puml
-docs/dist-auto-generated/_dist-metadata.md
-docs/dist-auto-generated/_repository-structure.md
-docs/dist-auto-generated/_default-variables.md
-docs/dist-auto-generated/_skin-params.md
-```
-
-### Theme Discovery
-
-Configure the source root:
-
-```bash
-THEMES_DIR="src/themes"
-```
-
-The build should iterate over immediate child directories and compile each existing `index.puml` into `theme-<folder-name>.puml`. Missing entry points should be reported and skipped rather than silently ignored.
-
-### SASS-Style Compilation
-
-The compiler recursively expands static `!include` directives, removes diagram delimiters such as `@startuml` and `@enduml`, and writes import-boundary comments into the compiled bundle. This is source flattening, not PlantUML runtime module discovery.
-
-### Generated Variable Reference
-
-The default-variable extractor:
-
-- Recognizes `!$VARIABLE ?= value`
-- Ignores commented lines
-- Keeps the first definition of each variable
-- Sorts output alphabetically
-- Rewrites `?=` as `=` for documentation
-
-“First occurrence wins” represents the first documented default in bundle order, not necessarily the final effective value after overrides.
-
-### Generated Skinparam Reference
-
-The skinparam extractor:
-
-- Keeps the first occurrence of each simple skinparam
-- Merges duplicate blocks by block name
-- Keeps the first occurrence of each nested property
-- Ignores commented lines
-- Reconstructs normalized blocks
-
-For example, separate `skinparam class` blocks containing new properties are merged, while later duplicates of `class.BackgroundColor` are ignored.
-
-### Build Metadata
-
-Every generated bundle should record:
-
-- Generation timestamp
-- Commit hash
-- Commit message
-- Bundle name
-
-This makes distributed files traceable to source.
-
-### Validation Checklist
-
-Before publishing a distribution:
-
-1. Confirm `all.puml` contains only core modules.
-2. Confirm every theme folder with an entry point produced a bundle.
-3. Render a core-only smoke test.
-4. Render one test for each theme bundle.
-5. Render a multi-theme composition test.
-6. Confirm registered names match procedure suffixes.
-7. Check generated default-variable and skinparam references.
-8. Ensure there are no organization-specific references in core documentation unless intentionally generic.
-
----
-
-## Appendix: Documentation Map
-
-This book supersedes the previously separated introductory, registry, extensibility, utility, color-resolution, and troubleshooting documents. Generated inventories remain separate because they are build artifacts:
-
-| Generated Reference | Location |
-|---|---|
-| Default Variables | `docs/dist-auto-generated/_default-variables.md` |
-| Skin Parameters | `docs/dist-auto-generated/_skin-params.md` |
-| Repository Structure | `docs/dist-auto-generated/_repository-structure.md` |
-| Distribution Metadata | `docs/dist-auto-generated/_dist-metadata.md` |
-
-## Closing Guidance
-
-The framework is strongest when boundaries remain strict:
-
-```text
-Static includes define available code.
-The registry controls theme execution.
-Preload procedures configure values.
-Load procedures emit styles.
-AFTER hooks apply the final project delta.
-```
-
-That separation keeps the core upgradeable, themes distributable, composition deterministic, and diagrams focused on architecture rather than styling mechanics.
