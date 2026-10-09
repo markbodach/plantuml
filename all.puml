@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-09 10:40:25 EDT
-' Build Commit Hash: b99d902497fd5174a1f87c3f19cc3babf8d042d2
-' Build Commit Comment: use while for iterations
+' Generated on: 2026-10-09 11:00:02 EDT
+' Build Commit Hash: 8ce46b178c158b8f7f2e998804e038d7e7df33af
+' Build Commit Comment: refactor invoke functions
 ' ========================================================
 
 ' src/all.puml
@@ -28,7 +28,7 @@
 '
 ' Example:
 '
-'   Register_Theme("OntarioHealth")
+'   Register_Theme("ThemeA")
 '   Register_Theme("PanelApp")
 '
 ' Execution Order:
@@ -57,13 +57,23 @@
 '
 ' REGISTRY
 '
-' Stores registered theme names.
+' Stores registered theme names using a delimiter-string
+' registry implementation.
+'
+' Registry Format:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+' Leading and trailing delimiters allow exact matching
+' using %strpos() without partial-match collisions.
 '
 ' Example:
 '
-'   ["OntarioHealth"]
+'   |ThemeA|
 '
-'   ["OntarioHealth","PanelApp"]
+'   |ThemeA|ThemeB|
 '
 '=================================================================
 
@@ -84,8 +94,19 @@
 '=========================================================
 ' Is Theme Registered
 '
-' Uses %array_contains() when available.
-' Falls back to manual iteration.
+' Performs an exact-match lookup against the delimiter-
+' string registry using:
+'
+'   %strpos(
+'       "|" + Theme + "|"
+'   )
+'
+' This prevents partial-match collisions.
+'
+' Example:
+'
+'   Theme     ≠ ThemeExtended
+'
 '=========================================================
 
 !function $Is_Theme_Registered($theme)
@@ -96,12 +117,26 @@
 '=================================================================
 ' REGISTRATION
 '=================================================================
-'
 ' Adds a theme to the registry.
+'
+' Registration order is preserved.
+'
+' Duplicate registrations are ignored.
 '
 ' Example:
 '
-'   Register_Theme("OntarioHealth")
+'   Register_Theme("ThemeA")
+'
+' Registry:
+'
+'   |ThemeA|
+'
+'
+'   Register_Theme("ThemeB")
+'
+' Registry:
+'
+'   |ThemeA|ThemeB|
 '
 '=================================================================
 !procedure Register_Theme($theme)
@@ -119,61 +154,53 @@
 !endprocedure
 
 
+'=================================================================
+' REGISTRY PROCESSING
+'=================================================================
+'
+' Themes are processed in registration order.
+'
+' Registry:
+'
+'   |ThemeA|ThemeB|
+'
+' Results In:
+'
+'   Preload_Theme_ThemeA()
+'   Preload_Theme_ThemeB()
+'
+' Followed By:
+'
+'   Load_Lib_Styles_THEME_ThemeA()
+'   Load_Lib_Styles_THEME_ThemeB()
+'
+' Iteration is implemented using:
+'
+'   !while
+'   %substr()
+'   %strpos()
+'
+' for maximum PlantUML compatibility.
+'
+'=================================================================
 
-'=================================================================
-' PRELOAD INVOCATION
-'=================================================================
-'
-' Executes:
-'
-'   Preload_Theme_<Theme>()
-'
-' for each registered theme.
-'
-' Example:
-'
-'   Register_Theme("OntarioHealth")
-'   Register_Theme("PanelApp")
-'
-' Executes:
-'
-'   Preload_Theme_OntarioHealth()
-'   Preload_Theme_PanelApp()
-'
-'=================================================================
-
-!procedure Invoke_Preload_Themes()
+!procedure For_Each_Theme($prefix)
 
     !$remaining = $THEMES
 
     !while ($remaining != "|")
 
-        '
-        ' Remove leading delimiter
-        '
-        !$remaining = %substr($remaining, 1)
+        !$remaining = %substr($remaining,1)
 
-        '
-        ' Find next delimiter
-        '
-        !$pos = %strpos($remaining, "|")
+        !$pos = %strpos($remaining,"|")
 
-        '
-        ' Extract theme name
-        '
-        !$theme = %substr($remaining, 0, $pos)
+        !$theme = %substr($remaining,0,$pos)
 
-        '
-        ' Advance remaining string
-        '
-        !$remaining = "|" + %substr($remaining, $pos + 1)
+        !$remaining = "|" + %substr($remaining,$pos + 1)
 
-        '
-        ' Execute preload
-        '
         !if ($theme != "")
 
-            !$proc = "Preload_Theme_" + $theme
+            !$proc = $prefix + $theme
 
             %invoke_procedure($proc)
 
@@ -183,70 +210,72 @@
 
 !endprocedure
 
+
+'=================================================================
+' PRELOAD INVOCATION
+'=================================================================
+'
+' Themes are extracted one at a time from the registry:
+'
+'   |ThemeA|ThemeB|
+'
+'       ↓
+'
+'   ThemeA
+'
+'       ↓
+'
+'   ThemeB
+'
+' Iteration uses:
+'
+'   !while
+'   %substr()
+'   %strpos()
+'
+' to avoid dependency on !foreach support.
+'
+'=================================================================
+
+!procedure Invoke_Preload_Themes()
+
+    For_Each_Theme("Preload_Theme_")
+
+!endprocedure
 
 
 '=================================================================
 ' STYLE INVOCATION
 '=================================================================
 '
-' Executes:
+' Themes are extracted one at a time from the registry:
 '
-'   Load_Lib_Styles_THEME_<Theme>()
+'   |ThemeA|ThemeB|
 '
-' for each registered theme.
+'       ↓
 '
-' Example:
+'   ThemeA
 '
-'   Register_Theme("OntarioHealth")
-'   Register_Theme("PanelApp")
+'       ↓
 '
-' Executes:
+'   ThemeB
 '
-'   Load_Lib_Styles_THEME_OntarioHealth()
-'   Load_Lib_Styles_THEME_PanelApp()
+' Iteration uses:
+'
+'   !while
+'   %substr()
+'   %strpos()
+'
+' to avoid dependency on !foreach support.
 '
 '=================================================================
 
 !procedure Invoke_Load_Themes()
 
-    !$remaining = $THEMES
-
-    !while ($remaining != "|")
-
-        '
-        ' Remove leading delimiter
-        '
-        !$remaining = %substr($remaining, 1)
-
-        '
-        ' Find next delimiter
-        '
-        !$pos = %strpos($remaining, "|")
-
-        '
-        ' Extract theme name
-        '
-        !$theme = %substr($remaining, 0, $pos)
-
-        '
-        ' Advance remaining string
-        '
-        !$remaining = "|" + %substr($remaining, $pos + 1)
-
-        '
-        ' Execute styles
-        '
-        !if ($theme != "")
-
-            !$proc = "Load_Lib_Styles_THEME_" + $theme
-
-            %invoke_procedure($proc)
-
-        !endif
-
-    !endwhile
+    For_Each_Theme("Load_Lib_Styles_THEME_")
 
 !endprocedure
+
 
 
 
@@ -261,16 +290,16 @@
 '
 ' Variables:
 '
-'   !procedure Preload_Theme_OntarioHealth()
+'   !procedure Preload_Theme_ThemeA()
 '
-'       !$COLOR_PRIMARY = $COLOR_OH_PRIMARY
+'       !$COLOR_PRIMARY = "#3366CC"
 '
 '   !endprocedure
 '
 '
 ' Styles:
 '
-'   !procedure Load_Lib_Styles_THEME_OntarioHealth()
+'   !procedure Load_Lib_Styles_THEME_ThemeA()
 '
 '   <style>
 '
