@@ -1,9 +1,118 @@
-
+'---------------------------------------------------------
+' String Utilities
+'
+' Core string manipulation helpers used throughout the
+' framework.
+'
+' Provides:
+'   - Prefix handling
+'   - Suffix detection
+'   - Style token detection
+'---------------------------------------------------------
 !include _strings.puml
+
+
+'---------------------------------------------------------
+' Variable Utilities
+'
+' Dynamic PlantUML variable resolution, validation,
+' existence checking, and indirection helpers.
+'
+' Provides:
+'   - Variable lookup
+'   - Dynamic variable access
+'   - Variable validation
+'---------------------------------------------------------
 !include _variables.puml
 
+
+'---------------------------------------------------------
+' Text Utilities
+'
+' Formatting helpers for generated text content,
+' titles, notes, legends, diagnostics, and
+' documentation output.
+'
+' Provides:
+'   - Padding
+'   - Centering
+'   - Line spacing
+'   - Framed text formatting
+'---------------------------------------------------------
+!include _text.puml
+
+
+'---------------------------------------------------------
+' Hex Utilities
+'
+' RGB and hexadecimal color processing functions.
+'
+' Provides:
+'   - Color validation
+'   - RGB extraction
+'   - Hex conversion
+'   - Luminance calculation
+'---------------------------------------------------------
 !include _hex.puml
+
+
+'---------------------------------------------------------
+' Color Utilities
+'
+' Semantic color resolution and contrast-aware
+' text color selection.
+'
+' Provides:
+'   - Semantic colors
+'   - Auto text colors
+'   - Contrast calculations
+'   - Theme-safe color lookups
+'---------------------------------------------------------
 !include _colors.puml
+
+
+'---------------------------------------------------------
+' Darken Utilities
+'
+' Semantic and RGB-based darkening operations
+' with brightness floor protection.
+'
+' Provides:
+'   - Semantic color progression
+'   - RGB darkening
+'   - Darkness normalization
+'---------------------------------------------------------
 !include _darken.puml
+
+
+'---------------------------------------------------------
+' Lighten Utilities
+'
+' Semantic and RGB-based lightening operations
+' with brightness ceiling protection.
+'
+' Provides:
+'   - Semantic color progression
+'   - RGB lightening
+'   - Lightness normalization
+'---------------------------------------------------------
 !include _lighten.puml
+
+
+'---------------------------------------------------------
+' Style Resolver
+'
+' Central style resolution engine.
+'
+' Resolves:
+'   - Semantic colors
+'   - AUTO
+'   - CURRENT
+'   - DARKEN*
+'   - LIGHTEN*
+'   - Literal colors
+'
+' Acts as the primary color/style abstraction
+' layer used by framework styles.
+'---------------------------------------------------------
 !include _resolver.puml

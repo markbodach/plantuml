@@ -30,6 +30,7 @@ src/all.puml (Root Master)
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
+        └── _text.puml
         └── _hex.puml
         └── _colors.puml
         └── _darken.puml
