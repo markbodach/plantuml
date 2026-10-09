@@ -124,19 +124,45 @@
 
 !procedure Invoke_Preload_Themes()
 
-!foreach $theme in %splitstr($THEMES, "|")
+    !$remaining = $THEMES
 
-    !if ($theme != "")
+    !while ($remaining != "|")
 
-        !$proc = "Preload_Theme_" + $theme
+        '
+        ' Remove leading delimiter
+        '
+        !$remaining = %substr($remaining, 1)
 
-        %invoke_procedure($proc)
+        '
+        ' Find next delimiter
+        '
+        !$pos = %strpos($remaining, "|")
 
-    !endif
+        '
+        ' Extract theme name
+        '
+        !$theme = %substr($remaining, 0, $pos)
 
-!endforeach
+        '
+        ' Advance remaining string
+        '
+        !$remaining = "|" + %substr($remaining, $pos + 1)
+
+        '
+        ' Execute preload
+        '
+        !if ($theme != "")
+
+            !$proc = "Preload_Theme_" + $theme
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
 
 !endprocedure
+
 
 
 '=================================================================
@@ -163,19 +189,45 @@
 
 !procedure Invoke_Load_Themes()
 
-!foreach $theme in %splitstr($THEMES, "|")
+    !$remaining = $THEMES
 
-    !if ($theme != "")
+    !while ($remaining != "|")
 
-        !$proc = "Load_Lib_Styles_THEME_" + $theme
+        '
+        ' Remove leading delimiter
+        '
+        !$remaining = %substr($remaining, 1)
 
-        %invoke_procedure($proc)
+        '
+        ' Find next delimiter
+        '
+        !$pos = %strpos($remaining, "|")
 
-    !endif
+        '
+        ' Extract theme name
+        '
+        !$theme = %substr($remaining, 0, $pos)
 
-!endforeach
+        '
+        ' Advance remaining string
+        '
+        !$remaining = "|" + %substr($remaining, $pos + 1)
+
+        '
+        ' Execute styles
+        '
+        !if ($theme != "")
+
+            !$proc = "Load_Lib_Styles_THEME_" + $theme
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
 
 !endprocedure
+
 
 
 '=================================================================
