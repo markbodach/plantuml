@@ -1,0 +1,14 @@
+' src/themes/archimate/_colors.puml
+
+
+!if ($ARCHIMATE_LIB_ENABLED)
+    !$COLOR_MOTIVATION ?= "#CCCCFF"
+    !$COLOR_STRATEGY ?= "#F5DEAA"
+    !$COLOR_BUSINESS ?= "#FFFF99"
+    !$COLOR_APPLICATION ?= "#99FFFF"
+    !$COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !$COLOR_IMPLEMENTATION ?= "#FFE0E0"
+    !$COLOR_HIGHLIGHTED ?= "#005DEF"
+    !$COLOR_NEW ?= "#005700"
+
+!endif

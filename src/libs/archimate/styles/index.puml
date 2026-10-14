@@ -1,0 +1,14 @@
+!procedure Preload_Lib_Styles_Archimate()
+!if ($ARCHIMATE_LIB_ENABLED)
+
+!endif
+
+!endprocedure 
+
+
+!procedure Load_Lib_Styles_Archimate()
+!if ($ARCHIMATE_LIB_ENABLED)
+
+!endif
+
+!endprocedure 

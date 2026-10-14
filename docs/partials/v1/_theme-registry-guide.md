@@ -27,7 +27,7 @@ BEFORE
     ↓
 StdLib
     ↓
-TOGAF
+ARCH
     ↓
 Registered Themes
     ↓
@@ -40,7 +40,7 @@ Where:
 |----------|----------|
 | BEFORE | Framework configuration and variable overrides |
 | StdLib | Core framework variables and styles |
-| TOGAF | Architecture semantics and TOGAF defaults |
+| Archimate | Architecture semantics and Archimate defaults |
 | Registered Themes | Organizational or project themes |
 | AFTER | Final overrides and local customizations |
 
@@ -301,7 +301,7 @@ Processing:
 ```text
 StdLib
     ↓
-TOGAF
+ARCH
     ↓
 Corporate
     ↓
@@ -442,7 +442,7 @@ A typical enterprise implementation might look like:
 ```text
 StdLib
     ↓
-TOGAF
+ARCH
     ↓
 Corporate Theme
     ↓
@@ -458,7 +458,7 @@ Where:
 | Layer | Example Responsibility |
 |----------|----------|
 | StdLib | Core utility framework |
-| TOGAF | Architecture semantics |
+| Archimate | Architecture semantics |
 | Corporate Theme | Organizational branding and standards |
 | Product Theme | Product-specific visual patterns |
 | Project Theme | Project-level extensions |

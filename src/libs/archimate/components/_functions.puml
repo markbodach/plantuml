@@ -1,16 +1,16 @@
-' src/libraries/togaf/_functions.puml
+' src/libraries/archimate/_functions.puml
 
 '---------------------------------------------------------
-' Helper Functions for TOGAF library integration
+' Helper Functions for Archimate library integration
 '---------------------------------------------------------
 
-'!function $togaf_layer_name($tg_name)
+'!function $archimate_layer_name($tg_name)
 '  !if ($tg_name == "technology")
 '
 '  !return $first + " " + $last
 '!endfunction
 
-!function $togaf_layer_color($state)
+!function $archimate_layer_color($state)
   !if ($state == "success")
     !return "Green"
   !else

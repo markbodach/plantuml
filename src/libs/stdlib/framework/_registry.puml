@@ -9,13 +9,13 @@
 ' Example:
 '
 '   Register_Theme("ThemeA")
-'   Register_Theme("PanelApp")
+'   Register_Theme("ThemeB")
 '
 ' Execution Order:
 '
-'   OntarioHealth
+'   ThemeA
 '       ↓
-'   PanelApp
+'   ThemeB
 '
 ' Each registered theme may provide:
 '
@@ -265,7 +265,7 @@
 '
 ' Register theme:
 '
-'   Register_Theme("OntarioHealth")
+'   Register_Theme("ThemeA")
 '
 '
 ' Variables:
@@ -299,7 +299,7 @@
 '       ↓
 '   StdLib
 '       ↓
-'   TOGAF
+'   ARCH
 '       ↓
 '   Registered Themes
 '       ↓

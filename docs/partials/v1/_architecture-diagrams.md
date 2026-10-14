@@ -6,13 +6,13 @@ This repository contains the PlantUML source for:
 * architecture views 
 for solution architecture.
 
-The repository is organized to support consistent architecture modeling aligned with TOGAF / ArchiMate architecture viewpoints.
+The repository is organized to support consistent architecture modeling aligned with Archimate / ArchiMate architecture viewpoints.
 
 Theme Variables 
 ↓ 
 Skinparam Initialization 
 ↓ 
-TOGAF Theme Mapping 
+Archimate Theme Mapping 
 ↓ 
 Ontario Health Theme Overlay 
 ↓ 

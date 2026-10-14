@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-09 16:28:05 EDT**
-* Build Commit Hash: **c41ed04fd2f1de8876fe60257acb0f1b1f7168af**
-* Build Commit Comment: **text module refactoring**
+* Generated on: **2026-10-14 13:22:07 EDT**
+* Build Commit Hash: **608dd9f815e45305a3bc439c8b59dccb49987ccd**
+* Build Commit Comment: **added debug module and help files**
 
 ## Usage
 
@@ -55,7 +55,7 @@ Load_Lib_Styles_All()
 
 This guide is the consolidated reference for using, extending, theming, building, and troubleshooting the PlantUML Architecture Framework. It replaces the earlier collection of overlapping documents with a single ordered narrative.
 
-The stable core contains **StdLib** and **TOGAF** support. Optional themes are compiled and distributed independently, included statically, registered explicitly, and executed in deterministic registration order.
+The stable core contains **StdLib** and **ARCH** support. Optional themes are compiled and distributed independently, included statically, registered explicitly, and executed in deterministic registration order.
 
 ## Table of Contents
 
@@ -81,7 +81,7 @@ The stable core contains **StdLib** and **TOGAF** support. Optional themes are c
 The framework provides:
 
 - Architecture-focused PlantUML styling
-- TOGAF-aligned semantic modelling support
+- ARCH-aligned semantic modelling support
 - Registry-based, ordered theme composition
 - Semantic color resolution and contrast-aware text colors
 - Bootstrap-inspired utility stereotypes
@@ -171,7 +171,7 @@ Execution order:
 ```text
 StdLib
     ↓
-TOGAF
+ARCH
     ↓
 Corporate
     ↓
@@ -190,7 +190,7 @@ Preload_Lib_Styles_BEFORE()
     ↓
 Preload_Lib_Styles_Stdlib()
     ↓
-Preload_Lib_Styles_Togaf()
+Preload_Lib_Styles_Archimate()
     ↓
 Invoke_Preload_Themes()
     ↓
@@ -200,7 +200,7 @@ Load_Lib_Styles_BEFORE()
     ↓
 Load_Lib_Styles_Stdlib()
     ↓
-Load_Lib_Styles_Togaf()
+Load_Lib_Styles_Archimate()
     ↓
 Invoke_Load_Themes()
     ↓
@@ -211,7 +211,7 @@ Load_Lib_Styles_AFTER()
 |---|---|
 | BEFORE | Consumer configuration before framework processing |
 | StdLib | Core variables, helpers, utilities, and styles |
-| TOGAF | Architecture semantics and TOGAF defaults |
+| Archimate | Architecture semantics and Archimate defaults |
 | Registered Themes | Organizational, product, customer, or project themes |
 | AFTER | Final variable adjustments and style overrides |
 
@@ -228,7 +228,7 @@ Variables must be resolved before styles reference them. Defining variables insi
 
 ### Core Distribution
 
-The core bundle contains StdLib and TOGAF support:
+The core bundle contains StdLib and Archimate support:
 
 ```text
 all.puml
@@ -268,16 +268,19 @@ Use these variables before loading the repository.
 !$ALIGNMENT_HORIZONTAL_COMPONENT = "left"
 !$ALIGNMENT_HORIZONTAL_ELEMENT = "left"
 !$ALIGNMENT_HORIZONTAL_TITLE = "center"
+!$ARCHIMATE_LIB_ENABLED = %false()
 !$BORDER_0 = 0
 !$BORDER_1 = 1
 !$BORDER_2 = 2
 !$BORDER_3 = 3
 !$BORDER_4 = 4
+!$BORDER_5 = 5
 !$BORDER_THICKNESS_BOLD = 2
 !$BORDER_THICKNESS_POD = 2
 !$BORDER_THICKNESS = 1
-!$COLOR_APPLICATION_DARK = $COLOR_TOGAF_APPLICATION
-!$COLOR_APPLICATION_LIGHT = $COLOR_TOGAF_APPLICATION
+!$COLOR_APPLICATION_DARK = $darken_color($COLOR_APPLICATION)
+!$COLOR_APPLICATION_LIGHT = $lighten_color($COLOR_APPLICATION)
+!$COLOR_APPLICATION = "#99FFFF"
 !$COLOR_BACKGROUND_ACTOR = "#90CAF9"
 !$COLOR_BACKGROUND_COMPONENT = $COLOR_PRIMARY
 !$COLOR_BACKGROUND_ELEMENT_COMPOSITE = $COLOR_PRIMARY_LIGHT
@@ -288,8 +291,9 @@ Use these variables before loading the repository.
 !$COLOR_BORDER_ACTOR = "#0D47A1"
 !$COLOR_BORDER_RECTANGLE = $COLOR_NONE
 !$COLOR_BORDER = "#5D6D7E"
-!$COLOR_BUSINESS_DARK = $COLOR_TOGAF_BUSINESS
-!$COLOR_BUSINESS_LIGHT = $COLOR_TOGAF_BUSINESS
+!$COLOR_BUSINESS_DARK = $darken_color($COLOR_BUSINESS)
+!$COLOR_BUSINESS_LIGHT = $lighten_color($COLOR_BUSINESS)
+!$COLOR_BUSINESS = "#FFFF99"
 !$COLOR_DISABLED_DARK = "#4D4D4D"
 !$COLOR_DISABLED_LIGHT = "#737373"
 !$COLOR_DISABLED = "#737373"
@@ -300,39 +304,37 @@ Use these variables before loading the repository.
 !$COLOR_FONT_ELEMENT = $COLOR_FONT
 !$COLOR_FONT_TITLE = $COLOR_FONT
 !$COLOR_FONT = $COLOR_TEXT
-!$COLOR_HIGHLIGHTED_DARK = $COLOR_TOGAF_HIGHLIGHTED
-!$COLOR_HIGHLIGHTED_LIGHT = $COLOR_TOGAF_HIGHLIGHTED
-!$COLOR_IMPLEMENTATION_DARK = $COLOR_TOGAF_IMPLEMENTATION
-!$COLOR_IMPLEMENTATION_LIGHT = $COLOR_TOGAF_IMPLEMENTATION
+!$COLOR_HIGHLIGHTED_DARK = $darken_color($COLOR_HIGHLIGHTED)
+!$COLOR_HIGHLIGHTED_LIGHT = $lighten_color($COLOR_HIGHLIGHTED)
+!$COLOR_HIGHLIGHTED = "#005DEF"
+!$COLOR_IMPLEMENTATION_DARK = $darken_color($COLOR_IMPLEMENTATION)
+!$COLOR_IMPLEMENTATION_LIGHT = $lighten_color($COLOR_IMPLEMENTATION)
+!$COLOR_IMPLEMENTATION = "#FFE0E0"
 !$COLOR_LINE_COMPONENT = $COLOR_LINE
 !$COLOR_LINE_ELEMENT = $COLOR_LINE
 !$COLOR_LINE_TITLE = $COLOR_LINE
 !$COLOR_LINE = $COLOR_TEXT
-!$COLOR_MOTIVATION_DARK = $COLOR_TOGAF_MOTIVATION
-!$COLOR_MOTIVATION_LIGHT = $COLOR_TOGAF_MOTIVATION
-!$COLOR_NEW_DARK = $COLOR_TOGAF_NEW
-!$COLOR_NEW_LIGHT = $COLOR_TOGAF_NEW
+!$COLOR_MOTIVATION_DARK = $darken_color($COLOR_MOTIVATION)
+!$COLOR_MOTIVATION_LIGHT = $lighten_color($COLOR_MOTIVATION)
+!$COLOR_MOTIVATION = "#CCCCFF"
+!$COLOR_NEW_DARK = $darken_color($COLOR_NEW)
+!$COLOR_NEW_LIGHT = $lighten_color($COLOR_NEW)
+!$COLOR_NEW = "#005700"
 !$COLOR_NONE = $COLOR_TRANSPARENT
 !$COLOR_PRIMARY_DARK = "#D6EAF8"
 !$COLOR_PRIMARY_LIGHT = "#D6EAF8"
 !$COLOR_PRIMARY = "#D6EAF8"
-!$COLOR_STRATEGY_DARK = $COLOR_TOGAF_STRATEGY
-!$COLOR_STRATEGY_LIGHT = $COLOR_TOGAF_STRATEGY
+!$COLOR_STRATEGY_DARK = $darken_color($COLOR_STRATEGY)
+!$COLOR_STRATEGY_LIGHT = $lighten_color($COLOR_STRATEGY)
+!$COLOR_STRATEGY = "#F5DEAA"
 !$COLOR_SUCCESS_DARK = "#D5F5E3"
 !$COLOR_SUCCESS_LIGHT = "#D5F5E3"
 !$COLOR_SUCCESS = "#D5F5E3"
-!$COLOR_TECHNOLOGY_DARK = $COLOR_TOGAF_TECHNOLOGY
-!$COLOR_TECHNOLOGY_LIGHT = $COLOR_TOGAF_TECHNOLOGY
+!$COLOR_TECHNOLOGY_DARK = $darken_color($COLOR_TECHNOLOGY)
+!$COLOR_TECHNOLOGY_LIGHT = $lighten_color($COLOR_TECHNOLOGY)
+!$COLOR_TECHNOLOGY = "#AFFFAF"
 !$COLOR_TEXT_LIGHT = $COLOR_BODY
 !$COLOR_TEXT = "#000000"
-!$COLOR_TOGAF_APPLICATION = "#99FFFF"
-!$COLOR_TOGAF_BUSINESS = "#FFFF99"
-!$COLOR_TOGAF_HIGHLIGHTED = "#005DEF"
-!$COLOR_TOGAF_IMPLEMENTATION = "#FFE0E0"
-!$COLOR_TOGAF_MOTIVATION = "#CCCCFF"
-!$COLOR_TOGAF_NEW = "#005700"
-!$COLOR_TOGAF_STRATEGY = "#F5DEAA"
-!$COLOR_TOGAF_TECHNOLOGY = "#AFFFAF"
 !$COLOR_WARNING_DARK = "#FCF3CF"
 !$COLOR_WARNING_LIGHT = "#FCF3CF"
 !$COLOR_WARNING = "#FCF3CF"
@@ -391,7 +393,6 @@ Use these variables before loading the repository.
 !$STYLE_FONT_ELEMENT = ""
 !$STYLE_FONT_TITLE = "bold"
 !$THEMES = "|"
-!$TOGAF_LIB_ENABLED = %false()
 !$WIDTH_LG = 350
 !$WIDTH_MD = 250
 !$WIDTH_SM = 150
@@ -420,7 +421,7 @@ src/all.puml (Root Master)
         └── _registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
-        └── _index.puml
+        └── _root.puml
         └── _colors.puml
         └── _fonts.puml
         └── _spacing.puml
@@ -433,8 +434,8 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _title.puml
         └── _component.puml
-      └── togaf/vars/index.puml
-        └── _index.puml
+      └── archimate/vars/index.puml
+        └── _root.puml
         └── _colors.puml
         └── _fonts.puml
       └── stdlib/components/index.puml
@@ -446,13 +447,14 @@ src/all.puml (Root Master)
         └── _darken.puml
         └── _lighten.puml
         └── _resolver.puml
-      └── togaf/components/index.puml
+      └── archimate/components/index.puml
         └── _functions.puml
         └── _colors.puml
       └── stdlib/theme/index.puml
-      └── togaf/theme/index.puml
+      └── archimate/theme/index.puml
+        └── _colors.puml
       └── stdlib/skinparam/index.puml
-      └── togaf/skinparam/index.puml
+      └── archimate/skinparam/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _card.puml
@@ -461,7 +463,7 @@ src/all.puml (Root Master)
         └── _title.puml
         └── _element.puml
         └── _component.puml
-      └── togaf/styles/index.puml
+      └── archimate/styles/index.puml
 ```
 
 ---
@@ -720,7 +722,7 @@ Preload_Lib_Styles_BEFORE()
     ↓
 Preload_Lib_Styles_Stdlib()
     ↓
-Preload_Lib_Styles_Togaf()
+Preload_Lib_Styles_Archimate()
     ↓
 Invoke_Preload_Themes()
     ↓
@@ -730,7 +732,7 @@ Load_Lib_Styles_BEFORE()
     ↓
 Load_Lib_Styles_Stdlib()
     ↓
-Load_Lib_Styles_Togaf()
+Load_Lib_Styles_Archimate()
     ↓
 Invoke_Load_Themes()
     ↓

@@ -107,7 +107,7 @@ can inherit colors from:
 
 - Default theme
 - Ontario Health theme
-- TOGAF theme
+- Archimate theme
 - Future themes
 
 without modification.

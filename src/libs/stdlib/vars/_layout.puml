@@ -30,7 +30,7 @@
 '---------------------------------------------------------
 
 ' legend right
-' |= TOGAF Category |= Color |
+' |= Archimate Category |= Color |
 ' | <back:E8DAEF>      </back> | External System |
 ' | <back:D6EAF8>      </back> | Logical Component / Service |
 ' | <back:FCF3CF>      </back> | Business Information Authority |

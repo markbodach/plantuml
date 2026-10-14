@@ -3,7 +3,7 @@
 
 ### Core Distribution
 
-The core bundle contains StdLib and TOGAF support:
+The core bundle contains StdLib and Archimate support:
 
 ```text
 all.puml

@@ -14,7 +14,7 @@ Changes to themes, libraries, or architecture standards should be reviewed as ar
 
 ## References
 
-- TOGAF® Standard, The Open Group
+- ARCH® Standard, The Open Group
 - ArchiMate® Specification, The Open Group
 - Ontario Health Architecture Standards
 - Ontario Health Solution Architecture Repository Standards

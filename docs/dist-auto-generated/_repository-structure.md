@@ -10,7 +10,7 @@ src/all.puml (Root Master)
         └── _registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
-        └── _index.puml
+        └── _root.puml
         └── _colors.puml
         └── _fonts.puml
         └── _spacing.puml
@@ -23,8 +23,8 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _title.puml
         └── _component.puml
-      └── togaf/vars/index.puml
-        └── _index.puml
+      └── archimate/vars/index.puml
+        └── _root.puml
         └── _colors.puml
         └── _fonts.puml
       └── stdlib/components/index.puml
@@ -36,13 +36,14 @@ src/all.puml (Root Master)
         └── _darken.puml
         └── _lighten.puml
         └── _resolver.puml
-      └── togaf/components/index.puml
+      └── archimate/components/index.puml
         └── _functions.puml
         └── _colors.puml
       └── stdlib/theme/index.puml
-      └── togaf/theme/index.puml
+      └── archimate/theme/index.puml
+        └── _colors.puml
       └── stdlib/skinparam/index.puml
-      └── togaf/skinparam/index.puml
+      └── archimate/skinparam/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _card.puml
@@ -51,5 +52,5 @@ src/all.puml (Root Master)
         └── _title.puml
         └── _element.puml
         └── _component.puml
-      └── togaf/styles/index.puml
+      └── archimate/styles/index.puml
 ```

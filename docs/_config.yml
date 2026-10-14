@@ -3,7 +3,7 @@ title: Your awesome title
 # email: your-email@domain.com
 
 description: > # this means to ignore newlines until "baseurl:"
-  PlantUML source, reusable themes, libraries, and generated architecture views for consistent solution architecture modeling, traceability, and governance aligned with TOGAF viewpoints.
+  PlantUML source, reusable themes, libraries, and generated architecture views for consistent solution architecture modeling, traceability, and governance aligned with Archimate viewpoints.
 baseurl: "/plantuml" # the subpath of your site, e.g. /blog/
 url: "http://markbodach.github.io" # the base hostname & protocol for your site
 show_downloads: true

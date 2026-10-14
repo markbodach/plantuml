@@ -10,7 +10,7 @@ Generated theme distribution bundles.
 ```text
 src/themes/ontariohealth/index.puml (Root Master)
   └── vars/index.puml
-    └── _index.puml
+    └── _root.puml
     └── _colors.puml
     └── _fonts.puml
     └── _layout.puml

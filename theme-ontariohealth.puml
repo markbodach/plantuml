@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-09 16:28:05 EDT
-' Build Commit Hash: c41ed04fd2f1de8876fe60257acb0f1b1f7168af
-' Build Commit Comment: text module refactoring
+' Generated on: 2026-10-14 13:22:07 EDT
+' Build Commit Hash: 608dd9f815e45305a3bc439c8b59dccb49987ccd
+' Build Commit Comment: added debug module and help files
 ' ========================================================
 
 
@@ -14,10 +14,10 @@
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/themes/ontariohealth/vars/_index.puml ---
+' --- Importing: src/themes/ontariohealth/vars/_root.puml ---
 
 
-' --- End Import: src/themes/ontariohealth/vars/_index.puml ---
+' --- End Import: src/themes/ontariohealth/vars/_root.puml ---
 
 ' --- Importing: src/themes/ontariohealth/vars/_colors.puml ---
 
@@ -61,7 +61,7 @@
 !$COLOR_OH_BORDER ?= "#5D6D7E"
 
 
-'Set OH Colours to TOGAF
+'Set OH Colours to ARCH
 !$COLOR_OH_BUSINESS ?= $COLOR_OH_WARNING
 !$COLOR_OH_LOGICAL ?= $COLOR_OH_PRIMARY
 !$COLOR_OH_DEPLOYMENT ?= "#FAD7A0"
@@ -182,36 +182,36 @@
 
 
 
-'If there are a lot of variables, this could be moved into a separate _togaf.puml file
+'If there are a lot of variables, this could be moved into a separate _archimate.puml file
 
 
-!if ($TOGAF_LIB_ENABLED)
+!if ($ARCHIMATE_LIB_ENABLED)
 
     'This is the surface colour
 
-    !$COLOR_MOTIVATION_LIGHT ?= $COLOR_OH_MOTIVATION_LIGHT
-    !$COLOR_MOTIVATION_DARK ?= $COLOR_OH_MOTIVATION_DARK
+    !$COLOR_MOTIVATION_LIGHT = $COLOR_OH_MOTIVATION_LIGHT
+    !$COLOR_MOTIVATION_DARK = $COLOR_OH_MOTIVATION_DARK
 
-    !$COLOR_STRATEGY_LIGHT ?= $COLOR_OH_STRATEGY_LIGHT
-    !$COLOR_STRATEGY_DARK ?= $COLOR_OH_STRATEGY_DARK
+    !$COLOR_STRATEGY_LIGHT = $COLOR_OH_STRATEGY_LIGHT
+    !$COLOR_STRATEGY_DARK = $COLOR_OH_STRATEGY_DARK
 
-    !$COLOR_BUSINESS_LIGHT ?= $COLOR_OH_BUSINESS_LIGHT
-    !$COLOR_BUSINESS_DARK ?= $COLOR_OH_BUSINESS_DARK
+    !$COLOR_BUSINESS_LIGHT = $COLOR_OH_BUSINESS_LIGHT
+    !$COLOR_BUSINESS_DARK = $COLOR_OH_BUSINESS_DARK
 
-    !$COLOR_APPLICATION_LIGHT ?= $COLOR_OH_APPLICATION_LIGHT
-    !$COLOR_APPLICATION_DARK ?= $COLOR_OH_APPLICATION_DARK
+    !$COLOR_APPLICATION_LIGHT = $COLOR_OH_APPLICATION_LIGHT
+    !$COLOR_APPLICATION_DARK = $COLOR_OH_APPLICATION_DARK
 
-    !$COLOR_TECHNOLOGY_LIGHT ?= $COLOR_OH_TECHNOLOGY_LIGHT
-    !$COLOR_TECHNOLOGY_DARK ?= $COLOR_OH_TECHNOLOGY_DARK
+    !$COLOR_TECHNOLOGY_LIGHT = $COLOR_OH_TECHNOLOGY_LIGHT
+    !$COLOR_TECHNOLOGY_DARK = $COLOR_OH_TECHNOLOGY_DARK
 
-    !$COLOR_IMPLEMENTATION_LIGHT ?= $COLOR_OH_IMPLEMENTATION_LIGHT
-    !$COLOR_IMPLEMENTATION_DARK ?= $COLOR_OH_IMPLEMENTATION_DARK
+    !$COLOR_IMPLEMENTATION_LIGHT = $COLOR_OH_IMPLEMENTATION_LIGHT
+    !$COLOR_IMPLEMENTATION_DARK = $COLOR_OH_IMPLEMENTATION_DARK
 
-    !$COLOR_HIGHLIGHTED_LIGHT ?= $COLOR_OH_HIGHLIGHTED_LIGHT
-    !$COLOR_HIGHLIGHTED_DARK ?= $COLOR_OH_HIGHLIGHTED_DARK
+    !$COLOR_HIGHLIGHTED_LIGHT = $COLOR_OH_HIGHLIGHTED_LIGHT
+    !$COLOR_HIGHLIGHTED_DARK = $COLOR_OH_HIGHLIGHTED_DARK
 
-    !$COLOR_NEW_LIGHT ?= $COLOR_OH_NEW_LIGHT
-    !$COLOR_NEW_DARK ?= $COLOR_OH_NEW_DARK
+    !$COLOR_NEW_LIGHT = $COLOR_OH_NEW_LIGHT
+    !$COLOR_NEW_DARK = $COLOR_OH_NEW_DARK
 
 
 !endif

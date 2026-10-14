@@ -1,7 +1,0 @@
-' src/libraries/togaf/index.puml
-' Module Entry Point: Libraries / TOGAF Component Pack 
-
-
-!include _functions.puml
-!include _colors.puml
-

@@ -1,19 +1,19 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-09 16:28:05 EDT
-' Build Commit Hash: c41ed04fd2f1de8876fe60257acb0f1b1f7168af
-' Build Commit Comment: text module refactoring
+' Generated on: 2026-10-14 13:22:07 EDT
+' Build Commit Hash: 608dd9f815e45305a3bc439c8b59dccb49987ccd
+' Build Commit Comment: added debug module and help files
 ' ========================================================
 
 ' src/all.puml
-' Module Entry Point: OH + TOGAF Component Pack
+' Module Entry Point: OH + Archimate Component Pack
 
 ' --- Importing: src/index.puml ---
 
 ' --- Importing: src/libs/index.puml ---
 ' src/index.puml
-' Module Entry Point: OH + TOGAF Component Pack
+' Module Entry Point: OH + Archimate Component Pack
 
 
 ' --- Importing: src/libs/stdlib/framework/index.puml ---
@@ -29,13 +29,13 @@
 ' Example:
 '
 '   Register_Theme("ThemeA")
-'   Register_Theme("PanelApp")
+'   Register_Theme("ThemeB")
 '
 ' Execution Order:
 '
-'   OntarioHealth
+'   ThemeA
 '       ↓
-'   PanelApp
+'   ThemeB
 '
 ' Each registered theme may provide:
 '
@@ -285,7 +285,7 @@
 '
 ' Register theme:
 '
-'   Register_Theme("OntarioHealth")
+'   Register_Theme("ThemeA")
 '
 '
 ' Variables:
@@ -319,7 +319,7 @@
 '       ↓
 '   StdLib
 '       ↓
-'   TOGAF
+'   ARCH
 '       ↓
 '   Registered Themes
 '       ↓
@@ -344,7 +344,7 @@
 '   Preload_Lib_Styles_BEFORE()
 '       ↓
 '   Preload_Lib_Styles_Stdlib()
-'   Preload_Lib_Styles_Togaf()
+'   Preload_Lib_Styles_Archimate()
 '   Registered Theme Preload Procedures
 '       ↓
 '   Preload_Lib_Styles_AFTER()
@@ -354,7 +354,7 @@
 '   Load_Lib_Styles_BEFORE()
 '       ↓
 '   Load_Lib_Styles_Stdlib()
-'   Load_Lib_Styles_Togaf()
+'   Load_Lib_Styles_Archimate()
 '   Registered Theme Style Procedures
 '       ↓
 '   Load_Lib_Styles_AFTER()
@@ -448,13 +448,13 @@
 
 'STEP 1 :: VARS includes
 ' --- Importing: src/libs/stdlib/vars/index.puml ---
-' --- Importing: src/libs/stdlib/vars/_index.puml ---
+' --- Importing: src/libs/stdlib/vars/_root.puml ---
 
 
 !$SKINPARAM_ENABLED ?= %false()
 
 !$UNSET = "__UML_UNSET__"
-' --- End Import: src/libs/stdlib/vars/_index.puml ---
+' --- End Import: src/libs/stdlib/vars/_root.puml ---
 
 
 ' --- Importing: src/libs/stdlib/vars/_colors.puml ---
@@ -590,6 +590,7 @@
 !$BORDER_2 ?= 2
 !$BORDER_3 ?= 3
 !$BORDER_4 ?= 4
+!$BORDER_5 ?= 5
 ' --- End Import: src/libs/stdlib/vars/_borders.puml ---
 
 ' --- Importing: src/libs/stdlib/vars/_corner.puml ---
@@ -669,7 +670,7 @@
 '---------------------------------------------------------
 
 ' legend right
-' |= TOGAF Category |= Color |
+' |= Archimate Category |= Color |
 ' | <back:E8DAEF>      </back> | External System |
 ' | <back:D6EAF8>      </back> | Logical Component / Service |
 ' | <back:FCF3CF>      </back> | Business Information Authority |
@@ -758,42 +759,43 @@
 
 ' --- End Import: src/libs/stdlib/vars/index.puml ---
 
-' --- Importing: src/libs/togaf/vars/index.puml ---
-' src/themes/togaf/index.puml
-' Module Entry Point: TOGAF Theme Variables
+' --- Importing: src/libs/archimate/vars/index.puml ---
+' src/themes/archimate/index.puml
+' Module Entry Point: Archimate Theme Variables
 
 
-' --- Importing: src/libs/togaf/vars/_index.puml ---
+' --- Importing: src/libs/archimate/vars/_root.puml ---
 
-!$TOGAF_LIB_ENABLED ?= %false()
-' --- End Import: src/libs/togaf/vars/_index.puml ---
+!$ARCHIMATE_LIB_ENABLED ?= %false()
+' --- End Import: src/libs/archimate/vars/_root.puml ---
 
-' --- Importing: src/libs/togaf/vars/_colors.puml ---
-' src/themes/togaf/_colors.puml
-
-
-
-!$COLOR_TOGAF_MOTIVATION ?= "#CCCCFF"
-!$COLOR_TOGAF_STRATEGY ?= "#F5DEAA"
-!$COLOR_TOGAF_BUSINESS ?= "#FFFF99"
-!$COLOR_TOGAF_APPLICATION ?= "#99FFFF"
-!$COLOR_TOGAF_TECHNOLOGY ?= "#AFFFAF"
-!$COLOR_TOGAF_IMPLEMENTATION ?= "#FFE0E0"
-!$COLOR_TOGAF_HIGHLIGHTED ?= "#005DEF"
-!$COLOR_TOGAF_NEW ?= "#005700"
-
-' --- End Import: src/libs/togaf/vars/_colors.puml ---
-
-' --- Importing: src/libs/togaf/vars/_fonts.puml ---
-' src/themes/togaf/_fonts.puml
+' --- Importing: src/libs/archimate/vars/_colors.puml ---
+' src/themes/archimate/_colors.puml
 
 
-!if ($TOGAF_LIB_ENABLED)
+!if ($ARCHIMATE_LIB_ENABLED)
+    !$COLOR_MOTIVATION ?= "#CCCCFF"
+    !$COLOR_STRATEGY ?= "#F5DEAA"
+    !$COLOR_BUSINESS ?= "#FFFF99"
+    !$COLOR_APPLICATION ?= "#99FFFF"
+    !$COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !$COLOR_IMPLEMENTATION ?= "#FFE0E0"
+    !$COLOR_HIGHLIGHTED ?= "#005DEF"
+    !$COLOR_NEW ?= "#005700"
 
 !endif
-' --- End Import: src/libs/togaf/vars/_fonts.puml ---
+' --- End Import: src/libs/archimate/vars/_colors.puml ---
 
-' --- End Import: src/libs/togaf/vars/index.puml ---
+' --- Importing: src/libs/archimate/vars/_fonts.puml ---
+' src/themes/archimate/_fonts.puml
+
+
+!if ($ARCHIMATE_LIB_ENABLED)
+
+!endif
+' --- End Import: src/libs/archimate/vars/_fonts.puml ---
+
+' --- End Import: src/libs/archimate/vars/index.puml ---
 
 
 'STEP 2 :: COMPONENTS includes
@@ -2711,25 +2713,25 @@
 
 ' --- End Import: src/libs/stdlib/components/index.puml ---
 
-' --- Importing: src/libs/togaf/components/index.puml ---
-' src/libraries/togaf/index.puml
-' Module Entry Point: Libraries / TOGAF Component Pack 
+' --- Importing: src/libs/archimate/components/index.puml ---
+' src/libraries/archimate/index.puml
+' Module Entry Point: Libraries / Archimate Component Pack 
 
 
-' --- Importing: src/libs/togaf/components/_functions.puml ---
-' src/libraries/togaf/_functions.puml
+' --- Importing: src/libs/archimate/components/_functions.puml ---
+' src/libraries/archimate/_functions.puml
 
 '---------------------------------------------------------
-' Helper Functions for TOGAF library integration
+' Helper Functions for Archimate library integration
 '---------------------------------------------------------
 
-'!function $togaf_layer_name($tg_name)
+'!function $archimate_layer_name($tg_name)
 '  !if ($tg_name == "technology")
 '
 '  !return $first + " " + $last
 '!endfunction
 
-!function $togaf_layer_color($state)
+!function $archimate_layer_color($state)
   !if ($state == "success")
     !return "Green"
   !else
@@ -2748,13 +2750,13 @@
 
 ' !unquoted procedure 
 ' !unquoted function  
-' --- End Import: src/libs/togaf/components/_functions.puml ---
+' --- End Import: src/libs/archimate/components/_functions.puml ---
 
-' --- Importing: src/libs/togaf/components/_colors.puml ---
-' --- End Import: src/libs/togaf/components/_colors.puml ---
+' --- Importing: src/libs/archimate/components/_colors.puml ---
+' --- End Import: src/libs/archimate/components/_colors.puml ---
 
 
-' --- End Import: src/libs/togaf/components/index.puml ---
+' --- End Import: src/libs/archimate/components/index.puml ---
 
 
 'STEP 3 :: THEME includes
@@ -2763,39 +2765,43 @@
 ' THIS FILE SHOULD BE BLANK
 ' --- End Import: src/libs/stdlib/theme/index.puml ---
 
-' --- Importing: src/libs/togaf/theme/index.puml ---
+' --- Importing: src/libs/archimate/theme/index.puml ---
 
-!if ($TOGAF_LIB_ENABLED)
 
-'This is the surface colour
+' --- Importing: src/libs/archimate/theme/_colors.puml ---
 
-!$COLOR_MOTIVATION_LIGHT ?= $COLOR_TOGAF_MOTIVATION
-!$COLOR_MOTIVATION_DARK ?= $COLOR_TOGAF_MOTIVATION
 
-!$COLOR_STRATEGY_LIGHT ?= $COLOR_TOGAF_STRATEGY
-!$COLOR_STRATEGY_DARK ?= $COLOR_TOGAF_STRATEGY
 
-!$COLOR_BUSINESS_LIGHT ?= $COLOR_TOGAF_BUSINESS
-!$COLOR_BUSINESS_DARK ?= $COLOR_TOGAF_BUSINESS
+!if ($ARCHIMATE_LIB_ENABLED)
 
-!$COLOR_APPLICATION_LIGHT ?= $COLOR_TOGAF_APPLICATION
-!$COLOR_APPLICATION_DARK ?= $COLOR_TOGAF_APPLICATION
+    !$COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
+    !$COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
 
-!$COLOR_TECHNOLOGY_LIGHT ?= $COLOR_TOGAF_TECHNOLOGY
-!$COLOR_TECHNOLOGY_DARK ?= $COLOR_TOGAF_TECHNOLOGY
+    !$COLOR_STRATEGY_LIGHT ?= $lighten_color($COLOR_STRATEGY)
+    !$COLOR_STRATEGY_DARK ?= $darken_color($COLOR_STRATEGY)
 
-!$COLOR_IMPLEMENTATION_LIGHT ?= $COLOR_TOGAF_IMPLEMENTATION
-!$COLOR_IMPLEMENTATION_DARK ?= $COLOR_TOGAF_IMPLEMENTATION
+    !$COLOR_BUSINESS_LIGHT ?= $lighten_color($COLOR_BUSINESS)
+    !$COLOR_BUSINESS_DARK ?= $darken_color($COLOR_BUSINESS)
 
-!$COLOR_HIGHLIGHTED_LIGHT ?= $COLOR_TOGAF_HIGHLIGHTED
-!$COLOR_HIGHLIGHTED_DARK ?= $COLOR_TOGAF_HIGHLIGHTED
+    !$COLOR_APPLICATION_LIGHT ?= $lighten_color($COLOR_APPLICATION)
+    !$COLOR_APPLICATION_DARK ?= $darken_color($COLOR_APPLICATION)
 
-!$COLOR_NEW_LIGHT ?= $COLOR_TOGAF_NEW
-!$COLOR_NEW_DARK ?= $COLOR_TOGAF_NEW
+    !$COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
+    !$COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
 
+    !$COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
+    !$COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
+
+    !$COLOR_HIGHLIGHTED_LIGHT ?= $lighten_color($COLOR_HIGHLIGHTED)
+    !$COLOR_HIGHLIGHTED_DARK ?= $darken_color($COLOR_HIGHLIGHTED)
+
+    !$COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
+    !$COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
 
 !endif
-' --- End Import: src/libs/togaf/theme/index.puml ---
+' --- End Import: src/libs/archimate/theme/_colors.puml ---
+
+' --- End Import: src/libs/archimate/theme/index.puml ---
 
 
 'STEP 4 :: Skin Params includes
@@ -2829,7 +2835,7 @@ skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 !endif
 ' --- End Import: src/libs/stdlib/skinparam/index.puml ---
 
-' --- Importing: src/libs/togaf/skinparam/index.puml ---
+' --- Importing: src/libs/archimate/skinparam/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
@@ -2840,7 +2846,7 @@ skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 
 
 !endif
-' --- End Import: src/libs/togaf/skinparam/index.puml ---
+' --- End Import: src/libs/archimate/skinparam/index.puml ---
 
 
 'STEP 5 :: STYLES includes
@@ -3263,22 +3269,22 @@ component {
 !endprocedure
 ' --- End Import: src/libs/stdlib/styles/index.puml ---
 
-' --- Importing: src/libs/togaf/styles/index.puml ---
-!procedure Preload_Lib_Styles_Togaf()
-!if ($TOGAF_LIB_ENABLED)
+' --- Importing: src/libs/archimate/styles/index.puml ---
+!procedure Preload_Lib_Styles_Archimate()
+!if ($ARCHIMATE_LIB_ENABLED)
 
 !endif
 
 !endprocedure 
 
 
-!procedure Load_Lib_Styles_Togaf()
-!if ($TOGAF_LIB_ENABLED)
+!procedure Load_Lib_Styles_Archimate()
+!if ($ARCHIMATE_LIB_ENABLED)
 
 !endif
 
 !endprocedure 
-' --- End Import: src/libs/togaf/styles/index.puml ---
+' --- End Import: src/libs/archimate/styles/index.puml ---
 
 
 'STEP 6 :: Add to Load_Lib_Styles_All
@@ -3289,7 +3295,7 @@ component {
     Preload_Lib_Styles_BEFORE()
 '--------------------------------------------
     Preload_Lib_Styles_Stdlib()
-    Preload_Lib_Styles_Togaf()
+    Preload_Lib_Styles_Archimate()
     Invoke_Preload_Themes()
 '--------------------------------------------    
     Preload_Lib_Styles_AFTER()
@@ -3300,7 +3306,7 @@ component {
     Load_Lib_Styles_BEFORE()
 '--------------------------------------------
     Load_Lib_Styles_Stdlib()
-    Load_Lib_Styles_Togaf()
+    Load_Lib_Styles_Archimate()
     Invoke_Load_Themes()
 '--------------------------------------------
     Load_Lib_Styles_AFTER()

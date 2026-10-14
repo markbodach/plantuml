@@ -1,0 +1,30 @@
+
+
+
+!if ($ARCHIMATE_LIB_ENABLED)
+
+    !$COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
+    !$COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
+
+    !$COLOR_STRATEGY_LIGHT ?= $lighten_color($COLOR_STRATEGY)
+    !$COLOR_STRATEGY_DARK ?= $darken_color($COLOR_STRATEGY)
+
+    !$COLOR_BUSINESS_LIGHT ?= $lighten_color($COLOR_BUSINESS)
+    !$COLOR_BUSINESS_DARK ?= $darken_color($COLOR_BUSINESS)
+
+    !$COLOR_APPLICATION_LIGHT ?= $lighten_color($COLOR_APPLICATION)
+    !$COLOR_APPLICATION_DARK ?= $darken_color($COLOR_APPLICATION)
+
+    !$COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
+    !$COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
+
+    !$COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
+    !$COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
+
+    !$COLOR_HIGHLIGHTED_LIGHT ?= $lighten_color($COLOR_HIGHLIGHTED)
+    !$COLOR_HIGHLIGHTED_DARK ?= $darken_color($COLOR_HIGHLIGHTED)
+
+    !$COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
+    !$COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
+
+!endif

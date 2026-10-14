@@ -13,7 +13,7 @@
 '   Preload_Lib_Styles_BEFORE()
 '       ↓
 '   Preload_Lib_Styles_Stdlib()
-'   Preload_Lib_Styles_Togaf()
+'   Preload_Lib_Styles_Archimate()
 '   Registered Theme Preload Procedures
 '       ↓
 '   Preload_Lib_Styles_AFTER()
@@ -23,7 +23,7 @@
 '   Load_Lib_Styles_BEFORE()
 '       ↓
 '   Load_Lib_Styles_Stdlib()
-'   Load_Lib_Styles_Togaf()
+'   Load_Lib_Styles_Archimate()
 '   Registered Theme Style Procedures
 '       ↓
 '   Load_Lib_Styles_AFTER()
