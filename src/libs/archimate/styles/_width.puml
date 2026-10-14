@@ -1,0 +1,11 @@
+
+!procedure Preload_Lib_Styles_Archimate_Widths()
+
+    '=====================================================
+    ' Widths
+    '=====================================================
+
+    !$ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !$ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+
+!endprocedure

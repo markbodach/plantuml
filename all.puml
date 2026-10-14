@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-14 13:22:07 EDT
-' Build Commit Hash: 608dd9f815e45305a3bc439c8b59dccb49987ccd
-' Build Commit Comment: added debug module and help files
+' Generated on: 2026-10-14 16:24:34 EDT
+' Build Commit Hash: f1bed4c9b7134a142c0bf35a4f98c2b57eff7a08
+' Build Commit Comment: archimate refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -519,6 +519,11 @@
 !$COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
 
+!$COLOR_EMPHASIS ?= "#E0B8D4"
+!$COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
+!$COLOR_EMPHASIS_DARK ?= "#C38AAF"
+
+
 ' COLOR_LIGHT
 ' COLOR_DARK
 
@@ -599,15 +604,21 @@
 ' Border Radius Utility Variables
 '---------------------------------------------------------
 
-!$ROUND_0 ?= 0
-!$ROUND_1 ?= 5
-!$ROUND_2 ?= 10
-!$ROUND_3 ?= 15
-!$ROUND_4 ?= 20
-!$ROUND_5 ?= 30
+!$ROUND_SHARP ?= 1
+!$ROUND_DIAGONAL ?= 12
+!$ROUND_STANDARD ?= 25
+!$ROUND_LARGE ?= 80
 
-!$ROUND_PILL ?= 50
-!$ROUND_CIRCLE ?= 100
+!$ROUND_0 ?= $ROUND_SHARP
+!$ROUND_1 ?= 6
+!$ROUND_2 ?= $ROUND_DIAGONAL
+!$ROUND_3 ?= 18
+!$ROUND_4 ?= $ROUND_STANDARD
+!$ROUND_5 ?= 40
+
+!$ROUND_PILL ?= 100
+!$ROUND_CIRCLE ?= 200
+
 
 ' --- End Import: src/libs/stdlib/vars/_corner.puml ---
 
@@ -619,9 +630,10 @@
 !$WIDTH_XS ?= 75
 !$WIDTH_SM ?= 150
 !$WIDTH_MD ?= 250
-!$WIDTH_LG ?= 350
-!$WIDTH_XL ?= 500
-!$WIDTH_XXL ?= 700
+!$WIDTH_LG ?= 400
+!$WIDTH_XL ?= 600
+!$WIDTH_XXL ?= 800
+
 
 ' --- End Import: src/libs/stdlib/vars/_width.puml ---
 
@@ -779,6 +791,7 @@
     !$COLOR_BUSINESS ?= "#FFFF99"
     !$COLOR_APPLICATION ?= "#99FFFF"
     !$COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !$COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
     !$COLOR_IMPLEMENTATION ?= "#FFE0E0"
     !$COLOR_HIGHLIGHTED ?= "#005DEF"
     !$COLOR_NEW ?= "#005700"
@@ -2789,6 +2802,10 @@
     !$COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
     !$COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
 
+    !$COLOR_PHYSICAL_LIGHT ?= $lighten_color($COLOR_PHYSICAL)
+    !$COLOR_PHYSICAL_DARK ?= $darken_color($COLOR_PHYSICAL)
+    
+
     !$COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
     !$COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
 
@@ -3270,18 +3287,120 @@ component {
 ' --- End Import: src/libs/stdlib/styles/index.puml ---
 
 ' --- Importing: src/libs/archimate/styles/index.puml ---
-!procedure Preload_Lib_Styles_Archimate()
-!if ($ARCHIMATE_LIB_ENABLED)
+' --- Importing: src/libs/archimate/styles/_fonts.puml ---
+!procedure Preload_Lib_Styles_Archimate_Fonts()
 
-!endif
+    '=====================================================
+    ' Typography
+    '=====================================================
+
+    !$ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
+
+    !$ARCH_DEFAULT_FONT = $NAME_FONT
+    !$ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
+
+    !$ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
+    !$ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
+
+!endprocedure
+' --- End Import: src/libs/archimate/styles/_fonts.puml ---
+
+' --- Importing: src/libs/archimate/styles/_colors.puml ---
+
+
+!procedure Preload_Lib_Styles_Archimate_Colors()
+    '=====================================================
+    ' Layer Colors
+    '=====================================================
+
+    !$ARCH_STRATEGY_FILLCOLOR = $COLOR_STRATEGY
+    !$ARCH_BUSINESS_FILLCOLOR = $COLOR_BUSINESS
+    !$ARCH_APPLICATION_FILLCOLOR = $COLOR_APPLICATION
+    !$ARCH_TECHNOLOGY_FILLCOLOR = $COLOR_TECHNOLOGY
+
+    ' ArchiMate physical layer
+    !$ARCH_PHYSICAL_FILLCOLOR = $COLOR_PHYSICAL
+
+    !$ARCH_MOTIVATION_FILLCOLOR = $COLOR_MOTIVATION
+    !$ARCH_IMPLEMENTATION_FILLCOLOR = $COLOR_IMPLEMENTATION
+
+    ' Other layer
+    !$ARCH_OTHER_FILLCOLOR = $COLOR_EMPHASIS_LIGHT
+
+    '=====================================================
+    ' Junction Colors
+    '=====================================================
+
+    !$ARCH_JUNCTIONOR_FILLCOLOR = $COLOR_BODY
+    !$ARCH_JUNCTIONAND_FILLCOLOR = $COLOR_TEXT
+
+    '=====================================================
+    ' Containers
+    '=====================================================
+
+    !$ARCH_GROUP_FILLCOLOR = $COLOR_DISABLED_LIGHT
+
+    !$ARCH_FOLDER_LINECOLOR = $COLOR_BORDER
+
+    '=====================================================
+    ' Relationships
+    '=====================================================
+
+    !$ARCH_RELATIONSHIP_LINECOLOR = $COLOR_LINE
+    !$ARCH_RELATIONSHIP_FONTCOLOR = $COLOR_TEXT
+
+!endprocedure
+' --- End Import: src/libs/archimate/styles/_colors.puml ---
+
+' --- Importing: src/libs/archimate/styles/_corner.puml ---
+
+!procedure Preload_Lib_Styles_Archimate_Corners()
+
+    '=====================================================
+    ' Corner Radius
+    '=====================================================
+    !$ARCH_SHARP_CORNER = $ROUND_SHARP
+    !$ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
+    !$ARCH_ROUND_CORNER = $ROUND_STANDARD
+    !$ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
+
+
+!endprocedure
+' --- End Import: src/libs/archimate/styles/_corner.puml ---
+
+' --- Importing: src/libs/archimate/styles/_width.puml ---
+
+!procedure Preload_Lib_Styles_Archimate_Widths()
+
+    '=====================================================
+    ' Widths
+    '=====================================================
+
+    !$ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !$ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+
+!endprocedure
+' --- End Import: src/libs/archimate/styles/_width.puml ---
+
+
+
+!procedure Preload_Lib_Styles_Archimate()
+
+    !if ($ARCHIMATE_LIB_ENABLED)
+        Preload_Lib_Styles_Archimate_Colors()
+        Preload_Lib_Styles_Archimate_Fonts()
+        Preload_Lib_Styles_Archimate_Corners()
+        Preload_Lib_Styles_Archimate_Widths()
+
+    !endif
 
 !endprocedure 
 
 
 !procedure Load_Lib_Styles_Archimate()
-!if ($ARCHIMATE_LIB_ENABLED)
+    !if ($ARCHIMATE_LIB_ENABLED)
 
-!endif
+    !endif
 
 !endprocedure 
 ' --- End Import: src/libs/archimate/styles/index.puml ---

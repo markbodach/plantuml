@@ -1,14 +1,25 @@
-!procedure Preload_Lib_Styles_Archimate()
-!if ($ARCHIMATE_LIB_ENABLED)
+!include _fonts.puml
+!include _colors.puml
+!include _corner.puml
+!include _width.puml
 
-!endif
+
+!procedure Preload_Lib_Styles_Archimate()
+
+    !if ($ARCHIMATE_LIB_ENABLED)
+        Preload_Lib_Styles_Archimate_Colors()
+        Preload_Lib_Styles_Archimate_Fonts()
+        Preload_Lib_Styles_Archimate_Corners()
+        Preload_Lib_Styles_Archimate_Widths()
+
+    !endif
 
 !endprocedure 
 
 
 !procedure Load_Lib_Styles_Archimate()
-!if ($ARCHIMATE_LIB_ENABLED)
+    !if ($ARCHIMATE_LIB_ENABLED)
 
-!endif
+    !endif
 
 !endprocedure 

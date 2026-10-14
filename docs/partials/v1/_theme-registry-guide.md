@@ -27,7 +27,7 @@ BEFORE
     ↓
 StdLib
     ↓
-ARCH
+Archimate / Libraries
     ↓
 Registered Themes
     ↓

@@ -53,4 +53,8 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
+        └── _fonts.puml
+        └── _colors.puml
+        └── _corner.puml
+        └── _width.puml
 ```

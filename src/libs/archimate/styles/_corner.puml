@@ -1,0 +1,13 @@
+
+!procedure Preload_Lib_Styles_Archimate_Corners()
+
+    '=====================================================
+    ' Corner Radius
+    '=====================================================
+    !$ARCH_SHARP_CORNER = $ROUND_SHARP
+    !$ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
+    !$ARCH_ROUND_CORNER = $ROUND_STANDARD
+    !$ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
+
+
+!endprocedure
