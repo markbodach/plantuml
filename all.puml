@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-14 16:24:34 EDT
-' Build Commit Hash: f1bed4c9b7134a142c0bf35a4f98c2b57eff7a08
-' Build Commit Comment: archimate refactoring
+' Generated on: 2026-10-15 16:23:10 EDT
+' Build Commit Hash: 8fa88a05448af09644bdec75db75b1dad0f58f4a
+' Build Commit Comment: archimate library refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -3313,19 +3313,19 @@ component {
     ' Layer Colors
     '=====================================================
 
-    !$ARCH_STRATEGY_FILLCOLOR = $COLOR_STRATEGY
-    !$ARCH_BUSINESS_FILLCOLOR = $COLOR_BUSINESS
-    !$ARCH_APPLICATION_FILLCOLOR = $COLOR_APPLICATION
-    !$ARCH_TECHNOLOGY_FILLCOLOR = $COLOR_TECHNOLOGY
+    !$ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !$ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
+    !$ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
+    !$ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !$ARCH_PHYSICAL_FILLCOLOR = $COLOR_PHYSICAL
+    !$ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
 
-    !$ARCH_MOTIVATION_FILLCOLOR = $COLOR_MOTIVATION
-    !$ARCH_IMPLEMENTATION_FILLCOLOR = $COLOR_IMPLEMENTATION
+    !$ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+    !$ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
-    !$ARCH_OTHER_FILLCOLOR = $COLOR_EMPHASIS_LIGHT
+    !$ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
     '=====================================================
     ' Junction Colors

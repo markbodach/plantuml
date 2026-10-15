@@ -5,19 +5,19 @@
     ' Layer Colors
     '=====================================================
 
-    !$ARCH_STRATEGY_FILLCOLOR = $COLOR_STRATEGY
-    !$ARCH_BUSINESS_FILLCOLOR = $COLOR_BUSINESS
-    !$ARCH_APPLICATION_FILLCOLOR = $COLOR_APPLICATION
-    !$ARCH_TECHNOLOGY_FILLCOLOR = $COLOR_TECHNOLOGY
+    !$ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !$ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
+    !$ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
+    !$ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !$ARCH_PHYSICAL_FILLCOLOR = $COLOR_PHYSICAL
+    !$ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
 
-    !$ARCH_MOTIVATION_FILLCOLOR = $COLOR_MOTIVATION
-    !$ARCH_IMPLEMENTATION_FILLCOLOR = $COLOR_IMPLEMENTATION
+    !$ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+    !$ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
-    !$ARCH_OTHER_FILLCOLOR = $COLOR_EMPHASIS_LIGHT
+    !$ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
     '=====================================================
     ' Junction Colors
