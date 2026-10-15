@@ -68,6 +68,12 @@
     
     <style>
 
+    motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationFg
+    }
+
     .motivation {
         BackgroundColor $motivationBg
         FontColor $motivationFg
@@ -79,8 +85,18 @@
         FontColor $strategyFg
         LineColor $strategyFg
     }
+    strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyFg
+    }
 
     .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessFg
+    }
+    business {
         BackgroundColor $businessBg
         FontColor $businessFg
         LineColor $businessFg
@@ -91,8 +107,18 @@
         FontColor $applicationFg
         LineColor $applicationFg
     }
+    application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationFg
+    }
 
     .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyFg
+    }
+    technology {
         BackgroundColor $technologyBg
         FontColor $technologyFg
         LineColor $technologyFg
@@ -103,14 +129,29 @@
         FontColor $physicalFg
         LineColor $physicalFg
     }
+    physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalFg
+    }
 
     .implementation {
         BackgroundColor $implementationBg
         FontColor $implementationFg
         LineColor $implementationFg
     }
+    implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationFg
+    }
 
     .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherFg
+    }
+    other {
         BackgroundColor $otherBg
         FontColor $otherFg
         LineColor $otherFg
