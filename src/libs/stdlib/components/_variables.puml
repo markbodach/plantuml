@@ -87,6 +87,10 @@
 '
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
+    !if ($is_literal_color($name)) 
+        !assert 0 == 1 : "MB_UML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
+    !endif
+
     !$variable_name = $to_var_name($name)
     !$value = ""
 

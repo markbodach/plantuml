@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 11:47:50 EDT
-' Build Commit Hash: 90fd285f705d956b39eeca7f1ec997bd32d51560
-' Build Commit Comment: trace_error added
+' Generated on: 2026-10-16 11:53:10 EDT
+' Build Commit Hash: fb42404d5be0baf92e63a0c7f6960bba577d0a6f
+' Build Commit Comment: guard added to get_variable_text_color
 ' ========================================================
 
 ' src/all.puml
@@ -986,6 +986,10 @@
 '   $COLOR_PRIMARY
 '
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
+
+    !if ($is_literal_color($name)) 
+        !assert 0 == 1 : "MB_UML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
+    !endif
 
     !$variable_name = $to_var_name($name)
     !$value = ""
