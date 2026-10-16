@@ -49,7 +49,7 @@
   ' Validation
   '
   !if ($tokenOrColor == "") && ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] (resolve_style_color) requires a tokenOrColor or context color"
+      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
   !endif
 
   '
@@ -64,7 +64,7 @@
   !elseif ($token == "AUTO")
    
     !if ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
+      !assert 0 == 1 : "MB_UML :: AUTO requires a context color (f:resolve_style_color)"
     !endif
     !return $get_auto_text_color($contextColor)
 
@@ -74,10 +74,10 @@
   !elseif ($token == "CURRENT")
 
       !if ($contextAsToken == "")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT"
+          !assert 0 == 1 : "MB_UML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
       !endif
       !if ($contextAsToken == "CURRENT")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) recursively calls CURRENT"
+          !assert 0 == 1 : "MB_UML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
       !endif
 
       !return $resolve_style_color($contextColor)
@@ -88,7 +88,7 @@
   !elseif (%strpos($token, "DARKEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $darken_color( $contextColor, $tokenOrColor )
@@ -99,7 +99,7 @@
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $lighten_color($contextColor, $tokenOrColor )

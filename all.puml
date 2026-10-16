@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 11:03:30 EDT
-' Build Commit Hash: b61c62fa25750025532015ddf12413a09575a458
-' Build Commit Comment: archimate default
+' Generated on: 2026-10-16 11:27:00 EDT
+' Build Commit Hash: b818716d8a888d6225ddd521055b1e0c6a5b3604
+' Build Commit Comment: archimate colors
 ' ========================================================
 
 ' src/all.puml
@@ -142,7 +142,7 @@
 !procedure Register_Theme($theme)
 
     !if ($theme == "")
-        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank"
+        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank (f:Register_Theme)"
     !endif
 
     !if ($theme_registered($theme) == %false())
@@ -916,7 +916,7 @@
     !$clean = %substr($name, 1)
 
     !if ($has_dollar($clean) == %true())
-        !assert 0 == 1 : "MB_UML :: Variable name has multiple leading dollar signs=[" + $name + "]"
+        !assert 0 == 1 : "MB_UML :: Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)"
     !endif
 
     !return $clean
@@ -963,9 +963,9 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[" + $variable_name + "]"
+                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[" + $variable_name + "] (f:variable_exists_safe)"
             !else
-                !assert 0 == 1 : "MB_UML :: Invalid variable name=[" + $variable_name + "]"
+                !assert 0 == 1 : "MB_UML :: Invalid variable name=[" + $variable_name + "] (f:variable_exists_safe)"
             !endif
         !endif
 
@@ -993,7 +993,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error) == %false())
 
         !if ($raise_error == %true())
-            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + "]"
+            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (f:resolve_variable)"
         !endif
 
         !return ""
@@ -1757,7 +1757,7 @@
 !function $get_color($value)
 
   !if ($value == "") 
-    !assert 0 == 1 : "MB_UML :: get_color() received blank value" 
+    !assert 0 == 1 : "MB_UML :: get_color() received blank value (f:get_color)" 
   !endif
 
   !if ($is_literal_color($value))
@@ -1779,7 +1779,7 @@
 !function $get_semantic_color($semantic_suffix)
 
   !if ($semantic_suffix == "") 
-    !assert 0 == 1 : "MB_UML :: get_semantic_color() received blank semantic suffix" 
+    !assert 0 == 1 : "MB_UML :: Function received blank semantic suffix (f:get_semantic_color)" 
   !endif
 
   !if ($is_literal_color($semantic_suffix))
@@ -1793,7 +1793,7 @@
   !$candidate = $semantic_color_variable($semantic_suffix)
 
   !if ($candidate == "COLOR_")
-      !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "]"
+      !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"
   !endif
 
   !return $get_color($candidate)
@@ -1970,14 +1970,14 @@
     ' Validate the darkness floor.
     '
     !if ($darkness_floor < 0) || ($darkness_floor > 255)
-        !assert 0 == 1 : "MB_UML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "]"
+        !assert 0 == 1 : "MB_UML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)"
     !endif
 
     '
     ' Validate the minimum correction.
     '
     !if ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100)
-        !assert 0 == 1 : "MB_UML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "]"
+        !assert 0 == 1 : "MB_UML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)"
     !endif
 
     '
@@ -2168,7 +2168,7 @@
 !function $darken_color($token, $darken_token = "DARKEN")
 
   !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "]"
+    !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
   !endif
 
   '
@@ -2306,14 +2306,14 @@
     ' Validate the lightness ceiling.
     '
     !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
-        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "]"
+        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
     ' Validate the minimum correction.
     '
     !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
-        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "]"
+        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
@@ -2528,7 +2528,7 @@
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
   !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
+    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
   !endif
 
   '
@@ -2648,7 +2648,7 @@
   ' Validation
   '
   !if ($tokenOrColor == "") && ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] (resolve_style_color) requires a tokenOrColor or context color"
+      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
   !endif
 
   '
@@ -2663,7 +2663,7 @@
   !elseif ($token == "AUTO")
    
     !if ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
+      !assert 0 == 1 : "MB_UML :: AUTO requires a context color (f:resolve_style_color)"
     !endif
     !return $get_auto_text_color($contextColor)
 
@@ -2673,10 +2673,10 @@
   !elseif ($token == "CURRENT")
 
       !if ($contextAsToken == "")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT"
+          !assert 0 == 1 : "MB_UML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
       !endif
       !if ($contextAsToken == "CURRENT")
-          !assert 0 == 1 : "MB_UML :: CURRENT (resolve_style_color) recursively calls CURRENT"
+          !assert 0 == 1 : "MB_UML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
       !endif
 
       !return $resolve_style_color($contextColor)
@@ -2687,7 +2687,7 @@
   !elseif (%strpos($token, "DARKEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $darken_color( $contextColor, $tokenOrColor )
@@ -2698,7 +2698,7 @@
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " (resolve_style_color) requires a context color"
+          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $lighten_color($contextColor, $tokenOrColor )

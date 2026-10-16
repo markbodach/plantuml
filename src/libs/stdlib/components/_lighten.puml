@@ -72,14 +72,14 @@
     ' Validate the lightness ceiling.
     '
     !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
-        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "]"
+        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
     ' Validate the minimum correction.
     '
     !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
-        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "]"
+        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
@@ -294,7 +294,7 @@
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
   !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "]"
+    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
   !endif
 
   '
