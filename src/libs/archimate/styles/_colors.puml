@@ -2,52 +2,45 @@
 
 !procedure Preload_Lib_Styles_Archimate_Colors()
 
-    !if ($ARCHIMATE_LIB_VARS_INITIALIZED == %false() )
-        !assert 0 == 1 : "MB_PUML :: ARCHIMATE_LIB_ENABLED was enabled after mb_puml was included (p: Preload_Lib_Styles_Archimate_Colors)"
-    !endif
-
     '=====================================================
     ' Layer Colors
     '=====================================================
 
-    !$ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
-    !$ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
-    !$ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
-    !$ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
+    !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !$ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
 
-    !$ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+    !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
 
-    '!assert 0 == 1 : "COLOR_MOTIVATION=[" + $COLOR_MOTIVATION + "] ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]"
-
-
-    !$ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
-    !$ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
     '=====================================================
     ' Junction Colors
     '=====================================================
 
-    !$ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
-    !$ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !$ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !$ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
+    !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !$ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
-    !$ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure

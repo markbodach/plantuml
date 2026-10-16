@@ -5,7 +5,7 @@
     ' Widths
     '=====================================================
 
-    !$ARCH_MINIMUM_WIDTH = $WIDTH_SM
-    !$ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+    !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
 
 !endprocedure

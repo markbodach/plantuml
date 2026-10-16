@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-16 16:16:25 EDT**
-* Build Commit Hash: **4e56e1282f34bcf8cfc4a353cdea722d8b249a31**
-* Build Commit Comment: **hardening resolve_color**
+* Generated on: **2026-10-16 16:23:51 EDT**
+* Build Commit Hash: **16b685776c24f30bff08f31c4698d5164ca061c3**
+* Build Commit Comment: **color resolver fixes**
 
 ## Usage
 

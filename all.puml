@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 16:16:25 EDT
-' Build Commit Hash: 4e56e1282f34bcf8cfc4a353cdea722d8b249a31
-' Build Commit Comment: hardening resolve_color
+' Generated on: 2026-10-16 16:23:51 EDT
+' Build Commit Hash: 16b685776c24f30bff08f31c4698d5164ca061c3
+' Build Commit Comment: color resolver fixes
 ' ========================================================
 
 ' src/all.puml
@@ -780,13 +780,7 @@
 
 !$ARCHIMATE_LIB_ENABLED ?= %false()
 
-!$ARCHIMATE_LIB_VARS_INITIALIZED = %false()
-
 !$ARCHIMATE_DEFAULT_LAYER ?= ""
-
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-    !$ARCHIMATE_LIB_VARS_INITIALIZED = %true()
-!endif
 ' --- End Import: src/libs/archimate/vars/_root.puml ---
 
 ' --- Importing: src/libs/archimate/vars/_colors.puml ---
@@ -3352,13 +3346,13 @@ component {
     ' Typography
     '=====================================================
 
-    !$ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
+    !global $ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
 
-    !$ARCH_DEFAULT_FONT = $NAME_FONT
-    !$ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
+    !global $ARCH_DEFAULT_FONT = $NAME_FONT
+    !global $ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
 
-    !$ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
-    !$ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
+    !global $ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
+    !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
 
 !endprocedure
 ' --- End Import: src/libs/archimate/styles/_fonts.puml ---
@@ -3368,53 +3362,46 @@ component {
 
 !procedure Preload_Lib_Styles_Archimate_Colors()
 
-    !if ($ARCHIMATE_LIB_VARS_INITIALIZED == %false() )
-        !assert 0 == 1 : "MB_PUML :: ARCHIMATE_LIB_ENABLED was enabled after mb_puml was included (p: Preload_Lib_Styles_Archimate_Colors)"
-    !endif
-
     '=====================================================
     ' Layer Colors
     '=====================================================
 
-    !$ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
-    !$ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
-    !$ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
-    !$ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
+    !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !$ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
 
-    !$ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+    !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
 
-    '!assert 0 == 1 : "COLOR_MOTIVATION=[" + $COLOR_MOTIVATION + "] ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]"
-
-
-    !$ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
-    !$ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
     '=====================================================
     ' Junction Colors
     '=====================================================
 
-    !$ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
-    !$ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !$ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !$ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
+    !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !$ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
-    !$ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
 ' --- End Import: src/libs/archimate/styles/_colors.puml ---
@@ -3426,10 +3413,10 @@ component {
     '=====================================================
     ' Corner Radius
     '=====================================================
-    !$ARCH_SHARP_CORNER = $ROUND_SHARP
-    !$ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
-    !$ARCH_ROUND_CORNER = $ROUND_STANDARD
-    !$ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
+    !global $ARCH_SHARP_CORNER = $ROUND_SHARP
+    !global $ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
+    !global $ARCH_ROUND_CORNER = $ROUND_STANDARD
+    !global $ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
 
 
 !endprocedure
@@ -3443,8 +3430,8 @@ component {
     ' Widths
     '=====================================================
 
-    !$ARCH_MINIMUM_WIDTH = $WIDTH_SM
-    !$ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+    !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
 
 !endprocedure
 ' --- End Import: src/libs/archimate/styles/_width.puml ---
