@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 11:27:00 EDT
-' Build Commit Hash: b818716d8a888d6225ddd521055b1e0c6a5b3604
-' Build Commit Comment: archimate colors
+' Generated on: 2026-10-16 11:41:25 EDT
+' Build Commit Hash: 8827dfa073b09d92c034b6bf17b37ab3f2168b99
+' Build Commit Comment: asserts now indicate function name
 ' ========================================================
 
 ' src/all.puml
@@ -985,7 +985,7 @@
 '   COLOR_PRIMARY
 '   $COLOR_PRIMARY
 '
-!function $resolve_variable($name, $raise_error = %true())
+!function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
     !$variable_name = $to_var_name($name)
     !$value = ""
@@ -993,7 +993,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error) == %false())
 
         !if ($raise_error == %true())
-            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (f:resolve_variable)"
+            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
         !endif
 
         !return ""
@@ -1848,8 +1848,8 @@
 !function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
   !if ($is_literal_color($background))
-    !$dark = $resolve_variable($dark_text_var_name)
-    !$light = $resolve_variable($light_text_var_name)
+    !$dark = $resolve_variable($dark_text_var_name, %true(), "f:get_auto_text_color -> ")
+    !$light = $resolve_variable($light_text_var_name, %true(), "f:get_auto_text_color -> ")
 
     !return $get_contrast_text_color($background, $dark, $light)
 
@@ -1876,9 +1876,9 @@
 
 !function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
 
-    !$bg_val    = $resolve_variable($bg_var_name)
-    !$dark_val  = $resolve_variable($dark_text_var_name)
-    !$light_val = $resolve_variable($light_text_var_name)
+    !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
+    !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
+    !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
 
     !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 

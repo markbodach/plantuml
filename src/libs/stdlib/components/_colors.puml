@@ -137,8 +137,8 @@
 !function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
   !if ($is_literal_color($background))
-    !$dark = $resolve_variable($dark_text_var_name)
-    !$light = $resolve_variable($light_text_var_name)
+    !$dark = $resolve_variable($dark_text_var_name, %true(), "f:get_auto_text_color -> ")
+    !$light = $resolve_variable($light_text_var_name, %true(), "f:get_auto_text_color -> ")
 
     !return $get_contrast_text_color($background, $dark, $light)
 
@@ -165,9 +165,9 @@
 
 !function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
 
-    !$bg_val    = $resolve_variable($bg_var_name)
-    !$dark_val  = $resolve_variable($dark_text_var_name)
-    !$light_val = $resolve_variable($light_text_var_name)
+    !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
+    !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
+    !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
 
     !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 
