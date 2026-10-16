@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-16 15:12:30 EDT**
-* Build Commit Hash: **0fc91ac6ed1bb5027d9d0f4554898784b0276463**
-* Build Commit Comment: **COLOR_ normalization**
+* Generated on: **2026-10-16 15:37:19 EDT**
+* Build Commit Hash: **459956dfc7596e3524d5553d60654696fc0fc428**
+* Build Commit Comment: **semantic_color_variable fixes**
 
 ## Usage
 

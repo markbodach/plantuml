@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 15:12:30 EDT
-' Build Commit Hash: 0fc91ac6ed1bb5027d9d0f4554898784b0276463
-' Build Commit Comment: COLOR_ normalization
+' Generated on: 2026-10-16 15:37:19 EDT
+' Build Commit Hash: 459956dfc7596e3524d5553d60654696fc0fc428
+' Build Commit Comment: semantic_color_variable fixes
 ' ========================================================
 
 ' src/all.puml
@@ -3370,6 +3370,10 @@ component {
     !$ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
 
     !$ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+
+    !assert 0 == 1 : "COLOR_MOTIVATION=[" + $COLOR_MOTIVATION + "] ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]"
+
+
     !$ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
