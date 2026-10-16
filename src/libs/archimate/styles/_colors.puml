@@ -23,22 +23,22 @@
     ' Junction Colors
     '=====================================================
 
-    !$ARCH_JUNCTIONOR_FILLCOLOR = $COLOR_BODY
-    !$ARCH_JUNCTIONAND_FILLCOLOR = $COLOR_TEXT
+    !$ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !$ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !$ARCH_GROUP_FILLCOLOR = $COLOR_DISABLED_LIGHT
+    !$ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !$ARCH_FOLDER_LINECOLOR = $COLOR_BORDER
+    !$ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !$ARCH_RELATIONSHIP_LINECOLOR = $COLOR_LINE
-    !$ARCH_RELATIONSHIP_FONTCOLOR = $COLOR_TEXT
+    !$ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !$ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure

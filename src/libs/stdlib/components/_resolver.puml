@@ -53,10 +53,16 @@
   !endif
 
   '
+  ' Literal color
+  '
+  !if ($is_literal_color($tokenOrColor))
+    !return %upper($tokenOrColor)
+  
+  '
   ' AUTO
   '
-  !if ($token == "AUTO")
-
+  !elseif ($token == "AUTO")
+   
     !if ($contextColor == "")
       !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
     !endif
@@ -98,14 +104,6 @@
 
       !return $lighten_color($contextColor, $tokenOrColor )
 
-  '
-  ' Literal color
-  '
-  !elseif ($is_literal_color($tokenOrColor))
-      !return %upper($tokenOrColor)
-  '
-  ' Semantic text token
-  '
   !elseif ($ends_with_text($tokenOrColor) == %true())
       !$base = %substr($tokenOrColor, 0,%strlen($tokenOrColor) - 5 )
       !return $get_semantic_text_color($base)

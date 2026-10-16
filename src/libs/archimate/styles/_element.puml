@@ -166,6 +166,11 @@
         FontColor $defaultFg
         LineColor $defaultFg
     }
+    rectangle {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultFg
+    }
 </style>
 
 !endif

@@ -10,6 +10,7 @@ Use these variables before loading the repository.
 !$ALIGNMENT_HORIZONTAL_COMPONENT = "left"
 !$ALIGNMENT_HORIZONTAL_ELEMENT = "left"
 !$ALIGNMENT_HORIZONTAL_TITLE = "center"
+!$ARCHIMATE_DEFAULT_LAYER = ""
 !$ARCHIMATE_LIB_ENABLED = %false()
 !$BORDER_0 = 0
 !$BORDER_1 = 1

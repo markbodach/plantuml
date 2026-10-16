@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-16 10:35:34 EDT**
-* Build Commit Hash: **89bf3c16c7354aaa5ebc4f112e0c454f4978568e**
-* Build Commit Comment: **stereotype refactoring**
+* Generated on: **2026-10-16 11:03:30 EDT**
+* Build Commit Hash: **b61c62fa25750025532015ddf12413a09575a458**
+* Build Commit Comment: **archimate default**
 
 ## Usage
 
@@ -268,6 +268,7 @@ Use these variables before loading the repository.
 !$ALIGNMENT_HORIZONTAL_COMPONENT = "left"
 !$ALIGNMENT_HORIZONTAL_ELEMENT = "left"
 !$ALIGNMENT_HORIZONTAL_TITLE = "center"
+!$ARCHIMATE_DEFAULT_LAYER = ""
 !$ARCHIMATE_LIB_ENABLED = %false()
 !$BORDER_0 = 0
 !$BORDER_1 = 1

@@ -1,2 +1,4 @@
 
 !$ARCHIMATE_LIB_ENABLED ?= %false()
+
+!$ARCHIMATE_DEFAULT_LAYER ?= ""

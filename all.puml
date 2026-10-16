@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 10:35:34 EDT
-' Build Commit Hash: 89bf3c16c7354aaa5ebc4f112e0c454f4978568e
-' Build Commit Comment: stereotype refactoring
+' Generated on: 2026-10-16 11:03:30 EDT
+' Build Commit Hash: b61c62fa25750025532015ddf12413a09575a458
+' Build Commit Comment: archimate default
 ' ========================================================
 
 ' src/all.puml
@@ -779,6 +779,8 @@
 ' --- Importing: src/libs/archimate/vars/_root.puml ---
 
 !$ARCHIMATE_LIB_ENABLED ?= %false()
+
+!$ARCHIMATE_DEFAULT_LAYER ?= ""
 ' --- End Import: src/libs/archimate/vars/_root.puml ---
 
 ' --- Importing: src/libs/archimate/vars/_colors.puml ---
@@ -2650,10 +2652,16 @@
   !endif
 
   '
+  ' Literal color
+  '
+  !if ($is_literal_color($tokenOrColor))
+    !return %upper($tokenOrColor)
+  
+  '
   ' AUTO
   '
-  !if ($token == "AUTO")
-
+  !elseif ($token == "AUTO")
+   
     !if ($contextColor == "")
       !assert 0 == 1 : "MB_UML :: AUTO (resolve_style_color) requires a context color"
     !endif
@@ -2695,14 +2703,6 @@
 
       !return $lighten_color($contextColor, $tokenOrColor )
 
-  '
-  ' Literal color
-  '
-  !elseif ($is_literal_color($tokenOrColor))
-      !return %upper($tokenOrColor)
-  '
-  ' Semantic text token
-  '
   !elseif ($ends_with_text($tokenOrColor) == %true())
       !$base = %substr($tokenOrColor, 0,%strlen($tokenOrColor) - 5 )
       !return $get_semantic_text_color($base)
@@ -3331,23 +3331,23 @@ component {
     ' Junction Colors
     '=====================================================
 
-    !$ARCH_JUNCTIONOR_FILLCOLOR = $COLOR_BODY
-    !$ARCH_JUNCTIONAND_FILLCOLOR = $COLOR_TEXT
+    !$ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !$ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !$ARCH_GROUP_FILLCOLOR = $COLOR_DISABLED_LIGHT
+    !$ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !$ARCH_FOLDER_LINECOLOR = $COLOR_BORDER
+    !$ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !$ARCH_RELATIONSHIP_LINECOLOR = $COLOR_LINE
-    !$ARCH_RELATIONSHIP_FONTCOLOR = $COLOR_TEXT
+    !$ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !$ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
 ' --- End Import: src/libs/archimate/styles/_colors.puml ---
@@ -3547,6 +3547,11 @@ component {
 !if ($defaultBg != "") && ($defaultFg != "")
 <style>
     element {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultFg
+    }
+    rectangle {
         BackgroundColor $defaultBg
         FontColor $defaultFg
         LineColor $defaultFg
