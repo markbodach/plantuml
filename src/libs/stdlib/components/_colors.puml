@@ -165,11 +165,17 @@
 
 !function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
 
-    !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
-    !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
-    !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
+  !if ($is_literal_color($background)) 
+    !$bg_val = %upper($background) 
+  !else 
+    !$bg_val = $resolve_variable($background) 
+  !endif
 
-    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+  !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
+  !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
+  !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
+
+  !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 
 !endfunction
 

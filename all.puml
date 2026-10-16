@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 11:41:25 EDT
-' Build Commit Hash: 8827dfa073b09d92c034b6bf17b37ab3f2168b99
-' Build Commit Comment: asserts now indicate function name
+' Generated on: 2026-10-16 11:47:50 EDT
+' Build Commit Hash: 90fd285f705d956b39eeca7f1ec997bd32d51560
+' Build Commit Comment: trace_error added
 ' ========================================================
 
 ' src/all.puml
@@ -1876,11 +1876,17 @@
 
 !function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
 
-    !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
-    !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
-    !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
+  !if ($is_literal_color($background)) 
+    !$bg_val = %upper($background) 
+  !else 
+    !$bg_val = $resolve_variable($background) 
+  !endif
 
-    !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+  !$bg_val    = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
+  !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
+  !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
+
+  !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
 
 !endfunction
 
