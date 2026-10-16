@@ -1,6 +1,11 @@
 
 
 !procedure Preload_Lib_Styles_Archimate_Colors()
+
+    !if ($ARCHIMATE_LIB_VARS_INITIALIZED == %false() )
+        !assert 0 == 1 : "MB_PUML :: ARCHIMATE_LIB_ENABLED was enabled after mb_puml was included (p: Preload_Lib_Styles_Archimate_Colors)"
+    !endif
+
     '=====================================================
     ' Layer Colors
     '=====================================================

@@ -1,4 +1,10 @@
 
 !$ARCHIMATE_LIB_ENABLED ?= %false()
 
+!$ARCHIMATE_LIB_VARS_INITIALIZED = %false()
+
 !$ARCHIMATE_DEFAULT_LAYER ?= ""
+
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
+    !$ARCHIMATE_LIB_VARS_INITIALIZED = %true()
+!endif

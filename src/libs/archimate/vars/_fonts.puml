@@ -1,6 +1,6 @@
 ' src/themes/archimate/_fonts.puml
 
 
-!if ($ARCHIMATE_LIB_ENABLED)
-
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
+    
 !endif

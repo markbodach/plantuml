@@ -22,7 +22,6 @@
     !if ($ARCHIMATE_LIB_ENABLED)
 
         Write_Lib_Style_Archimate_Element()
-        rectangle "Load_Lib_Styles_Archimate"
     !endif
 
 !endprocedure 

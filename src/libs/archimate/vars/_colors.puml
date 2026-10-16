@@ -2,6 +2,7 @@
 
 
 !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
     !$COLOR_MOTIVATION ?= "#CCCCFF"
     !$COLOR_STRATEGY ?= "#F5DEAA"
     !$COLOR_BUSINESS ?= "#FFFF99"

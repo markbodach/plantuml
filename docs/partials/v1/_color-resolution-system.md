@@ -359,7 +359,7 @@ Example:
 Produces:
 
 ```text
-MB_UML :: Invalid literal color=[#GGGGGG]
+MB_PUML :: Invalid literal color=[#GGGGGG]
 ```
 
 ---

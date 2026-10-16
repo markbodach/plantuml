@@ -9,7 +9,7 @@ The color-resolution system performs validation, normalization, semantic resolut
 ### Symptom
 
 ```text
-MB_UML :: Invalid literal color=[#GGGGGG]
+MB_PUML :: Invalid literal color=[#GGGGGG]
 ```
 
 ### Cause
@@ -50,7 +50,7 @@ Use a valid hexadecimal color:
 ### Symptom
 
 ```text
-MB_UML :: Invalid variable name or undefined variable=[$COLOR_PRIMARY_DARKEST]
+MB_PUML :: Invalid variable name or undefined variable=[$COLOR_PRIMARY_DARKEST]
 ```
 
 ### Cause
@@ -96,7 +96,7 @@ PRIMARY_LIGHT
 ### Symptom
 
 ```text
-MB_UML :: AUTO (resolve_style_color) requires a context color
+MB_PUML :: AUTO (resolve_style_color) requires a context color
 ```
 
 ### Cause
@@ -138,7 +138,7 @@ FontColor $resolve_style_color(
 ### Symptom
 
 ```text
-MB_UML :: CURRENT (resolve_style_color) requires a context color
+MB_PUML :: CURRENT (resolve_style_color) requires a context color
 ```
 
 ### Cause
@@ -163,7 +163,7 @@ LineColor CURRENT
 ### Symptom
 
 ```text
-MB_UML :: DARKEN (resolve_style_color) requires a context color
+MB_PUML :: DARKEN (resolve_style_color) requires a context color
 ```
 
 ### Cause
@@ -194,7 +194,7 @@ BorderColor DARKEN
 ### Symptom
 
 ```text
-MB_UML :: LIGHTEN (resolve_style_color) requires a context color
+MB_PUML :: LIGHTEN (resolve_style_color) requires a context color
 ```
 
 ### Cause
@@ -219,13 +219,13 @@ HeaderColor LIGHTEN
 ### Symptom
 
 ```text
-MB_UML :: Invalid hex byte=[ABCD]
+MB_PUML :: Invalid hex byte=[ABCD]
 ```
 
 or
 
 ```text
-MB_UML :: Invalid hex digit=[G]
+MB_PUML :: Invalid hex digit=[G]
 ```
 
 ### Cause
@@ -261,7 +261,7 @@ not:
 ### Symptom
 
 ```text
-MB_UML :: Expected literal color=[PRIMARY_DARK]
+MB_PUML :: Expected literal color=[PRIMARY_DARK]
 ```
 
 ### Cause
@@ -291,13 +291,13 @@ before invoking RGB-dependent functionality.
 ### Symptom
 
 ```text
-MB_UML :: Invalid DARKNESS_THRESHOLD=[300]
+MB_PUML :: Invalid DARKNESS_THRESHOLD=[300]
 ```
 
 or
 
 ```text
-MB_UML :: Invalid LIGHTNESS_THRESHOLD=[-1]
+MB_PUML :: Invalid LIGHTNESS_THRESHOLD=[-1]
 ```
 
 ### Cause

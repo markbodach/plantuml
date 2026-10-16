@@ -122,7 +122,7 @@
 !procedure Register_Theme($theme)
 
     !if ($theme == "")
-        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank (f:Register_Theme)"
+        !assert 0 == 1 : "MB_PUML :: Registering Theme name cannot be blank (f:Register_Theme)"
     !endif
 
     !if ($theme_registered($theme) == %false())

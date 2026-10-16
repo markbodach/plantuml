@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-16 14:24:47 EDT**
-* Build Commit Hash: **85e3dcbd8302b0625de71c738b8fee14d8ff6f6d**
-* Build Commit Comment: **more fixes**
+* Generated on: **2026-10-16 15:12:30 EDT**
+* Build Commit Hash: **0fc91ac6ed1bb5027d9d0f4554898784b0276463**
+* Build Commit Comment: **COLOR_ normalization**
 
 ## Usage
 
@@ -1371,7 +1371,7 @@ If no darker semantic token exists, the literal color is darkened and normalized
 Literal colors are validated before channel extraction. Invalid values fail with an assertion such as:
 
 ```text
-MB_UML :: Invalid literal color=[#GGGGGG]
+MB_PUML :: Invalid literal color=[#GGGGGG]
 ```
 
 Semantic variable names are normalized to uppercase `COLOR_` names. Undefined variables fail when strict resolution is requested.
@@ -1747,7 +1747,7 @@ end note
 #### Symptom
 
 ```text
-MB_UML :: Invalid literal color=[#GGGGGG]
+MB_PUML :: Invalid literal color=[#GGGGGG]
 ```
 
 #### Cause
@@ -1769,7 +1769,7 @@ Named colors and `rgb(...)` syntax are not accepted by RGB helper functions unle
 #### Symptom
 
 ```text
-MB_UML :: Invalid variable name or undefined variable=[$COLOR_PRIMARY_DARKEST]
+MB_PUML :: Invalid variable name or undefined variable=[$COLOR_PRIMARY_DARKEST]
 ```
 
 #### Cause
@@ -1791,7 +1791,7 @@ or use an existing token.
 #### Symptom
 
 ```text
-MB_UML :: AUTO (resolve_style_color) requires a context color
+MB_PUML :: AUTO (resolve_style_color) requires a context color
 ```
 
 #### Resolution
@@ -1807,7 +1807,7 @@ In generated styles, resolve the background first and pass it as context for fon
 #### Symptom
 
 ```text
-MB_UML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT
+MB_PUML :: CURRENT (resolve_style_color) requires a context color to determine CURRENT
 ```
 
 #### Resolution
@@ -1823,13 +1823,13 @@ Do not provide `CURRENT` as its own context.
 #### Symptom
 
 ```text
-MB_UML :: DARKEN (resolve_style_color) requires a context color
+MB_PUML :: DARKEN (resolve_style_color) requires a context color
 ```
 
 or:
 
 ```text
-MB_UML :: LIGHTEN (resolve_style_color) requires a context color
+MB_PUML :: LIGHTEN (resolve_style_color) requires a context color
 ```
 
 #### Resolution
@@ -1844,13 +1844,13 @@ $resolve_style_color("LIGHTEN", "PRIMARY_DARK")
 #### Symptom
 
 ```text
-MB_UML :: Invalid hex byte=[ABCD]
+MB_PUML :: Invalid hex byte=[ABCD]
 ```
 
 or:
 
 ```text
-MB_UML :: Invalid hex digit=[G]
+MB_PUML :: Invalid hex digit=[G]
 ```
 
 #### Cause

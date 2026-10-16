@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 14:24:47 EDT
-' Build Commit Hash: 85e3dcbd8302b0625de71c738b8fee14d8ff6f6d
-' Build Commit Comment: more fixes
+' Generated on: 2026-10-16 15:12:30 EDT
+' Build Commit Hash: 0fc91ac6ed1bb5027d9d0f4554898784b0276463
+' Build Commit Comment: COLOR_ normalization
 ' ========================================================
 
 ' src/all.puml
@@ -142,7 +142,7 @@
 !procedure Register_Theme($theme)
 
     !if ($theme == "")
-        !assert 0 == 1 : "MB_UML :: Registering Theme name cannot be blank (f:Register_Theme)"
+        !assert 0 == 1 : "MB_PUML :: Registering Theme name cannot be blank (f:Register_Theme)"
     !endif
 
     !if ($theme_registered($theme) == %false())
@@ -780,7 +780,13 @@
 
 !$ARCHIMATE_LIB_ENABLED ?= %false()
 
+!$ARCHIMATE_LIB_VARS_INITIALIZED = %false()
+
 !$ARCHIMATE_DEFAULT_LAYER ?= ""
+
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
+    !$ARCHIMATE_LIB_VARS_INITIALIZED = %true()
+!endif
 ' --- End Import: src/libs/archimate/vars/_root.puml ---
 
 ' --- Importing: src/libs/archimate/vars/_colors.puml ---
@@ -788,6 +794,7 @@
 
 
 !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
     !$COLOR_MOTIVATION ?= "#CCCCFF"
     !$COLOR_STRATEGY ?= "#F5DEAA"
     !$COLOR_BUSINESS ?= "#FFFF99"
@@ -805,8 +812,8 @@
 ' src/themes/archimate/_fonts.puml
 
 
-!if ($ARCHIMATE_LIB_ENABLED)
-
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
+    
 !endif
 ' --- End Import: src/libs/archimate/vars/_fonts.puml ---
 
@@ -916,7 +923,7 @@
     !$clean = %substr($name, 1)
 
     !if ($has_dollar($clean) == %true())
-        !assert 0 == 1 : "MB_UML :: Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)"
+        !assert 0 == 1 : "MB_PUML :: Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)"
     !endif
 
     !return $clean
@@ -963,9 +970,9 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
+                !assert 0 == 1 : "MB_PUML :: Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
             !else
-                !assert 0 == 1 : "MB_UML :: Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
+                !assert 0 == 1 : "MB_PUML :: Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
             !endif
         !endif
 
@@ -988,7 +995,7 @@
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
     !if ($is_literal_color($name)) 
-        !assert 0 == 1 : "MB_UML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
+        !assert 0 == 1 : "MB_PUML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
     !endif
 
     !$variable_name = $to_var_name($name)
@@ -997,7 +1004,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error, $trace_error + "f:resolve_variable -> ") == %false())
 
         !if ($raise_error == %true())
-            !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
+            !assert 0 == 1 : "MB_PUML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
         !endif
 
         !return ""
@@ -1456,7 +1463,7 @@
 !function $assert_literal_color($value)
 
   !if ($is_literal_color($value) == %false())
-    !assert 0==1 : "MB_UML :: Invalid literal color=[" + $value + "]"
+    !assert 0==1 : "MB_PUML :: Invalid literal color=[" + $value + "]"
   !endif
 
   !return $value
@@ -1553,7 +1560,7 @@
         !return 15
     !endif
 
-    !assert 0==1 : "MB_UML :: Invalid hex digit=[" + $c + "]"
+    !assert 0==1 : "MB_PUML :: Invalid hex digit=[" + $c + "]"
     !return -1
 !endfunction
 
@@ -1624,7 +1631,7 @@
 !function $hex_byte_to_int($hexByte)
 
   !if (%strlen($hexByte) != 2)
-      !assert 0==1 : "MB_UML :: Invalid hex byte=[" + $hexByte + "]"
+      !assert 0==1 : "MB_PUML :: Invalid hex byte=[" + $hexByte + "]"
   !endif
 
   !$hi = $hex_digit_value(%substr($hexByte,0,1))
@@ -1737,28 +1744,42 @@
 !endfunction
 
 
-!function $semantic_color_variable($name, $raise_error = %false(), $trace_error = "" )
+!function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
-  !if ($is_literal_color($name))
-    !return %upper($name)
-  !endif
-
-  !$candidate = "COLOR_" + $normalize_color_name($name)
-
-  !if ($raise_error == %true())
-
-    !if ($variable_exists_safe( $candidate, %false(), $trace_error + "f:semantic_color_variable -> " ) == %false())
-      !assert 0 == 1 : "MB_UML :: Semantic color variable not found=[" + $candidate + "] from input=[" + $name + "] (" + $trace_error + "f:semantic_color_variable)"
+    !if ($is_literal_color($name))
+        !return %upper($name)
     !endif
 
-  !endif
+    !$normalized = $normalize_color_name($name)
 
-  !return $candidate
+    '------------------------------------------
+    ' Exact variable exists
+    '------------------------------------------
+    !if ($variable_exists_safe($normalized))
+        !return $normalized
+    !endif
+
+    '------------------------------------------
+    ' Semantic COLOR_ variable
+    '------------------------------------------
+    !$candidate = "COLOR_" + $normalized
+
+    !if ($variable_exists_safe($candidate))
+        !return $candidate
+    !endif
+
+    '------------------------------------------
+    ' Error
+    '------------------------------------------
+    !if ($raise_error == %true() )
+
+      !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+
+    !endif
+
+    !return ""
 
 !endfunction
-
-
-
 
 
 
@@ -1774,7 +1795,7 @@
 !function $get_color($value)
 
   !if ($value == "") 
-    !assert 0 == 1 : "MB_UML :: get_color() received blank value (f:get_color)" 
+    !assert 0 == 1 : "MB_PUML :: get_color() received blank value (f:get_color)" 
   !endif
 
   !if ($is_literal_color($value))
@@ -1796,7 +1817,7 @@
 !function $get_semantic_color($semantic_suffix)
 
   !if ($semantic_suffix == "") 
-    !assert 0 == 1 : "MB_UML :: Function received blank semantic suffix (f:get_semantic_color)" 
+    !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
   !endif
 
   !if ($is_literal_color($semantic_suffix))
@@ -1810,7 +1831,7 @@
   !$candidate = $semantic_color_variable($semantic_suffix, %true(), "f:get_semantic_color")
 
   !if ($candidate == "COLOR_")
-      !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"
+      !assert 0 == 1 : "MB_PUML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"
   !endif
 
   !return $get_color($candidate)
@@ -1992,14 +2013,14 @@
     ' Validate the darkness floor.
     '
     !if ($darkness_floor < 0) || ($darkness_floor > 255)
-        !assert 0 == 1 : "MB_UML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)"
+        !assert 0 == 1 : "MB_PUML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)"
     !endif
 
     '
     ' Validate the minimum correction.
     '
     !if ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100)
-        !assert 0 == 1 : "MB_UML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)"
+        !assert 0 == 1 : "MB_PUML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)"
     !endif
 
     '
@@ -2190,7 +2211,7 @@
 !function $darken_color($token, $darken_token = "DARKEN")
 
   !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
+    !assert 0 == 1 : "MB_PUML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
   !endif
 
   '
@@ -2328,14 +2349,14 @@
     ' Validate the lightness ceiling.
     '
     !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
-        !assert 0 == 1 : "MB_UML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
+        !assert 0 == 1 : "MB_PUML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
     ' Validate the minimum correction.
     '
     !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
-        !assert 0 == 1 : "MB_UML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
+        !assert 0 == 1 : "MB_PUML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
     !endif
 
     '
@@ -2550,7 +2571,7 @@
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
   !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_UML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
+    !assert 0 == 1 : "MB_PUML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
   !endif
 
   '
@@ -2670,7 +2691,7 @@
   ' Validation
   '
   !if ($tokenOrColor == "") && ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
+      !assert 0 == 1 : "MB_PUML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
   !endif
 
   '
@@ -2685,7 +2706,7 @@
   !elseif ($token == "AUTO")
    
     !if ($contextColor == "")
-      !assert 0 == 1 : "MB_UML :: AUTO requires a context color (f:resolve_style_color)"
+      !assert 0 == 1 : "MB_PUML :: AUTO requires a context color (f:resolve_style_color)"
     !endif
     !return $get_auto_text_color($contextColor)
 
@@ -2695,10 +2716,10 @@
   !elseif ($token == "CURRENT")
 
       !if ($contextAsToken == "")
-          !assert 0 == 1 : "MB_UML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
+          !assert 0 == 1 : "MB_PUML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
       !endif
       !if ($contextAsToken == "CURRENT")
-          !assert 0 == 1 : "MB_UML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
+          !assert 0 == 1 : "MB_PUML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
       !endif
 
       !return $resolve_style_color($contextColor)
@@ -2709,7 +2730,7 @@
   !elseif (%strpos($token, "DARKEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
+          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $darken_color( $contextColor, $tokenOrColor )
@@ -2720,7 +2741,7 @@
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
       !if ($contextColor == "")
-          !assert 0 == 1 : "MB_UML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
+          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
       !endif
 
       !return $lighten_color($contextColor, $tokenOrColor )
@@ -3331,6 +3352,11 @@ component {
 
 
 !procedure Preload_Lib_Styles_Archimate_Colors()
+
+    !if ($ARCHIMATE_LIB_VARS_INITIALIZED == %false() )
+        !assert 0 == 1 : "MB_PUML :: ARCHIMATE_LIB_ENABLED was enabled after mb_puml was included (p: Preload_Lib_Styles_Archimate_Colors)"
+    !endif
+
     '=====================================================
     ' Layer Colors
     '=====================================================
@@ -3605,7 +3631,6 @@ component {
     !if ($ARCHIMATE_LIB_ENABLED)
 
         Write_Lib_Style_Archimate_Element()
-        rectangle "Load_Lib_Styles_Archimate"
     !endif
 
 !endprocedure 
