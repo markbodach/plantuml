@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 16:03:01 EDT
-' Build Commit Hash: a3b4f55edadb16e7077615743833cde3537e86b2
-' Build Commit Comment: debug
+' Generated on: 2026-10-16 16:16:25 EDT
+' Build Commit Hash: 4e56e1282f34bcf8cfc4a353cdea722d8b249a31
+' Build Commit Comment: hardening resolve_color
 ' ========================================================
 
 ' src/all.puml
@@ -2697,10 +2697,12 @@
   !if ($has_dollar($tokenOrColor))
     !$resolved = $resolve_variable( $tokenOrColor, %false() )
     
-    !assert 0 == 1 : "MB_PUML :: Variable name passed as value=[" + $tokenOrColor + "] (f:resolve_style_color)"
-    
     !if ($resolved != "")
         !return $resolve_style_color($resolved)
+    
+    !else
+        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved.  token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
+
     !endif
   !endif
 

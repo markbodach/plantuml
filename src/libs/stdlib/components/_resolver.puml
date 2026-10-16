@@ -55,10 +55,12 @@
   !if ($has_dollar($tokenOrColor))
     !$resolved = $resolve_variable( $tokenOrColor, %false() )
     
-    !assert 0 == 1 : "MB_PUML :: Variable name passed as value=[" + $tokenOrColor + "] (f:resolve_style_color)"
-    
     !if ($resolved != "")
         !return $resolve_style_color($resolved)
+    
+    !else
+        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved.  token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
+
     !endif
   !endif
 
