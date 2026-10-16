@@ -22,15 +22,27 @@
 !endfunction
 
 
-!function $semantic_color_variable($name)
+!function $semantic_color_variable($name, $raise_error = %false(), $trace_error = "" )
 
   !if ($is_literal_color($name))
     !return %upper($name)
   !endif
 
-  !return "COLOR_" + $normalize_color_name($name)
+  !$candidate = "COLOR_" + $normalize_color_name($name)
+
+  !if ($raise_error == %true())
+
+    !if ($variable_exists_safe( $candidate, %false(), $trace_error + "f:semantic_color_variable -> " ) == %false())
+      !assert 0 == 1 : "MB_UML :: Semantic color variable not found=[" + $candidate + "] from input=[" + $name + "] (" + $trace_error + "f:semantic_color_variable)"
+    !endif
+
+  !endif
+
+  !return $candidate
 
 !endfunction
+
+
 
 
 
@@ -38,7 +50,8 @@
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
   
   ' Call the base contrast function using the constructed variable name
-  !return $get_text_color( $semantic_color_variable( $semantic_suffix ), $dark_text_var_name, $light_text_var_name )
+  !$semantic_color = $semantic_color_variable( $semantic_suffix, %true(), "f:get_semantic_text_color" )
+  !return $get_text_color( $semantic_color, $dark_text_var_name, $light_text_var_name )
 
 !endfunction
 
@@ -79,7 +92,7 @@
       !return $semantic_suffix
   !endif
 
-  !$candidate = $semantic_color_variable($semantic_suffix)
+  !$candidate = $semantic_color_variable($semantic_suffix, %true(), "f:get_semantic_color")
 
   !if ($candidate == "COLOR_")
       !assert 0 == 1 : "MB_UML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"

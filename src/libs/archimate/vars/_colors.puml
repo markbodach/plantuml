@@ -1,7 +1,7 @@
 ' src/themes/archimate/_colors.puml
 
 
-!if ($ARCHIMATE_LIB_ENABLED)
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
     !$COLOR_MOTIVATION ?= "#CCCCFF"
     !$COLOR_STRATEGY ?= "#F5DEAA"
     !$COLOR_BUSINESS ?= "#FFFF99"
