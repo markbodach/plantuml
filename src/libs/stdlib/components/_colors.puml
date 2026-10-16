@@ -94,9 +94,6 @@
 
 !function $get_semantic_color($semantic_suffix)
 
-  !assert 0 == 1 : "get_semantic_color=[" +$semantic_suffix +"]"
-
-
   !if ($semantic_suffix == "") 
     !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
   !endif

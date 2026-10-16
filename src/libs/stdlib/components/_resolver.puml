@@ -52,16 +52,29 @@
       !assert 0 == 1 : "MB_PUML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
   !endif
 
+  !if ($has_dollar($tokenOrColor))
+    !$resolved = $resolve_variable( $tokenOrColor, %false() )
+    
+    !assert 0 == 1 : "MB_PUML :: Variable name passed as value=[" + $tokenOrColor + "] (f:resolve_style_color)"
+    
+    !if ($resolved != "")
+        !return $resolve_style_color($resolved)
+    !endif
+  !endif
+
   '
   ' Literal color
   '
   !if ($is_literal_color($tokenOrColor))
     !return %upper($tokenOrColor)
-  
+  !endif
+
+
+
   '
   ' AUTO
   '
-  !elseif ($token == "AUTO")
+  !if ($token == "AUTO")
    
     !if ($contextColor == "")
       !assert 0 == 1 : "MB_PUML :: AUTO requires a context color (f:resolve_style_color)"
