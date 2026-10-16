@@ -2,6 +2,7 @@
 !include _colors.puml
 !include _corner.puml
 !include _width.puml
+!include _element.puml
 
 
 !procedure Preload_Lib_Styles_Archimate()
@@ -20,6 +21,8 @@
 !procedure Load_Lib_Styles_Archimate()
     !if ($ARCHIMATE_LIB_ENABLED)
 
+        Write_Lib_Style_Archimate_Element()
+        rectangle "Load_Lib_Styles_Archimate"
     !endif
 
 !endprocedure 

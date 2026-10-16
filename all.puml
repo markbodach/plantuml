@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-15 16:46:01 EDT
-' Build Commit Hash: 4a92f019927c712291b47b3a5bdffbfa70b984fb
-' Build Commit Comment: archimate stereotypes
+' Generated on: 2026-10-16 10:35:34 EDT
+' Build Commit Hash: 89bf3c16c7354aaa5ebc4f112e0c454f4978568e
+' Build Commit Comment: stereotype refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -3382,6 +3382,183 @@ component {
 !endprocedure
 ' --- End Import: src/libs/archimate/styles/_width.puml ---
 
+' --- Importing: src/libs/archimate/styles/_element.puml ---
+!procedure Write_Lib_Style_Archimate_Element()
+
+    
+    !$defaultBg = ""
+    !$defaultFg = ""
+
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+    !endif
+    
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_FILLCOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+    !endif
+    
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+    !endif
+    
+
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+    !endif
+    
+
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+    !endif
+    
+
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+    !endif
+    
+
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+    !endif
+    
+
+    !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+    !endif
+    
+    
+    <style>
+
+    motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationFg
+    }
+
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationFg
+    }
+
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyFg
+    }
+    strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyFg
+    }
+
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessFg
+    }
+    business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessFg
+    }
+
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationFg
+    }
+    application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationFg
+    }
+
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyFg
+    }
+    technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyFg
+    }
+
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalFg
+    }
+    physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalFg
+    }
+
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationFg
+    }
+    implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationFg
+    }
+
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherFg
+    }
+    other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherFg
+    }
+</style>
+
+
+!if ($defaultBg != "") && ($defaultFg != "")
+<style>
+    element {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultFg
+    }
+</style>
+
+!endif
+
+
+!endprocedure
+' --- End Import: src/libs/archimate/styles/_element.puml ---
+
 
 
 !procedure Preload_Lib_Styles_Archimate()
@@ -3400,6 +3577,8 @@ component {
 !procedure Load_Lib_Styles_Archimate()
     !if ($ARCHIMATE_LIB_ENABLED)
 
+        Write_Lib_Style_Archimate_Element()
+        rectangle "Load_Lib_Styles_Archimate"
     !endif
 
 !endprocedure 

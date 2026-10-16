@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-15 16:46:01 EDT**
-* Build Commit Hash: **4a92f019927c712291b47b3a5bdffbfa70b984fb**
-* Build Commit Comment: **archimate stereotypes**
+* Generated on: **2026-10-16 10:35:34 EDT**
+* Build Commit Hash: **89bf3c16c7354aaa5ebc4f112e0c454f4978568e**
+* Build Commit Comment: **stereotype refactoring**
 
 ## Usage
 
@@ -478,6 +478,7 @@ src/all.puml (Root Master)
         └── _colors.puml
         └── _corner.puml
         └── _width.puml
+        └── _element.puml
 ```
 
 ---
