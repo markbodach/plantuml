@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 11:53:10 EDT
-' Build Commit Hash: fb42404d5be0baf92e63a0c7f6960bba577d0a6f
-' Build Commit Comment: guard added to get_variable_text_color
+' Generated on: 2026-10-16 13:14:33 EDT
+' Build Commit Hash: d94d09c5f48d31acfa9adc00702eed3c3daaaf1a
+' Build Commit Comment: guards for resolve_variable function
 ' ========================================================
 
 ' src/all.puml
@@ -955,7 +955,7 @@
 
 
 
-!function $variable_exists_safe($name, $raise_error = %false())
+!function $variable_exists_safe($name, $raise_error = %false(), $trace_error = "")
 
     !$variable_name = $to_var_name($name)
 
@@ -963,9 +963,9 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[" + $variable_name + "] (f:variable_exists_safe)"
+                !assert 0 == 1 : "MB_UML :: Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
             !else
-                !assert 0 == 1 : "MB_UML :: Invalid variable name=[" + $variable_name + "] (f:variable_exists_safe)"
+                !assert 0 == 1 : "MB_UML :: Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
             !endif
         !endif
 
@@ -994,7 +994,7 @@
     !$variable_name = $to_var_name($name)
     !$value = ""
 
-    !if ($variable_exists_safe($variable_name, $raise_error) == %false())
+    !if ($variable_exists_safe($variable_name, $raise_error, $trace_error + "resolve_variable() -> ") == %false())
 
         !if ($raise_error == %true())
             !assert 0 == 1 : "MB_UML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
