@@ -26,7 +26,7 @@
 '           - Theme initialization
 '           - Configuration
 '
-'   Load_Lib_Styles_THEME_<Theme>()
+'   Load_Theme_<Theme>()
 '
 '       Used for:
 '           - Styles
@@ -151,8 +151,8 @@
 '
 ' Followed By:
 '
-'   Load_Lib_Styles_THEME_ThemeA()
-'   Load_Lib_Styles_THEME_ThemeB()
+'   Load_Theme_ThemeA()
+'   Load_Theme_ThemeB()
 '
 ' Iteration is implemented using:
 '
@@ -252,7 +252,7 @@
 
 !procedure Invoke_Load_Themes()
 
-    For_Each_Theme("Load_Lib_Styles_THEME_")
+    For_Each_Theme("Load_Theme_")
 
 !endprocedure
 
@@ -279,7 +279,7 @@
 '
 ' Styles:
 '
-'   !procedure Load_Lib_Styles_THEME_ThemeA()
+'   !procedure Load_Theme_ThemeA()
 '
 '   <style>
 '

@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-19 14:29:24 EDT**
-* Build Commit Hash: **c35f6c00a60017a14471ffda8e773887dbec6d9a**
-* Build Commit Comment: **ArchiMate border colors**
+* Generated on: **2026-10-19 14:49:59 EDT**
+* Build Commit Hash: **8ec07e3b5cb3f8a8dc7025963da287b3424b6363**
+* Build Commit Comment: **business border**
 
 ## Usage
 

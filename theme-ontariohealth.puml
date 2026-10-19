@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-19 14:29:24 EDT
-' Build Commit Hash: c35f6c00a60017a14471ffda8e773887dbec6d9a
-' Build Commit Comment: ArchiMate border colors
+' Generated on: 2026-10-19 14:49:59 EDT
+' Build Commit Hash: 8ec07e3b5cb3f8a8dc7025963da287b3424b6363
+' Build Commit Comment: business border
 ' ========================================================
 
 
@@ -259,7 +259,7 @@
 
 
 
-!procedure PreLoad_Lib_Styles_THEME_OntarioHealth()
+!procedure PreLoad_Theme_OntarioHealth()
     !if ($Is_Theme_Registered("OntarioHealth") == %true() )
         Preload_Theme_OntarioHealth_Colors()
         Preload_Theme_OntarioHealth_Layout()
@@ -300,12 +300,12 @@
 
 
 
-!procedure Load_Lib_Styles_THEME_OntarioHealth()
+!procedure Load_Theme_OntarioHealth()
 
     !if ($Is_Theme_Registered("OntarioHealth") == %true() )
         Write_Lib_Style_OntarioHealth_Title()
     !endif
-    
+
 !endprocedure 
 ' --- End Import: src/themes/ontariohealth/styles/index.puml ---
 

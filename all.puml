@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-19 14:29:24 EDT
-' Build Commit Hash: c35f6c00a60017a14471ffda8e773887dbec6d9a
-' Build Commit Comment: ArchiMate border colors
+' Generated on: 2026-10-19 14:49:59 EDT
+' Build Commit Hash: 8ec07e3b5cb3f8a8dc7025963da287b3424b6363
+' Build Commit Comment: business border
 ' ========================================================
 
 ' src/all.puml
@@ -46,7 +46,7 @@
 '           - Theme initialization
 '           - Configuration
 '
-'   Load_Lib_Styles_THEME_<Theme>()
+'   Load_Theme_<Theme>()
 '
 '       Used for:
 '           - Styles
@@ -171,8 +171,8 @@
 '
 ' Followed By:
 '
-'   Load_Lib_Styles_THEME_ThemeA()
-'   Load_Lib_Styles_THEME_ThemeB()
+'   Load_Theme_ThemeA()
+'   Load_Theme_ThemeB()
 '
 ' Iteration is implemented using:
 '
@@ -272,7 +272,7 @@
 
 !procedure Invoke_Load_Themes()
 
-    For_Each_Theme("Load_Lib_Styles_THEME_")
+    For_Each_Theme("Load_Theme_")
 
 !endprocedure
 
@@ -299,7 +299,7 @@
 '
 ' Styles:
 '
-'   !procedure Load_Lib_Styles_THEME_ThemeA()
+'   !procedure Load_Theme_ThemeA()
 '
 '   <style>
 '
@@ -3584,7 +3584,7 @@ component {
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
-    !$motivatiomLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
     !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
         !$defaultBg = $motivationBg
         !$defaultFg = $motivationFg
@@ -3781,8 +3781,11 @@ component {
     Preload_Lib_Styles_BEFORE()
 '--------------------------------------------
     Preload_Lib_Styles_Stdlib()
-    Preload_Lib_Styles_Archimate()
+    
     Invoke_Preload_Themes()
+
+    Preload_Lib_Styles_Archimate()
+    
 '--------------------------------------------    
     Preload_Lib_Styles_AFTER()
 '--------------------------------------------
@@ -3792,8 +3795,11 @@ component {
     Load_Lib_Styles_BEFORE()
 '--------------------------------------------
     Load_Lib_Styles_Stdlib()
-    Load_Lib_Styles_Archimate()
+    
     Invoke_Load_Themes()
+
+    Load_Lib_Styles_Archimate()
+    
 '--------------------------------------------
     Load_Lib_Styles_AFTER()
 '--------------------------------------------

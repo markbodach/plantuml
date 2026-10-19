@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-19 14:29:24 EDT**
-* Build Commit Hash: **c35f6c00a60017a14471ffda8e773887dbec6d9a**
-* Build Commit Comment: **ArchiMate border colors**
+* Generated on: **2026-10-19 14:49:59 EDT**
+* Build Commit Hash: **8ec07e3b5cb3f8a8dc7025963da287b3424b6363**
+* Build Commit Comment: **business border**
 
 ## Usage
 
@@ -380,13 +380,13 @@ Use it for variables, semantic mappings, and theme configuration:
 #### Load Phase
 
 ```plantuml
-Load_Lib_Styles_THEME_<ThemeName>()
+Load_Theme_<ThemeName>()
 ```
 
 Use it for styles and stereotypes:
 
 ```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
 <style>
 .card {
     Padding 24
@@ -417,8 +417,8 @@ Preload_Lib_Styles_THEME_Product()
 `Invoke_Load_Themes()` dynamically invokes:
 
 ```plantuml
-Load_Lib_Styles_THEME_Corporate()
-Load_Lib_Styles_THEME_Product()
+Load_Theme_Corporate()
+Load_Theme_Product()
 ```
 
 PlantUML does not provide a portable procedure-existence test. Registering a theme whose procedures are absent or misspelled will fail when `%invoke_procedure()` executes. Registration is therefore a contract.
@@ -499,7 +499,7 @@ A registered theme named `Corporate` must define both procedures exactly:
     ' Variables and semantic mappings
 !endprocedure
 
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
     ' Styles and stereotypes
 !endprocedure
 ```
@@ -521,7 +521,7 @@ Even when a theme has nothing to do in one phase, define an empty procedure. Pla
 ### Load Example
 
 ```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
 <style>
 .corporateCard {
     Padding $SPACING_3
@@ -1745,7 +1745,7 @@ The registry builds procedure names dynamically. A registered theme must define 
 
 ```plantuml
 Preload_Lib_Styles_THEME_Corporate()
-Load_Lib_Styles_THEME_Corporate()
+Load_Theme_Corporate()
 ```
 
 for:

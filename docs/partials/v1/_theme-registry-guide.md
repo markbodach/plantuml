@@ -135,7 +135,7 @@ Example:
 ## Style Phase
 
 ```plantuml
-Load_Lib_Styles_THEME_<ThemeName>()
+Load_Theme_<ThemeName>()
 ```
 
 Used for:
@@ -148,7 +148,7 @@ Used for:
 Example:
 
 ```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
 
 <style>
 
@@ -203,7 +203,7 @@ Preload_Theme_Product()
 For each registered theme:
 
 ```plantuml
-Load_Lib_Styles_THEME_<Theme>()
+Load_Theme_<Theme>()
 ```
 
 is executed.
@@ -211,9 +211,9 @@ is executed.
 For example:
 
 ```plantuml
-Load_Lib_Styles_THEME_Corporate()
+Load_Theme_Corporate()
 
-Load_Lib_Styles_THEME_Product()
+Load_Theme_Product()
 ```
 
 ---
@@ -247,7 +247,7 @@ Register_Theme("Corporate")
 !endprocedure
 
 
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
 
 <style>
 
@@ -404,7 +404,7 @@ Avoid defining variables during the style phase.
 Good:
 
 ```plantuml
-!procedure Load_Lib_Styles_THEME_Corporate()
+!procedure Load_Theme_Corporate()
 
 <style>
 

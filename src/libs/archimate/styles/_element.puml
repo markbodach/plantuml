@@ -7,7 +7,7 @@
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
-    !$motivatiomLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
     !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
         !$defaultBg = $motivationBg
         !$defaultFg = $motivationFg
