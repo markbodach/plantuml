@@ -31,12 +31,9 @@
 '--------------------------------------------    
     Preload_Lib_Styles_BEFORE()
 '--------------------------------------------
-    Preload_Lib_Styles_Stdlib()
-    
     Invoke_Preload_Themes()
-
+    Preload_Lib_Styles_Stdlib()
     Preload_Lib_Styles_Archimate()
-    
 '--------------------------------------------    
     Preload_Lib_Styles_AFTER()
 '--------------------------------------------
@@ -46,11 +43,8 @@
     Load_Lib_Styles_BEFORE()
 '--------------------------------------------
     Load_Lib_Styles_Stdlib()
-    
-    Invoke_Load_Themes()
-
     Load_Lib_Styles_Archimate()
-    
+    Invoke_Load_Themes()
 '--------------------------------------------
     Load_Lib_Styles_AFTER()
 '--------------------------------------------
