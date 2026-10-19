@@ -27,7 +27,7 @@
     !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
     !$businessFg = $resolve_style_color("AUTO", $businessBg)
     
-    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR )), $businessFg)
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
 
     !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
         !$defaultBg = $businessBg
