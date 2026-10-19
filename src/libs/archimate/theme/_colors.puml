@@ -1,34 +1,34 @@
 
 
 
-!if ($ARCHIMATE_LIB_ENABLED)
+!if ($ARCHIMATE_LIB_ENABLED == %true() )
 
-    !$COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
-    !$COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
+    !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
+    !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
 
-    !$COLOR_STRATEGY_LIGHT ?= $lighten_color($COLOR_STRATEGY)
-    !$COLOR_STRATEGY_DARK ?= $darken_color($COLOR_STRATEGY)
+    !global $COLOR_STRATEGY_LIGHT ?= $lighten_color($COLOR_STRATEGY)
+    !global $COLOR_STRATEGY_DARK ?= $darken_color($COLOR_STRATEGY)
 
-    !$COLOR_BUSINESS_LIGHT ?= $lighten_color($COLOR_BUSINESS)
-    !$COLOR_BUSINESS_DARK ?= $darken_color($COLOR_BUSINESS)
+    !global $COLOR_BUSINESS_LIGHT ?= $lighten_color($COLOR_BUSINESS)
+    !global $COLOR_BUSINESS_DARK ?= $darken_color($COLOR_BUSINESS)
 
-    !$COLOR_APPLICATION_LIGHT ?= $lighten_color($COLOR_APPLICATION)
-    !$COLOR_APPLICATION_DARK ?= $darken_color($COLOR_APPLICATION)
+    !global $COLOR_APPLICATION_LIGHT ?= $lighten_color($COLOR_APPLICATION)
+    !global $COLOR_APPLICATION_DARK ?= $darken_color($COLOR_APPLICATION)
 
-    !$COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
-    !$COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
+    !global $COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
+    !global $COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
 
-    !$COLOR_PHYSICAL_LIGHT ?= $lighten_color($COLOR_PHYSICAL)
-    !$COLOR_PHYSICAL_DARK ?= $darken_color($COLOR_PHYSICAL)
+    !global $COLOR_PHYSICAL_LIGHT ?= $lighten_color($COLOR_PHYSICAL)
+    !global $COLOR_PHYSICAL_DARK ?= $darken_color($COLOR_PHYSICAL)
     
 
-    !$COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
-    !$COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
+    !global $COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
+    !global $COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
 
-    !$COLOR_HIGHLIGHTED_LIGHT ?= $lighten_color($COLOR_HIGHLIGHTED)
-    !$COLOR_HIGHLIGHTED_DARK ?= $darken_color($COLOR_HIGHLIGHTED)
+    !global $COLOR_HIGHLIGHTED_LIGHT ?= $lighten_color($COLOR_HIGHLIGHTED)
+    !global $COLOR_HIGHLIGHTED_DARK ?= $darken_color($COLOR_HIGHLIGHTED)
 
-    !$COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
-    !$COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
+    !global $COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
+    !global $COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
 
 !endif

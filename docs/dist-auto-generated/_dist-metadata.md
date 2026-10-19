@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-19 09:51:24 EDT**
-* Build Commit Hash: **05c26cdfb2cd46a1834ab797561aed4847dbb883**
-* Build Commit Comment: **global variables**
+* Generated on: **2026-10-19 10:55:49 EDT**
+* Build Commit Hash: **a302c61f58c1b0d171fa73a326dea1a625db5e6d**
+* Build Commit Comment: **ArchiMate element refactoring**
 
 ## Usage
 

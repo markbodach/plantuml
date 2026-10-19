@@ -7,7 +7,7 @@
 
 !procedure Preload_Lib_Styles_Archimate()
 
-    !if ($ARCHIMATE_LIB_ENABLED)
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
         Preload_Lib_Styles_Archimate_Colors()
         Preload_Lib_Styles_Archimate_Fonts()
         Preload_Lib_Styles_Archimate_Corners()
@@ -19,7 +19,7 @@
 
 
 !procedure Load_Lib_Styles_Archimate()
-    !if ($ARCHIMATE_LIB_ENABLED)
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
 
         Write_Lib_Style_Archimate_Element()
     !endif

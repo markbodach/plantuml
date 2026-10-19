@@ -68,13 +68,6 @@
     
     
     <style>
-
-    Motivation {
-        BackgroundColor $motivationBg
-        FontColor $motivationFg
-        LineColor $motivationFg
-    }
-
     .motivation {
         BackgroundColor $motivationBg
         FontColor $motivationFg
@@ -86,78 +79,43 @@
         FontColor $strategyFg
         LineColor $strategyFg
     }
-    Strategy {
-        BackgroundColor $strategyBg
-        FontColor $strategyFg
-        LineColor $strategyFg
-    }
-
+    
     .business {
         BackgroundColor $businessBg
         FontColor $businessFg
         LineColor $businessFg
     }
-    Business {
-        BackgroundColor $businessBg
-        FontColor $businessFg
-        LineColor $businessFg
-    }
-
+    
     .application {
         BackgroundColor $applicationBg
         FontColor $applicationFg
         LineColor $applicationFg
     }
-    Application {
-        BackgroundColor $applicationBg
-        FontColor $applicationFg
-        LineColor $applicationFg
-    }
-
+    
     .technology {
         BackgroundColor $technologyBg
         FontColor $technologyFg
         LineColor $technologyFg
     }
-    Technology {
-        BackgroundColor $technologyBg
-        FontColor $technologyFg
-        LineColor $technologyFg
-    }
-
+    
     .physical {
         BackgroundColor $physicalBg
         FontColor $physicalFg
         LineColor $physicalFg
     }
-    Physical {
-        BackgroundColor $physicalBg
-        FontColor $physicalFg
-        LineColor $physicalFg
-    }
-
+    
     .implementation {
         BackgroundColor $implementationBg
         FontColor $implementationFg
         LineColor $implementationFg
     }
-    Implementation {
-        BackgroundColor $implementationBg
-        FontColor $implementationFg
-        LineColor $implementationFg
-    }
-
+    
     .other {
         BackgroundColor $otherBg
         FontColor $otherFg
         LineColor $otherFg
     }
-    Other {
-        BackgroundColor $otherBg
-        FontColor $otherFg
-        LineColor $otherFg
-    }
-
+    
 </style>
 
 
