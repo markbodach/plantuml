@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-19 15:45:26 EDT**
-* Build Commit Hash: **d37178b5309245f89a2f78b8197f12d216f853c5**
-* Build Commit Comment: **fixed PreLoad to Preload**
+* Generated on: **2026-10-19 16:00:02 EDT**
+* Build Commit Hash: **3cc2a1761a60e9e504589cd07ddd01d7bf15b952**
+* Build Commit Comment: **missing OH theme colors for ArchiMate**
 
 ## Usage
 

@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-19 15:45:26 EDT
-' Build Commit Hash: d37178b5309245f89a2f78b8197f12d216f853c5
-' Build Commit Comment: fixed PreLoad to Preload
+' Generated on: 2026-10-19 16:00:02 EDT
+' Build Commit Hash: 3cc2a1761a60e9e504589cd07ddd01d7bf15b952
+' Build Commit Comment: missing OH theme colors for ArchiMate
 ' ========================================================
 
 
@@ -211,6 +211,9 @@
     !global $COLOR_IMPLEMENTATION_LIGHT = $COLOR_OH_IMPLEMENTATION_LIGHT
     !global $COLOR_IMPLEMENTATION_DARK = $COLOR_OH_IMPLEMENTATION_DARK
 
+    !global $COLOR_PHYSICAL_LIGHT = $COLOR_OH_PHYSICAL_LIGHT
+    !global $COLOR_PHYSICAL_DARK = $COLOR_OH_PHYSICAL_DARK
+
     !global $COLOR_HIGHLIGHTED_LIGHT = $COLOR_OH_HIGHLIGHTED_LIGHT
     !global $COLOR_HIGHLIGHTED_DARK = $COLOR_OH_HIGHLIGHTED_DARK
 
@@ -247,15 +250,15 @@
 
 !procedure Preload_Theme_OntarioHealth_Title()
 
-!$MARGIN_TITLE = $MARGIN_OH_TITLE
-!$PADDING_TITLE = $PADDING_OH_TITLE
+    !global $MARGIN_TITLE = $MARGIN_OH_TITLE
+    !global $PADDING_TITLE = $PADDING_OH_TITLE
 
-!$ROUND_CORNER_TITLE = $ROUND_OH_CORNER_TITLE
+    !global $ROUND_CORNER_TITLE = $ROUND_OH_CORNER_TITLE
 
-!$COLOR_BACKGROUND_TITLE = $COLOR_OH_BACKGROUND_TITLE
-!$COLOR_FONT_TITLE = $COLOR_OH_FONT_TITLE
-    
-!$COLOR_LINE_TITLE = $COLOR_OH_LINE_TITLE 
+    !global $COLOR_BACKGROUND_TITLE = $COLOR_OH_BACKGROUND_TITLE
+    !global $COLOR_FONT_TITLE = $COLOR_OH_FONT_TITLE
+        
+    !global $COLOR_LINE_TITLE = $COLOR_OH_LINE_TITLE 
 
 !endprocedure
 
