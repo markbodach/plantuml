@@ -2,12 +2,12 @@
 ' Title Constants
 '---------------------------------------------------------
 
-!$MARGIN_OH_TITLE ?= 20
-!$PADDING_OH_TITLE ?= 15
-!$ROUND_OH_CORNER_TITLE ?= 0
+!global $MARGIN_OH_TITLE ?= 20
+!global $PADDING_OH_TITLE ?= 15
+!global $ROUND_OH_CORNER_TITLE ?= 0
 
 
-!$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
-!$COLOR_OH_FONT_TITLE ?= "AUTO"
+!global $COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
+!global $COLOR_OH_FONT_TITLE ?= "AUTO"
     
-!$COLOR_OH_LINE_TITLE ?= "CURRENT" 
+!global $COLOR_OH_LINE_TITLE ?= "CURRENT" 

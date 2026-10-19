@@ -7,9 +7,9 @@
 
 
 'Actors
-!$STYLE_ACTOR ?= awesome
+!global $STYLE_ACTOR ?= awesome
 
-!$COLOR_BORDER_ACTOR ?= "#0D47A1"
-!$SIZE_BORDER_ACTOR ?= 3
-!$COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
+!global $COLOR_BORDER_ACTOR ?= "#0D47A1"
+!global $SIZE_BORDER_ACTOR ?= 3
+!global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
 

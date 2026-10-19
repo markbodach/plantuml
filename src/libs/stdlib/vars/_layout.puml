@@ -5,25 +5,25 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$NODE_SEP ?= 75
-!$RANK_SEP ?= 75
-!$ROUND_CORNER ?= 10
-!$MARGIN ?= 15
-!$PADDING ?= 10
+!global $NODE_SEP ?= 75
+!global $RANK_SEP ?= 75
+!global $ROUND_CORNER ?= 10
+!global $MARGIN ?= 15
+!global $PADDING ?= 10
 
-!$SHADOWING ?= %false()
-!$LINE_TYPE ?= "ortho"
-!$COLOR_LINE ?= $COLOR_TEXT
-!$SIZE_LINE ?= 2
+!global $SHADOWING ?= %false()
+!global $LINE_TYPE ?= "ortho"
+!global $COLOR_LINE ?= $COLOR_TEXT
+!global $SIZE_LINE ?= 2
 
-!$DEFAULT_TEXT_ALIGNMENT ?= "center"
+!global $DEFAULT_TEXT_ALIGNMENT ?= "center"
 
 
 '---------------------------------------------------------
 ' Container / Boundary Constants
 '---------------------------------------------------------
 
-!$COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
+!global $COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
 
 '---------------------------------------------------------
 ' Legend Functions

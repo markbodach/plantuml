@@ -1,4 +1,4 @@
 
-!$ARCHIMATE_LIB_ENABLED ?= %false()
+!global $ARCHIMATE_LIB_ENABLED ?= %false()
 
-!$ARCHIMATE_DEFAULT_LAYER ?= ""
+!global $ARCHIMATE_DEFAULT_LAYER ?= ""

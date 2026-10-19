@@ -5,13 +5,13 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$BORDER_THICKNESS ?= 1
-!$BORDER_THICKNESS_BOLD ?= 2
-!$BORDER_THICKNESS_POD ?= 2
+!global $BORDER_THICKNESS ?= 1
+!global $BORDER_THICKNESS_BOLD ?= 2
+!global $BORDER_THICKNESS_POD ?= 2
 
-!$BORDER_0 ?= 0
-!$BORDER_1 ?= 1
-!$BORDER_2 ?= 2
-!$BORDER_3 ?= 3
-!$BORDER_4 ?= 4
-!$BORDER_5 ?= 5
+!global $BORDER_0 ?= 0
+!global $BORDER_1 ?= 1
+!global $BORDER_2 ?= 2
+!global $BORDER_3 ?= 3
+!global $BORDER_4 ?= 4
+!global $BORDER_5 ?= 5

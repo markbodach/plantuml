@@ -2,11 +2,11 @@
 ' Width Utility Variables
 '---------------------------------------------------------
 
-!$WIDTH_XS ?= 75
-!$WIDTH_SM ?= 150
-!$WIDTH_MD ?= 250
-!$WIDTH_LG ?= 400
-!$WIDTH_XL ?= 600
-!$WIDTH_XXL ?= 800
+!global $WIDTH_XS ?= 75
+!global $WIDTH_SM ?= 150
+!global $WIDTH_MD ?= 250
+!global $WIDTH_LG ?= 400
+!global $WIDTH_XL ?= 600
+!global $WIDTH_XXL ?= 800
 
 

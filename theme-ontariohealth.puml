@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-19 10:55:49 EDT
-' Build Commit Hash: a302c61f58c1b0d171fa73a326dea1a625db5e6d
-' Build Commit Comment: ArchiMate element refactoring
+' Generated on: 2026-10-19 12:01:48 EDT
+' Build Commit Hash: 49505995b9967cec63c81e409a8d7a24f97dcd8e
+' Build Commit Comment: OH Theme enablement
 ' ========================================================
 
 
@@ -108,15 +108,15 @@
 ' Title Constants
 '---------------------------------------------------------
 
-!$MARGIN_OH_TITLE ?= 20
-!$PADDING_OH_TITLE ?= 15
-!$ROUND_OH_CORNER_TITLE ?= 0
+!global $MARGIN_OH_TITLE ?= 20
+!global $PADDING_OH_TITLE ?= 15
+!global $ROUND_OH_CORNER_TITLE ?= 0
 
 
-!$COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
-!$COLOR_OH_FONT_TITLE ?= "AUTO"
+!global $COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
+!global $COLOR_OH_FONT_TITLE ?= "AUTO"
     
-!$COLOR_OH_LINE_TITLE ?= "CURRENT" 
+!global $COLOR_OH_LINE_TITLE ?= "CURRENT" 
 ' --- End Import: src/themes/ontariohealth/vars/_title.puml ---
 
 ' --- End Import: src/themes/ontariohealth/vars/index.puml ---
@@ -259,8 +259,8 @@
 
 
 
-!procedure Preload_Theme_OntarioHealth()
-    !if ($Is_Theme_Registered("OntarioHealth"))
+!procedure PreLoad_Lib_Styles_THEME_OntarioHealth()
+    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
         Preload_Theme_OntarioHealth_Colors()
         Preload_Theme_OntarioHealth_Layout()
         Preload_Theme_OntarioHealth_Title()
@@ -302,9 +302,10 @@
 
 !procedure Load_Lib_Styles_THEME_OntarioHealth()
 
-    !if ($Is_Theme_Registered("OntarioHealth"))
+    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
         Write_Lib_Style_OntarioHealth_Title()
     !endif
+    
 !endprocedure 
 ' --- End Import: src/themes/ontariohealth/styles/index.puml ---
 

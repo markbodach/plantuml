@@ -3,19 +3,19 @@
 ' Border Radius Utility Variables
 '---------------------------------------------------------
 
-!$ROUND_SHARP ?= 1
-!$ROUND_DIAGONAL ?= 12
-!$ROUND_STANDARD ?= 25
-!$ROUND_LARGE ?= 80
+!global $ROUND_SHARP ?= 1
+!global $ROUND_DIAGONAL ?= 12
+!global $ROUND_STANDARD ?= 25
+!global $ROUND_LARGE ?= 80
 
-!$ROUND_0 ?= $ROUND_SHARP
-!$ROUND_1 ?= 6
-!$ROUND_2 ?= $ROUND_DIAGONAL
-!$ROUND_3 ?= 18
-!$ROUND_4 ?= $ROUND_STANDARD
-!$ROUND_5 ?= 40
+!global $ROUND_0 ?= $ROUND_SHARP
+!global $ROUND_1 ?= 6
+!global $ROUND_2 ?= $ROUND_DIAGONAL
+!global $ROUND_3 ?= 18
+!global $ROUND_4 ?= $ROUND_STANDARD
+!global $ROUND_5 ?= 40
 
-!$ROUND_PILL ?= 100
-!$ROUND_CIRCLE ?= 200
+!global $ROUND_PILL ?= 100
+!global $ROUND_CIRCLE ?= 200
 
 

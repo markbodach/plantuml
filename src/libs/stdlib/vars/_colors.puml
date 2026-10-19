@@ -1,17 +1,17 @@
 '---------------------------------------------------------
 ' Contrast defaults
 '---------------------------------------------------------
-!$CONTRAST_THRESHOLD ?= 128
+!global $CONTRAST_THRESHOLD ?= 128
 
 '---------------------------------------------------------
 ' Darkening defaults
 '---------------------------------------------------------
 
 ' Darkening default
-!$DARKEN_DEFAULT_PERCENT = 5
+!global $DARKEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance floor (0-255)
-!$DARKNESS_THRESHOLD = 32
+!global $DARKNESS_THRESHOLD = 32
 
 
 '---------------------------------------------------------
@@ -19,10 +19,10 @@
 '---------------------------------------------------------
 
 ' Lightening default
-!$LIGHTEN_DEFAULT_PERCENT = 5
+!global $LIGHTEN_DEFAULT_PERCENT = 5
 
 ' RGB luminance ceiling (0-255)
-!$LIGHTNESS_THRESHOLD = 223
+!global $LIGHTNESS_THRESHOLD = 223
 
 
 
@@ -32,41 +32,41 @@
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
-!$COLOR_TRANSPARENT = "#FFFFFF00"
-!$COLOR_NONE ?= $COLOR_TRANSPARENT
+!global $COLOR_TRANSPARENT = "#FFFFFF00"
+!global $COLOR_NONE ?= $COLOR_TRANSPARENT
 
-!$COLOR_PRIMARY ?= "#D6EAF8"
-!$COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
-!$COLOR_PRIMARY_DARK ?= "#D6EAF8"
+!global $COLOR_PRIMARY ?= "#D6EAF8"
+!global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!global $COLOR_PRIMARY_DARK ?= "#D6EAF8"
 
-!$COLOR_WARNING ?= "#FCF3CF"
-!$COLOR_WARNING_LIGHT ?= "#FCF3CF"
-!$COLOR_WARNING_DARK ?= "#FCF3CF"
+!global $COLOR_WARNING ?= "#FCF3CF"
+!global $COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!global $COLOR_WARNING_DARK ?= "#FCF3CF"
 
-!$COLOR_SUCCESS ?= "#D5F5E3"
-!$COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
-!$COLOR_SUCCESS_DARK ?= "#D5F5E3"
+!global $COLOR_SUCCESS ?= "#D5F5E3"
+!global $COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!global $COLOR_SUCCESS_DARK ?= "#D5F5E3"
 
-!$COLOR_ERROR ?= "#CD0000"
-!$COLOR_ERROR_LIGHT ?= "#CD0000"
-!$COLOR_ERROR_DARK ?= "#CD0000"
+!global $COLOR_ERROR ?= "#CD0000"
+!global $COLOR_ERROR_LIGHT ?= "#CD0000"
+!global $COLOR_ERROR_DARK ?= "#CD0000"
 
-!$COLOR_BODY ?= "#ffffff"
-!$COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
-!$COLOR_BORDER ?= "#5D6D7E"
+!global $COLOR_BODY ?= "#ffffff"
+!global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
+!global $COLOR_BORDER ?= "#5D6D7E"
 
-!$COLOR_TEXT ?= "#000000"
-!$COLOR_TEXT_LIGHT ?= $COLOR_BODY
+!global $COLOR_TEXT ?= "#000000"
+!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
 
-!$COLOR_EMPHASIS ?= "#E0B8D4"
-!$COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
-!$COLOR_EMPHASIS_DARK ?= "#C38AAF"
+!global $COLOR_EMPHASIS ?= "#E0B8D4"
+!global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
+!global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
 
 
 ' COLOR_LIGHT
 ' COLOR_DARK
 
-!$COLOR_DISABLED_DARK ?= "#4D4D4D"
-!$COLOR_DISABLED ?= "#737373"
-!$COLOR_DISABLED_LIGHT ?= "#737373"
+!global $COLOR_DISABLED_DARK ?= "#4D4D4D"
+!global $COLOR_DISABLED ?= "#737373"
+!global $COLOR_DISABLED_LIGHT ?= "#737373"

@@ -1,5 +1,5 @@
 
 
-!$SKINPARAM_ENABLED ?= %false()
+!global $SKINPARAM_ENABLED ?= %false()
 
-!$UNSET = "__UML_UNSET__"
+!global $UNSET = "__UML_UNSET__"

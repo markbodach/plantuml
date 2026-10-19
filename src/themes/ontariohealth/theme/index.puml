@@ -6,8 +6,8 @@
 !include _title.puml
 
 
-!procedure Preload_Theme_OntarioHealth()
-    !if ($Is_Theme_Registered("OntarioHealth"))
+!procedure PreLoad_Lib_Styles_THEME_OntarioHealth()
+    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
         Preload_Theme_OntarioHealth_Colors()
         Preload_Theme_OntarioHealth_Layout()
         Preload_Theme_OntarioHealth_Title()

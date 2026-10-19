@@ -2,8 +2,8 @@
 ' Height Utility Variables
 '---------------------------------------------------------
 
-!$HEIGHT_XS ?= 50
-!$HEIGHT_SM ?= 75
-!$HEIGHT_MD ?= 100
-!$HEIGHT_LG ?= 150
-!$HEIGHT_XL ?= 200
+!global $HEIGHT_XS ?= 50
+!global $HEIGHT_SM ?= 75
+!global $HEIGHT_MD ?= 100
+!global $HEIGHT_LG ?= 150
+!global $HEIGHT_XL ?= 200

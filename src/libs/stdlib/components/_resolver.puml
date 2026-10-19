@@ -53,17 +53,31 @@
   !endif
 
   !if ($has_dollar($tokenOrColor))
+
     !$resolved = $resolve_variable( $tokenOrColor, %false() )
-    
+
     !if ($resolved != "")
-        !return $resolve_style_color($resolved)
-    
+
+        '------------------------------------------
+        ' Prevent infinite recursion
+        '------------------------------------------
+        !if (%upper("" + $resolved + "") == %upper("" + $tokenOrColor + ""))
+            !assert 0 == 1 : "MB_PUML :: Recursive variable resolution detected. variable=[" + $tokenOrColor + "] value=[" + $resolved + "] (f:resolve_style_color)"
+        !endif
+
+        'PRESERVE THE CONTEXT !return $resolve_style_color($resolved)
+
+        !return $resolve_style_color($resolved, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7 )
+
+
     !else
-        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved.  token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
+        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
 
     !endif
+
   !endif
 
+  
   '
   ' Literal color
   '
@@ -95,7 +109,7 @@
           !assert 0 == 1 : "MB_PUML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
       !endif
 
-      !return $resolve_style_color($contextColor)
+      !return $resolve_style_color($contextColor, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
   '
   ' DARKEN
