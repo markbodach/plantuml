@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-16 16:23:51 EDT
-' Build Commit Hash: 16b685776c24f30bff08f31c4698d5164ca061c3
-' Build Commit Comment: color resolver fixes
+' Generated on: 2026-10-19 09:51:24 EDT
+' Build Commit Hash: 05c26cdfb2cd46a1834ab797561aed4847dbb883
+' Build Commit Comment: global variables
 ' ========================================================
 
 ' src/all.puml
@@ -3442,6 +3442,7 @@ component {
     
     !$defaultBg = ""
     !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
@@ -3507,7 +3508,7 @@ component {
     
     <style>
 
-    motivation {
+    Motivation {
         BackgroundColor $motivationBg
         FontColor $motivationFg
         LineColor $motivationFg
@@ -3524,7 +3525,7 @@ component {
         FontColor $strategyFg
         LineColor $strategyFg
     }
-    strategy {
+    Strategy {
         BackgroundColor $strategyBg
         FontColor $strategyFg
         LineColor $strategyFg
@@ -3535,7 +3536,7 @@ component {
         FontColor $businessFg
         LineColor $businessFg
     }
-    business {
+    Business {
         BackgroundColor $businessBg
         FontColor $businessFg
         LineColor $businessFg
@@ -3546,7 +3547,7 @@ component {
         FontColor $applicationFg
         LineColor $applicationFg
     }
-    application {
+    Application {
         BackgroundColor $applicationBg
         FontColor $applicationFg
         LineColor $applicationFg
@@ -3557,7 +3558,7 @@ component {
         FontColor $technologyFg
         LineColor $technologyFg
     }
-    technology {
+    Technology {
         BackgroundColor $technologyBg
         FontColor $technologyFg
         LineColor $technologyFg
@@ -3568,7 +3569,7 @@ component {
         FontColor $physicalFg
         LineColor $physicalFg
     }
-    physical {
+    Physical {
         BackgroundColor $physicalBg
         FontColor $physicalFg
         LineColor $physicalFg
@@ -3579,7 +3580,7 @@ component {
         FontColor $implementationFg
         LineColor $implementationFg
     }
-    implementation {
+    Implementation {
         BackgroundColor $implementationBg
         FontColor $implementationFg
         LineColor $implementationFg
@@ -3590,11 +3591,12 @@ component {
         FontColor $otherFg
         LineColor $otherFg
     }
-    other {
+    Other {
         BackgroundColor $otherBg
         FontColor $otherFg
         LineColor $otherFg
     }
+
 </style>
 
 
@@ -3606,6 +3608,12 @@ component {
         LineColor $defaultFg
     }
     rectangle {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultFg
+    }
+
+    .default {
         BackgroundColor $defaultBg
         FontColor $defaultFg
         LineColor $defaultFg

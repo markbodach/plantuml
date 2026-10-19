@@ -3,6 +3,7 @@
     
     !$defaultBg = ""
     !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
@@ -68,7 +69,7 @@
     
     <style>
 
-    motivation {
+    Motivation {
         BackgroundColor $motivationBg
         FontColor $motivationFg
         LineColor $motivationFg
@@ -85,7 +86,7 @@
         FontColor $strategyFg
         LineColor $strategyFg
     }
-    strategy {
+    Strategy {
         BackgroundColor $strategyBg
         FontColor $strategyFg
         LineColor $strategyFg
@@ -96,7 +97,7 @@
         FontColor $businessFg
         LineColor $businessFg
     }
-    business {
+    Business {
         BackgroundColor $businessBg
         FontColor $businessFg
         LineColor $businessFg
@@ -107,7 +108,7 @@
         FontColor $applicationFg
         LineColor $applicationFg
     }
-    application {
+    Application {
         BackgroundColor $applicationBg
         FontColor $applicationFg
         LineColor $applicationFg
@@ -118,7 +119,7 @@
         FontColor $technologyFg
         LineColor $technologyFg
     }
-    technology {
+    Technology {
         BackgroundColor $technologyBg
         FontColor $technologyFg
         LineColor $technologyFg
@@ -129,7 +130,7 @@
         FontColor $physicalFg
         LineColor $physicalFg
     }
-    physical {
+    Physical {
         BackgroundColor $physicalBg
         FontColor $physicalFg
         LineColor $physicalFg
@@ -140,7 +141,7 @@
         FontColor $implementationFg
         LineColor $implementationFg
     }
-    implementation {
+    Implementation {
         BackgroundColor $implementationBg
         FontColor $implementationFg
         LineColor $implementationFg
@@ -151,11 +152,12 @@
         FontColor $otherFg
         LineColor $otherFg
     }
-    other {
+    Other {
         BackgroundColor $otherBg
         FontColor $otherFg
         LineColor $otherFg
     }
+
 </style>
 
 
@@ -167,6 +169,12 @@
         LineColor $defaultFg
     }
     rectangle {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultFg
+    }
+
+    .default {
         BackgroundColor $defaultBg
         FontColor $defaultFg
         LineColor $defaultFg
