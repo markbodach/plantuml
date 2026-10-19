@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-19 13:45:33 EDT
-' Build Commit Hash: b3d0aff3fd914b707f1311061f92e1dad13cc980
-' Build Commit Comment: globalized variables
+' Generated on: 2026-10-19 14:19:11 EDT
+' Build Commit Hash: 88e703d532e2fc9fda45b21378b82c443a346671
+' Build Commit Comment: LineColor refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -3603,7 +3603,8 @@ component {
     
     !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
     !$businessFg = $resolve_style_color("AUTO", $businessBg)
-    !$businessLc = $first_defined($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), $businessFg)
+    
+    !$businessLc = $first_defined(darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR )), $businessFg)
 
     !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
         !$defaultBg = $businessBg
