@@ -7,63 +7,86 @@
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivatiomLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
     !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
         !$defaultBg = $motivationBg
         !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
     !endif
     
     !$strategyBg = $resolve_style_color($ARCH_STRATEGY_FILLCOLOR)
     !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
         !$defaultBg = $strategyBg
         !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
     !endif
     
     !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
     !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    !$businessLc = $first_defined($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), $businessFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
         !$defaultBg = $businessBg
         !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
     !endif
     
 
     !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
     !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
         !$defaultBg = $applicationBg
         !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
     !endif
     
 
     !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
     !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
         !$defaultBg = $technologyBg
         !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
     !endif
     
 
     !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
     !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
         !$defaultBg = $physicalBg
         !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
     !endif
     
 
     !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
     !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
         !$defaultBg = $implementationBg
         !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
     !endif
     
 
     !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
     !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+
     !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
         !$defaultBg = $otherBg
         !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
     !endif
     
     
@@ -71,49 +94,51 @@
     .motivation {
         BackgroundColor $motivationBg
         FontColor $motivationFg
-        LineColor $motivationFg
+        LineColor $motivationLc
+        
     }
 
     .strategy {
         BackgroundColor $strategyBg
         FontColor $strategyFg
-        LineColor $strategyFg
+        LineColor $strategyLc
+        
     }
     
     .business {
         BackgroundColor $businessBg
         FontColor $businessFg
-        LineColor $businessFg
+        LineColor $businessLc
     }
     
     .application {
         BackgroundColor $applicationBg
         FontColor $applicationFg
-        LineColor $applicationFg
+        LineColor $applicationLc
     }
     
     .technology {
         BackgroundColor $technologyBg
         FontColor $technologyFg
-        LineColor $technologyFg
+        LineColor $technologyLc
     }
     
     .physical {
         BackgroundColor $physicalBg
         FontColor $physicalFg
-        LineColor $physicalFg
+        LineColor $physicalLc
     }
     
     .implementation {
         BackgroundColor $implementationBg
         FontColor $implementationFg
-        LineColor $implementationFg
+        LineColor $implementationLc
     }
     
     .other {
         BackgroundColor $otherBg
         FontColor $otherFg
-        LineColor $otherFg
+        LineColor $otherLc
     }
     
 </style>
@@ -124,18 +149,18 @@
     element {
         BackgroundColor $defaultBg
         FontColor $defaultFg
-        LineColor $defaultFg
+        LineColor $defaultLc
     }
     rectangle {
         BackgroundColor $defaultBg
         FontColor $defaultFg
-        LineColor $defaultFg
+        LineColor $defaultLc
     }
 
     .default {
         BackgroundColor $defaultBg
         FontColor $defaultFg
-        LineColor $defaultFg
+        LineColor $defaultLc
     }
 </style>
 

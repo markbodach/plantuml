@@ -109,3 +109,102 @@
     !return $value
 
 !endfunction
+
+
+
+
+'=========================================================
+' First Defined Value
+'
+' Preserves:
+'   ""
+'
+' Treats only:
+'   $UNSET
+'
+' as undefined.
+'
+'=========================================================
+!function $first_defined( $value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET )
+
+    !if ($value0 != $UNSET)
+        !return $value0
+    !endif
+
+    !if ($value1 != $UNSET)
+        !return $value1
+    !endif
+
+    !if ($value2 != $UNSET)
+        !return $value2
+    !endif
+
+    !if ($value3 != $UNSET)
+        !return $value3
+    !endif
+
+    !if ($value4 != $UNSET)
+        !return $value4
+    !endif
+
+    !if ($value5 != $UNSET)
+        !return $value5
+    !endif
+
+    !if ($value6 != $UNSET)
+        !return $value6
+    !endif
+
+    !if ($value7 != $UNSET)
+        !return $value7
+    !endif
+
+    !return $UNSET
+
+!endfunction
+
+'=========================================================
+' First Non-Blank Value
+'
+' Returns the first value that is not blank.
+'
+' Safe for:
+'   - Undefined variables
+'   - Empty strings
+'   - Literal colors
+'   - Semantic tokens
+'
+' Similar to:
+'
+'   value0 ?? value1 ?? value2 ...
+'
+'=========================================================
+!function $first_defined_variable( $var0="", $var1="", $var2="", $var3="", $var4="", $var5="", $var6="", $var7="" )
+
+    !$v = $UNSET
+    !if ($var0 != "")
+        !$v = $resolve_variable($var0,%false())
+        !if ($variable_exists_safe($var0))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var1 != "")
+        !$v = $resolve_variable($var1,%false())
+        !if ($variable_exists_safe($var1))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var2 != "")
+        !$v = $resolve_variable($var2,%false())
+        !if ($variable_exists_safe($var2))
+            !return $v
+        !endif
+    !endif
+
+    ' repeat through var7...
+
+    !return $UNSET
+
+!endfunction

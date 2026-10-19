@@ -21,6 +21,31 @@
     ' Other layer
     !global $ARCH_OTHER_FILLCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
+
+    '=====================================================
+    ' Border Colors
+    '=====================================================
+    !global $ARCH_STRATEGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_BUSINESS_BORDERCOLOR ?= $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_APPLICATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_TECHNOLOGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+
+    ' ArchiMate physical layer
+    !global $ARCH_PHYSICAL_BORDERCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL_DARK)
+
+    !global $ARCH_MOTIVATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION_DARK)
+
+    !global $ARCH_IMPLEMENTATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
+
+    ' Other layer
+    !global $ARCH_OTHER_BORDERCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_DARK)
+
+
+    '=====================================================
+    ' Composite Colors
+    '=====================================================
+
+
     '=====================================================
     ' Junction Colors
     '=====================================================
