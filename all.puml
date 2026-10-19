@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-19 15:14:58 EDT
-' Build Commit Hash: d3d2245e1371e5efb63893ec3fbaef451d5af7c9
-' Build Commit Comment: refactored loading order
+' Generated on: 2026-10-19 15:45:26 EDT
+' Build Commit Hash: d37178b5309245f89a2f78b8197f12d216f853c5
+' Build Commit Comment: fixed PreLoad to Preload
 ' ========================================================
 
 ' src/all.puml
@@ -3485,10 +3485,9 @@ component {
     !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
-
     !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
 
+    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
     !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer

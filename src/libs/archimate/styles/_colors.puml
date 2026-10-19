@@ -12,10 +12,9 @@
     !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
-    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
-
     !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
 
+    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
     !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
 
     ' Other layer
