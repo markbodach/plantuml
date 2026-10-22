@@ -7,7 +7,7 @@
 
 
 !procedure Preload_Theme_OntarioHealth()
-    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
+    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
         Preload_Theme_OntarioHealth_Colors()
         Preload_Theme_OntarioHealth_ArchimateColors()
         Preload_Theme_OntarioHealth_Layout()

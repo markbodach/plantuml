@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-22 16:58:23 EDT
-' Build Commit Hash: f9cf25a19ba56c8321918023501d50ab7da9c921
-' Build Commit Comment: physical and technology colors
+' Generated on: 2026-10-22 17:18:02 EDT
+' Build Commit Hash: 23dabdb6489b07eb50dc9b90ddfc7bfd104bb2e9
+' Build Commit Comment: refactoring
 ' ========================================================
 
 
@@ -17,6 +17,7 @@
 ' --- Importing: src/themes/ontariohealth/vars/_root.puml ---
 
 
+!global $OH_THEME_NAME = "OntarioHealth"
 ' --- End Import: src/themes/ontariohealth/vars/_root.puml ---
 
 ' --- Importing: src/themes/ontariohealth/vars/_colors.puml ---
@@ -159,71 +160,68 @@
 
 !procedure Preload_Theme_OntarioHealth_Colors()
 
-'Set OH Colours
+    'Set OH Colours
+    !global $COLOR_PRIMARY = $COLOR_OH_PRIMARY
+    !global $COLOR_PRIMARY_LIGHT = $COLOR_OH_PRIMARY_LIGHT
+    !global $COLOR_PRIMARY_DARK = $COLOR_OH_PRIMARY_DARK
 
-!$COLOR_PRIMARY = $COLOR_OH_PRIMARY
-!$COLOR_PRIMARY_LIGHT = $COLOR_OH_PRIMARY_LIGHT
-!$COLOR_PRIMARY_DARK = $COLOR_OH_PRIMARY_DARK
+    !global $COLOR_WARNING = $COLOR_OH_WARNING
+    !global $COLOR_WARNING_LIGHT = $COLOR_OH_WARNING_LIGHT
+    !global $COLOR_WARNING_DARK = $COLOR_OH_WARNING_DARK
 
-!$COLOR_WARNING = $COLOR_OH_WARNING
-!$COLOR_WARNING_LIGHT = $COLOR_OH_WARNING_LIGHT
-!$COLOR_WARNING_DARK = $COLOR_OH_WARNING_DARK
+    !global $COLOR_SUCCESS = $COLOR_OH_SUCCESS
+    !global $COLOR_SUCCESS_LIGHT = $COLOR_OH_SUCCESS_LIGHT
+    !global $COLOR_SUCCESS_DARK = $COLOR_OH_SUCCESS_DARK
 
-!$COLOR_SUCCESS = $COLOR_OH_SUCCESS
-!$COLOR_SUCCESS_LIGHT = $COLOR_OH_SUCCESS_LIGHT
-!$COLOR_SUCCESS_DARK = $COLOR_OH_SUCCESS_DARK
+    !global $COLOR_ERROR = $COLOR_OH_ERROR
+    !global $COLOR_ERROR_LIGHT = $COLOR_OH_ERROR_LIGHT
+    !global $COLOR_ERROR_DARK = $COLOR_OH_ERROR_DARK
 
-!$COLOR_ERROR = $COLOR_OH_ERROR
-!$COLOR_ERROR_LIGHT = $COLOR_OH_ERROR_LIGHT
-!$COLOR_ERROR_DARK = $COLOR_OH_ERROR_DARK
-
-!$COLOR_TEXT = $COLOR_OH_TEXT
-!$COLOR_BORDER ?= $COLOR_OH_BORDER
+    !global $COLOR_TEXT = $COLOR_OH_TEXT
+    !global $COLOR_BORDER ?= $COLOR_OH_BORDER
 
 
-!$COLOR_DISABLED_DARK = $COLOR_OH_LABEL
-!$COLOR_DISABLED = $COLOR_OH_PLACEHOLDER
+    !global $COLOR_DISABLED_DARK = $COLOR_OH_LABEL
+    !global $COLOR_DISABLED = $COLOR_OH_PLACEHOLDER
 
 !endprocedure
 
 
 !procedure Preload_Theme_OntarioHealth_ArchimateColors()
-'If there are a lot of variables, this could be moved into a separate _archimate.puml file
+    'If there are a lot of variables, this could be moved into a separate _archimate.puml file
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
+        'This is the surface colour
+
+        !global $COLOR_MOTIVATION_LIGHT = $COLOR_OH_MOTIVATION_LIGHT
+        !global $COLOR_MOTIVATION_DARK = $COLOR_OH_MOTIVATION_DARK
+
+        !global $COLOR_STRATEGY_LIGHT = $COLOR_OH_STRATEGY_LIGHT
+        !global $COLOR_STRATEGY_DARK = $COLOR_OH_STRATEGY_DARK
+
+        !global $COLOR_BUSINESS_LIGHT = $COLOR_OH_BUSINESS_LIGHT
+        !global $COLOR_BUSINESS_DARK = $COLOR_OH_BUSINESS_DARK
+
+        !global $COLOR_APPLICATION_LIGHT = $COLOR_OH_APPLICATION_LIGHT
+        !global $COLOR_APPLICATION_DARK = $COLOR_OH_APPLICATION_DARK
+
+        !global $COLOR_TECHNOLOGY_LIGHT = $COLOR_OH_TECHNOLOGY_LIGHT
+        !global $COLOR_TECHNOLOGY_DARK = $COLOR_OH_TECHNOLOGY_DARK
+
+        !global $COLOR_IMPLEMENTATION_LIGHT = $COLOR_OH_IMPLEMENTATION_LIGHT
+        !global $COLOR_IMPLEMENTATION_DARK = $COLOR_OH_IMPLEMENTATION_DARK
+
+        !global $COLOR_PHYSICAL_LIGHT = $COLOR_OH_PHYSICAL_LIGHT
+        !global $COLOR_PHYSICAL_DARK = $COLOR_OH_PHYSICAL_DARK
+
+        !global $COLOR_HIGHLIGHTED_LIGHT = $COLOR_OH_HIGHLIGHTED_LIGHT
+        !global $COLOR_HIGHLIGHTED_DARK = $COLOR_OH_HIGHLIGHTED_DARK
+
+        !global $COLOR_NEW_LIGHT = $COLOR_OH_NEW_LIGHT
+        !global $COLOR_NEW_DARK = $COLOR_OH_NEW_DARK
 
 
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-
-    'This is the surface colour
-
-    !global $COLOR_MOTIVATION_LIGHT = $COLOR_OH_MOTIVATION_LIGHT
-    !global $COLOR_MOTIVATION_DARK = $COLOR_OH_MOTIVATION_DARK
-
-    !global $COLOR_STRATEGY_LIGHT = $COLOR_OH_STRATEGY_LIGHT
-    !global $COLOR_STRATEGY_DARK = $COLOR_OH_STRATEGY_DARK
-
-    !global $COLOR_BUSINESS_LIGHT = $COLOR_OH_BUSINESS_LIGHT
-    !global $COLOR_BUSINESS_DARK = $COLOR_OH_BUSINESS_DARK
-
-    !global $COLOR_APPLICATION_LIGHT = $COLOR_OH_APPLICATION_LIGHT
-    !global $COLOR_APPLICATION_DARK = $COLOR_OH_APPLICATION_DARK
-
-    !global $COLOR_TECHNOLOGY_LIGHT = $COLOR_OH_TECHNOLOGY_LIGHT
-    !global $COLOR_TECHNOLOGY_DARK = $COLOR_OH_TECHNOLOGY_DARK
-
-    !global $COLOR_IMPLEMENTATION_LIGHT = $COLOR_OH_IMPLEMENTATION_LIGHT
-    !global $COLOR_IMPLEMENTATION_DARK = $COLOR_OH_IMPLEMENTATION_DARK
-
-    !global $COLOR_PHYSICAL_LIGHT = $COLOR_OH_PHYSICAL_LIGHT
-    !global $COLOR_PHYSICAL_DARK = $COLOR_OH_PHYSICAL_DARK
-
-    !global $COLOR_HIGHLIGHTED_LIGHT = $COLOR_OH_HIGHLIGHTED_LIGHT
-    !global $COLOR_HIGHLIGHTED_DARK = $COLOR_OH_HIGHLIGHTED_DARK
-
-    !global $COLOR_NEW_LIGHT = $COLOR_OH_NEW_LIGHT
-    !global $COLOR_NEW_DARK = $COLOR_OH_NEW_DARK
-
-
-!endif
+    !endif
 
 !endprocedure
 
@@ -269,7 +267,7 @@
 
 
 !procedure Preload_Theme_OntarioHealth()
-    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
+    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
         Preload_Theme_OntarioHealth_Colors()
         Preload_Theme_OntarioHealth_ArchimateColors()
         Preload_Theme_OntarioHealth_Layout()
@@ -312,7 +310,7 @@
 
 !procedure Load_Theme_OntarioHealth()
 
-    !if ($Is_Theme_Registered("OntarioHealth") == %true() )
+    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
     !endif
 
