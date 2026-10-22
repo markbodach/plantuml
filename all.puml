@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-19 16:00:02 EDT
-' Build Commit Hash: 3cc2a1761a60e9e504589cd07ddd01d7bf15b952
-' Build Commit Comment: missing OH theme colors for ArchiMate
+' Generated on: 2026-10-22 16:58:23 EDT
+' Build Commit Hash: f9cf25a19ba56c8321918023501d50ab7da9c921
+' Build Commit Comment: physical and technology colors
 ' ========================================================
 
 ' src/all.puml
@@ -341,13 +341,13 @@
 '
 ' LOADING ORDER
 '
-'   Preload_Lib_Styles_BEFORE()
+'   Preload_Lib_Theme_BEFORE()
 '       ↓
-'   Preload_Lib_Styles_Stdlib()
-'   Preload_Lib_Styles_Archimate()
 '   Registered Theme Preload Procedures
+'   Preload_Lib_Theme_Stdlib()
+'   Preload_Lib_Theme_Archimate()
 '       ↓
-'   Preload_Lib_Styles_AFTER()
+'   Preload_Lib_Theme_AFTER()
 '
 '       ↓
 '
@@ -372,7 +372,7 @@
 '
 ' Example:
 '
-'   !procedure Preload_Lib_Styles_BEFORE()
+'   !procedure Preload_Lib_Theme_BEFORE()
 '
 '       !$SPACING_UNIT = 8
 '
@@ -424,11 +424,11 @@
 '
 ' Consumers may redefine these procedures.
 '
-!procedure Preload_Lib_Styles_BEFORE()
+!procedure Preload_Lib_Theme_BEFORE()
 'DO NOT ADD CODE
 !endprocedure
 
-!procedure Preload_Lib_Styles_AFTER()
+!procedure Preload_Lib_Theme_AFTER()
 'DO NOT ADD CODE
 !endprocedure
 
@@ -456,8 +456,9 @@
 !global $UNSET = "__UML_UNSET__"
 ' --- End Import: src/libs/stdlib/vars/_root.puml ---
 
-
 ' --- Importing: src/libs/stdlib/vars/_colors.puml ---
+
+
 '---------------------------------------------------------
 ' Contrast defaults
 '---------------------------------------------------------
@@ -484,289 +485,7 @@
 ' RGB luminance ceiling (0-255)
 !global $LIGHTNESS_THRESHOLD = 223
 
-
-
-'---------------------------------------------------------
-' Color Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-!global $COLOR_TRANSPARENT = "#FFFFFF00"
-!global $COLOR_NONE ?= $COLOR_TRANSPARENT
-
-!global $COLOR_PRIMARY ?= "#D6EAF8"
-!global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
-!global $COLOR_PRIMARY_DARK ?= "#D6EAF8"
-
-!global $COLOR_WARNING ?= "#FCF3CF"
-!global $COLOR_WARNING_LIGHT ?= "#FCF3CF"
-!global $COLOR_WARNING_DARK ?= "#FCF3CF"
-
-!global $COLOR_SUCCESS ?= "#D5F5E3"
-!global $COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
-!global $COLOR_SUCCESS_DARK ?= "#D5F5E3"
-
-!global $COLOR_ERROR ?= "#CD0000"
-!global $COLOR_ERROR_LIGHT ?= "#CD0000"
-!global $COLOR_ERROR_DARK ?= "#CD0000"
-
-!global $COLOR_BODY ?= "#ffffff"
-!global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
-!global $COLOR_BORDER ?= "#5D6D7E"
-
-!global $COLOR_TEXT ?= "#000000"
-!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
-
-
-!global $COLOR_EMPHASIS ?= "#E0B8D4"
-!global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
-!global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
-
-
-' COLOR_LIGHT
-' COLOR_DARK
-
-!global $COLOR_DISABLED_DARK ?= "#4D4D4D"
-!global $COLOR_DISABLED ?= "#737373"
-!global $COLOR_DISABLED_LIGHT ?= "#737373"
 ' --- End Import: src/libs/stdlib/vars/_colors.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_fonts.puml ---
-
-'---------------------------------------------------------
-' Font Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-!global $NAME_FONT ?= "Segoe UI"
-!global $SIZE_FONT ?= 12
-!global $SIZE_FONT_TITLE ?= 18
-!global $SIZE_FONT_LEGEND ?= 11
-!global $SIZE_FONT_ARROW ?= 11
-
-!global $COLOR_FONT ?= $COLOR_TEXT
-' --- End Import: src/libs/stdlib/vars/_fonts.puml ---
-
-
-' --- Importing: src/libs/stdlib/vars/_spacing.puml ---
-'---------------------------------------------------------
-' Bootstrap-inspired spacing scale
-'---------------------------------------------------------
-
-!global $SPACING_UNIT_ENABLED ?= %true()
-!global $SPACING_UNIT ?= 5
-
-
-!if $SPACING_UNIT_ENABLED == %true()
-    !global $SPACING_0 ?= 0
-    !global $SPACING_1 ?= ($SPACING_UNIT * 1)
-    !global $SPACING_2 ?= ($SPACING_UNIT * 2)
-    !global $SPACING_3 ?= ($SPACING_UNIT * 3)
-    !global $SPACING_4 ?= ($SPACING_UNIT * 4)
-    !global $SPACING_5 ?= ($SPACING_UNIT * 6)
-
-!else
-    !global $SPACING_0 ?= 0
-    !global $SPACING_1 ?= 5
-    !global $SPACING_2 ?= 10
-    !global $SPACING_3 ?= 15
-    !global $SPACING_4 ?= 20
-    !global $SPACING_5 ?= 30
-    
-!endif
-' --- End Import: src/libs/stdlib/vars/_spacing.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_borders.puml ---
-
-'---------------------------------------------------------
-' Border Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-!global $BORDER_THICKNESS ?= 1
-!global $BORDER_THICKNESS_BOLD ?= 2
-!global $BORDER_THICKNESS_POD ?= 2
-
-!global $BORDER_0 ?= 0
-!global $BORDER_1 ?= 1
-!global $BORDER_2 ?= 2
-!global $BORDER_3 ?= 3
-!global $BORDER_4 ?= 4
-!global $BORDER_5 ?= 5
-' --- End Import: src/libs/stdlib/vars/_borders.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_corner.puml ---
-
-'---------------------------------------------------------
-' Border Radius Utility Variables
-'---------------------------------------------------------
-
-!global $ROUND_SHARP ?= 1
-!global $ROUND_DIAGONAL ?= 12
-!global $ROUND_STANDARD ?= 25
-!global $ROUND_LARGE ?= 80
-
-!global $ROUND_0 ?= $ROUND_SHARP
-!global $ROUND_1 ?= 6
-!global $ROUND_2 ?= $ROUND_DIAGONAL
-!global $ROUND_3 ?= 18
-!global $ROUND_4 ?= $ROUND_STANDARD
-!global $ROUND_5 ?= 40
-
-!global $ROUND_PILL ?= 100
-!global $ROUND_CIRCLE ?= 200
-
-
-' --- End Import: src/libs/stdlib/vars/_corner.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_width.puml ---
-'---------------------------------------------------------
-' Width Utility Variables
-'---------------------------------------------------------
-
-!global $WIDTH_XS ?= 75
-!global $WIDTH_SM ?= 150
-!global $WIDTH_MD ?= 250
-!global $WIDTH_LG ?= 400
-!global $WIDTH_XL ?= 600
-!global $WIDTH_XXL ?= 800
-
-
-' --- End Import: src/libs/stdlib/vars/_width.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_height.puml ---
-'---------------------------------------------------------
-' Height Utility Variables
-'---------------------------------------------------------
-
-!global $HEIGHT_XS ?= 50
-!global $HEIGHT_SM ?= 75
-!global $HEIGHT_MD ?= 100
-!global $HEIGHT_LG ?= 150
-!global $HEIGHT_XL ?= 200
-' --- End Import: src/libs/stdlib/vars/_height.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_layout.puml ---
-
-'---------------------------------------------------------
-' Layout Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-!global $NODE_SEP ?= 75
-!global $RANK_SEP ?= 75
-!global $ROUND_CORNER ?= 10
-!global $MARGIN ?= 15
-!global $PADDING ?= 10
-
-!global $SHADOWING ?= %false()
-!global $LINE_TYPE ?= "ortho"
-!global $COLOR_LINE ?= $COLOR_TEXT
-!global $SIZE_LINE ?= 2
-
-!global $DEFAULT_TEXT_ALIGNMENT ?= "center"
-
-
-'---------------------------------------------------------
-' Container / Boundary Constants
-'---------------------------------------------------------
-
-!global $COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
-
-'---------------------------------------------------------
-' Legend Functions
-'---------------------------------------------------------
-
-' legend right
-' |= Archimate Category |= Color |
-' | <back:E8DAEF>      </back> | External System |
-' | <back:D6EAF8>      </back> | Logical Component / Service |
-' | <back:FCF3CF>      </back> | Business Information Authority |
-' endlegend
-' --- End Import: src/libs/stdlib/vars/_layout.puml ---
-
-
-' --- Importing: src/libs/stdlib/vars/_icons.puml ---
-
-'---------------------------------------------------------
-' Icon Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-
-'Actors
-!global $STYLE_ACTOR ?= awesome
-
-!global $COLOR_BORDER_ACTOR ?= "#0D47A1"
-!global $SIZE_BORDER_ACTOR ?= 3
-!global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
-
-' --- End Import: src/libs/stdlib/vars/_icons.puml ---
-
-
-' --- Importing: src/libs/stdlib/vars/_element.puml ---
-
-!global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
-!global $STYLE_FONT_ELEMENT ?= ""
-
-!global $COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
-!global $COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
-!global $ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
-
-!global $MARGIN_ELEMENT ?= 20
-!global $PADDING_ELEMENT ?= 15
-!global $ROUND_CORNER_ELEMENT ?= $ROUND_CORNER
-
-!global $COLOR_LINE_ELEMENT ?= $COLOR_LINE
-!global $SIZE_LINE_ELEMENT ?= $SIZE_LINE
-' --- End Import: src/libs/stdlib/vars/_element.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_title.puml ---
-
-
-'---------------------------------------------------------
-' Title Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-
-
-!global $COLOR_FONT_TITLE ?= $COLOR_FONT
-!global $STYLE_FONT_TITLE ?= "bold"
-
-!global $COLOR_BACKGROUND_TITLE ?= $COLOR_PRIMARY_LIGHT
-!global $ALIGNMENT_HORIZONTAL_TITLE ?= "center"
-
-!global $MARGIN_TITLE ?= 20
-!global $PADDING_TITLE ?= 15
-!global $ROUND_CORNER_TITLE ?= $ROUND_CORNER
-
-!global $COLOR_LINE_TITLE ?= $COLOR_LINE
-!global $SIZE_LINE_TITLE ?= $SIZE_LINE
-
-' --- End Import: src/libs/stdlib/vars/_title.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_component.puml ---
-
-!global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
-!global $STYLE_FONT_COMPONENT ?= ""
-
-!global $COLOR_BACKGROUND_COMPONENT ?= $COLOR_PRIMARY
-!global $ALIGNMENT_HORIZONTAL_COMPONENT ?= "left"
-
-!global $MARGIN_COMPONENT ?= 20
-!global $PADDING_COMPONENT ?= 15
-!global $ROUND_CORNER_COMPONENT ?= $ROUND_CORNER
-
-!global $COLOR_LINE_COMPONENT ?= $COLOR_LINE
-!global $SIZE_LINE_COMPONENT ?= $SIZE_LINE
-' --- End Import: src/libs/stdlib/vars/_component.puml ---
 
 
 ' --- End Import: src/libs/stdlib/vars/index.puml ---
@@ -782,34 +501,6 @@
 
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 ' --- End Import: src/libs/archimate/vars/_root.puml ---
-
-' --- Importing: src/libs/archimate/vars/_colors.puml ---
-' src/themes/archimate/_colors.puml
-
-
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-
-    !global $COLOR_MOTIVATION ?= "#CCCCFF"
-    !global $COLOR_STRATEGY ?= "#F5DEAA"
-    !global $COLOR_BUSINESS ?= "#FFFF99"
-    !global $COLOR_APPLICATION ?= "#99FFFF"
-    !global $COLOR_TECHNOLOGY ?= "#AFFFAF"
-    !global $COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
-    !global $COLOR_IMPLEMENTATION ?= "#FFE0E0"
-    !global $COLOR_HIGHLIGHTED ?= "#005DEF"
-    !global $COLOR_NEW ?= "#005700"
-
-!endif
-' --- End Import: src/libs/archimate/vars/_colors.puml ---
-
-' --- Importing: src/libs/archimate/vars/_fonts.puml ---
-' src/themes/archimate/_fonts.puml
-
-
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-    
-!endif
-' --- End Import: src/libs/archimate/vars/_fonts.puml ---
 
 ' --- End Import: src/libs/archimate/vars/index.puml ---
 
@@ -2940,18 +2631,380 @@
 'STEP 3 :: THEME includes
 ' --- Importing: src/libs/stdlib/theme/index.puml ---
 
-' THIS FILE SHOULD BE BLANK
+' --- Importing: src/libs/stdlib/theme/_colors.puml ---
+
+!procedure Preload_Lib_Theme_StdLib_Colors()
+'---------------------------------------------------------
+' Color Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!global $COLOR_TRANSPARENT = "#FFFFFF00"
+!global $COLOR_NONE ?= $COLOR_TRANSPARENT
+
+!global $COLOR_PRIMARY ?= "#D6EAF8"
+!global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!global $COLOR_PRIMARY_DARK ?= "#D6EAF8"
+
+!global $COLOR_WARNING ?= "#FCF3CF"
+!global $COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!global $COLOR_WARNING_DARK ?= "#FCF3CF"
+
+!global $COLOR_SUCCESS ?= "#D5F5E3"
+!global $COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!global $COLOR_SUCCESS_DARK ?= "#D5F5E3"
+
+!global $COLOR_ERROR ?= "#CD0000"
+!global $COLOR_ERROR_LIGHT ?= "#CD0000"
+!global $COLOR_ERROR_DARK ?= "#CD0000"
+
+!global $COLOR_BODY ?= "#ffffff"
+!global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
+!global $COLOR_BORDER ?= "#5D6D7E"
+
+!global $COLOR_TEXT ?= "#000000"
+!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
+
+
+!global $COLOR_EMPHASIS ?= "#E0B8D4"
+!global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
+!global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
+
+
+' COLOR_LIGHT
+' COLOR_DARK
+
+!global $COLOR_DISABLED_DARK ?= "#4D4D4D"
+!global $COLOR_DISABLED ?= "#737373"
+!global $COLOR_DISABLED_LIGHT ?= "#737373"
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_colors.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_fonts.puml ---
+!procedure Preload_Lib_Theme_StdLib_Fonts()
+
+'---------------------------------------------------------
+' Font Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!global $NAME_FONT ?= "Segoe UI"
+!global $SIZE_FONT ?= 12
+!global $SIZE_FONT_TITLE ?= 18
+!global $SIZE_FONT_LEGEND ?= 11
+!global $SIZE_FONT_ARROW ?= 11
+
+!global $COLOR_FONT ?= $COLOR_TEXT
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_fonts.puml ---
+
+
+' --- Importing: src/libs/stdlib/theme/_spacing.puml ---
+!procedure Preload_Lib_Theme_StdLib_Spacing()
+
+'---------------------------------------------------------
+' Bootstrap-inspired spacing scale
+'---------------------------------------------------------
+
+!global $SPACING_UNIT_ENABLED ?= %true()
+!global $SPACING_UNIT ?= 5
+
+
+!if $SPACING_UNIT_ENABLED == %true()
+    !global $SPACING_0 ?= 0
+    !global $SPACING_1 ?= ($SPACING_UNIT * 1)
+    !global $SPACING_2 ?= ($SPACING_UNIT * 2)
+    !global $SPACING_3 ?= ($SPACING_UNIT * 3)
+    !global $SPACING_4 ?= ($SPACING_UNIT * 4)
+    !global $SPACING_5 ?= ($SPACING_UNIT * 6)
+
+!else
+    !global $SPACING_0 ?= 0
+    !global $SPACING_1 ?= 5
+    !global $SPACING_2 ?= 10
+    !global $SPACING_3 ?= 15
+    !global $SPACING_4 ?= 20
+    !global $SPACING_5 ?= 30
+    
+!endif
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_spacing.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_borders.puml ---
+
+!procedure Preload_Lib_Theme_StdLib_Borders()
+'---------------------------------------------------------
+' Border Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!global $BORDER_THICKNESS ?= 1
+!global $BORDER_THICKNESS_BOLD ?= 2
+!global $BORDER_THICKNESS_POD ?= 2
+
+!global $BORDER_0 ?= 0
+!global $BORDER_1 ?= 1
+!global $BORDER_2 ?= 2
+!global $BORDER_3 ?= 3
+!global $BORDER_4 ?= 4
+!global $BORDER_5 ?= 5
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_borders.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_corners.puml ---
+!procedure Preload_Lib_Theme_StdLib_Corners()
+'---------------------------------------------------------
+' Border Radius Utility Variables
+'---------------------------------------------------------
+
+!global $ROUND_SHARP ?= 1
+!global $ROUND_DIAGONAL ?= 12
+!global $ROUND_STANDARD ?= 25
+!global $ROUND_LARGE ?= 80
+
+!global $ROUND_0 ?= $ROUND_SHARP
+!global $ROUND_1 ?= 6
+!global $ROUND_2 ?= $ROUND_DIAGONAL
+!global $ROUND_3 ?= 18
+!global $ROUND_4 ?= $ROUND_STANDARD
+!global $ROUND_5 ?= 40
+
+!global $ROUND_PILL ?= 100
+!global $ROUND_CIRCLE ?= 200
+
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_corners.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_widths.puml ---
+!procedure Preload_Lib_Theme_StdLib_Widths()
+'---------------------------------------------------------
+' Width Utility Variables
+'---------------------------------------------------------
+
+!global $WIDTH_XS ?= 75
+!global $WIDTH_SM ?= 150
+!global $WIDTH_MD ?= 250
+!global $WIDTH_LG ?= 400
+!global $WIDTH_XL ?= 600
+!global $WIDTH_XXL ?= 800
+
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_widths.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_heights.puml ---
+!procedure Preload_Lib_Theme_StdLib_Heights()
+'---------------------------------------------------------
+' Height Utility Variables
+'---------------------------------------------------------
+
+!global $HEIGHT_XS ?= 50
+!global $HEIGHT_SM ?= 75
+!global $HEIGHT_MD ?= 100
+!global $HEIGHT_LG ?= 150
+!global $HEIGHT_XL ?= 200
+
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_heights.puml ---
+
+
+' --- Importing: src/libs/stdlib/theme/_element.puml ---
+!procedure Preload_Lib_Theme_StdLib_Element()
+
+!global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
+!global $STYLE_FONT_ELEMENT ?= ""
+
+!global $COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
+!global $COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
+!global $ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
+
+!global $MARGIN_ELEMENT ?= 20
+!global $PADDING_ELEMENT ?= 15
+!global $ROUND_CORNER_ELEMENT ?= $ROUND_CORNER
+
+!global $COLOR_LINE_ELEMENT ?= $COLOR_LINE
+!global $SIZE_LINE_ELEMENT ?= $SIZE_LINE
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_element.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_layout.puml ---
+!procedure Preload_Lib_Theme_StdLib_Layout()
+'---------------------------------------------------------
+' Layout Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+!global $NODE_SEP ?= 75
+!global $RANK_SEP ?= 75
+!global $ROUND_CORNER ?= 10
+!global $MARGIN ?= 15
+!global $PADDING ?= 10
+
+!global $SHADOWING ?= %false()
+!global $LINE_TYPE ?= "ortho"
+!global $COLOR_LINE ?= $COLOR_TEXT
+!global $SIZE_LINE ?= 2
+
+!global $DEFAULT_TEXT_ALIGNMENT ?= "center"
+
+
+'---------------------------------------------------------
+' Container / Boundary Constants
+'---------------------------------------------------------
+
+!global $COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
+
+'---------------------------------------------------------
+' Legend Functions
+'---------------------------------------------------------
+
+' legend right
+' |= Archimate Category |= Color |
+' | <back:E8DAEF>      </back> | External System |
+' | <back:D6EAF8>      </back> | Logical Component / Service |
+' | <back:FCF3CF>      </back> | Business Information Authority |
+' endlegend
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_layout.puml ---
+
+
+' --- Importing: src/libs/stdlib/theme/_icons.puml ---
+!procedure Preload_Lib_Theme_StdLib_Icons()
+'---------------------------------------------------------
+' Icon Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+
+'Actors
+!global $STYLE_ACTOR ?= awesome
+
+!global $COLOR_BORDER_ACTOR ?= "#0D47A1"
+!global $SIZE_BORDER_ACTOR ?= 3
+!global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_icons.puml ---
+
+
+' --- Importing: src/libs/stdlib/theme/_title.puml ---
+!procedure Preload_Lib_Theme_StdLib_Title()
+
+'---------------------------------------------------------
+' Title Constants
+'
+' !$variable_name ?= "variable_value"
+'---------------------------------------------------------
+
+
+
+!global $COLOR_FONT_TITLE ?= $COLOR_FONT
+!global $STYLE_FONT_TITLE ?= "bold"
+
+!global $COLOR_BACKGROUND_TITLE ?= $COLOR_PRIMARY_LIGHT
+!global $ALIGNMENT_HORIZONTAL_TITLE ?= "center"
+
+!global $MARGIN_TITLE ?= 20
+!global $PADDING_TITLE ?= 15
+!global $ROUND_CORNER_TITLE ?= $ROUND_CORNER
+
+!global $COLOR_LINE_TITLE ?= $COLOR_LINE
+!global $SIZE_LINE_TITLE ?= $SIZE_LINE
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_title.puml ---
+
+' --- Importing: src/libs/stdlib/theme/_component.puml ---
+!procedure Preload_Lib_Theme_StdLib_Component()
+
+!global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
+!global $STYLE_FONT_COMPONENT ?= ""
+
+!global $COLOR_BACKGROUND_COMPONENT ?= $COLOR_PRIMARY
+!global $ALIGNMENT_HORIZONTAL_COMPONENT ?= "left"
+
+!global $MARGIN_COMPONENT ?= 20
+!global $PADDING_COMPONENT ?= 15
+!global $ROUND_CORNER_COMPONENT ?= $ROUND_CORNER
+
+!global $COLOR_LINE_COMPONENT ?= $COLOR_LINE
+!global $SIZE_LINE_COMPONENT ?= $SIZE_LINE
+
+!endprocedure
+' --- End Import: src/libs/stdlib/theme/_component.puml ---
+
+
+
+
+
+!procedure Preload_Lib_Theme_Stdlib()
+    Preload_Lib_Theme_StdLib_Colors()
+    Preload_Lib_Theme_StdLib_Fonts()
+
+    Preload_Lib_Theme_StdLib_Spacing()
+    Preload_Lib_Theme_StdLib_Borders()
+    Preload_Lib_Theme_StdLib_Corners()
+    Preload_Lib_Theme_StdLib_Widths()
+    Preload_Lib_Theme_StdLib_Heights()
+
+    Preload_Lib_Theme_StdLib_Element()
+    Preload_Lib_Theme_StdLib_Layout()
+
+    Preload_Lib_Theme_StdLib_Icons()
+    Preload_Lib_Theme_StdLib_Title()
+    Preload_Lib_Theme_StdLib_Component()
+    
+!endprocedure
 ' --- End Import: src/libs/stdlib/theme/index.puml ---
 
 ' --- Importing: src/libs/archimate/theme/index.puml ---
+' --- Importing: src/libs/archimate/theme/_fonts.puml ---
+!procedure Preload_Lib_Theme_Archimate_Fonts()
 
+    '=====================================================
+    ' Typography
+    '=====================================================
+
+    !global $ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
+
+    !global $ARCH_DEFAULT_FONT = $NAME_FONT
+    !global $ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
+
+    !global $ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
+    !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
+
+!endprocedure
+' --- End Import: src/libs/archimate/theme/_fonts.puml ---
 
 ' --- Importing: src/libs/archimate/theme/_colors.puml ---
 
+!procedure Preload_Lib_Theme_Archimate_Colors()
+
+    !global $COLOR_MOTIVATION ?= "#CCCCFF"
+    !global $COLOR_STRATEGY ?= "#F5DEAA"
+    !global $COLOR_BUSINESS ?= "#FFFF99"
+    !global $COLOR_APPLICATION ?= "#99FFFF"
+    !global $COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !global $COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
+    !global $COLOR_IMPLEMENTATION ?= "#FFE0E0"
+    !global $COLOR_HIGHLIGHTED ?= "#005DEF"
+    !global $COLOR_NEW ?= "#005700"
 
 
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-
+    'DERIVATES
     !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
     !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
 
@@ -2980,9 +3033,309 @@
     !global $COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
     !global $COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
 
-!endif
+!endprocedure
 ' --- End Import: src/libs/archimate/theme/_colors.puml ---
 
+' --- Importing: src/libs/archimate/theme/_mapped_colors.puml ---
+
+
+!procedure Preload_Lib_Theme_Archimate_Mapped_Colors()
+
+    '=====================================================
+    ' Layer Colors
+    '=====================================================
+
+    !global $ARCH_STRATEGY_FILLCOLOR ?= $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_BUSINESS_FILLCOLOR ?= $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_APPLICATION_FILLCOLOR ?= $resolve_literal_color($COLOR_APPLICATION)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
+
+    ' ArchiMate physical layer
+    !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
+
+    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
+
+    ' Other layer
+    !global $ARCH_OTHER_FILLCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+
+
+    '=====================================================
+    ' Border Colors
+    '=====================================================
+    !global $ARCH_STRATEGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_BUSINESS_BORDERCOLOR ?= $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_APPLICATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_TECHNOLOGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+
+    ' ArchiMate physical layer
+    !global $ARCH_PHYSICAL_BORDERCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL_DARK)
+
+    !global $ARCH_MOTIVATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION_DARK)
+
+    !global $ARCH_IMPLEMENTATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
+
+    ' Other layer
+    !global $ARCH_OTHER_BORDERCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_DARK)
+
+
+    '=====================================================
+    ' Composite Colors
+    '=====================================================
+
+
+    '=====================================================
+    ' Junction Colors
+    '=====================================================
+
+    !global $ARCH_JUNCTIONOR_FILLCOLOR ?= $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+
+    '=====================================================
+    ' Containers
+    '=====================================================
+
+    !global $ARCH_GROUP_FILLCOLOR ?= $resolve_literal_color($COLOR_DISABLED_LIGHT)
+
+    !global $ARCH_FOLDER_LINECOLOR ?= $resolve_literal_color($COLOR_BORDER)
+
+    '=====================================================
+    ' Relationships
+    '=====================================================
+
+    !global $ARCH_RELATIONSHIP_LINECOLOR ?= $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+
+!endprocedure
+' --- End Import: src/libs/archimate/theme/_mapped_colors.puml ---
+
+' --- Importing: src/libs/archimate/theme/_corners.puml ---
+
+!procedure Preload_Lib_Theme_Archimate_Corners()
+
+    '=====================================================
+    ' Corner Radius
+    '=====================================================
+    !global $ARCH_SHARP_CORNER = $ROUND_SHARP
+    !global $ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
+    !global $ARCH_ROUND_CORNER = $ROUND_STANDARD
+    !global $ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
+
+
+!endprocedure
+' --- End Import: src/libs/archimate/theme/_corners.puml ---
+
+' --- Importing: src/libs/archimate/theme/_widths.puml ---
+
+!procedure Preload_Lib_Theme_Archimate_Widths()
+
+    '=====================================================
+    ' Widths
+    '=====================================================
+
+    !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+
+!endprocedure
+' --- End Import: src/libs/archimate/theme/_widths.puml ---
+
+' --- Importing: src/libs/archimate/theme/_element.puml ---
+!procedure Write_Lib_Style_Archimate_Element()
+
+    
+    !$defaultBg = ""
+    !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
+
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
+    !endif
+    
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_FILLCOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
+    !endif
+    
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
+    !endif
+    
+
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
+    !endif
+    
+
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
+    !endif
+    
+
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
+    !endif
+    
+
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
+    !endif
+    
+
+    !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
+    !endif
+    
+    
+    <style>
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationLc
+        
+    }
+
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyLc
+        
+    }
+    
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessLc
+    }
+    
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationLc
+    }
+    
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyLc
+    }
+    
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalLc
+    }
+    
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationLc
+    }
+    
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherLc
+    }
+    
+</style>
+
+
+!if ($defaultBg != "") && ($defaultFg != "")
+<style>
+    element {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+    rectangle {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+
+    .default {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+</style>
+
+!endif
+
+
+!endprocedure
+' --- End Import: src/libs/archimate/theme/_element.puml ---
+
+
+
+!procedure Preload_Lib_Theme_Archimate()
+
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        Preload_Lib_Theme_Archimate_Colors()
+        Preload_Lib_Theme_Archimate_Mapped_Colors()
+        Preload_Lib_Theme_Archimate_Fonts()
+        Preload_Lib_Theme_Archimate_Corners()
+        Preload_Lib_Theme_Archimate_Widths()
+
+    !endif
+
+!endprocedure 
+
+
+!procedure Load_Lib_Styles_Archimate()
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
+        Write_Lib_Style_Archimate_Element()
+    !endif
+
+!endprocedure 
 ' --- End Import: src/libs/archimate/theme/index.puml ---
 
 
@@ -3429,12 +3782,6 @@ component {
 
 
 
-
-!procedure Preload_Lib_Styles_Stdlib()
-
-    
-!endprocedure
-
 !procedure Load_Lib_Styles_Stdlib()
 
     Write_Lib_Style_Stdlib_Utilities()
@@ -3452,323 +3799,7 @@ component {
 ' --- End Import: src/libs/stdlib/styles/index.puml ---
 
 ' --- Importing: src/libs/archimate/styles/index.puml ---
-' --- Importing: src/libs/archimate/styles/_fonts.puml ---
-!procedure Preload_Lib_Styles_Archimate_Fonts()
 
-    '=====================================================
-    ' Typography
-    '=====================================================
-
-    !global $ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
-
-    !global $ARCH_DEFAULT_FONT = $NAME_FONT
-    !global $ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
-
-    !global $ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
-    !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
-
-!endprocedure
-' --- End Import: src/libs/archimate/styles/_fonts.puml ---
-
-' --- Importing: src/libs/archimate/styles/_colors.puml ---
-
-
-!procedure Preload_Lib_Styles_Archimate_Colors()
-
-    '=====================================================
-    ' Layer Colors
-    '=====================================================
-
-    !global $ARCH_STRATEGY_FILLCOLOR ?= $resolve_literal_color($COLOR_STRATEGY)
-    !global $ARCH_BUSINESS_FILLCOLOR ?= $resolve_literal_color($COLOR_BUSINESS)
-    !global $ARCH_APPLICATION_FILLCOLOR ?= $resolve_literal_color($COLOR_APPLICATION)
-    !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
-
-    ' ArchiMate physical layer
-    !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
-
-    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
-    !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
-
-    ' Other layer
-    !global $ARCH_OTHER_FILLCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
-
-
-    '=====================================================
-    ' Border Colors
-    '=====================================================
-    !global $ARCH_STRATEGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_STRATEGY_DARK)
-    !global $ARCH_BUSINESS_BORDERCOLOR ?= $resolve_literal_color($COLOR_BUSINESS_DARK)
-    !global $ARCH_APPLICATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_APPLICATION_DARK)
-    !global $ARCH_TECHNOLOGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
-
-    ' ArchiMate physical layer
-    !global $ARCH_PHYSICAL_BORDERCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL_DARK)
-
-    !global $ARCH_MOTIVATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION_DARK)
-
-    !global $ARCH_IMPLEMENTATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
-
-    ' Other layer
-    !global $ARCH_OTHER_BORDERCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_DARK)
-
-
-    '=====================================================
-    ' Composite Colors
-    '=====================================================
-
-
-    '=====================================================
-    ' Junction Colors
-    '=====================================================
-
-    !global $ARCH_JUNCTIONOR_FILLCOLOR ?= $resolve_literal_color($COLOR_BODY)
-    !global $ARCH_JUNCTIONAND_FILLCOLOR ?= $resolve_literal_color($COLOR_TEXT)
-
-    '=====================================================
-    ' Containers
-    '=====================================================
-
-    !global $ARCH_GROUP_FILLCOLOR ?= $resolve_literal_color($COLOR_DISABLED_LIGHT)
-
-    !global $ARCH_FOLDER_LINECOLOR ?= $resolve_literal_color($COLOR_BORDER)
-
-    '=====================================================
-    ' Relationships
-    '=====================================================
-
-    !global $ARCH_RELATIONSHIP_LINECOLOR ?= $resolve_literal_color($COLOR_LINE)
-    !global $ARCH_RELATIONSHIP_FONTCOLOR ?= $resolve_literal_color($COLOR_TEXT)
-
-!endprocedure
-' --- End Import: src/libs/archimate/styles/_colors.puml ---
-
-' --- Importing: src/libs/archimate/styles/_corner.puml ---
-
-!procedure Preload_Lib_Styles_Archimate_Corners()
-
-    '=====================================================
-    ' Corner Radius
-    '=====================================================
-    !global $ARCH_SHARP_CORNER = $ROUND_SHARP
-    !global $ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
-    !global $ARCH_ROUND_CORNER = $ROUND_STANDARD
-    !global $ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
-
-
-!endprocedure
-' --- End Import: src/libs/archimate/styles/_corner.puml ---
-
-' --- Importing: src/libs/archimate/styles/_width.puml ---
-
-!procedure Preload_Lib_Styles_Archimate_Widths()
-
-    '=====================================================
-    ' Widths
-    '=====================================================
-
-    !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
-    !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
-
-!endprocedure
-' --- End Import: src/libs/archimate/styles/_width.puml ---
-
-' --- Importing: src/libs/archimate/styles/_element.puml ---
-!procedure Write_Lib_Style_Archimate_Element()
-
-    
-    !$defaultBg = ""
-    !$defaultFg = ""
-    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
-
-    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
-    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
-    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
-    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
-        !$defaultBg = $motivationBg
-        !$defaultFg = $motivationFg
-        !$defaultLc = $motivationLc
-    !endif
-    
-    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_FILLCOLOR)
-    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
-    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
-        !$defaultBg = $strategyBg
-        !$defaultFg = $strategyFg
-        !$defaultLc = $strategyLc
-    !endif
-    
-    !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
-    !$businessFg = $resolve_style_color("AUTO", $businessBg)
-    
-    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
-        !$defaultBg = $businessBg
-        !$defaultFg = $businessFg
-        !$defaultLc = $businessLc
-    !endif
-    
-
-    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
-    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
-    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
-        !$defaultBg = $applicationBg
-        !$defaultFg = $applicationFg
-        !$defaultLc = $applicationLc
-    !endif
-    
-
-    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
-    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
-    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
-        !$defaultBg = $technologyBg
-        !$defaultFg = $technologyFg
-        !$defaultLc = $technologyLc
-    !endif
-    
-
-    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
-    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
-    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
-        !$defaultBg = $physicalBg
-        !$defaultFg = $physicalFg
-        !$defaultLc = $physicalLc
-    !endif
-    
-
-    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
-    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
-    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
-        !$defaultBg = $implementationBg
-        !$defaultFg = $implementationFg
-        !$defaultLc = $implementationLc
-    !endif
-    
-
-    !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
-    !$otherFg = $resolve_style_color("AUTO", $otherBg)
-    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
-
-    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
-        !$defaultBg = $otherBg
-        !$defaultFg = $otherFg
-        !$defaultLc = $otherLc
-    !endif
-    
-    
-    <style>
-    .motivation {
-        BackgroundColor $motivationBg
-        FontColor $motivationFg
-        LineColor $motivationLc
-        
-    }
-
-    .strategy {
-        BackgroundColor $strategyBg
-        FontColor $strategyFg
-        LineColor $strategyLc
-        
-    }
-    
-    .business {
-        BackgroundColor $businessBg
-        FontColor $businessFg
-        LineColor $businessLc
-    }
-    
-    .application {
-        BackgroundColor $applicationBg
-        FontColor $applicationFg
-        LineColor $applicationLc
-    }
-    
-    .technology {
-        BackgroundColor $technologyBg
-        FontColor $technologyFg
-        LineColor $technologyLc
-    }
-    
-    .physical {
-        BackgroundColor $physicalBg
-        FontColor $physicalFg
-        LineColor $physicalLc
-    }
-    
-    .implementation {
-        BackgroundColor $implementationBg
-        FontColor $implementationFg
-        LineColor $implementationLc
-    }
-    
-    .other {
-        BackgroundColor $otherBg
-        FontColor $otherFg
-        LineColor $otherLc
-    }
-    
-</style>
-
-
-!if ($defaultBg != "") && ($defaultFg != "")
-<style>
-    element {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-    rectangle {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-
-    .default {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-</style>
-
-!endif
-
-
-!endprocedure
-' --- End Import: src/libs/archimate/styles/_element.puml ---
-
-
-
-!procedure Preload_Lib_Styles_Archimate()
-
-    !if ($ARCHIMATE_LIB_ENABLED == %true() )
-        Preload_Lib_Styles_Archimate_Colors()
-        Preload_Lib_Styles_Archimate_Fonts()
-        Preload_Lib_Styles_Archimate_Corners()
-        Preload_Lib_Styles_Archimate_Widths()
-
-    !endif
-
-!endprocedure 
-
-
-!procedure Load_Lib_Styles_Archimate()
-    !if ($ARCHIMATE_LIB_ENABLED == %true() )
-
-        Write_Lib_Style_Archimate_Element()
-    !endif
-
-!endprocedure 
 ' --- End Import: src/libs/archimate/styles/index.puml ---
 
 
@@ -3777,13 +3808,13 @@ component {
 !procedure Load_Lib_Styles_All()
 
 '--------------------------------------------    
-    Preload_Lib_Styles_BEFORE()
+    Preload_Lib_Theme_BEFORE()
 '--------------------------------------------
     Invoke_Preload_Themes()
-    Preload_Lib_Styles_Stdlib()
-    Preload_Lib_Styles_Archimate()
+    Preload_Lib_Theme_Stdlib()
+    Preload_Lib_Theme_Archimate()
 '--------------------------------------------    
-    Preload_Lib_Styles_AFTER()
+    Preload_Lib_Theme_AFTER()
 '--------------------------------------------
 
 

@@ -1,4 +1,5 @@
 
+!procedure Preload_Lib_Theme_StdLib_Borders()
 '---------------------------------------------------------
 ' Border Constants
 '
@@ -15,3 +16,5 @@
 !global $BORDER_3 ?= 3
 !global $BORDER_4 ?= 4
 !global $BORDER_5 ?= 5
+
+!endprocedure

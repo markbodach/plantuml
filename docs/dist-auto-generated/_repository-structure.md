@@ -12,21 +12,8 @@ src/all.puml (Root Master)
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _colors.puml
-        └── _fonts.puml
-        └── _spacing.puml
-        └── _borders.puml
-        └── _corner.puml
-        └── _width.puml
-        └── _height.puml
-        └── _layout.puml
-        └── _icons.puml
-        └── _element.puml
-        └── _title.puml
-        └── _component.puml
       └── archimate/vars/index.puml
         └── _root.puml
-        └── _colors.puml
-        └── _fonts.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
@@ -40,8 +27,25 @@ src/all.puml (Root Master)
         └── _functions.puml
         └── _colors.puml
       └── stdlib/theme/index.puml
-      └── archimate/theme/index.puml
         └── _colors.puml
+        └── _fonts.puml
+        └── _spacing.puml
+        └── _borders.puml
+        └── _corners.puml
+        └── _widths.puml
+        └── _heights.puml
+        └── _element.puml
+        └── _layout.puml
+        └── _icons.puml
+        └── _title.puml
+        └── _component.puml
+      └── archimate/theme/index.puml
+        └── _fonts.puml
+        └── _colors.puml
+        └── _mapped_colors.puml
+        └── _corners.puml
+        └── _widths.puml
+        └── _element.puml
       └── stdlib/skinparam/index.puml
       └── archimate/skinparam/index.puml
       └── stdlib/styles/index.puml
@@ -53,9 +57,4 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
-        └── _fonts.puml
-        └── _colors.puml
-        └── _corner.puml
-        └── _width.puml
-        └── _element.puml
 ```

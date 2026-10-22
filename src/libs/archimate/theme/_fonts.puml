@@ -1,4 +1,4 @@
-!procedure Preload_Lib_Styles_Archimate_Fonts()
+!procedure Preload_Lib_Theme_Archimate_Fonts()
 
     '=====================================================
     ' Typography

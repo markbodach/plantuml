@@ -30,8 +30,10 @@
 !$COLOR_DISABLED_DARK = $COLOR_OH_LABEL
 !$COLOR_DISABLED = $COLOR_OH_PLACEHOLDER
 
+!endprocedure
 
 
+!procedure Preload_Theme_OntarioHealth_ArchimateColors()
 'If there are a lot of variables, this could be moved into a separate _archimate.puml file
 
 

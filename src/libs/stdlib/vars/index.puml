@@ -1,18 +1,3 @@
 !include _root.puml
-
 !include _colors.puml
-!include _fonts.puml
-
-!include _spacing.puml
-!include _borders.puml
-!include _corner.puml
-!include _width.puml
-!include _height.puml
-!include _layout.puml
-
-!include _icons.puml
-
-!include _element.puml
-!include _title.puml
-!include _component.puml
 

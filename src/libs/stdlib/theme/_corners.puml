@@ -1,4 +1,4 @@
-
+!procedure Preload_Lib_Theme_StdLib_Corners()
 '---------------------------------------------------------
 ' Border Radius Utility Variables
 '---------------------------------------------------------
@@ -19,3 +19,4 @@
 !global $ROUND_CIRCLE ?= 200
 
 
+!endprocedure

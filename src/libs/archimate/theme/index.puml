@@ -1,3 +1,29 @@
-
-
+!include _fonts.puml
 !include _colors.puml
+!include _mapped_colors.puml
+!include _corners.puml
+!include _widths.puml
+!include _element.puml
+
+
+!procedure Preload_Lib_Theme_Archimate()
+
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        Preload_Lib_Theme_Archimate_Colors()
+        Preload_Lib_Theme_Archimate_Mapped_Colors()
+        Preload_Lib_Theme_Archimate_Fonts()
+        Preload_Lib_Theme_Archimate_Corners()
+        Preload_Lib_Theme_Archimate_Widths()
+
+    !endif
+
+!endprocedure 
+
+
+!procedure Load_Lib_Styles_Archimate()
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
+        Write_Lib_Style_Archimate_Element()
+    !endif
+
+!endprocedure 

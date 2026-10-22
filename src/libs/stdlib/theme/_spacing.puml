@@ -1,3 +1,5 @@
+!procedure Preload_Lib_Theme_StdLib_Spacing()
+
 '---------------------------------------------------------
 ' Bootstrap-inspired spacing scale
 '---------------------------------------------------------
@@ -23,3 +25,5 @@
     !global $SPACING_5 ?= 30
     
 !endif
+
+!endprocedure

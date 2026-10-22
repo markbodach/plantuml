@@ -1,2 +1,39 @@
 
-' THIS FILE SHOULD BE BLANK
+!include _colors.puml
+!include _fonts.puml
+
+!include _spacing.puml
+!include _borders.puml
+!include _corners.puml
+!include _widths.puml
+!include _heights.puml
+
+!include _element.puml
+!include _layout.puml
+
+!include _icons.puml
+
+!include _title.puml
+!include _component.puml
+
+
+
+
+!procedure Preload_Lib_Theme_Stdlib()
+    Preload_Lib_Theme_StdLib_Colors()
+    Preload_Lib_Theme_StdLib_Fonts()
+
+    Preload_Lib_Theme_StdLib_Spacing()
+    Preload_Lib_Theme_StdLib_Borders()
+    Preload_Lib_Theme_StdLib_Corners()
+    Preload_Lib_Theme_StdLib_Widths()
+    Preload_Lib_Theme_StdLib_Heights()
+
+    Preload_Lib_Theme_StdLib_Element()
+    Preload_Lib_Theme_StdLib_Layout()
+
+    Preload_Lib_Theme_StdLib_Icons()
+    Preload_Lib_Theme_StdLib_Title()
+    Preload_Lib_Theme_StdLib_Component()
+    
+!endprocedure

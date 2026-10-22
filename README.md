@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-19 16:00:02 EDT**
-* Build Commit Hash: **3cc2a1761a60e9e504589cd07ddd01d7bf15b952**
-* Build Commit Comment: **missing OH theme colors for ArchiMate**
+* Generated on: **2026-10-22 16:58:23 EDT**
+* Build Commit Hash: **f9cf25a19ba56c8321918023501d50ab7da9c921**
+* Build Commit Comment: **physical and technology colors**
 
 ## Usage
 
@@ -186,15 +186,15 @@ Later themes may override variables or styles introduced by earlier themes.
 `Load_Lib_Styles_All()` executes two phases. The preload phase establishes the values used to generate styles. The load phase emits styles.
 
 ```text
-Preload_Lib_Styles_BEFORE()
+Preload_Lib_Theme_BEFORE()
     ↓
-Preload_Lib_Styles_Stdlib()
+Preload_Lib_Theme_Stdlib()
     ↓
-Preload_Lib_Styles_Archimate()
+Preload_Lib_Theme_Archimate()
     ↓
 Invoke_Preload_Themes()
     ↓
-Preload_Lib_Styles_AFTER()
+Preload_Lib_Theme_AFTER()
 
 Load_Lib_Styles_BEFORE()
     ↓
@@ -290,21 +290,8 @@ src/all.puml (Root Master)
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _colors.puml
-        └── _fonts.puml
-        └── _spacing.puml
-        └── _borders.puml
-        └── _corner.puml
-        └── _width.puml
-        └── _height.puml
-        └── _layout.puml
-        └── _icons.puml
-        └── _element.puml
-        └── _title.puml
-        └── _component.puml
       └── archimate/vars/index.puml
         └── _root.puml
-        └── _colors.puml
-        └── _fonts.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
@@ -318,8 +305,25 @@ src/all.puml (Root Master)
         └── _functions.puml
         └── _colors.puml
       └── stdlib/theme/index.puml
-      └── archimate/theme/index.puml
         └── _colors.puml
+        └── _fonts.puml
+        └── _spacing.puml
+        └── _borders.puml
+        └── _corners.puml
+        └── _widths.puml
+        └── _heights.puml
+        └── _element.puml
+        └── _layout.puml
+        └── _icons.puml
+        └── _title.puml
+        └── _component.puml
+      └── archimate/theme/index.puml
+        └── _fonts.puml
+        └── _colors.puml
+        └── _mapped_colors.puml
+        └── _corners.puml
+        └── _widths.puml
+        └── _element.puml
       └── stdlib/skinparam/index.puml
       └── archimate/skinparam/index.puml
       └── stdlib/styles/index.puml
@@ -331,11 +335,6 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
-        └── _fonts.puml
-        └── _colors.puml
-        └── _corner.puml
-        └── _width.puml
-        └── _element.puml
 ```
 
 ---
@@ -364,13 +363,13 @@ Every registered theme must define both procedures below.
 #### Preload Phase
 
 ```plantuml
-Preload_Lib_Styles_THEME_<ThemeName>()
+Preload_Lib_Theme_THEME_<ThemeName>()
 ```
 
 Use it for variables, semantic mappings, and theme configuration:
 
 ```plantuml
-!procedure Preload_Lib_Styles_THEME_Corporate()
+!procedure Preload_Lib_Theme_THEME_Corporate()
     !$SPACING_UNIT = 8
     !$ROUND_2 = 12
     !$COLOR_PRIMARY = "#123456"
@@ -410,8 +409,8 @@ Register_Theme("Product")
 `Invoke_Preload_Themes()` dynamically invokes:
 
 ```plantuml
-Preload_Lib_Styles_THEME_Corporate()
-Preload_Lib_Styles_THEME_Product()
+Preload_Lib_Theme_THEME_Corporate()
+Preload_Lib_Theme_THEME_Product()
 ```
 
 `Invoke_Load_Themes()` dynamically invokes:
@@ -495,7 +494,7 @@ Do not mix conventions or the documentation becomes ambiguous. Guarding duplicat
 A registered theme named `Corporate` must define both procedures exactly:
 
 ```plantuml
-!procedure Preload_Lib_Styles_THEME_Corporate()
+!procedure Preload_Lib_Theme_THEME_Corporate()
     ' Variables and semantic mappings
 !endprocedure
 
@@ -509,7 +508,7 @@ Even when a theme has nothing to do in one phase, define an empty procedure. Pla
 ### Preload Example
 
 ```plantuml
-!procedure Preload_Lib_Styles_THEME_Corporate()
+!procedure Preload_Lib_Theme_THEME_Corporate()
     !$COLOR_PRIMARY = "#123456"
     !$COLOR_PRIMARY_LIGHT = "#D9E3EC"
     !$COLOR_PRIMARY_DARK = "#0A2438"
@@ -581,8 +580,8 @@ A corporate theme should establish broad branding and semantic colors. A product
 The framework exposes four optional extension procedures so consumers can configure or override behavior without editing core source files:
 
 ```plantuml
-Preload_Lib_Styles_BEFORE()
-Preload_Lib_Styles_AFTER()
+Preload_Lib_Theme_BEFORE()
+Preload_Lib_Theme_AFTER()
 Load_Lib_Styles_BEFORE()
 Load_Lib_Styles_AFTER()
 ```
@@ -590,15 +589,15 @@ Load_Lib_Styles_AFTER()
 ### Processing Order
 
 ```text
-Preload_Lib_Styles_BEFORE()
+Preload_Lib_Theme_BEFORE()
     ↓
-Preload_Lib_Styles_Stdlib()
+Preload_Lib_Theme_Stdlib()
     ↓
-Preload_Lib_Styles_Archimate()
+Preload_Lib_Theme_Archimate()
     ↓
 Invoke_Preload_Themes()
     ↓
-Preload_Lib_Styles_AFTER()
+Preload_Lib_Theme_AFTER()
 
 Load_Lib_Styles_BEFORE()
     ↓
@@ -616,10 +615,10 @@ Load_Lib_Styles_AFTER()
 The framework supplies empty defaults:
 
 ```plantuml
-!procedure Preload_Lib_Styles_BEFORE()
+!procedure Preload_Lib_Theme_BEFORE()
 !endprocedure
 
-!procedure Preload_Lib_Styles_AFTER()
+!procedure Preload_Lib_Theme_AFTER()
 !endprocedure
 
 !procedure Load_Lib_Styles_BEFORE()
@@ -635,12 +634,12 @@ Consumers may redefine them before `Load_Lib_Styles_All()` is called.
 
 Preload hooks are for values used when styles are generated.
 
-#### `Preload_Lib_Styles_BEFORE()`
+#### `Preload_Lib_Theme_BEFORE()`
 
 Use this hook to configure the framework before core preload processing:
 
 ```plantuml
-!procedure Preload_Lib_Styles_BEFORE()
+!procedure Preload_Lib_Theme_BEFORE()
     !$SPACING_UNIT = 8
     !$CONTRAST_THRESHOLD = 140
     !$SKINPARAM_ENABLED = %true()
@@ -654,12 +653,12 @@ Typical uses:
 - Framework defaults that must exist before core processing
 - Variables consumed by core or theme preload procedures
 
-#### `Preload_Lib_Styles_AFTER()`
+#### `Preload_Lib_Theme_AFTER()`
 
 Use this hook for final variable adjustments after registered themes have run:
 
 ```plantuml
-!procedure Preload_Lib_Styles_AFTER()
+!procedure Preload_Lib_Theme_AFTER()
     !$PADDING_TITLE = $SPACING_4
     !$ROUND_CORNER_TITLE = $ROUND_2
 !endprocedure
@@ -719,11 +718,11 @@ This is the preferred hook for local style customization because it runs last.
 ```plantuml
 @startuml
 
-!procedure Preload_Lib_Styles_BEFORE()
+!procedure Preload_Lib_Theme_BEFORE()
     !$SPACING_UNIT = 8
 !endprocedure
 
-!procedure Preload_Lib_Styles_AFTER()
+!procedure Preload_Lib_Theme_AFTER()
     !$PADDING_TITLE = $SPACING_3
 !endprocedure
 
@@ -752,8 +751,8 @@ rectangle "Project Component" <<projectCard>>
 
 | Concern | Hook |
 |---|---|
-| Configure before core processing | `Preload_Lib_Styles_BEFORE()` |
-| Final variable override | `Preload_Lib_Styles_AFTER()` |
+| Configure before core processing | `Preload_Lib_Theme_BEFORE()` |
+| Final variable override | `Preload_Lib_Theme_AFTER()` |
 | Style emitted before framework styles | `Load_Lib_Styles_BEFORE()` |
 | Final style override or project stereotype | `Load_Lib_Styles_AFTER()` |
 
@@ -964,7 +963,7 @@ PlantUML does not provide a full CSS-style merge model. When an atomic utility c
 Theme authors should override variables in their preload procedure:
 
 ```plantuml
-!procedure Preload_Lib_Styles_THEME_Corporate()
+!procedure Preload_Lib_Theme_THEME_Corporate()
     !$SPACING_UNIT = 8
     !$ROUND_2 = 14
     !$WIDTH_MD = 300
@@ -1744,7 +1743,7 @@ $$COLOR_PRIMARY
 The registry builds procedure names dynamically. A registered theme must define both procedures with exact casing:
 
 ```plantuml
-Preload_Lib_Styles_THEME_Corporate()
+Preload_Lib_Theme_THEME_Corporate()
 Load_Theme_Corporate()
 ```
 

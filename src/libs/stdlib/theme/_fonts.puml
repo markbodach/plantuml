@@ -1,3 +1,4 @@
+!procedure Preload_Lib_Theme_StdLib_Fonts()
 
 '---------------------------------------------------------
 ' Font Constants
@@ -12,3 +13,5 @@
 !global $SIZE_FONT_ARROW ?= 11
 
 !global $COLOR_FONT ?= $COLOR_TEXT
+
+!endprocedure

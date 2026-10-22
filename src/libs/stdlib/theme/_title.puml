@@ -1,4 +1,4 @@
-
+!procedure Preload_Lib_Theme_StdLib_Title()
 
 '---------------------------------------------------------
 ' Title Constants
@@ -21,3 +21,4 @@
 !global $COLOR_LINE_TITLE ?= $COLOR_LINE
 !global $SIZE_LINE_TITLE ?= $SIZE_LINE
 
+!endprocedure

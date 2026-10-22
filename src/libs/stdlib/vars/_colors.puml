@@ -1,3 +1,5 @@
+
+
 '---------------------------------------------------------
 ' Contrast defaults
 '---------------------------------------------------------
@@ -24,49 +26,3 @@
 ' RGB luminance ceiling (0-255)
 !global $LIGHTNESS_THRESHOLD = 223
 
-
-
-'---------------------------------------------------------
-' Color Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-!global $COLOR_TRANSPARENT = "#FFFFFF00"
-!global $COLOR_NONE ?= $COLOR_TRANSPARENT
-
-!global $COLOR_PRIMARY ?= "#D6EAF8"
-!global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
-!global $COLOR_PRIMARY_DARK ?= "#D6EAF8"
-
-!global $COLOR_WARNING ?= "#FCF3CF"
-!global $COLOR_WARNING_LIGHT ?= "#FCF3CF"
-!global $COLOR_WARNING_DARK ?= "#FCF3CF"
-
-!global $COLOR_SUCCESS ?= "#D5F5E3"
-!global $COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
-!global $COLOR_SUCCESS_DARK ?= "#D5F5E3"
-
-!global $COLOR_ERROR ?= "#CD0000"
-!global $COLOR_ERROR_LIGHT ?= "#CD0000"
-!global $COLOR_ERROR_DARK ?= "#CD0000"
-
-!global $COLOR_BODY ?= "#ffffff"
-!global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
-!global $COLOR_BORDER ?= "#5D6D7E"
-
-!global $COLOR_TEXT ?= "#000000"
-!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
-
-
-!global $COLOR_EMPHASIS ?= "#E0B8D4"
-!global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
-!global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
-
-
-' COLOR_LIGHT
-' COLOR_DARK
-
-!global $COLOR_DISABLED_DARK ?= "#4D4D4D"
-!global $COLOR_DISABLED ?= "#737373"
-!global $COLOR_DISABLED_LIGHT ?= "#737373"

@@ -1,4 +1,4 @@
-
+!procedure Preload_Lib_Theme_StdLib_Icons()
 '---------------------------------------------------------
 ' Icon Constants
 '
@@ -13,3 +13,4 @@
 !global $SIZE_BORDER_ACTOR ?= 3
 !global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
 
+!endprocedure

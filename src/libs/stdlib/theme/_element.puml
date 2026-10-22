@@ -1,3 +1,4 @@
+!procedure Preload_Lib_Theme_StdLib_Element()
 
 !global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
 !global $STYLE_FONT_ELEMENT ?= ""
@@ -12,3 +13,5 @@
 
 !global $COLOR_LINE_ELEMENT ?= $COLOR_LINE
 !global $SIZE_LINE_ELEMENT ?= $SIZE_LINE
+
+!endprocedure

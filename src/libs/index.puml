@@ -29,13 +29,13 @@
 !procedure Load_Lib_Styles_All()
 
 '--------------------------------------------    
-    Preload_Lib_Styles_BEFORE()
+    Preload_Lib_Theme_BEFORE()
 '--------------------------------------------
     Invoke_Preload_Themes()
-    Preload_Lib_Styles_Stdlib()
-    Preload_Lib_Styles_Archimate()
+    Preload_Lib_Theme_Stdlib()
+    Preload_Lib_Theme_Archimate()
 '--------------------------------------------    
-    Preload_Lib_Styles_AFTER()
+    Preload_Lib_Theme_AFTER()
 '--------------------------------------------
 
 

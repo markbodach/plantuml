@@ -1,8 +1,18 @@
 
+!procedure Preload_Lib_Theme_Archimate_Colors()
+
+    !global $COLOR_MOTIVATION ?= "#CCCCFF"
+    !global $COLOR_STRATEGY ?= "#F5DEAA"
+    !global $COLOR_BUSINESS ?= "#FFFF99"
+    !global $COLOR_APPLICATION ?= "#99FFFF"
+    !global $COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !global $COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
+    !global $COLOR_IMPLEMENTATION ?= "#FFE0E0"
+    !global $COLOR_HIGHLIGHTED ?= "#005DEF"
+    !global $COLOR_NEW ?= "#005700"
 
 
-!if ($ARCHIMATE_LIB_ENABLED == %true() )
-
+    'DERIVATES
     !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
     !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
 
@@ -31,4 +41,4 @@
     !global $COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
     !global $COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
 
-!endif
+!endprocedure

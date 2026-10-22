@@ -1,3 +1,4 @@
+!procedure Preload_Lib_Theme_StdLib_Widths()
 '---------------------------------------------------------
 ' Width Utility Variables
 '---------------------------------------------------------
@@ -10,3 +11,4 @@
 !global $WIDTH_XXL ?= 800
 
 
+!endprocedure

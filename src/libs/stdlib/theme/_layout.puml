@@ -1,4 +1,4 @@
-
+!procedure Preload_Lib_Theme_StdLib_Layout()
 '---------------------------------------------------------
 ' Layout Constants
 '
@@ -35,3 +35,5 @@
 ' | <back:D6EAF8>      </back> | Logical Component / Service |
 ' | <back:FCF3CF>      </back> | Business Information Authority |
 ' endlegend
+
+!endprocedure
