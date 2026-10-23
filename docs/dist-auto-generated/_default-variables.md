@@ -7,7 +7,7 @@ Use these variables before loading the repository.
 ```plantuml
 @startuml
 
-!$THEMES = "|"
+
 
 @enduml
 ```

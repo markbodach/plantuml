@@ -5,7 +5,7 @@
 
 !procedure Load_Skinparams_OntarioHealth()
 
-    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
+    !if ($Is_Skinparam_Registered($OH_THEME_NAME) == %true() )
     !if ($SKINPARAM_ENABLED)
 
 

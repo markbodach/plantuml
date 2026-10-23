@@ -318,7 +318,7 @@ theme-panelapp.puml
 
 !includeurl MBpuml/theme-corporate.puml
 
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 
 Load_Lib_All()
 

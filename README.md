@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-23 01:34:55 EDT**
-* Build Commit Hash: **383a801195adea90273f460cdbeaf2c5991710ac**
-* Build Commit Comment: **skinparams**
+* Generated on: **2026-10-23 11:10:25 EDT**
+* Build Commit Hash: **5b9f74f743a858b43ecd247b54b3fba20b2b7c17**
+* Build Commit Comment: **skinparams refactoring**
 
 ## Usage
 
@@ -41,7 +41,7 @@ theme-panelapp.puml
 
 !includeurl MBpuml/theme-corporate.puml
 
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 
 Load_Lib_All()
 
@@ -138,7 +138,7 @@ rectangle "Core Component" <<card>>
 !includeurl MBpuml/all.puml
 !includeurl MBpuml/theme-corporate.puml
 
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 Load_Lib_All()
 
 rectangle "Themed Component" <<card>>
@@ -158,8 +158,8 @@ A theme bundle may instead self-register. Pick one convention—consumer registr
 !includeurl MBpuml/theme-corporate.puml
 !includeurl MBpuml/theme-product.puml
 
-Register_Theme("Corporate")
-Register_Theme("Product")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
 
 Load_Lib_All()
 
@@ -192,7 +192,7 @@ Load_Lib_Theme_Stdlib()
     ↓
 Load_Lib_Theme_Archimate()
     ↓
-Invoke_Load_Themes()
+Load_Registered_Themes()
     ↓
 Load_Lib_Theme_AFTER()
 
@@ -202,7 +202,7 @@ Load_Lib_Styles_Stdlib()
     ↓
 Load_Lib_Styles_Archimate()
     ↓
-Invoke_Load_Styles()
+Load_Registered_Styles()
     ↓
 Load_Lib_Styles_AFTER()
 ```
@@ -265,7 +265,7 @@ Use these variables before loading the repository.
 ```plantuml
 @startuml
 
-!$THEMES = "|"
+
 
 @enduml
 ```
@@ -285,6 +285,7 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/framework/index.puml
+        └── _helpers.puml
         └── _registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
@@ -344,18 +345,18 @@ src/all.puml (Root Master)
 ### Registering a Theme
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 Multiple themes:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
-Register_Theme("Project")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
+Register_Lib_All("Project")
 ```
 
-Duplicate registration is ignored by the guarded `Register_Theme()` implementation.
+Duplicate registration is ignored by the guarded `Register_Lib_All()` implementation.
 
 ### Required Procedure Names
 
@@ -396,25 +397,25 @@ Use it for styles and stereotypes:
 !endprocedure
 ```
 
-The spelling and casing of `<ThemeName>` must exactly match the value passed to `Register_Theme()`.
+The spelling and casing of `<ThemeName>` must exactly match the value passed to `Register_Lib_All()`.
 
 ### Invocation
 
 Given:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
 ```
 
-`Invoke_Load_Themes()` dynamically invokes:
+`Load_Registered_Themes()` dynamically invokes:
 
 ```plantuml
 Load_Lib_Theme_THEME_Corporate()
 Load_Lib_Theme_THEME_Product()
 ```
 
-`Invoke_Load_Styles()` dynamically invokes:
+`Load_Registered_Styles()` dynamically invokes:
 
 ```plantuml
 Load_Styles_Corporate()
@@ -439,7 +440,7 @@ Use static includes first, then register:
 !includeurl MBpuml/all.puml
 !includeurl MBpuml/theme-corporate.puml
 
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 Load_Lib_All()
 ```
 
@@ -450,7 +451,7 @@ Conceptually:
     ↓
 Theme procedures are defined
     ↓
-Register_Theme()
+Register_Lib_All()
     ↓
 Registry determines execution order
     ↓
@@ -467,12 +468,12 @@ The bundle defines procedures; the diagram registers the theme:
 
 ```plantuml
 !includeurl MBpuml/theme-corporate.puml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 #### Self-Registration
 
-The bundle calls `Register_Theme("Corporate")`; the diagram only includes it.
+The bundle calls `Register_Lib_All("Corporate")`; the diagram only includes it.
 
 Do not mix conventions or the documentation becomes ambiguous. Guarding duplicate registration prevents repeated execution, but it does not fix unclear ownership.
 
@@ -547,7 +548,7 @@ Even when a theme has nothing to do in one phase, define an empty procedure. Pla
 If self-registration is the selected project convention, add this once in the entry point:
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 Otherwise, require consumers to register the included bundle explicitly.
@@ -596,7 +597,7 @@ Load_Lib_Theme_Stdlib()
     ↓
 Load_Lib_Theme_Archimate()
     ↓
-Invoke_Load_Themes()
+Load_Registered_Themes()
     ↓
 Load_Lib_Theme_AFTER()
 
@@ -606,7 +607,7 @@ Load_Lib_Styles_Stdlib()
     ↓
 Load_Lib_Styles_Archimate()
     ↓
-Invoke_Load_Styles()
+Load_Registered_Styles()
     ↓
 Load_Lib_Styles_AFTER()
 ```
@@ -1751,7 +1752,7 @@ Load_Styles_Corporate()
 for:
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 PlantUML does not provide a portable procedure-existence check before `%invoke_procedure()`.
@@ -1769,7 +1770,7 @@ Check the complete sequence:
 ```plantuml
 !includeurl MBpuml/all.puml
 !includeurl MBpuml/theme-corporate.puml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 Load_Lib_All()
 ```
 
@@ -1777,7 +1778,7 @@ Including a bundle defines its procedures; registration makes it part of the loa
 
 ### Theme Executed Twice
 
-Use the guarded registry implementation so `Register_Theme()` ignores duplicate names. Also choose either self-registration or consumer registration, not both.
+Use the guarded registry implementation so `Register_Lib_All()` ignores duplicate names. Also choose either self-registration or consumer registration, not both.
 
 ### Include Inside Procedure Does Not Behave Dynamically
 

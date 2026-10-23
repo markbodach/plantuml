@@ -1,15 +1,15 @@
 '=================================================================
-' THEME REGISTRY
+' Extension Registry Framework
 '=================================================================
 '
-' Provides registration and invocation support for custom themes.
+' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
 '
 ' Themes are processed in registration order.
 '
 ' Example:
 '
-'   Register_Theme("ThemeA")
-'   Register_Theme("ThemeB")
+'   Register_Lib_All("ThemeA")
+'   Register_Lib_All("ThemeB")
 '
 ' Execution Order:
 '
@@ -17,7 +17,7 @@
 '       ↓
 '   ThemeB
 '
-' Each registered theme may provide:
+' Registered extensions may provide:
 '
 '   Load_Theme_<Theme>()
 '
@@ -57,247 +57,67 @@
 '
 '=================================================================
 
-!$THEMES ?= "|"
+!global $THEMES = "|"
+!global $SKINPARAMS = "|"
+!global $STYLES = "|"
+
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
 
 
-!function $theme_registered($theme)
 
-    !if ($theme == "")
-        !return %false()
-    !endif
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
 
-    !return (%strpos($THEMES, "|" + $theme + "|") >= 0)
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
 
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
 !endfunction
 
 
-'=========================================================
-' Is Theme Registered
-'
-' Performs an exact-match lookup against the delimiter-
-' string registry using:
-'
-'   %strpos(
-'       "|" + Theme + "|"
-'   )
-'
-' This prevents partial-match collisions.
-'
-' Example:
-'
-'   Theme     ≠ ThemeExtended
-'
-'=========================================================
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
 
-!function $Is_Theme_Registered($theme)
-    !return $theme_registered($theme)
-!endfunction
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
 
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
 
-'=================================================================
-' REGISTRATION
-'=================================================================
-' Adds a theme to the registry.
-'
-' Registration order is preserved.
-'
-' Duplicate registrations are ignored.
-'
-' Example:
-'
-'   Register_Theme("ThemeA")
-'
-' Registry:
-'
-'   |ThemeA|
-'
-'
-'   Register_Theme("ThemeB")
-'
-' Registry:
-'
-'   |ThemeA|ThemeB|
-'
-'=================================================================
-!procedure Register_Theme($theme)
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    
+!endprocedure
 
-    !if ($theme == "")
-        !assert 0 == 1 : "MB_PUML :: Registering Theme name cannot be blank (f:Register_Theme)"
-    !endif
+!procedure Load_Registered_Themes()
 
-    !if ($theme_registered($theme) == %false())
-
-        !$THEMES = $THEMES + $theme + "|"
-
-    !endif
+    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
 
 !endprocedure
 
 
-'=================================================================
-' REGISTRY PROCESSING
-'=================================================================
-'
-' Themes are processed in registration order.
-'
-' Registry:
-'
-'   |ThemeA|ThemeB|
-'
-' Results In:
-'
-'   Load_Theme_ThemeA()
-'   Load_Theme_ThemeB()
-'
-' Followed By:
-'
-'   Load_Styles_ThemeA()
-'   Load_Styles_ThemeB()
-'
-' Iteration is implemented using:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' for maximum PlantUML compatibility.
-'
-'=================================================================
 
-!procedure For_Each_Theme($prefix)
+!procedure Load_Registered_Skinparams()
 
-    !$remaining = $THEMES
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-
-        !$pos = %strpos($remaining,"|")
-
-        !$theme = %substr($remaining,0,$pos)
-
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($theme != "")
-
-            !$proc = $prefix + $theme
-            !log "Invoking Theme " + $prefix + "=[" + $theme + "]"
-            %invoke_procedure($proc)
-
-        !endif
-
-    !endwhile
+    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
 
 !endprocedure
 
 
-'=================================================================
-' PRELOAD INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
 
-!procedure Invoke_Load_Themes()
+!procedure Load_Registered_Styles()
 
-    For_Each_Theme("Load_Theme_")
+    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
 
 !endprocedure
 
-
-'=================================================================
-' SKINPARAM INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
-
-!procedure Invoke_Load_Skinparams()
-
-    For_Each_Theme("Load_Skinparams_")
-
-!endprocedure
-
-
-'=================================================================
-' STYLE INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
-
-!procedure Invoke_Load_Styles()
-
-    For_Each_Theme("Load_Styles_")
-
-!endprocedure
-
-
-'=================================================================
-' THEME AUTHORING EXAMPLE
-'=================================================================
-'
-' Register theme:
-'
-'   Register_Theme("ThemeA")
-'
-'
-' Variables:
-'
-'   !procedure Load_Theme_ThemeA()
-'
-'       !$COLOR_PRIMARY = "#3366CC"
-'
-'   !endprocedure
-'
-'
-' Styles:
-'
-'   !procedure Load_Styles_ThemeA()
-'
-'   <style>
-'
-'   .ohCard {
-'       Padding 20
-'   }
-'
-'   </style>
-'
-'   !endprocedure
-'
-'=================================================================
-'
-' PROCESSING MODEL
-'
-'   BEFORE
-'       ↓
-'   StdLib
-'       ↓
-'   ARCH
-'       ↓
-'   Registered Themes
-'       ↓
-'   AFTER
-'
-'=================================================================

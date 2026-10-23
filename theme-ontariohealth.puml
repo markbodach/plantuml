@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-23 01:34:55 EDT
-' Build Commit Hash: 383a801195adea90273f460cdbeaf2c5991710ac
-' Build Commit Comment: skinparams
+' Generated on: 2026-10-23 11:10:25 EDT
+' Build Commit Hash: 5b9f74f743a858b43ecd247b54b3fba20b2b7c17
+' Build Commit Comment: skinparams refactoring
 ' ========================================================
 
 
@@ -290,7 +290,7 @@
 
 !procedure Load_Skinparams_OntarioHealth()
 
-    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
+    !if ($Is_Skinparam_Registered($OH_THEME_NAME) == %true() )
     !if ($SKINPARAM_ENABLED)
 
 
@@ -318,7 +318,7 @@
 
 !procedure Load_Styles_OntarioHealth()
 
-    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
+    !if ($Is_Style_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
 
 

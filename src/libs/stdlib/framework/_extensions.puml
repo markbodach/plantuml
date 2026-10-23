@@ -14,7 +14,7 @@
 '       ↓
 '   Load_Lib_Theme_Stdlib()
 '   Load_Lib_Theme_Archimate()
-'   Registered Theme Skinparams Procedures
+'   Registered Theme Procedures
 '       ↓
 '   Load_Lib_Theme_AFTER()
 '
@@ -23,7 +23,7 @@
 '       ↓
 '   Load_Lib_Skinparams_Stdlib()
 '   Load_Lib_Skinparams_Archimate()
-'   Registered Theme Skinparams Procedures
+'   Registered Skinparams Procedures
 '       ↓
 '
 '   Load_Lib_Styles_BEFORE()

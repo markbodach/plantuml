@@ -7,6 +7,7 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/framework/index.puml
+        └── _helpers.puml
         └── _registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml

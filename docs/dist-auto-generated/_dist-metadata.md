@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-23 01:34:55 EDT**
-* Build Commit Hash: **383a801195adea90273f460cdbeaf2c5991710ac**
-* Build Commit Comment: **skinparams**
+* Generated on: **2026-10-23 11:10:25 EDT**
+* Build Commit Hash: **5b9f74f743a858b43ecd247b54b3fba20b2b7c17**
+* Build Commit Comment: **skinparams refactoring**
 
 ## Usage
 
@@ -38,7 +38,7 @@ theme-panelapp.puml
 
 !includeurl MBpuml/theme-corporate.puml
 
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 
 Load_Lib_All()
 

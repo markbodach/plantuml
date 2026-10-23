@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 01:34:55 EDT
-' Build Commit Hash: 383a801195adea90273f460cdbeaf2c5991710ac
-' Build Commit Comment: skinparams
+' Generated on: 2026-10-23 11:10:25 EDT
+' Build Commit Hash: 5b9f74f743a858b43ecd247b54b3fba20b2b7c17
+' Build Commit Comment: skinparams refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -17,19 +17,119 @@
 
 
 ' --- Importing: src/libs/stdlib/framework/index.puml ---
+' --- Importing: src/libs/stdlib/framework/_helpers.puml ---
+'=========================================================
+' Registry Variable Access
+'=========================================================
+
+!function $Registry_Get($registryName)
+
+    !$varName = "$" + $registryName
+
+    !if (%variable_exists($varName) == %false())
+        !assert 0 == 1 : "MB_PUML :: Registry variable not found=[" + $registryName + "] (f:registry_get)"
+    !endif
+
+    !return %get_variable_value($varName)
+
+!endfunction
+
+
+!procedure Registry_Set($registryName, $value)
+
+    !$varName = "$" + $registryName
+
+    %set_variable_value($varName, $value)
+
+!endprocedure
+
+
+
+!function $object_registered($name, $registryName)
+
+    !if ($name == "")
+        !return %false()
+    !endif
+
+    !$registry = $Registry_Get($registryName)
+
+    !return (%strpos($registry, "|" + $name + "|") >= 0)
+
+!endfunction
+
+
+!procedure Register_Lib_Object($name, $registryName)
+
+    !if ($name == "")
+        !assert 0 == 1 : "MB_PUML :: Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)"
+    !endif
+
+    !if ($object_registered($name, $registryName) == %false())
+
+        !$registry = $Registry_Get($registryName)
+
+        !$registry = $registry + $name + "|"
+
+        Registry_Set($registryName, $registry)
+
+    !endif
+
+!endprocedure
+
+
+!procedure For_Each_Lib_Object($prefix, $registryName)
+
+    !$remaining = $Registry_Get($registryName)
+
+    !while ($remaining != "|")
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,"|")
+
+        !$name = %substr($remaining,0,$pos)
+
+        !$remaining =
+            "|" +
+            %substr($remaining,$pos + 1)
+
+        !if ($name != "")
+
+            !$proc = $prefix + $name
+
+            !log "[" + $registryName + "] " + $proc
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+
+!procedure Dump_Registries()
+
+    !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
+    !log "SKINPARAMS=[" + $Registry_Get($REGISTRY_SKINPARAMS) + "]"
+    !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
+
+!endprocedure
+' --- End Import: src/libs/stdlib/framework/_helpers.puml ---
+
 ' --- Importing: src/libs/stdlib/framework/_registry.puml ---
 '=================================================================
-' THEME REGISTRY
+' Extension Registry Framework
 '=================================================================
 '
-' Provides registration and invocation support for custom themes.
+' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
 '
 ' Themes are processed in registration order.
 '
 ' Example:
 '
-'   Register_Theme("ThemeA")
-'   Register_Theme("ThemeB")
+'   Register_Lib_All("ThemeA")
+'   Register_Lib_All("ThemeB")
 '
 ' Execution Order:
 '
@@ -37,7 +137,7 @@
 '       ↓
 '   ThemeB
 '
-' Each registered theme may provide:
+' Registered extensions may provide:
 '
 '   Load_Theme_<Theme>()
 '
@@ -77,250 +177,70 @@
 '
 '=================================================================
 
-!$THEMES ?= "|"
+!global $THEMES = "|"
+!global $SKINPARAMS = "|"
+!global $STYLES = "|"
+
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
 
 
-!function $theme_registered($theme)
 
-    !if ($theme == "")
-        !return %false()
-    !endif
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
 
-    !return (%strpos($THEMES, "|" + $theme + "|") >= 0)
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
 
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
 !endfunction
 
 
-'=========================================================
-' Is Theme Registered
-'
-' Performs an exact-match lookup against the delimiter-
-' string registry using:
-'
-'   %strpos(
-'       "|" + Theme + "|"
-'   )
-'
-' This prevents partial-match collisions.
-'
-' Example:
-'
-'   Theme     ≠ ThemeExtended
-'
-'=========================================================
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
 
-!function $Is_Theme_Registered($theme)
-    !return $theme_registered($theme)
-!endfunction
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
 
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
 
-'=================================================================
-' REGISTRATION
-'=================================================================
-' Adds a theme to the registry.
-'
-' Registration order is preserved.
-'
-' Duplicate registrations are ignored.
-'
-' Example:
-'
-'   Register_Theme("ThemeA")
-'
-' Registry:
-'
-'   |ThemeA|
-'
-'
-'   Register_Theme("ThemeB")
-'
-' Registry:
-'
-'   |ThemeA|ThemeB|
-'
-'=================================================================
-!procedure Register_Theme($theme)
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    
+!endprocedure
 
-    !if ($theme == "")
-        !assert 0 == 1 : "MB_PUML :: Registering Theme name cannot be blank (f:Register_Theme)"
-    !endif
+!procedure Load_Registered_Themes()
 
-    !if ($theme_registered($theme) == %false())
-
-        !$THEMES = $THEMES + $theme + "|"
-
-    !endif
+    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
 
 !endprocedure
 
 
-'=================================================================
-' REGISTRY PROCESSING
-'=================================================================
-'
-' Themes are processed in registration order.
-'
-' Registry:
-'
-'   |ThemeA|ThemeB|
-'
-' Results In:
-'
-'   Load_Theme_ThemeA()
-'   Load_Theme_ThemeB()
-'
-' Followed By:
-'
-'   Load_Styles_ThemeA()
-'   Load_Styles_ThemeB()
-'
-' Iteration is implemented using:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' for maximum PlantUML compatibility.
-'
-'=================================================================
 
-!procedure For_Each_Theme($prefix)
+!procedure Load_Registered_Skinparams()
 
-    !$remaining = $THEMES
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-
-        !$pos = %strpos($remaining,"|")
-
-        !$theme = %substr($remaining,0,$pos)
-
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($theme != "")
-
-            !$proc = $prefix + $theme
-            !log "Invoking Theme " + $prefix + "=[" + $theme + "]"
-            %invoke_procedure($proc)
-
-        !endif
-
-    !endwhile
+    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
 
 !endprocedure
 
 
-'=================================================================
-' PRELOAD INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
 
-!procedure Invoke_Load_Themes()
+!procedure Load_Registered_Styles()
 
-    For_Each_Theme("Load_Theme_")
+    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
 
 !endprocedure
 
-
-'=================================================================
-' SKINPARAM INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
-
-!procedure Invoke_Load_Skinparams()
-
-    For_Each_Theme("Load_Skinparams_")
-
-!endprocedure
-
-
-'=================================================================
-' STYLE INVOCATION
-'=================================================================
-'
-' Themes are extracted one at a time from the registry:
-'
-'   |ThemeA|ThemeB|
-'       ↓
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-'=================================================================
-
-!procedure Invoke_Load_Styles()
-
-    For_Each_Theme("Load_Styles_")
-
-!endprocedure
-
-
-'=================================================================
-' THEME AUTHORING EXAMPLE
-'=================================================================
-'
-' Register theme:
-'
-'   Register_Theme("ThemeA")
-'
-'
-' Variables:
-'
-'   !procedure Load_Theme_ThemeA()
-'
-'       !$COLOR_PRIMARY = "#3366CC"
-'
-'   !endprocedure
-'
-'
-' Styles:
-'
-'   !procedure Load_Styles_ThemeA()
-'
-'   <style>
-'
-'   .ohCard {
-'       Padding 20
-'   }
-'
-'   </style>
-'
-'   !endprocedure
-'
-'=================================================================
-'
-' PROCESSING MODEL
-'
-'   BEFORE
-'       ↓
-'   StdLib
-'       ↓
-'   ARCH
-'       ↓
-'   Registered Themes
-'       ↓
-'   AFTER
-'
-'=================================================================
 ' --- End Import: src/libs/stdlib/framework/_registry.puml ---
 
 ' --- Importing: src/libs/stdlib/framework/_extensions.puml ---
@@ -340,7 +260,7 @@
 '       ↓
 '   Load_Lib_Theme_Stdlib()
 '   Load_Lib_Theme_Archimate()
-'   Registered Theme Skinparams Procedures
+'   Registered Theme Procedures
 '       ↓
 '   Load_Lib_Theme_AFTER()
 '
@@ -349,7 +269,7 @@
 '       ↓
 '   Load_Lib_Skinparams_Stdlib()
 '   Load_Lib_Skinparams_Archimate()
-'   Registered Theme Skinparams Procedures
+'   Registered Skinparams Procedures
 '       ↓
 '
 '   Load_Lib_Styles_BEFORE()
@@ -3832,7 +3752,7 @@ component {
     
     Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_Archimate()
-    Invoke_Load_Themes()
+    Load_Registered_Themes()
 
  
     Load_Lib_Theme_AFTER()
@@ -3846,7 +3766,7 @@ component {
 
     Load_Lib_Skinparams_Stdlib()
     Load_Lib_Skinparams_Archimate()
-    Invoke_Load_Skinparams()
+    Load_Registered_Skinparams()
 
     Load_Lib_Skinparams_AFTER()
     '--------------------------------------------
@@ -3859,7 +3779,7 @@ component {
 
     Load_Lib_Styles_Stdlib()
     Load_Lib_Styles_Archimate()
-    Invoke_Load_Styles()
+    Load_Registered_Styles()
 
     Load_Lib_Styles_AFTER()
     '--------------------------------------------

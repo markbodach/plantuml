@@ -7,7 +7,7 @@
 
 !procedure Load_Styles_OntarioHealth()
 
-    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
+    !if ($Is_Style_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
 
 

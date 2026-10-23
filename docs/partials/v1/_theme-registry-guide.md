@@ -75,20 +75,20 @@ or
 Themes are registered using:
 
 ```plantuml
-Register_Theme($theme)
+Register_Lib_All($theme)
 ```
 
 Example:
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 Multiple themes:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
 ```
 
 Execution order:
@@ -184,8 +184,8 @@ is executed.
 For example:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
 ```
 
 results in:
@@ -235,7 +235,7 @@ theme-repository
 Example:
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 
 
 !procedure Load_Theme_Corporate()
@@ -291,9 +291,9 @@ Multiple themes may be loaded simultaneously.
 Example:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Product")
-Register_Theme("Customer")
+Register_Lib_All("Corporate")
+Register_Lib_All("Product")
+Register_Lib_All("Customer")
 ```
 
 Processing:
@@ -369,14 +369,14 @@ Examples:
 Do:
 
 ```plantuml
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 Avoid:
 
 ```plantuml
-Register_Theme("Corporate")
-Register_Theme("Corporate")
+Register_Lib_All("Corporate")
+Register_Lib_All("Corporate")
 ```
 
 Duplicate registrations will result in duplicate execution.

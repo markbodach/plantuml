@@ -1,0 +1,97 @@
+'=========================================================
+' Registry Variable Access
+'=========================================================
+
+!function $Registry_Get($registryName)
+
+    !$varName = "$" + $registryName
+
+    !if (%variable_exists($varName) == %false())
+        !assert 0 == 1 : "MB_PUML :: Registry variable not found=[" + $registryName + "] (f:registry_get)"
+    !endif
+
+    !return %get_variable_value($varName)
+
+!endfunction
+
+
+!procedure Registry_Set($registryName, $value)
+
+    !$varName = "$" + $registryName
+
+    %set_variable_value($varName, $value)
+
+!endprocedure
+
+
+
+!function $object_registered($name, $registryName)
+
+    !if ($name == "")
+        !return %false()
+    !endif
+
+    !$registry = $Registry_Get($registryName)
+
+    !return (%strpos($registry, "|" + $name + "|") >= 0)
+
+!endfunction
+
+
+!procedure Register_Lib_Object($name, $registryName)
+
+    !if ($name == "")
+        !assert 0 == 1 : "MB_PUML :: Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)"
+    !endif
+
+    !if ($object_registered($name, $registryName) == %false())
+
+        !$registry = $Registry_Get($registryName)
+
+        !$registry = $registry + $name + "|"
+
+        Registry_Set($registryName, $registry)
+
+    !endif
+
+!endprocedure
+
+
+!procedure For_Each_Lib_Object($prefix, $registryName)
+
+    !$remaining = $Registry_Get($registryName)
+
+    !while ($remaining != "|")
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,"|")
+
+        !$name = %substr($remaining,0,$pos)
+
+        !$remaining =
+            "|" +
+            %substr($remaining,$pos + 1)
+
+        !if ($name != "")
+
+            !$proc = $prefix + $name
+
+            !log "[" + $registryName + "] " + $proc
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+
+!procedure Dump_Registries()
+
+    !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
+    !log "SKINPARAMS=[" + $Registry_Get($REGISTRY_SKINPARAMS) + "]"
+    !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
+
+!endprocedure
