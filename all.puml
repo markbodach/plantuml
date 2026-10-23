@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 00:58:57 EDT
-' Build Commit Hash: 00626a5862b31fea7366c00439c14c72773ee81c
-' Build Commit Comment: global variables
+' Generated on: 2026-10-23 01:30:08 EDT
+' Build Commit Hash: 7badf46616597c40d156096367bf5328fbd3ca33
+' Build Commit Comment: refactoring skinparams
 ' ========================================================
 
 ' src/all.puml
@@ -3367,17 +3367,19 @@
 
     !if ($SKINPARAM_ENABLED)
 
-    skinparam shadowing $SHADOWING
-    skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+        skinparam shadowing $SHADOWING
+        skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
-    skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
+        skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
 
-    skinparam actorStyle $STYLE_ACTOR
-    skinparam actorBorderColor $COLOR_BORDER_ACTOR
-    skinparam actorBorderThickness $SIZE_BORDER_ACTOR
-    skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
+        skinparam actorStyle $STYLE_ACTOR
+        skinparam actorBorderColor $COLOR_BORDER_ACTOR
+        skinparam actorBorderThickness $SIZE_BORDER_ACTOR
+        skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 
-!endif
+    !endif
+
+!endprocedure
 ' --- End Import: src/libs/stdlib/skinparams/index.puml ---
 
 ' --- Importing: src/libs/archimate/skinparams/index.puml ---
