@@ -6,14 +6,14 @@
 !include _element.puml
 
 
-!procedure Preload_Lib_Theme_Archimate()
+!procedure Load_Lib_Theme_Archimate()
 
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
-        Preload_Lib_Theme_Archimate_Colors()
-        Preload_Lib_Theme_Archimate_Mapped_Colors()
-        Preload_Lib_Theme_Archimate_Fonts()
-        Preload_Lib_Theme_Archimate_Corners()
-        Preload_Lib_Theme_Archimate_Widths()
+        Load_Lib_Theme_Archimate_Colors()
+        Load_Lib_Theme_Archimate_Mapped_Colors()
+        Load_Lib_Theme_Archimate_Fonts()
+        Load_Lib_Theme_Archimate_Corners()
+        Load_Lib_Theme_Archimate_Widths()
 
     !endif
 

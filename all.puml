@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-22 17:18:02 EDT
-' Build Commit Hash: 23dabdb6489b07eb50dc9b90ddfc7bfd104bb2e9
-' Build Commit Comment: refactoring
+' Generated on: 2026-10-23 00:58:57 EDT
+' Build Commit Hash: 00626a5862b31fea7366c00439c14c72773ee81c
+' Build Commit Comment: global variables
 ' ========================================================
 
 ' src/all.puml
@@ -39,14 +39,14 @@
 '
 ' Each registered theme may provide:
 '
-'   Preload_Theme_<Theme>()
+'   Load_Theme_<Theme>()
 '
 '       Used for:
 '           - Variables
 '           - Theme initialization
 '           - Configuration
 '
-'   Load_Theme_<Theme>()
+'   Load_Styles_<Theme>()
 '
 '       Used for:
 '           - Styles
@@ -166,13 +166,13 @@
 '
 ' Results In:
 '
-'   Preload_Theme_ThemeA()
-'   Preload_Theme_ThemeB()
+'   Load_Theme_ThemeA()
+'   Load_Theme_ThemeB()
 '
 ' Followed By:
 '
-'   Load_Theme_ThemeA()
-'   Load_Theme_ThemeB()
+'   Load_Styles_ThemeA()
+'   Load_Styles_ThemeB()
 '
 ' Iteration is implemented using:
 '
@@ -218,28 +218,37 @@
 ' Themes are extracted one at a time from the registry:
 '
 '   |ThemeA|ThemeB|
-'
 '       ↓
-'
 '   ThemeA
-'
 '       ↓
-'
 '   ThemeB
-'
-' Iteration uses:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' to avoid dependency on !foreach support.
 '
 '=================================================================
 
-!procedure Invoke_Preload_Themes()
+!procedure Invoke_Load_Themes()
 
-    For_Each_Theme("Preload_Theme_")
+    For_Each_Theme("Load_Theme_")
+
+!endprocedure
+
+
+'=================================================================
+' SKINPARAM INVOCATION
+'=================================================================
+'
+' Themes are extracted one at a time from the registry:
+'
+'   |ThemeA|ThemeB|
+'       ↓
+'   ThemeA
+'       ↓
+'   ThemeB
+'
+'=================================================================
+
+!procedure Invoke_Load_Skinparams()
+
+    For_Each_Theme("Load_Skinparams_")
 
 !endprocedure
 
@@ -251,32 +260,18 @@
 ' Themes are extracted one at a time from the registry:
 '
 '   |ThemeA|ThemeB|
-'
 '       ↓
-'
 '   ThemeA
-'
 '       ↓
-'
 '   ThemeB
-'
-' Iteration uses:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' to avoid dependency on !foreach support.
 '
 '=================================================================
 
-!procedure Invoke_Load_Themes()
+!procedure Invoke_Load_Styles()
 
-    For_Each_Theme("Load_Theme_")
+    For_Each_Theme("Load_Styles_")
 
 !endprocedure
-
-
 
 
 '=================================================================
@@ -290,7 +285,7 @@
 '
 ' Variables:
 '
-'   !procedure Preload_Theme_ThemeA()
+'   !procedure Load_Theme_ThemeA()
 '
 '       !$COLOR_PRIMARY = "#3366CC"
 '
@@ -299,7 +294,7 @@
 '
 ' Styles:
 '
-'   !procedure Load_Theme_ThemeA()
+'   !procedure Load_Styles_ThemeA()
 '
 '   <style>
 '
@@ -341,13 +336,13 @@
 '
 ' LOADING ORDER
 '
-'   Preload_Lib_Theme_BEFORE()
+'   Load_Lib_Theme_BEFORE()
 '       ↓
 '   Registered Theme Preload Procedures
-'   Preload_Lib_Theme_Stdlib()
-'   Preload_Lib_Theme_Archimate()
+'   Load_Lib_Theme_Stdlib()
+'   Load_Lib_Theme_Archimate()
 '       ↓
-'   Preload_Lib_Theme_AFTER()
+'   Load_Lib_Theme_AFTER()
 '
 '       ↓
 '
@@ -372,7 +367,7 @@
 '
 ' Example:
 '
-'   !procedure Preload_Lib_Theme_BEFORE()
+'   !procedure Load_Lib_Theme_BEFORE()
 '
 '       !$SPACING_UNIT = 8
 '
@@ -424,11 +419,19 @@
 '
 ' Consumers may redefine these procedures.
 '
-!procedure Preload_Lib_Theme_BEFORE()
+!procedure Load_Lib_Theme_BEFORE()
 'DO NOT ADD CODE
 !endprocedure
 
-!procedure Preload_Lib_Theme_AFTER()
+!procedure Load_Lib_Theme_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_AFTER()
 'DO NOT ADD CODE
 !endprocedure
 
@@ -1506,7 +1509,9 @@
 ' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
 !function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+  
   !return $get_variable_text_color($bg_var_name, $dark_text_var_name, $light_text_var_name )
+
 !endfunction
 
 
@@ -2633,15 +2638,22 @@
 
 ' --- Importing: src/libs/stdlib/theme/_colors.puml ---
 
-!procedure Preload_Lib_Theme_StdLib_Colors()
+!procedure Load_Lib_Theme_StdLib_Colors()
 '---------------------------------------------------------
 ' Color Constants
 '
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+!global $COLOR_BODY ?= "#ffffff"
+!global $COLOR_TEXT ?= "#000000"
+!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
+
+
 !global $COLOR_TRANSPARENT = "#FFFFFF00"
 !global $COLOR_NONE ?= $COLOR_TRANSPARENT
+
+
 
 !global $COLOR_PRIMARY ?= "#D6EAF8"
 !global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
@@ -2659,12 +2671,10 @@
 !global $COLOR_ERROR_LIGHT ?= "#CD0000"
 !global $COLOR_ERROR_DARK ?= "#CD0000"
 
-!global $COLOR_BODY ?= "#ffffff"
+'NEED TO FIX NAMING
 !global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
 !global $COLOR_BORDER ?= "#5D6D7E"
 
-!global $COLOR_TEXT ?= "#000000"
-!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
 
 !global $COLOR_EMPHASIS ?= "#E0B8D4"
@@ -2683,7 +2693,7 @@
 ' --- End Import: src/libs/stdlib/theme/_colors.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_fonts.puml ---
-!procedure Preload_Lib_Theme_StdLib_Fonts()
+!procedure Load_Lib_Theme_StdLib_Fonts()
 
 '---------------------------------------------------------
 ' Font Constants
@@ -2704,7 +2714,7 @@
 
 
 ' --- Importing: src/libs/stdlib/theme/_spacing.puml ---
-!procedure Preload_Lib_Theme_StdLib_Spacing()
+!procedure Load_Lib_Theme_StdLib_Spacing()
 
 '---------------------------------------------------------
 ' Bootstrap-inspired spacing scale
@@ -2737,7 +2747,7 @@
 
 ' --- Importing: src/libs/stdlib/theme/_borders.puml ---
 
-!procedure Preload_Lib_Theme_StdLib_Borders()
+!procedure Load_Lib_Theme_StdLib_Borders()
 '---------------------------------------------------------
 ' Border Constants
 '
@@ -2759,7 +2769,7 @@
 ' --- End Import: src/libs/stdlib/theme/_borders.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_corners.puml ---
-!procedure Preload_Lib_Theme_StdLib_Corners()
+!procedure Load_Lib_Theme_StdLib_Corners()
 '---------------------------------------------------------
 ' Border Radius Utility Variables
 '---------------------------------------------------------
@@ -2784,7 +2794,7 @@
 ' --- End Import: src/libs/stdlib/theme/_corners.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_widths.puml ---
-!procedure Preload_Lib_Theme_StdLib_Widths()
+!procedure Load_Lib_Theme_StdLib_Widths()
 '---------------------------------------------------------
 ' Width Utility Variables
 '---------------------------------------------------------
@@ -2801,7 +2811,7 @@
 ' --- End Import: src/libs/stdlib/theme/_widths.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_heights.puml ---
-!procedure Preload_Lib_Theme_StdLib_Heights()
+!procedure Load_Lib_Theme_StdLib_Heights()
 '---------------------------------------------------------
 ' Height Utility Variables
 '---------------------------------------------------------
@@ -2818,7 +2828,7 @@
 
 
 ' --- Importing: src/libs/stdlib/theme/_element.puml ---
-!procedure Preload_Lib_Theme_StdLib_Element()
+!procedure Load_Lib_Theme_StdLib_Element()
 
 !global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
 !global $STYLE_FONT_ELEMENT ?= ""
@@ -2838,7 +2848,7 @@
 ' --- End Import: src/libs/stdlib/theme/_element.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_layout.puml ---
-!procedure Preload_Lib_Theme_StdLib_Layout()
+!procedure Load_Lib_Theme_StdLib_Layout()
 '---------------------------------------------------------
 ' Layout Constants
 '
@@ -2881,7 +2891,7 @@
 
 
 ' --- Importing: src/libs/stdlib/theme/_icons.puml ---
-!procedure Preload_Lib_Theme_StdLib_Icons()
+!procedure Load_Lib_Theme_StdLib_Icons()
 '---------------------------------------------------------
 ' Icon Constants
 '
@@ -2901,7 +2911,7 @@
 
 
 ' --- Importing: src/libs/stdlib/theme/_title.puml ---
-!procedure Preload_Lib_Theme_StdLib_Title()
+!procedure Load_Lib_Theme_StdLib_Title()
 
 '---------------------------------------------------------
 ' Title Constants
@@ -2928,7 +2938,7 @@
 ' --- End Import: src/libs/stdlib/theme/_title.puml ---
 
 ' --- Importing: src/libs/stdlib/theme/_component.puml ---
-!procedure Preload_Lib_Theme_StdLib_Component()
+!procedure Load_Lib_Theme_StdLib_Component()
 
 !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
 !global $STYLE_FONT_COMPONENT ?= ""
@@ -2950,29 +2960,29 @@
 
 
 
-!procedure Preload_Lib_Theme_Stdlib()
-    Preload_Lib_Theme_StdLib_Colors()
-    Preload_Lib_Theme_StdLib_Fonts()
+!procedure Load_Lib_Theme_Stdlib()
+    Load_Lib_Theme_StdLib_Colors()
+    Load_Lib_Theme_StdLib_Fonts()
 
-    Preload_Lib_Theme_StdLib_Spacing()
-    Preload_Lib_Theme_StdLib_Borders()
-    Preload_Lib_Theme_StdLib_Corners()
-    Preload_Lib_Theme_StdLib_Widths()
-    Preload_Lib_Theme_StdLib_Heights()
+    Load_Lib_Theme_StdLib_Spacing()
+    Load_Lib_Theme_StdLib_Borders()
+    Load_Lib_Theme_StdLib_Corners()
+    Load_Lib_Theme_StdLib_Widths()
+    Load_Lib_Theme_StdLib_Heights()
 
-    Preload_Lib_Theme_StdLib_Element()
-    Preload_Lib_Theme_StdLib_Layout()
+    Load_Lib_Theme_StdLib_Element()
+    Load_Lib_Theme_StdLib_Layout()
 
-    Preload_Lib_Theme_StdLib_Icons()
-    Preload_Lib_Theme_StdLib_Title()
-    Preload_Lib_Theme_StdLib_Component()
+    Load_Lib_Theme_StdLib_Icons()
+    Load_Lib_Theme_StdLib_Title()
+    Load_Lib_Theme_StdLib_Component()
     
 !endprocedure
 ' --- End Import: src/libs/stdlib/theme/index.puml ---
 
 ' --- Importing: src/libs/archimate/theme/index.puml ---
 ' --- Importing: src/libs/archimate/theme/_fonts.puml ---
-!procedure Preload_Lib_Theme_Archimate_Fonts()
+!procedure Load_Lib_Theme_Archimate_Fonts()
 
     '=====================================================
     ' Typography
@@ -2991,7 +3001,7 @@
 
 ' --- Importing: src/libs/archimate/theme/_colors.puml ---
 
-!procedure Preload_Lib_Theme_Archimate_Colors()
+!procedure Load_Lib_Theme_Archimate_Colors()
 
     !global $COLOR_MOTIVATION ?= "#CCCCFF"
     !global $COLOR_STRATEGY ?= "#F5DEAA"
@@ -3039,7 +3049,7 @@
 ' --- Importing: src/libs/archimate/theme/_mapped_colors.puml ---
 
 
-!procedure Preload_Lib_Theme_Archimate_Mapped_Colors()
+!procedure Load_Lib_Theme_Archimate_Mapped_Colors()
 
     '=====================================================
     ' Layer Colors
@@ -3111,7 +3121,7 @@
 
 ' --- Importing: src/libs/archimate/theme/_corners.puml ---
 
-!procedure Preload_Lib_Theme_Archimate_Corners()
+!procedure Load_Lib_Theme_Archimate_Corners()
 
     '=====================================================
     ' Corner Radius
@@ -3127,7 +3137,7 @@
 
 ' --- Importing: src/libs/archimate/theme/_widths.puml ---
 
-!procedure Preload_Lib_Theme_Archimate_Widths()
+!procedure Load_Lib_Theme_Archimate_Widths()
 
     '=====================================================
     ' Widths
@@ -3315,14 +3325,14 @@
 
 
 
-!procedure Preload_Lib_Theme_Archimate()
+!procedure Load_Lib_Theme_Archimate()
 
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
-        Preload_Lib_Theme_Archimate_Colors()
-        Preload_Lib_Theme_Archimate_Mapped_Colors()
-        Preload_Lib_Theme_Archimate_Fonts()
-        Preload_Lib_Theme_Archimate_Corners()
-        Preload_Lib_Theme_Archimate_Widths()
+        Load_Lib_Theme_Archimate_Colors()
+        Load_Lib_Theme_Archimate_Mapped_Colors()
+        Load_Lib_Theme_Archimate_Fonts()
+        Load_Lib_Theme_Archimate_Corners()
+        Load_Lib_Theme_Archimate_Widths()
 
     !endif
 
@@ -3340,7 +3350,7 @@
 
 
 'STEP 4 :: Skin Params includes
-' --- Importing: src/libs/stdlib/skinparam/index.puml ---
+' --- Importing: src/libs/stdlib/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
@@ -3350,38 +3360,40 @@
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
+!procedure Load_Lib_Skinparams_Stdlib()
+    skinparam linetype $LINE_TYPE
+    skinparam nodesep $NODE_SEP
+    skinparam ranksep $RANK_SEP
 
-skinparam linetype $LINE_TYPE
-skinparam nodesep $NODE_SEP
-skinparam ranksep $RANK_SEP
+    !if ($SKINPARAM_ENABLED)
 
-!if ($SKINPARAM_ENABLED)
+    skinparam shadowing $SHADOWING
+    skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
 
-skinparam shadowing $SHADOWING
-skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+    skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
 
-skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
-
-skinparam actorStyle $STYLE_ACTOR
-skinparam actorBorderColor $COLOR_BORDER_ACTOR
-skinparam actorBorderThickness $SIZE_BORDER_ACTOR
-skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
+    skinparam actorStyle $STYLE_ACTOR
+    skinparam actorBorderColor $COLOR_BORDER_ACTOR
+    skinparam actorBorderThickness $SIZE_BORDER_ACTOR
+    skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 
 !endif
-' --- End Import: src/libs/stdlib/skinparam/index.puml ---
+' --- End Import: src/libs/stdlib/skinparams/index.puml ---
 
-' --- Importing: src/libs/archimate/skinparam/index.puml ---
+' --- Importing: src/libs/archimate/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
 '---------------------------------------------------------
 
-!if ($SKINPARAM_ENABLED)
+!procedure Load_Lib_Skinparams_Archimate()
 
+    !if ($SKINPARAM_ENABLED)
 
-
-!endif
-' --- End Import: src/libs/archimate/skinparam/index.puml ---
+    !endif
+    
+!endprocedure
+' --- End Import: src/libs/archimate/skinparams/index.puml ---
 
 
 'STEP 5 :: STYLES includes
@@ -3803,32 +3815,60 @@ component {
 ' --- End Import: src/libs/archimate/styles/index.puml ---
 
 
-'STEP 6 :: Add to Load_Lib_Styles_All
+'STEP 6 :: Add to Load_Lib_All
+' --- Importing: src/libs/_load.puml ---
+!procedure Load_Lib_Themes()
+    '--------------------------------------------    
+    Load_Lib_Theme_BEFORE()
 
-!procedure Load_Lib_Styles_All()
+    
+    Load_Lib_Theme_Stdlib()
+    Load_Lib_Theme_Archimate()
+    Invoke_Load_Themes()
 
-'--------------------------------------------    
-    Preload_Lib_Theme_BEFORE()
-'--------------------------------------------
-    Invoke_Preload_Themes()
-    Preload_Lib_Theme_Stdlib()
-    Preload_Lib_Theme_Archimate()
-'--------------------------------------------    
-    Preload_Lib_Theme_AFTER()
-'--------------------------------------------
+ 
+    Load_Lib_Theme_AFTER()
+    '--------------------------------------------
+!endprocedure
 
 
-'--------------------------------------------    
+!procedure Load_Lib_Skinparams()
+    '--------------------------------------------    
+    Load_Lib_Skinparams_BEFORE()
+
+    Load_Lib_Skinparams_Stdlib()
+    Load_Lib_Skinparams_Archimate()
+    Invoke_Load_Skinparams()
+
+    Load_Lib_Skinparams_AFTER()
+    '--------------------------------------------
+!endprocedure
+
+
+!procedure Load_Lib_Styles()
+    '--------------------------------------------    
     Load_Lib_Styles_BEFORE()
-'--------------------------------------------
+
     Load_Lib_Styles_Stdlib()
     Load_Lib_Styles_Archimate()
-    Invoke_Load_Themes()
-'--------------------------------------------
-    Load_Lib_Styles_AFTER()
-'--------------------------------------------
+    Invoke_Load_Styles()
 
+    Load_Lib_Styles_AFTER()
+    '--------------------------------------------
 !endprocedure
+
+
+
+!procedure Load_Lib_All()
+    Load_Lib_Themes()
+    Load_Lib_Skinparams()
+    Load_Lib_Styles()
+!endprocedure
+  
+
+
+' --- End Import: src/libs/_load.puml ---
+
 
 ' --- End Import: src/libs/index.puml ---
 

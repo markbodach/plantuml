@@ -4,7 +4,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Layout()
+!procedure Load_Theme_OntarioHealth_Layout()
 
 
 !endprocedure

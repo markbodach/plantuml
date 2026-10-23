@@ -5,7 +5,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Title()
+!procedure Load_Theme_OntarioHealth_Title()
 
     !global $MARGIN_TITLE = $MARGIN_OH_TITLE
     !global $PADDING_TITLE = $PADDING_OH_TITLE

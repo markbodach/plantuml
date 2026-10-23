@@ -46,8 +46,8 @@ src/all.puml (Root Master)
         └── _corners.puml
         └── _widths.puml
         └── _element.puml
-      └── stdlib/skinparam/index.puml
-      └── archimate/skinparam/index.puml
+      └── stdlib/skinparams/index.puml
+      └── archimate/skinparams/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _card.puml
@@ -57,4 +57,5 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
+      └── _load.puml
 ```

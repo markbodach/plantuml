@@ -1,6 +1,8 @@
 
 !function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+  
   !return $get_variable_text_color($bg_var_name, $dark_text_var_name, $light_text_var_name )
+
 !endfunction
 
 

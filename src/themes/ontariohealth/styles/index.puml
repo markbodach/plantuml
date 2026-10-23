@@ -5,10 +5,14 @@
 
 
 
-!procedure Load_Theme_OntarioHealth()
+!procedure Load_Styles_OntarioHealth()
 
     !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
+
+
+        Load_Lib_Skinparams_OntarioHealth()
     !endif
+
 
 !endprocedure 

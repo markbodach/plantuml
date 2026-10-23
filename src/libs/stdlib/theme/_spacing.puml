@@ -1,4 +1,4 @@
-!procedure Preload_Lib_Theme_StdLib_Spacing()
+!procedure Load_Lib_Theme_StdLib_Spacing()
 
 '---------------------------------------------------------
 ' Bootstrap-inspired spacing scale

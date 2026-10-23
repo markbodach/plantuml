@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-22 17:18:02 EDT
-' Build Commit Hash: 23dabdb6489b07eb50dc9b90ddfc7bfd104bb2e9
-' Build Commit Comment: refactoring
+' Generated on: 2026-10-23 00:58:57 EDT
+' Build Commit Hash: 00626a5862b31fea7366c00439c14c72773ee81c
+' Build Commit Comment: global variables
 ' ========================================================
 
 
@@ -158,7 +158,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Colors()
+!procedure Load_Theme_OntarioHealth_Colors()
 
     'Set OH Colours
     !global $COLOR_PRIMARY = $COLOR_OH_PRIMARY
@@ -178,7 +178,7 @@
     !global $COLOR_ERROR_DARK = $COLOR_OH_ERROR_DARK
 
     !global $COLOR_TEXT = $COLOR_OH_TEXT
-    !global $COLOR_BORDER ?= $COLOR_OH_BORDER
+    !global $COLOR_BORDER = $COLOR_OH_BORDER
 
 
     !global $COLOR_DISABLED_DARK = $COLOR_OH_LABEL
@@ -187,7 +187,7 @@
 !endprocedure
 
 
-!procedure Preload_Theme_OntarioHealth_ArchimateColors()
+!procedure Load_Theme_OntarioHealth_ArchimateColors()
     'If there are a lot of variables, this could be moved into a separate _archimate.puml file
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
 
@@ -234,7 +234,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Layout()
+!procedure Load_Theme_OntarioHealth_Layout()
 
 
 !endprocedure
@@ -248,7 +248,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Title()
+!procedure Load_Theme_OntarioHealth_Title()
 
     !global $MARGIN_TITLE = $MARGIN_OH_TITLE
     !global $PADDING_TITLE = $PADDING_OH_TITLE
@@ -266,13 +266,17 @@
 
 
 
-!procedure Preload_Theme_OntarioHealth()
+!procedure Load_Theme_OntarioHealth()
+
     !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
-        Preload_Theme_OntarioHealth_Colors()
-        Preload_Theme_OntarioHealth_ArchimateColors()
-        Preload_Theme_OntarioHealth_Layout()
-        Preload_Theme_OntarioHealth_Title()
+
+        Load_Theme_OntarioHealth_Colors()
+        Load_Theme_OntarioHealth_ArchimateColors()
+        Load_Theme_OntarioHealth_Layout()
+        Load_Theme_OntarioHealth_Title()
+
     !endif
+
 !endprocedure
 ' --- End Import: src/themes/ontariohealth/theme/index.puml ---
 
@@ -284,11 +288,13 @@
 ' skinparam Initialization
 '---------------------------------------------------------
 
-!if ($SKINPARAM_ENABLED)
+!procedure Load_Lib_Skinparams_OntarioHealth()
 
+    !if ($SKINPARAM_ENABLED)
 
-
-!endif
+    !endif
+    
+!endprocedure
 ' --- End Import: src/themes/ontariohealth/skinparam/index.puml ---
 
 
@@ -308,11 +314,15 @@
 
 
 
-!procedure Load_Theme_OntarioHealth()
+!procedure Load_Styles_OntarioHealth()
 
     !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
+
+
+        Load_Lib_Skinparams_OntarioHealth()
     !endif
+
 
 !endprocedure 
 ' --- End Import: src/themes/ontariohealth/styles/index.puml ---

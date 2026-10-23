@@ -1,5 +1,5 @@
 
-!procedure Preload_Lib_Theme_StdLib_Borders()
+!procedure Load_Lib_Theme_StdLib_Borders()
 '---------------------------------------------------------
 ' Border Constants
 '

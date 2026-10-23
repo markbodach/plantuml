@@ -3,7 +3,7 @@
 '---------------------------------------------------------
 
 
-!procedure Preload_Theme_OntarioHealth_Colors()
+!procedure Load_Theme_OntarioHealth_Colors()
 
     'Set OH Colours
     !global $COLOR_PRIMARY = $COLOR_OH_PRIMARY
@@ -23,7 +23,7 @@
     !global $COLOR_ERROR_DARK = $COLOR_OH_ERROR_DARK
 
     !global $COLOR_TEXT = $COLOR_OH_TEXT
-    !global $COLOR_BORDER ?= $COLOR_OH_BORDER
+    !global $COLOR_BORDER = $COLOR_OH_BORDER
 
 
     !global $COLOR_DISABLED_DARK = $COLOR_OH_LABEL
@@ -32,7 +32,7 @@
 !endprocedure
 
 
-!procedure Preload_Theme_OntarioHealth_ArchimateColors()
+!procedure Load_Theme_OntarioHealth_ArchimateColors()
     'If there are a lot of variables, this could be moved into a separate _archimate.puml file
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
 

@@ -1,13 +1,20 @@
 
-!procedure Preload_Lib_Theme_StdLib_Colors()
+!procedure Load_Lib_Theme_StdLib_Colors()
 '---------------------------------------------------------
 ' Color Constants
 '
 ' !$variable_name ?= "variable_value"
 '---------------------------------------------------------
 
+!global $COLOR_BODY ?= "#ffffff"
+!global $COLOR_TEXT ?= "#000000"
+!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
+
+
 !global $COLOR_TRANSPARENT = "#FFFFFF00"
 !global $COLOR_NONE ?= $COLOR_TRANSPARENT
+
+
 
 !global $COLOR_PRIMARY ?= "#D6EAF8"
 !global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
@@ -25,12 +32,10 @@
 !global $COLOR_ERROR_LIGHT ?= "#CD0000"
 !global $COLOR_ERROR_DARK ?= "#CD0000"
 
-!global $COLOR_BODY ?= "#ffffff"
+'NEED TO FIX NAMING
 !global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
 !global $COLOR_BORDER ?= "#5D6D7E"
 
-!global $COLOR_TEXT ?= "#000000"
-!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
 
 !global $COLOR_EMPHASIS ?= "#E0B8D4"

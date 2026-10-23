@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-22 17:18:02 EDT**
-* Build Commit Hash: **23dabdb6489b07eb50dc9b90ddfc7bfd104bb2e9**
-* Build Commit Comment: **refactoring**
+* Generated on: **2026-10-23 00:58:57 EDT**
+* Build Commit Hash: **00626a5862b31fea7366c00439c14c72773ee81c**
+* Build Commit Comment: **global variables**
 
 ## Usage
 
@@ -40,7 +40,7 @@ theme-panelapp.puml
 
 Register_Theme("Corporate")
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 @enduml
 ```

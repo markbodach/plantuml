@@ -10,13 +10,13 @@
 '
 ' LOADING ORDER
 '
-'   Preload_Lib_Theme_BEFORE()
+'   Load_Lib_Theme_BEFORE()
 '       ↓
 '   Registered Theme Preload Procedures
-'   Preload_Lib_Theme_Stdlib()
-'   Preload_Lib_Theme_Archimate()
+'   Load_Lib_Theme_Stdlib()
+'   Load_Lib_Theme_Archimate()
 '       ↓
-'   Preload_Lib_Theme_AFTER()
+'   Load_Lib_Theme_AFTER()
 '
 '       ↓
 '
@@ -41,7 +41,7 @@
 '
 ' Example:
 '
-'   !procedure Preload_Lib_Theme_BEFORE()
+'   !procedure Load_Lib_Theme_BEFORE()
 '
 '       !$SPACING_UNIT = 8
 '
@@ -93,11 +93,19 @@
 '
 ' Consumers may redefine these procedures.
 '
-!procedure Preload_Lib_Theme_BEFORE()
+!procedure Load_Lib_Theme_BEFORE()
 'DO NOT ADD CODE
 !endprocedure
 
-!procedure Preload_Lib_Theme_AFTER()
+!procedure Load_Lib_Theme_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_AFTER()
 'DO NOT ADD CODE
 !endprocedure
 

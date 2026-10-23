@@ -19,21 +19,21 @@
 
 
 
-!procedure Preload_Lib_Theme_Stdlib()
-    Preload_Lib_Theme_StdLib_Colors()
-    Preload_Lib_Theme_StdLib_Fonts()
+!procedure Load_Lib_Theme_Stdlib()
+    Load_Lib_Theme_StdLib_Colors()
+    Load_Lib_Theme_StdLib_Fonts()
 
-    Preload_Lib_Theme_StdLib_Spacing()
-    Preload_Lib_Theme_StdLib_Borders()
-    Preload_Lib_Theme_StdLib_Corners()
-    Preload_Lib_Theme_StdLib_Widths()
-    Preload_Lib_Theme_StdLib_Heights()
+    Load_Lib_Theme_StdLib_Spacing()
+    Load_Lib_Theme_StdLib_Borders()
+    Load_Lib_Theme_StdLib_Corners()
+    Load_Lib_Theme_StdLib_Widths()
+    Load_Lib_Theme_StdLib_Heights()
 
-    Preload_Lib_Theme_StdLib_Element()
-    Preload_Lib_Theme_StdLib_Layout()
+    Load_Lib_Theme_StdLib_Element()
+    Load_Lib_Theme_StdLib_Layout()
 
-    Preload_Lib_Theme_StdLib_Icons()
-    Preload_Lib_Theme_StdLib_Title()
-    Preload_Lib_Theme_StdLib_Component()
+    Load_Lib_Theme_StdLib_Icons()
+    Load_Lib_Theme_StdLib_Title()
+    Load_Lib_Theme_StdLib_Component()
     
 !endprocedure

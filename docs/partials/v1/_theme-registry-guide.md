@@ -110,7 +110,7 @@ Each registered theme must provide two procedures.
 ## Variable Phase
 
 ```plantuml
-Preload_Theme_<ThemeName>()
+Load_Theme_<ThemeName>()
 ```
 
 Used for:
@@ -123,7 +123,7 @@ Used for:
 Example:
 
 ```plantuml
-!procedure Preload_Theme_Corporate()
+!procedure Load_Theme_Corporate()
 
     !$SPACING_UNIT = 8
 
@@ -135,7 +135,7 @@ Example:
 ## Style Phase
 
 ```plantuml
-Load_Theme_<ThemeName>()
+Load_Styles_<ThemeName>()
 ```
 
 Used for:
@@ -148,7 +148,7 @@ Used for:
 Example:
 
 ```plantuml
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
 
 <style>
 
@@ -176,7 +176,7 @@ Theme authors do not call these procedures directly.
 For each registered theme:
 
 ```plantuml
-Preload_Theme_<Theme>()
+Load_Theme_<Theme>()
 ```
 
 is executed.
@@ -191,9 +191,9 @@ Register_Theme("Product")
 results in:
 
 ```plantuml
-Preload_Theme_Corporate()
+Load_Theme_Corporate()
 
-Preload_Theme_Product()
+Load_Theme_Product()
 ```
 
 ---
@@ -203,7 +203,7 @@ Preload_Theme_Product()
 For each registered theme:
 
 ```plantuml
-Load_Theme_<Theme>()
+Load_Styles_<Theme>()
 ```
 
 is executed.
@@ -211,9 +211,9 @@ is executed.
 For example:
 
 ```plantuml
-Load_Theme_Corporate()
+Load_Styles_Corporate()
 
-Load_Theme_Product()
+Load_Styles_Product()
 ```
 
 ---
@@ -238,7 +238,7 @@ Example:
 Register_Theme("Corporate")
 
 
-!procedure Preload_Theme_Corporate()
+!procedure Load_Theme_Corporate()
 
     !$SPACING_UNIT = 8
 
@@ -247,7 +247,7 @@ Register_Theme("Corporate")
 !endprocedure
 
 
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
 
 <style>
 
@@ -277,7 +277,7 @@ Simply include the theme package.
 
 !include corporate-theme.puml
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 ```
 
 The theme registers itself automatically.
@@ -388,7 +388,7 @@ Duplicate registrations will result in duplicate execution.
 Good:
 
 ```plantuml
-!procedure Preload_Theme_Corporate()
+!procedure Load_Theme_Corporate()
 
     !$SPACING_UNIT = 8
 
@@ -404,7 +404,7 @@ Avoid defining variables during the style phase.
 Good:
 
 ```plantuml
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
 
 <style>
 

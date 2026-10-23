@@ -320,7 +320,7 @@ theme-panelapp.puml
 
 Register_Theme("Corporate")
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 @enduml
 \`\`\`

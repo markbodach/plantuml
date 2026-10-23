@@ -1,4 +1,4 @@
-!procedure Preload_Lib_Theme_StdLib_Component()
+!procedure Load_Lib_Theme_StdLib_Component()
 
 !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
 !global $STYLE_FONT_COMPONENT ?= ""

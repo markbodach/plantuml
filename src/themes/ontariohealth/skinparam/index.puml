@@ -3,8 +3,10 @@
 ' skinparam Initialization
 '---------------------------------------------------------
 
-!if ($SKINPARAM_ENABLED)
+!procedure Load_Lib_Skinparams_OntarioHealth()
 
+    !if ($SKINPARAM_ENABLED)
 
-
-!endif
+    !endif
+    
+!endprocedure

@@ -1,4 +1,4 @@
-!procedure Preload_Lib_Theme_StdLib_Title()
+!procedure Load_Lib_Theme_StdLib_Title()
 
 '---------------------------------------------------------
 ' Title Constants

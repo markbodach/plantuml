@@ -19,14 +19,14 @@
 '
 ' Each registered theme may provide:
 '
-'   Preload_Theme_<Theme>()
+'   Load_Theme_<Theme>()
 '
 '       Used for:
 '           - Variables
 '           - Theme initialization
 '           - Configuration
 '
-'   Load_Theme_<Theme>()
+'   Load_Styles_<Theme>()
 '
 '       Used for:
 '           - Styles
@@ -146,13 +146,13 @@
 '
 ' Results In:
 '
-'   Preload_Theme_ThemeA()
-'   Preload_Theme_ThemeB()
+'   Load_Theme_ThemeA()
+'   Load_Theme_ThemeB()
 '
 ' Followed By:
 '
-'   Load_Theme_ThemeA()
-'   Load_Theme_ThemeB()
+'   Load_Styles_ThemeA()
+'   Load_Styles_ThemeB()
 '
 ' Iteration is implemented using:
 '
@@ -198,28 +198,37 @@
 ' Themes are extracted one at a time from the registry:
 '
 '   |ThemeA|ThemeB|
-'
 '       ↓
-'
 '   ThemeA
-'
 '       ↓
-'
 '   ThemeB
-'
-' Iteration uses:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' to avoid dependency on !foreach support.
 '
 '=================================================================
 
-!procedure Invoke_Preload_Themes()
+!procedure Invoke_Load_Themes()
 
-    For_Each_Theme("Preload_Theme_")
+    For_Each_Theme("Load_Theme_")
+
+!endprocedure
+
+
+'=================================================================
+' SKINPARAM INVOCATION
+'=================================================================
+'
+' Themes are extracted one at a time from the registry:
+'
+'   |ThemeA|ThemeB|
+'       ↓
+'   ThemeA
+'       ↓
+'   ThemeB
+'
+'=================================================================
+
+!procedure Invoke_Load_Skinparams()
+
+    For_Each_Theme("Load_Skinparams_")
 
 !endprocedure
 
@@ -231,32 +240,18 @@
 ' Themes are extracted one at a time from the registry:
 '
 '   |ThemeA|ThemeB|
-'
 '       ↓
-'
 '   ThemeA
-'
 '       ↓
-'
 '   ThemeB
-'
-' Iteration uses:
-'
-'   !while
-'   %substr()
-'   %strpos()
-'
-' to avoid dependency on !foreach support.
 '
 '=================================================================
 
-!procedure Invoke_Load_Themes()
+!procedure Invoke_Load_Styles()
 
-    For_Each_Theme("Load_Theme_")
+    For_Each_Theme("Load_Styles_")
 
 !endprocedure
-
-
 
 
 '=================================================================
@@ -270,7 +265,7 @@
 '
 ' Variables:
 '
-'   !procedure Preload_Theme_ThemeA()
+'   !procedure Load_Theme_ThemeA()
 '
 '       !$COLOR_PRIMARY = "#3366CC"
 '
@@ -279,7 +274,7 @@
 '
 ' Styles:
 '
-'   !procedure Load_Theme_ThemeA()
+'   !procedure Load_Styles_ThemeA()
 '
 '   <style>
 '

@@ -17,37 +17,13 @@
 !include archimate/theme/index.puml
 
 'STEP 4 :: Skin Params includes
-!include stdlib/skinparam/index.puml
-!include archimate/skinparam/index.puml
+!include stdlib/skinparams/index.puml
+!include archimate/skinparams/index.puml
 
 'STEP 5 :: STYLES includes
 !include stdlib/styles/index.puml
 !include archimate/styles/index.puml
 
-'STEP 6 :: Add to Load_Lib_Styles_All
-
-!procedure Load_Lib_Styles_All()
-
-'--------------------------------------------    
-    Preload_Lib_Theme_BEFORE()
-'--------------------------------------------
-    Invoke_Preload_Themes()
-    Preload_Lib_Theme_Stdlib()
-    Preload_Lib_Theme_Archimate()
-'--------------------------------------------    
-    Preload_Lib_Theme_AFTER()
-'--------------------------------------------
-
-
-'--------------------------------------------    
-    Load_Lib_Styles_BEFORE()
-'--------------------------------------------
-    Load_Lib_Styles_Stdlib()
-    Load_Lib_Styles_Archimate()
-    Invoke_Load_Themes()
-'--------------------------------------------
-    Load_Lib_Styles_AFTER()
-'--------------------------------------------
-
-!endprocedure
+'STEP 6 :: Add to Load_Lib_All
+!include _load.puml
 

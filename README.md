@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-22 17:18:02 EDT**
-* Build Commit Hash: **23dabdb6489b07eb50dc9b90ddfc7bfd104bb2e9**
-* Build Commit Comment: **refactoring**
+* Generated on: **2026-10-23 00:58:57 EDT**
+* Build Commit Hash: **00626a5862b31fea7366c00439c14c72773ee81c**
+* Build Commit Comment: **global variables**
 
 ## Usage
 
@@ -43,7 +43,7 @@ theme-panelapp.puml
 
 Register_Theme("Corporate")
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 @enduml
 ```
@@ -98,7 +98,7 @@ Registered Theme(s)
 Project Customization
 ```
 
-The registry controls **execution**, not file discovery. PlantUML files are loaded statically with `!include` or `!includeurl`; registration controls which already-loaded theme procedures participate in `Load_Lib_Styles_All()`.
+The registry controls **execution**, not file discovery. PlantUML files are loaded statically with `!include` or `!includeurl`; registration controls which already-loaded theme procedures participate in `Load_Lib_All()`.
 
 ### Design Principles
 
@@ -122,7 +122,7 @@ The registry controls **execution**, not file discovery. PlantUML files are load
 !define MBpuml https://markbodach.github.io/plantuml
 !includeurl MBpuml/all.puml
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 rectangle "Core Component" <<card>>
 
@@ -139,7 +139,7 @@ rectangle "Core Component" <<card>>
 !includeurl MBpuml/theme-corporate.puml
 
 Register_Theme("Corporate")
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 rectangle "Themed Component" <<card>>
 
@@ -161,7 +161,7 @@ A theme bundle may instead self-register. Pick one convention—consumer registr
 Register_Theme("Corporate")
 Register_Theme("Product")
 
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 @enduml
 ```
@@ -183,18 +183,18 @@ Later themes may override variables or styles introduced by earlier themes.
 ---
 ## Chapter 3: Runtime Architecture and Processing Order
 
-`Load_Lib_Styles_All()` executes two phases. The preload phase establishes the values used to generate styles. The load phase emits styles.
+`Load_Lib_All()` executes two phases. The preload phase establishes the values used to generate styles. The load phase emits styles.
 
 ```text
-Preload_Lib_Theme_BEFORE()
+Load_Lib_Theme_BEFORE()
     ↓
-Preload_Lib_Theme_Stdlib()
+Load_Lib_Theme_Stdlib()
     ↓
-Preload_Lib_Theme_Archimate()
+Load_Lib_Theme_Archimate()
     ↓
-Invoke_Preload_Themes()
+Invoke_Load_Themes()
     ↓
-Preload_Lib_Theme_AFTER()
+Load_Lib_Theme_AFTER()
 
 Load_Lib_Styles_BEFORE()
     ↓
@@ -202,7 +202,7 @@ Load_Lib_Styles_Stdlib()
     ↓
 Load_Lib_Styles_Archimate()
     ↓
-Invoke_Load_Themes()
+Invoke_Load_Styles()
     ↓
 Load_Lib_Styles_AFTER()
 ```
@@ -324,8 +324,8 @@ src/all.puml (Root Master)
         └── _corners.puml
         └── _widths.puml
         └── _element.puml
-      └── stdlib/skinparam/index.puml
-      └── archimate/skinparam/index.puml
+      └── stdlib/skinparams/index.puml
+      └── archimate/skinparams/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _card.puml
@@ -335,6 +335,7 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
+      └── _load.puml
 ```
 
 ---
@@ -363,13 +364,13 @@ Every registered theme must define both procedures below.
 #### Preload Phase
 
 ```plantuml
-Preload_Lib_Theme_THEME_<ThemeName>()
+Load_Lib_Theme_THEME_<ThemeName>()
 ```
 
 Use it for variables, semantic mappings, and theme configuration:
 
 ```plantuml
-!procedure Preload_Lib_Theme_THEME_Corporate()
+!procedure Load_Lib_Theme_THEME_Corporate()
     !$SPACING_UNIT = 8
     !$ROUND_2 = 12
     !$COLOR_PRIMARY = "#123456"
@@ -379,13 +380,13 @@ Use it for variables, semantic mappings, and theme configuration:
 #### Load Phase
 
 ```plantuml
-Load_Theme_<ThemeName>()
+Load_Styles_<ThemeName>()
 ```
 
 Use it for styles and stereotypes:
 
 ```plantuml
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
 <style>
 .card {
     Padding 24
@@ -406,18 +407,18 @@ Register_Theme("Corporate")
 Register_Theme("Product")
 ```
 
-`Invoke_Preload_Themes()` dynamically invokes:
-
-```plantuml
-Preload_Lib_Theme_THEME_Corporate()
-Preload_Lib_Theme_THEME_Product()
-```
-
 `Invoke_Load_Themes()` dynamically invokes:
 
 ```plantuml
-Load_Theme_Corporate()
-Load_Theme_Product()
+Load_Lib_Theme_THEME_Corporate()
+Load_Lib_Theme_THEME_Product()
+```
+
+`Invoke_Load_Styles()` dynamically invokes:
+
+```plantuml
+Load_Styles_Corporate()
+Load_Styles_Product()
 ```
 
 PlantUML does not provide a portable procedure-existence test. Registering a theme whose procedures are absent or misspelled will fail when `%invoke_procedure()` executes. Registration is therefore a contract.
@@ -439,7 +440,7 @@ Use static includes first, then register:
 !includeurl MBpuml/theme-corporate.puml
 
 Register_Theme("Corporate")
-Load_Lib_Styles_All()
+Load_Lib_All()
 ```
 
 Conceptually:
@@ -453,7 +454,7 @@ Register_Theme()
     ↓
 Registry determines execution order
     ↓
-Load_Lib_Styles_All()
+Load_Lib_All()
 ```
 
 ### Registration Convention
@@ -494,11 +495,11 @@ Do not mix conventions or the documentation becomes ambiguous. Guarding duplicat
 A registered theme named `Corporate` must define both procedures exactly:
 
 ```plantuml
-!procedure Preload_Lib_Theme_THEME_Corporate()
+!procedure Load_Lib_Theme_THEME_Corporate()
     ' Variables and semantic mappings
 !endprocedure
 
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
     ' Styles and stereotypes
 !endprocedure
 ```
@@ -508,7 +509,7 @@ Even when a theme has nothing to do in one phase, define an empty procedure. Pla
 ### Preload Example
 
 ```plantuml
-!procedure Preload_Lib_Theme_THEME_Corporate()
+!procedure Load_Lib_Theme_THEME_Corporate()
     !$COLOR_PRIMARY = "#123456"
     !$COLOR_PRIMARY_LIGHT = "#D9E3EC"
     !$COLOR_PRIMARY_DARK = "#0A2438"
@@ -520,7 +521,7 @@ Even when a theme has nothing to do in one phase, define an empty procedure. Pla
 ### Load Example
 
 ```plantuml
-!procedure Load_Theme_Corporate()
+!procedure Load_Styles_Corporate()
 <style>
 .corporateCard {
     Padding $SPACING_3
@@ -580,8 +581,8 @@ A corporate theme should establish broad branding and semantic colors. A product
 The framework exposes four optional extension procedures so consumers can configure or override behavior without editing core source files:
 
 ```plantuml
-Preload_Lib_Theme_BEFORE()
-Preload_Lib_Theme_AFTER()
+Load_Lib_Theme_BEFORE()
+Load_Lib_Theme_AFTER()
 Load_Lib_Styles_BEFORE()
 Load_Lib_Styles_AFTER()
 ```
@@ -589,15 +590,15 @@ Load_Lib_Styles_AFTER()
 ### Processing Order
 
 ```text
-Preload_Lib_Theme_BEFORE()
+Load_Lib_Theme_BEFORE()
     ↓
-Preload_Lib_Theme_Stdlib()
+Load_Lib_Theme_Stdlib()
     ↓
-Preload_Lib_Theme_Archimate()
+Load_Lib_Theme_Archimate()
     ↓
-Invoke_Preload_Themes()
+Invoke_Load_Themes()
     ↓
-Preload_Lib_Theme_AFTER()
+Load_Lib_Theme_AFTER()
 
 Load_Lib_Styles_BEFORE()
     ↓
@@ -605,7 +606,7 @@ Load_Lib_Styles_Stdlib()
     ↓
 Load_Lib_Styles_Archimate()
     ↓
-Invoke_Load_Themes()
+Invoke_Load_Styles()
     ↓
 Load_Lib_Styles_AFTER()
 ```
@@ -615,10 +616,10 @@ Load_Lib_Styles_AFTER()
 The framework supplies empty defaults:
 
 ```plantuml
-!procedure Preload_Lib_Theme_BEFORE()
+!procedure Load_Lib_Theme_BEFORE()
 !endprocedure
 
-!procedure Preload_Lib_Theme_AFTER()
+!procedure Load_Lib_Theme_AFTER()
 !endprocedure
 
 !procedure Load_Lib_Styles_BEFORE()
@@ -628,18 +629,18 @@ The framework supplies empty defaults:
 !endprocedure
 ```
 
-Consumers may redefine them before `Load_Lib_Styles_All()` is called.
+Consumers may redefine them before `Load_Lib_All()` is called.
 
 ### Preload Hooks
 
 Preload hooks are for values used when styles are generated.
 
-#### `Preload_Lib_Theme_BEFORE()`
+#### `Load_Lib_Theme_BEFORE()`
 
 Use this hook to configure the framework before core preload processing:
 
 ```plantuml
-!procedure Preload_Lib_Theme_BEFORE()
+!procedure Load_Lib_Theme_BEFORE()
     !$SPACING_UNIT = 8
     !$CONTRAST_THRESHOLD = 140
     !$SKINPARAM_ENABLED = %true()
@@ -653,12 +654,12 @@ Typical uses:
 - Framework defaults that must exist before core processing
 - Variables consumed by core or theme preload procedures
 
-#### `Preload_Lib_Theme_AFTER()`
+#### `Load_Lib_Theme_AFTER()`
 
 Use this hook for final variable adjustments after registered themes have run:
 
 ```plantuml
-!procedure Preload_Lib_Theme_AFTER()
+!procedure Load_Lib_Theme_AFTER()
     !$PADDING_TITLE = $SPACING_4
     !$ROUND_CORNER_TITLE = $ROUND_2
 !endprocedure
@@ -718,11 +719,11 @@ This is the preferred hook for local style customization because it runs last.
 ```plantuml
 @startuml
 
-!procedure Preload_Lib_Theme_BEFORE()
+!procedure Load_Lib_Theme_BEFORE()
     !$SPACING_UNIT = 8
 !endprocedure
 
-!procedure Preload_Lib_Theme_AFTER()
+!procedure Load_Lib_Theme_AFTER()
     !$PADDING_TITLE = $SPACING_3
 !endprocedure
 
@@ -738,7 +739,7 @@ This is the preferred hook for local style customization because it runs last.
 !endprocedure
 
 !includeurl MBpuml/all.puml
-Load_Lib_Styles_All()
+Load_Lib_All()
 
 rectangle "Project Component" <<projectCard>>
 
@@ -751,8 +752,8 @@ rectangle "Project Component" <<projectCard>>
 
 | Concern | Hook |
 |---|---|
-| Configure before core processing | `Preload_Lib_Theme_BEFORE()` |
-| Final variable override | `Preload_Lib_Theme_AFTER()` |
+| Configure before core processing | `Load_Lib_Theme_BEFORE()` |
+| Final variable override | `Load_Lib_Theme_AFTER()` |
 | Style emitted before framework styles | `Load_Lib_Styles_BEFORE()` |
 | Final style override or project stereotype | `Load_Lib_Styles_AFTER()` |
 
@@ -963,7 +964,7 @@ PlantUML does not provide a full CSS-style merge model. When an atomic utility c
 Theme authors should override variables in their preload procedure:
 
 ```plantuml
-!procedure Preload_Lib_Theme_THEME_Corporate()
+!procedure Load_Lib_Theme_THEME_Corporate()
     !$SPACING_UNIT = 8
     !$ROUND_2 = 14
     !$WIDTH_MD = 300
@@ -1743,8 +1744,8 @@ $$COLOR_PRIMARY
 The registry builds procedure names dynamically. A registered theme must define both procedures with exact casing:
 
 ```plantuml
-Preload_Lib_Theme_THEME_Corporate()
-Load_Theme_Corporate()
+Load_Lib_Theme_THEME_Corporate()
+Load_Styles_Corporate()
 ```
 
 for:
@@ -1769,10 +1770,10 @@ Check the complete sequence:
 !includeurl MBpuml/all.puml
 !includeurl MBpuml/theme-corporate.puml
 Register_Theme("Corporate")
-Load_Lib_Styles_All()
+Load_Lib_All()
 ```
 
-Including a bundle defines its procedures; registration makes it part of the loader; `Load_Lib_Styles_All()` executes the pipeline.
+Including a bundle defines its procedures; registration makes it part of the loader; `Load_Lib_All()` executes the pipeline.
 
 ### Theme Executed Twice
 

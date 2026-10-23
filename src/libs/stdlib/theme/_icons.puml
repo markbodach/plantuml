@@ -1,4 +1,4 @@
-!procedure Preload_Lib_Theme_StdLib_Icons()
+!procedure Load_Lib_Theme_StdLib_Icons()
 '---------------------------------------------------------
 ' Icon Constants
 '
