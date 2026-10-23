@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 11:10:25 EDT
-' Build Commit Hash: 5b9f74f743a858b43ecd247b54b3fba20b2b7c17
-' Build Commit Comment: skinparams refactoring
+' Generated on: 2026-10-23 12:00:59 EDT
+' Build Commit Hash: c7e4dd3497e5dfca57188b95d8c1c5e1d2278204
+' Build Commit Comment: Code is architecturally sound. Registry abstraction is complete. Constant-based registry identifiers eliminate string literal drift. Further refactoring would produce diminishing returns. Focus effort on updating framework documentation and extension-authoring guidance rather than changing implementation
 ' ========================================================
 
 ' src/all.puml
@@ -89,9 +89,7 @@
 
         !$name = %substr($remaining,0,$pos)
 
-        !$remaining =
-            "|" +
-            %substr($remaining,$pos + 1)
+        !$remaining = "|" + %substr($remaining,$pos + 1)
 
         !if ($name != "")
 

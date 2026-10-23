@@ -69,9 +69,7 @@
 
         !$name = %substr($remaining,0,$pos)
 
-        !$remaining =
-            "|" +
-            %substr($remaining,$pos + 1)
+        !$remaining = "|" + %substr($remaining,$pos + 1)
 
         !if ($name != "")
 
