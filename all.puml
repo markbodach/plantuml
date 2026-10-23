@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 01:30:08 EDT
-' Build Commit Hash: 7badf46616597c40d156096367bf5328fbd3ca33
-' Build Commit Comment: refactoring skinparams
+' Generated on: 2026-10-23 01:34:55 EDT
+' Build Commit Hash: 383a801195adea90273f460cdbeaf2c5991710ac
+' Build Commit Comment: skinparams
 ' ========================================================
 
 ' src/all.puml
@@ -338,12 +338,18 @@
 '
 '   Load_Lib_Theme_BEFORE()
 '       ↓
-'   Registered Theme Preload Procedures
 '   Load_Lib_Theme_Stdlib()
 '   Load_Lib_Theme_Archimate()
+'   Registered Theme Skinparams Procedures
 '       ↓
 '   Load_Lib_Theme_AFTER()
 '
+'       ↓
+'   Load_Lib_Skinparams_BEFORE()
+'       ↓
+'   Load_Lib_Skinparams_Stdlib()
+'   Load_Lib_Skinparams_Archimate()
+'   Registered Theme Skinparams Procedures
 '       ↓
 '
 '   Load_Lib_Styles_BEFORE()

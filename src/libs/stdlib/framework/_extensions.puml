@@ -12,12 +12,18 @@
 '
 '   Load_Lib_Theme_BEFORE()
 '       ↓
-'   Registered Theme Preload Procedures
 '   Load_Lib_Theme_Stdlib()
 '   Load_Lib_Theme_Archimate()
+'   Registered Theme Skinparams Procedures
 '       ↓
 '   Load_Lib_Theme_AFTER()
 '
+'       ↓
+'   Load_Lib_Skinparams_BEFORE()
+'       ↓
+'   Load_Lib_Skinparams_Stdlib()
+'   Load_Lib_Skinparams_Archimate()
+'   Registered Theme Skinparams Procedures
 '       ↓
 '
 '   Load_Lib_Styles_BEFORE()

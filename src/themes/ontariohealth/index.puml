@@ -11,7 +11,7 @@
 !include theme/index.puml
 
 'STEP 4 :: Skin Params includes
-!include skinparam/index.puml
+!include skinparams/index.puml
 
 'STEP 5 :: STYLES includes
 !include styles/index.puml

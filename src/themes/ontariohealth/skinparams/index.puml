@@ -3,10 +3,12 @@
 ' skinparam Initialization
 '---------------------------------------------------------
 
-!procedure Load_Lib_Skinparams_OntarioHealth()
+!procedure Load_Skinparams_OntarioHealth()
 
+    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
     !if ($SKINPARAM_ENABLED)
 
+
     !endif
-    
+    !endif
 !endprocedure

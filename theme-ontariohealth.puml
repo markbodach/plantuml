@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-23 01:30:08 EDT
-' Build Commit Hash: 7badf46616597c40d156096367bf5328fbd3ca33
-' Build Commit Comment: refactoring skinparams
+' Generated on: 2026-10-23 01:34:55 EDT
+' Build Commit Hash: 383a801195adea90273f460cdbeaf2c5991710ac
+' Build Commit Comment: skinparams
 ' ========================================================
 
 
@@ -282,20 +282,22 @@
 
 
 'STEP 4 :: Skin Params includes
-' --- Importing: src/themes/ontariohealth/skinparam/index.puml ---
+' --- Importing: src/themes/ontariohealth/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
 '---------------------------------------------------------
 
-!procedure Load_Lib_Skinparams_OntarioHealth()
+!procedure Load_Skinparams_OntarioHealth()
 
+    !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
     !if ($SKINPARAM_ENABLED)
 
+
     !endif
-    
+    !endif
 !endprocedure
-' --- End Import: src/themes/ontariohealth/skinparam/index.puml ---
+' --- End Import: src/themes/ontariohealth/skinparams/index.puml ---
 
 
 'STEP 5 :: STYLES includes
