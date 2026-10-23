@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-23 12:00:59 EDT**
-* Build Commit Hash: **c7e4dd3497e5dfca57188b95d8c1c5e1d2278204**
-* Build Commit Comment: **Code is architecturally sound. Registry abstraction is complete. Constant-based registry identifiers eliminate string literal drift. Further refactoring would produce diminishing returns. Focus effort on updating framework documentation and extension-authoring guidance rather than changing implementation**
+* Generated on: **2026-10-23 15:38:19 EDT**
+* Build Commit Hash: **6f47b62ec0bde61e30e34b1671643895c4ad021d**
+* Build Commit Comment: **Refactoring**
 
 ## Usage
 
@@ -294,6 +294,7 @@ src/all.puml (Root Master)
       └── archimate/vars/index.puml
         └── _root.puml
       └── stdlib/components/index.puml
+        └── _debug.puml
         └── _strings.puml
         └── _variables.puml
         └── _text.puml

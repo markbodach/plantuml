@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 12:00:59 EDT
-' Build Commit Hash: c7e4dd3497e5dfca57188b95d8c1c5e1d2278204
-' Build Commit Comment: Code is architecturally sound. Registry abstraction is complete. Constant-based registry identifiers eliminate string literal drift. Further refactoring would produce diminishing returns. Focus effort on updating framework documentation and extension-authoring guidance rather than changing implementation
+' Generated on: 2026-10-23 15:38:19 EDT
+' Build Commit Hash: 6f47b62ec0bde61e30e34b1671643895c4ad021d
+' Build Commit Comment: Refactoring
 ' ========================================================
 
 ' src/all.puml
@@ -434,6 +434,301 @@
 
 'STEP 2 :: COMPONENTS includes
 ' --- Importing: src/libs/stdlib/components/index.puml ---
+'---------------------------------------------------------
+' Debug Utilities
+'=================================================================
+'
+' PURPOSE
+'
+'   Provides reusable diagnostics and troubleshooting helpers
+'   for framework development, theme validation, style
+'   inspection, and runtime variable analysis.
+'
+' CAPABILITIES
+'
+'   - Variable inspection
+'   - Color inspection
+'   - Style inspection
+'   - Theme troubleshooting
+'   - Diagnostic panel generation
+'---------------------------------------------------------
+' --- Importing: src/libs/stdlib/components/_debug.puml ---
+'=================================================================
+' DEBUG UTILITIES
+'=================================================================
+'
+' PURPOSE
+'
+'   Provides reusable debugging helpers for:
+'
+'       - Variable inspection
+'       - Color inspection
+'       - Style troubleshooting
+'       - Theme debugging
+'       - Diagnostic output
+'
+' DESIGN GOALS
+'
+'   - Simple to use
+'   - PlantUML compatible
+'   - Rectangle-friendly output
+'   - Theme troubleshooting support
+'   - Framework diagnostics
+'
+' NOTES
+'
+'   Functions return formatted text suitable for:
+'
+'       rectangle
+'       note
+'       title
+'       legend
+'
+'   Most helpers are intended for temporary debugging
+'   and should not normally appear in production diagrams.
+'
+'=================================================================
+
+
+
+'=================================================================
+' Debug Color
+'
+' Displays background, font, and line colors.
+'
+' Example:
+'
+' rectangle $debug_color(
+'     "Web UI",
+'     $cBackgroundColor,
+'     $cFontColor,
+'     $cLineColor
+' )
+'
+'=================================================================
+!function $debug_color( $name, $backgroundColor, $fontColor, $lineColor )
+
+    !return $surround($name) + "\nBackground = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variables (Flat Array)
+'
+' Input Format:
+'
+' [
+'   "Name1","Value1",
+'   "Name2","Value2"
+' ]
+'
+' Example:
+'
+' rectangle $debug_variables_flat([
+'     "COLOR_PRIMARY", $COLOR_PRIMARY,
+'     "COLOR_TEXT", $COLOR_TEXT,
+'     "ROUND_2", $ROUND_2
+' ])
+'
+'=================================================================
+!function $debug_variables_flat($pairs)
+
+    !$result = ""
+
+    !$count = %size($pairs)
+
+    !$i = 0
+
+    !while ($i < $count)
+
+        !$name = $pairs[$i]
+        !$value = $pairs[$i + 1]
+
+        !$result = $result + $name + " = " + $value + "\n"
+
+        !$i = $i + 2
+
+    !endwhile
+
+    !return $result
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variables (Nested Array)
+'
+' Input Format:
+'
+' [
+'   ["Name1","Value1"],
+'   ["Name2","Value2"]
+' ]
+'
+' Example:
+'
+' rectangle $debug_variables_nested([
+'     ["COLOR_PRIMARY",$COLOR_PRIMARY],
+'     ["COLOR_TEXT",$COLOR_TEXT],
+'     ["ROUND_2",$ROUND_2]
+' ])
+'
+' NOTES
+'
+'   Nested array support may vary between PlantUML
+'   versions. Prefer the flat-array implementation
+'   when maximum compatibility is required.
+'
+'=================================================================
+!function $debug_variables_nested($pairs)
+
+    !$result = ""
+
+    !$count = %size($pairs)
+
+    !$i = 0
+
+    !while ($i < $count)
+
+        !$pair = $pairs[$i]
+
+        !$name = $pair[0]
+        !$value = $pair[1]
+
+        !$result = $result + $name + " = " + $value + "\n"
+
+        !$i = $i + 1
+
+    !endwhile
+
+    !return $result
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Panel
+'
+' Adds a title to any debug content.
+'
+' Example:
+'
+' rectangle $debug_panel(
+'     "Web UI",
+'     $debug_variables_flat([
+'         "COLOR_PRIMARY",$COLOR_PRIMARY,
+'         "COLOR_TEXT",$COLOR_TEXT
+'     ])
+' )
+'
+'=================================================================
+!function $debug_panel( $title, $content )
+
+    !return $surround($title) + "\n" + $content
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Variable
+'
+' Convenience helper for displaying a single value.
+'
+' Example:
+'
+' rectangle $debug_variable(
+'     "COLOR_PRIMARY",
+'     $COLOR_PRIMARY
+' )
+'
+'=================================================================
+!function $debug_variable( $name, $value )
+
+    !return $name + " = " + $value
+
+!endfunction
+
+
+
+'=================================================================
+' Debug Style
+'
+' Displays a complete style context.
+'
+' Useful during style generation and color resolution.
+'
+' Example:
+'
+' rectangle $debug_style(
+'     "Web UI",
+'     $cBackgroundColor,
+'     $cFontColor,
+'     $cLineColor
+' )
+'
+'=================================================================
+!function $debug_style( $name, $backgroundColor="", $fontColor="", $lineColor="")
+
+    !return $debug_panel( $name, "Background = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor )
+
+!endfunction
+
+
+
+'=================================================================
+' EXAMPLES
+'=================================================================
+'
+' Single Variable
+'
+' rectangle $debug_variable(
+'     "ROUND_2",
+'     $ROUND_2
+' )
+'
+'
+' Color Diagnostic
+'
+' rectangle $debug_color(
+'     "Primary Theme",
+'     $COLOR_PRIMARY,
+'     $COLOR_TEXT,
+'     $COLOR_BORDER
+' )
+'
+'
+' Flat Variable List
+'
+' rectangle $debug_panel(
+'     "Theme Variables",
+'     $debug_variables_flat([
+'         "COLOR_PRIMARY",$COLOR_PRIMARY,
+'         "COLOR_TEXT",$COLOR_TEXT,
+'         "ROUND_2",$ROUND_2
+'     ])
+' )
+'
+'
+' Nested Variable List
+'
+' rectangle $debug_panel(
+'     "Theme Variables",
+'     $debug_variables_nested([
+'         ["COLOR_PRIMARY",$COLOR_PRIMARY],
+'         ["COLOR_TEXT",$COLOR_TEXT],
+'         ["ROUND_2",$ROUND_2]
+'     ])
+' )
+'
+'=================================================================
+' --- End Import: src/libs/stdlib/components/_debug.puml ---
+
+
 '---------------------------------------------------------
 ' String Utilities
 '
