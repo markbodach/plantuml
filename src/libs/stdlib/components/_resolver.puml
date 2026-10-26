@@ -144,7 +144,10 @@
   ' Semantic color token
   '
   !else
-      !return $get_semantic_color($tokenOrColor)
+    
+    Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", %strpos(%upper($tokenOrColor), "#") == 0, "TOKEN=[" + $tokenOrColor + "] " + "CONTEXT=[" + $contextColor + "] " + "(f:resolve_style_color)" )
+    !return $get_semantic_color($tokenOrColor)
+
   !endif
 
 !endfunction

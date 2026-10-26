@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-26 15:24:54 EDT
-' Build Commit Hash: f5a398a5fc1ad3b1c5887a821d494d58d873f6fc
-' Build Commit Comment: apply_if added
+' Generated on: 2026-10-26 15:41:33 EDT
+' Build Commit Hash: 74e64add73441d37daed2a40609d6fb5f3dc79be
+' Build Commit Comment: Hash token fixes
 ' ========================================================
 
 ' src/all.puml
@@ -752,6 +752,137 @@
 '   - Uses PlantUML assertions as a controlled execution stop mechanism
 '---------------------------------------------------------
 ' --- Importing: src/libs/stdlib/components/_breakpoint.puml ---
+'=========================================================
+' BREAKPOINT REGISTRY
+'=========================================================
+
+!global $BREAKPOINTS ?= "|"
+
+!global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
+
+
+'=========================================================
+' Breakpoint Registration
+'=========================================================
+
+!procedure Enable_Breakpoint($name)
+    Register_Lib_Object($name,$REGISTRY_BREAKPOINTS)
+!endprocedure
+
+
+!function $Breakpoint_Enabled($name)
+    !return $object_registered($name,$REGISTRY_BREAKPOINTS)
+!endfunction
+
+
+'=========================================================
+' Diagnostics
+'=========================================================
+
+!procedure Dump_Breakpoints()
+    !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
+!endprocedure
+
+
+'=========================================================
+' Trigger_Breakpoint Assert
+'=========================================================
+
+!procedure Trigger_Breakpoint($name, $message = "" )
+
+    !if ( $Breakpoint_Enabled( $name ) )
+        !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> [" + $name + "] " + $message
+    !endif
+
+!endprocedure
+
+
+!procedure Breakpoint_If( $name, $condition, $message = "" )
+
+    !if ( $Breakpoint_Enabled($name))
+
+        !if ($condition)
+            Breakpoint($name, $message)
+        !endif
+
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Breakpoint Removal
+'=========================================================
+!procedure Disable_Breakpoint($name)
+
+    !if ($name == "")
+        !assert 0 == 1 : "MB_PUML :: Breakpoint name cannot be blank (p:Disable_Breakpoint)"
+    !endif
+
+    !if ($Breakpoint_Enabled($name))
+
+        !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
+        !$token = "|" + $name + "|"
+
+        !$registry = %replace($registry, $token, "|")
+
+        Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
+
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Conditional Breakpoint Removal
+'=========================================================
+!procedure Disable_Breakpoint_If( $name, $condition)
+
+    !if ($condition)
+        Disable_Breakpoint($name)
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Clear All Breakpoints
+'=========================================================
+!procedure Clear_Breakpoints()
+    Registry_Set($REGISTRY_BREAKPOINTS, "|" )
+!endprocedure
+
+
+!function $Breakpoint_Count()
+
+    !$remaining = $Registry_Get( $REGISTRY_BREAKPOINTS )
+
+    !$count = 0
+
+    !while ($remaining != "|")
+
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,"|")
+        !$remaining = "|" + %substr($remaining,$pos + 1)
+
+        !$count = $count + 1
+
+    !endwhile
+
+    !return $count
+
+!endfunction
+
+
+'=========================================================
+' Conditional Breakpoint Registration
+'=========================================================
+!procedure Enable_Breakpoint_If($name, $condition)
+    !if ($condition)
+        Enable_Breakpoint($name)
+    !endif
+
+!endprocedure
 ' --- End Import: src/libs/stdlib/components/_breakpoint.puml ---
 
 
@@ -2926,7 +3057,10 @@
   ' Semantic color token
   '
   !else
-      !return $get_semantic_color($tokenOrColor)
+    
+    Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", %strpos(%upper($tokenOrColor), "#") == 0, "TOKEN=[" + $tokenOrColor + "] " + "CONTEXT=[" + $contextColor + "] " + "(f:resolve_style_color)" )
+    !return $get_semantic_color($tokenOrColor)
+
   !endif
 
 !endfunction
