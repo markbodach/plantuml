@@ -1,0 +1,56 @@
+'=========================================================
+' BREAKPOINT REGISTRY
+'=========================================================
+
+!global $BREAKPOINTS ?= "|"
+
+!global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
+
+
+'=========================================================
+' Breakpoint Registration
+'=========================================================
+
+!procedure Enable_Breakpoint($name)
+    Register_Lib_Object($name,$REGISTRY_BREAKPOINTS)
+!endprocedure
+
+
+!function $Breakpoint_Enabled($name)
+    !return $object_registered($name,$REGISTRY_BREAKPOINTS)
+!endfunction
+
+
+'=========================================================
+' Diagnostics
+'=========================================================
+
+!procedure Dump_Breakpoints()
+    !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
+!endprocedure
+
+
+'=========================================================
+' Breakpoint Assert
+'=========================================================
+
+!procedure Breakpoint($name, $message = "" )
+
+    !if ( $Breakpoint_Enabled( $name ) )
+        !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> [" + $name + "] " + $message
+    !endif
+
+!endprocedure
+
+
+!procedure Breakpoint_If( $name, $condition, $message = "" )
+
+    !if ( $Breakpoint_Enabled($name))
+
+        !if ($condition)
+            Breakpoint($name, $message)
+        !endif
+
+    !endif
+
+!endprocedure

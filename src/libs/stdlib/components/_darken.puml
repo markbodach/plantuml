@@ -188,6 +188,9 @@
 
 !function $get_darker_semantic_token($token)
   !$token = %upper($token)
+
+  Breakpoint_If( "DARKER_TOKEN_LITERAL", $is_literal_color($token), "get_darker_semantic_token token=[" + $token + "]" )
+
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -264,6 +267,8 @@
 '---------------------------------------------------------
 !function $darken_color($token, $darken_token = "DARKEN")
 
+  Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
+  
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_PUML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
   !endif

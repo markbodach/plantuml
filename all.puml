@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-26 11:23:01 EDT
-' Build Commit Hash: 68f38f549813d31220078cd716de927d092bbdbb
-' Build Commit Comment: hunting #colorprofilename
+' Generated on: 2026-10-26 11:51:26 EDT
+' Build Commit Hash: dd537a2835209149ae1db8e9c0b3e66ca6bad76f
+' Build Commit Comment: Pound Var
 ' ========================================================
 
 ' src/all.puml
@@ -1756,38 +1756,42 @@
 
 !function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
-    !if ($is_literal_color($name))
-        !return %upper($name)
-    !endif
+  Breakpoint_If( "SEMANTIC_COLOR_VARIABLE_LITERAL", $is_literal_color($name), "semantic_color_variable literal=[" + $name + "] trace=[" + $trace_error + "]" )
+  
+  !if ($is_literal_color($name))
+      !return %upper($name)
+  !endif
 
-    !$normalized = $normalize_color_name($name)
 
-    '------------------------------------------
-    ' Exact variable exists
-    '------------------------------------------
-    !if ($variable_exists_safe($normalized))
-        !return $normalized
-    !endif
 
-    '------------------------------------------
-    ' Semantic COLOR_ variable
-    '------------------------------------------
-    !$candidate = "COLOR_" + $normalized
+  !$normalized = $normalize_color_name($name)
 
-    !if ($variable_exists_safe($candidate))
-        !return $candidate
-    !endif
+  '------------------------------------------
+  ' Exact variable exists
+  '------------------------------------------
+  !if ($variable_exists_safe($normalized))
+      !return $normalized
+  !endif
 
-    '------------------------------------------
-    ' Error
-    '------------------------------------------
-    !if ($raise_error == %true() )
+  '------------------------------------------
+  ' Semantic COLOR_ variable
+  '------------------------------------------
+  !$candidate = "COLOR_" + $normalized
 
-      !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+  !if ($variable_exists_safe($candidate))
+      !return $candidate
+  !endif
 
-    !endif
+  '------------------------------------------
+  ' Error
+  '------------------------------------------
+  !if ($raise_error == %true() )
 
-    !return ""
+    !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+
+  !endif
+
+  !return ""
 
 !endfunction
 
@@ -1824,16 +1828,14 @@
 
 
 
-!function $get_semantic_color($semantic_suffix)
+!function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
 
   !if ($semantic_suffix == "") 
     !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
   !endif
 
-  !if ($is_literal_color($semantic_suffix))
-      !return %upper($semantic_suffix)
-  !endif
-
+  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "get_semantic_color received literal color=[" + $semantic_suffix + "]" )
+  
   !if $is_special_style_token($semantic_suffix)
       !return $semantic_suffix
   !endif
@@ -2144,6 +2146,9 @@
 
 !function $get_darker_semantic_token($token)
   !$token = %upper($token)
+
+  Breakpoint_If( "DARKER_TOKEN_LITERAL", $is_literal_color($token), "get_darker_semantic_token token=[" + $token + "]" )
+
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -2220,6 +2225,8 @@
 '---------------------------------------------------------
 !function $darken_color($token, $darken_token = "DARKEN")
 
+  Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
+  
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_PUML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
   !endif
@@ -2486,6 +2493,9 @@
 
 !function $get_lighter_semantic_token($token)
   !$token = %upper($token)
+
+  Breakpoint_If( "LIGHTER_TOKEN_LITERAL", $is_literal_color($token), "get_lighter_semantic_token token=[" + $token + "]" )
+
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -2580,6 +2590,9 @@
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
+
+  Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
+
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_PUML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
   !endif
@@ -2697,6 +2710,9 @@
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
 
+
+    Breakpoint_If( "STYLE_COLOR_MOTIVATION", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+
   '
   ' Validation
   '
@@ -2803,7 +2819,7 @@
 
   $assert_literal_color($color)
   !return %upper($color)
-  
+
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 

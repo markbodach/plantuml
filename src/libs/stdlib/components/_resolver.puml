@@ -45,6 +45,9 @@
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
 
+
+    Breakpoint_If( "STYLE_COLOR_MOTIVATION", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+
   '
   ' Validation
   '
@@ -151,5 +154,5 @@
 
   $assert_literal_color($color)
   !return %upper($color)
-  
+
 !endfunction

@@ -26,38 +26,42 @@
 
 !function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
-    !if ($is_literal_color($name))
-        !return %upper($name)
-    !endif
+  Breakpoint_If( "SEMANTIC_COLOR_VARIABLE_LITERAL", $is_literal_color($name), "semantic_color_variable literal=[" + $name + "] trace=[" + $trace_error + "]" )
+  
+  !if ($is_literal_color($name))
+      !return %upper($name)
+  !endif
 
-    !$normalized = $normalize_color_name($name)
 
-    '------------------------------------------
-    ' Exact variable exists
-    '------------------------------------------
-    !if ($variable_exists_safe($normalized))
-        !return $normalized
-    !endif
 
-    '------------------------------------------
-    ' Semantic COLOR_ variable
-    '------------------------------------------
-    !$candidate = "COLOR_" + $normalized
+  !$normalized = $normalize_color_name($name)
 
-    !if ($variable_exists_safe($candidate))
-        !return $candidate
-    !endif
+  '------------------------------------------
+  ' Exact variable exists
+  '------------------------------------------
+  !if ($variable_exists_safe($normalized))
+      !return $normalized
+  !endif
 
-    '------------------------------------------
-    ' Error
-    '------------------------------------------
-    !if ($raise_error == %true() )
+  '------------------------------------------
+  ' Semantic COLOR_ variable
+  '------------------------------------------
+  !$candidate = "COLOR_" + $normalized
 
-      !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+  !if ($variable_exists_safe($candidate))
+      !return $candidate
+  !endif
 
-    !endif
+  '------------------------------------------
+  ' Error
+  '------------------------------------------
+  !if ($raise_error == %true() )
 
-    !return ""
+    !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+
+  !endif
+
+  !return ""
 
 !endfunction
 
@@ -94,16 +98,14 @@
 
 
 
-!function $get_semantic_color($semantic_suffix)
+!function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
 
   !if ($semantic_suffix == "") 
     !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
   !endif
 
-  !if ($is_literal_color($semantic_suffix))
-      !return %upper($semantic_suffix)
-  !endif
-
+  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "get_semantic_color received literal color=[" + $semantic_suffix + "]" )
+  
   !if $is_special_style_token($semantic_suffix)
       !return $semantic_suffix
   !endif

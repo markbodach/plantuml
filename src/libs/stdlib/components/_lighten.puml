@@ -199,6 +199,9 @@
 
 !function $get_lighter_semantic_token($token)
   !$token = %upper($token)
+
+  Breakpoint_If( "LIGHTER_TOKEN_LITERAL", $is_literal_color($token), "get_lighter_semantic_token token=[" + $token + "]" )
+
   !if ($is_literal_color($token))
       !return ""
   !endif
@@ -293,6 +296,9 @@
 
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
+
+  Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
+
   !if $is_special_style_token($token)
     !assert 0 == 1 : "MB_PUML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
   !endif
