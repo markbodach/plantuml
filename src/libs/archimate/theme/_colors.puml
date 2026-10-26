@@ -5,6 +5,7 @@
     !global $COLOR_STRATEGY ?= "#F5DEAA"
     !global $COLOR_BUSINESS ?= "#FFFF99"
     !global $COLOR_APPLICATION ?= "#99FFFF"
+    !global $COLOR_LOGICAL ?= "#99FFFF"
     !global $COLOR_TECHNOLOGY ?= "#AFFFAF"
     !global $COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
     !global $COLOR_IMPLEMENTATION ?= "#FFE0E0"

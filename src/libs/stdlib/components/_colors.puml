@@ -27,7 +27,7 @@
 !function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
   Breakpoint_If( "MOTIVATION_HASH_TOKEN", %strpos(%upper($name), "#MOTIVATION") >= 0, "name=[" + $name + "]" )
-  
+
   Breakpoint_If( "SEMANTIC_COLOR_VARIABLE_LITERAL", $is_literal_color($name), "semantic_color_variable literal=[" + $name + "] trace=[" + $trace_error + "]" )
   
   !if ($is_literal_color($name))
@@ -101,6 +101,10 @@
 
 
 !function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
+
+  !if (%strpos(%upper($semantic_suffix), "#") == 0)
+    !assert 0 == 1 : "MB_PUML :: Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)"
+  !endif
 
   !if ($semantic_suffix == "") 
     !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
