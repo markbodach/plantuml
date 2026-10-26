@@ -151,4 +151,5 @@
 
   $assert_literal_color($color)
   !return %upper($color)
+  
 !endfunction

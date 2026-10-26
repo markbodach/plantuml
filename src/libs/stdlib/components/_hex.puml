@@ -26,7 +26,7 @@
     '
     ' Must start with #
     '
-    !if (%substr($value,0,1) != "#")
+    !if (%substr($value,0,1) != $POUND )
         !return %false()
     !endif
 
@@ -90,7 +90,7 @@
     !$g = %substr($hex,2,1)
     !$b = %substr($hex,3,1)
 
-    !return "#" + $r + $r + $g + $g + $b + $b
+    !return $POUND + $r + $r + $g + $g + $b + $b
 
   !endif
 
@@ -99,7 +99,7 @@
   '
   !if ($len == 9)
 
-    !return "#" + %substr($hex,1,6)
+    !return $POUND + %substr($hex,1,6)
 
   !endif
 
@@ -293,6 +293,6 @@
 '=========================================================
 
 !function $rgb_to_hex($r,$g,$b)
-  !return "#" + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
+  !return $POUND + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction

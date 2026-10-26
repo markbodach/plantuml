@@ -3,3 +3,5 @@
 !global $SKINPARAM_ENABLED ?= %false()
 
 !global $UNSET = "__UML_UNSET__"
+
+!global $POUND = "#"

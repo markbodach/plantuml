@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-23 15:38:19 EDT
-' Build Commit Hash: 6f47b62ec0bde61e30e34b1671643895c4ad021d
-' Build Commit Comment: Refactoring
+' Generated on: 2026-10-26 11:10:50 EDT
+' Build Commit Hash: 462c2675e25f16f9811c0e30541c3fa10cb1e894
+' Build Commit Comment: incorporating debug functions
 ' ========================================================
 
 ' src/all.puml
@@ -381,6 +381,8 @@
 !global $SKINPARAM_ENABLED ?= %false()
 
 !global $UNSET = "__UML_UNSET__"
+
+!global $POUND = "#"
 ' --- End Import: src/libs/stdlib/vars/_root.puml ---
 
 ' --- Importing: src/libs/stdlib/vars/_colors.puml ---
@@ -1439,7 +1441,7 @@
     '
     ' Must start with #
     '
-    !if (%substr($value,0,1) != "#")
+    !if (%substr($value,0,1) != $POUND )
         !return %false()
     !endif
 
@@ -1503,7 +1505,7 @@
     !$g = %substr($hex,2,1)
     !$b = %substr($hex,3,1)
 
-    !return "#" + $r + $r + $g + $g + $b + $b
+    !return $POUND + $r + $r + $g + $g + $b + $b
 
   !endif
 
@@ -1512,7 +1514,7 @@
   '
   !if ($len == 9)
 
-    !return "#" + %substr($hex,1,6)
+    !return $POUND + %substr($hex,1,6)
 
   !endif
 
@@ -1706,7 +1708,7 @@
 '=========================================================
 
 !function $rgb_to_hex($r,$g,$b)
-  !return "#" + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
+  !return $POUND + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_hex.puml ---
@@ -2801,6 +2803,7 @@
 
   $assert_literal_color($color)
   !return %upper($color)
+  
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
@@ -3265,6 +3268,7 @@
 !endprocedure
 ' --- End Import: src/libs/archimate/theme/_colors.puml ---
 
+
 ' --- Importing: src/libs/archimate/theme/_mapped_colors.puml ---
 
 
@@ -3337,6 +3341,7 @@
 
 !endprocedure
 ' --- End Import: src/libs/archimate/theme/_mapped_colors.puml ---
+
 
 ' --- Importing: src/libs/archimate/theme/_corners.puml ---
 

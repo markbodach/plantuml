@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-10-23 15:38:19 EDT
-' Build Commit Hash: 6f47b62ec0bde61e30e34b1671643895c4ad021d
-' Build Commit Comment: Refactoring
+' Generated on: 2026-10-26 11:10:50 EDT
+' Build Commit Hash: 462c2675e25f16f9811c0e30541c3fa10cb1e894
+' Build Commit Comment: incorporating debug functions
 ' ========================================================
 
 
@@ -55,8 +55,8 @@
 !global $COLOR_OH_ERROR_DARK ?= "#8a0101"
 
 '! $COLOR_OH_EMPHASIS ?= "#9333EA"
-'! $COLOR_OH_EMPHASIS_LIGHT ?= "#"
-'! $COLOR_OH_EMPHASIS_DARK ?= "#"
+'! $COLOR_OH_EMPHASIS_LIGHT ?= $POUND
+'! $COLOR_OH_EMPHASIS_DARK ?= $POUND
 
 !global $COLOR_OH_TEXT ?= "#1A1A1A"
 !global $COLOR_OH_BORDER ?= "#5D6D7E"

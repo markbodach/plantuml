@@ -1,6 +1,8 @@
 !include _fonts.puml
 !include _colors.puml
+
 !include _mapped_colors.puml
+
 !include _corners.puml
 !include _widths.puml
 !include _element.puml
