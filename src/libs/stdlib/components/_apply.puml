@@ -1,0 +1,76 @@
+'=========================================================
+' Apply Variable Override If Source Exists
+'
+' Copies source value into target if source exists.
+'
+' Parameters:
+'
+'   target
+'       Variable to receive the value
+'
+'   source
+'       Variable providing the value
+'
+'   strictTarget
+'       %false() = create target if missing
+'       %true()  = target must already exist
+'
+'=========================================================
+!procedure Apply_If( $target, $source, $strictTarget = %false() )
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    !if ($is_valid_variable_name($to_var_name($target)) == %false())
+        !assert 0 == 1 : "MB_PUML :: Invalid target variable=[" + $target + "] (p:Apply_If)"
+    !endif
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    !if ($is_valid_variable_name($to_var_name($source)) == %false())
+        !assert 0 == 1 : "MB_PUML :: Invalid source variable=[" + $source + "] (p:Apply_If)"
+    !endif
+
+    '-----------------------------------------
+    ' Source missing -> no action
+    '-----------------------------------------
+    !if ($variable_exists_safe($source))
+
+        '-------------------------------------
+        ' Strict target validation
+        '-------------------------------------
+        !if ($strictTarget)
+
+            !if ($variable_exists_safe($target) == %false())
+                !assert 0 == 1 : "MB_PUML :: Target variable does not exist=[" + $target + "] (p:Apply_If)"
+            !endif
+
+        !endif
+
+        '-------------------------------------
+        ' Read source value
+        '-------------------------------------
+        !$sourceValue = %get_variable_value( $to_var_name($source) )
+
+        '-------------------------------------
+        ' Prevent blank overwrite
+        '-------------------------------------
+        !if ($sourceValue == "")
+            !assert 0 == 1 : "MB_PUML :: Source variable is blank=[" + $source + "] (p:Apply_If)"
+        !endif
+
+        '-------------------------------------
+        ' Apply value
+        '-------------------------------------
+        %set_variable_value( $to_var_name($target), $sourceValue )
+
+    !endif
+
+!endprocedure
+
+!procedure Apply_If_Strict($target,$source)
+
+    Apply_If( $target, $source, %true() )
+
+!endprocedure

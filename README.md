@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-26 13:53:15 EDT**
-* Build Commit Hash: **41d4d17497227ab8b999c0c95cd5dd4e50044441**
-* Build Commit Comment: **Breakpoints**
+* Generated on: **2026-10-26 15:09:59 EDT**
+* Build Commit Hash: **705497af27d11aa6f396d3e6c7f3c96a380105e7**
+* Build Commit Comment: **Applying Breakpoints**
 
 ## Usage
 
@@ -303,6 +303,7 @@ src/all.puml (Root Master)
         └── _variables.puml
         └── _text.puml
         └── _hex.puml
+        └── _apply.puml
         └── _colors.puml
         └── _darken.puml
         └── _lighten.puml

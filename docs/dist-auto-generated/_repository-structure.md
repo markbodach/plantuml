@@ -22,6 +22,7 @@ src/all.puml (Root Master)
         └── _variables.puml
         └── _text.puml
         └── _hex.puml
+        └── _apply.puml
         └── _colors.puml
         └── _darken.puml
         └── _lighten.puml

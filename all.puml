@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-26 13:53:15 EDT
-' Build Commit Hash: 41d4d17497227ab8b999c0c95cd5dd4e50044441
-' Build Commit Comment: Breakpoints
+' Generated on: 2026-10-26 15:09:59 EDT
+' Build Commit Hash: 705497af27d11aa6f396d3e6c7f3c96a380105e7
+' Build Commit Comment: Applying Breakpoints
 ' ========================================================
 
 ' src/all.puml
@@ -1741,6 +1741,91 @@
 
 
 
+
+'---------------------------------------------------------
+' Apply Variable Override If Source Exists
+'---------------------------------------------------------
+' --- Importing: src/libs/stdlib/components/_apply.puml ---
+'=========================================================
+' Apply Variable Override If Source Exists
+'
+' Copies source value into target if source exists.
+'
+' Parameters:
+'
+'   target
+'       Variable to receive the value
+'
+'   source
+'       Variable providing the value
+'
+'   strictTarget
+'       %false() = create target if missing
+'       %true()  = target must already exist
+'
+'=========================================================
+!procedure Apply_If( $target, $source, $strictTarget = %false() )
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    !if ($is_valid_variable_name($to_var_name($target)) == %false())
+        !assert 0 == 1 : "MB_PUML :: Invalid target variable=[" + $target + "] (p:Apply_If)"
+    !endif
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    !if ($is_valid_variable_name($to_var_name($source)) == %false())
+        !assert 0 == 1 : "MB_PUML :: Invalid source variable=[" + $source + "] (p:Apply_If)"
+    !endif
+
+    '-----------------------------------------
+    ' Source missing -> no action
+    '-----------------------------------------
+    !if ($variable_exists_safe($source))
+
+        '-------------------------------------
+        ' Strict target validation
+        '-------------------------------------
+        !if ($strictTarget)
+
+            !if ($variable_exists_safe($target) == %false())
+                !assert 0 == 1 : "MB_PUML :: Target variable does not exist=[" + $target + "] (p:Apply_If)"
+            !endif
+
+        !endif
+
+        '-------------------------------------
+        ' Read source value
+        '-------------------------------------
+        !$sourceValue = %get_variable_value( $to_var_name($source) )
+
+        '-------------------------------------
+        ' Prevent blank overwrite
+        '-------------------------------------
+        !if ($sourceValue == "")
+            !assert 0 == 1 : "MB_PUML :: Source variable is blank=[" + $source + "] (p:Apply_If)"
+        !endif
+
+        '-------------------------------------
+        ' Apply value
+        '-------------------------------------
+        %set_variable_value( $to_var_name($target), $sourceValue )
+
+    !endif
+
+!endprocedure
+
+!procedure Apply_If_Strict($target,$source)
+
+    Apply_If( $target, $source, %true() )
+
+!endprocedure
+' --- End Import: src/libs/stdlib/components/_apply.puml ---
+
+
+
 '---------------------------------------------------------
 ' Color Utilities
 '
@@ -1782,6 +1867,8 @@
 
 !function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
+  Breakpoint_If( "MOTIVATION_HASH_TOKEN", %strpos(%upper($name), "#MOTIVATION") >= 0, "name=[" + $name + "]" )
+  
   Breakpoint_If( "SEMANTIC_COLOR_VARIABLE_LITERAL", $is_literal_color($name), "semantic_color_variable literal=[" + $name + "] trace=[" + $trace_error + "]" )
   
   !if ($is_literal_color($name))
