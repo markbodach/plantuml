@@ -18,6 +18,30 @@
 '---------------------------------------------------------
 !include _debug.puml
 
+
+'---------------------------------------------------------
+' Breakpoint Utilities
+'=================================================================
+'
+' PURPOSE
+'
+'   This allows developers to trace and debug complex resolution pipelines 
+'   (such as semantic colors, style inheritance, automatic contrast selection, 
+'   and token transformations) without modifying framework code or adding 
+'   temporary logging statements.
+'
+' CAPABILITIES
+'
+'   - Built on the existing registry framework
+'   - Zero overhead when breakpoints are disabled
+'   - Non-invasive and cross-cutting
+'   - Suitable for framework internals and diagnostic scenarios
+'   - Uses PlantUML assertions as a controlled execution stop mechanism
+'---------------------------------------------------------
+!include _breakpoint.puml
+
+
+
 '---------------------------------------------------------
 ' String Utilities
 '

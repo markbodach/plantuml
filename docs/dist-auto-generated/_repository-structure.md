@@ -17,6 +17,7 @@ src/all.puml (Root Master)
         └── _root.puml
       └── stdlib/components/index.puml
         └── _debug.puml
+        └── _breakpoint.puml
         └── _strings.puml
         └── _variables.puml
         └── _text.puml
