@@ -31,10 +31,10 @@
 
 
 '=========================================================
-' Breakpoint Assert
+' Trigger_Breakpoint Assert
 '=========================================================
 
-!procedure Breakpoint($name, $message = "" )
+!procedure Trigger_Breakpoint($name, $message = "" )
 
     !if ( $Breakpoint_Enabled( $name ) )
         !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> [" + $name + "] " + $message
@@ -51,6 +51,81 @@
             Breakpoint($name, $message)
         !endif
 
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Breakpoint Removal
+'=========================================================
+!procedure Disable_Breakpoint($name)
+
+    !if ($name == "")
+        !assert 0 == 1 : "MB_PUML :: Breakpoint name cannot be blank (p:Disable_Breakpoint)"
+    !endif
+
+    !if ($Breakpoint_Enabled($name))
+
+        !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
+        !$token = "|" + $name + "|"
+
+        !$registry = %replace($registry, $token, "|")
+
+        Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
+
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Conditional Breakpoint Removal
+'=========================================================
+!procedure Disable_Breakpoint_If( $name, $condition)
+
+    !if ($condition)
+        Disable_Breakpoint($name)
+    !endif
+
+!endprocedure
+
+
+'=========================================================
+' Clear All Breakpoints
+'=========================================================
+!procedure Clear_Breakpoints()
+    Registry_Set($REGISTRY_BREAKPOINTS, "|" )
+!endprocedure
+
+
+!function $Breakpoint_Count()
+
+    !$remaining = $Registry_Get( $REGISTRY_BREAKPOINTS )
+
+    !$count = 0
+
+    !while ($remaining != "|")
+
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,"|")
+        !$remaining = "|" + %substr($remaining,$pos + 1)
+
+        !$count = $count + 1
+
+    !endwhile
+
+    !return $count
+
+!endfunction
+
+
+'=========================================================
+' Conditional Breakpoint Registration
+'=========================================================
+!procedure Enable_Breakpoint_If($name, $condition)
+    !if ($condition)
+        Enable_Breakpoint($name)
     !endif
 
 !endprocedure
