@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-26 13:44:53 EDT
-' Build Commit Hash: 3faaf4f101a336b93a94e45be40036bc7bc06078
-' Build Commit Comment: Breakpoint utility
+' Generated on: 2026-10-26 13:53:15 EDT
+' Build Commit Hash: 41d4d17497227ab8b999c0c95cd5dd4e50044441
+' Build Commit Comment: Breakpoints
 ' ========================================================
 
 ' src/all.puml
@@ -2736,8 +2736,9 @@
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
 
+  Breakpoint_If("STYLE_COLOR_MOTIVATION.48", %strpos(%upper($tokenOrColor),"#MOTIVATION") >= 0, "token=[" + $tokenOrColor + "]")
 
-    Breakpoint_If( "STYLE_COLOR_MOTIVATION", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+  Breakpoint_If( "STYLE_COLOR_MOTIVATION.50", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
 
   '
   ' Validation

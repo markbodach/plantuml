@@ -45,8 +45,9 @@
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
 
+  Breakpoint_If("STYLE_COLOR_MOTIVATION.48", %strpos(%upper($tokenOrColor),"#MOTIVATION") >= 0, "token=[" + $tokenOrColor + "]")
 
-    Breakpoint_If( "STYLE_COLOR_MOTIVATION", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+  Breakpoint_If( "STYLE_COLOR_MOTIVATION.50", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
 
   '
   ' Validation
