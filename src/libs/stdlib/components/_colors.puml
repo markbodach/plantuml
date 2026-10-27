@@ -101,6 +101,9 @@
 
 !function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
 
+
+  Breakpoint_If( "HASH_TOKEN_TRACE", (%strpos(%upper($semantic_suffix), $POUND ) == 0), "semantic_suffix=[" + $semantic_suffix + "] trace=[" + $trace_error + "]" )
+
   Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)" )
 
 
