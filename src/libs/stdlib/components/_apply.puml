@@ -118,16 +118,13 @@
     Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
 
     '-----------------------------------------
-    ' Preserve explicit target value
-    '-----------------------------------------
-    !if ($variable_exists_safe($target))
-        !return
-    !endif
-
-    '-----------------------------------------
     ' Inherit source value
     '-----------------------------------------
-    Apply_If($target,$source)
+    !if ($variable_exists_safe($target) == %false())
+        %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
+    !endif
+
+    
 
 !endprocedure
 

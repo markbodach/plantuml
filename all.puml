@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-27 18:43:42 EDT
-' Build Commit Hash: 06f3da13b5e30ce5846c34f02ab8048435d0f61c
-' Build Commit Comment: breakpoint typo
+' Generated on: 2026-10-27 18:59:09 EDT
+' Build Commit Hash: a470d059783c80982c8925206db10915eade5992
+' Build Commit Comment: Assert and Inherit helper functions
 ' ========================================================
 
 ' src/all.puml
@@ -2255,16 +2255,13 @@
     Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
 
     '-----------------------------------------
-    ' Preserve explicit target value
-    '-----------------------------------------
-    !if ($variable_exists_safe($target))
-        !return
-    !endif
-
-    '-----------------------------------------
     ' Inherit source value
     '-----------------------------------------
-    Apply_If($target,$source)
+    !if ($variable_exists_safe($target) == %false())
+        %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
+    !endif
+
+    
 
 !endprocedure
 
