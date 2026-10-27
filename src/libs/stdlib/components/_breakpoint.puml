@@ -48,7 +48,7 @@
     !if ( $Breakpoint_Enabled($name))
 
         !if ($condition)
-            Breakpoint($name, $message)
+            Trigger_Breakpoint($name, $message)
         !endif
 
     !endif
