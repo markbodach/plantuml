@@ -10,8 +10,6 @@
     !if ($Is_Style_Registered($OH_THEME_NAME) == %true() )
         Write_Lib_Style_OntarioHealth_Title()
 
-
-        Load_Lib_Skinparams_OntarioHealth()
     !endif
 
 
