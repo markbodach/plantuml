@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-27 19:33:00 EDT
-' Build Commit Hash: f94ad2a7bf140bc72adec0b9f36dc4de4c30b3d6
-' Build Commit Comment: fixed procedure return
+' Generated on: 2026-10-27 19:45:54 EDT
+' Build Commit Hash: cb42dcaf78e148ca48e45fed57016c466aba8751
+' Build Commit Comment: MOTIVATION issue
 ' ========================================================
 
 ' src/all.puml
@@ -638,7 +638,7 @@
 '
 '=========================================================
 !procedure Assert_Hash_Token($value, $message = "")
-    !if (%strpos(%upper($value), $POUND) == 0)
+    !if (%strpos(%upper($value), "#" ) == 0)
         Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
     !endif
 !endprocedure
@@ -2389,7 +2389,7 @@
 
   Breakpoint_If( "HASH_TOKEN_TRACE", (%strpos(%upper($semantic_suffix), $POUND ) == 0), "semantic_suffix=[" + $semantic_suffix + "] trace=[" + $trace_error + "]" )
 
-  Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)" )
+  Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] trace=[" + $trace_error + "] (f:get_semantic_color)" )
 
 
   Assert_Blank( $semantic_suffix, "Function received blank semantic suffix (f:get_semantic_color)" )
@@ -3353,11 +3353,15 @@
   ' Semantic color token
   '
   !else
-    
-    Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", %strpos(%upper($tokenOrColor), $POUND) == 0, "TOKEN=[" + $tokenOrColor + "] " + "CONTEXT=[" + $contextColor + "] " + "(f:resolve_style_color)" )
+
+    'Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), $POUND) == 0), "TOKEN=[" + $tokenOrColor + "]" )
+
+    Assert_Hash_Token( $tokenOrColor, "resolve_style_color received hash token=[" + $tokenOrColor + "]" )
+
     !return $get_semantic_color($tokenOrColor)
 
   !endif
+
 
 !endfunction
  

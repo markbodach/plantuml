@@ -186,7 +186,7 @@
 '
 '=========================================================
 !procedure Assert_Hash_Token($value, $message = "")
-    !if (%strpos(%upper($value), $POUND) == 0)
+    !if (%strpos(%upper($value), "#" ) == 0)
         Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
     !endif
 !endprocedure
