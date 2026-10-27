@@ -1,0 +1,199 @@
+'=========================================================
+' ASSERT UTILITIES
+'=========================================================
+'
+' PURPOSE
+'
+'   Provides reusable assertion helpers for:
+'
+'       - Validation
+'       - Diagnostics
+'       - Contract enforcement
+'       - Runtime debugging
+'
+'=========================================================
+
+
+'=========================================================
+' Trigger_Assert
+'=========================================================
+'
+' Raises an assertion immediately.
+'
+' Parameters:
+'
+'   $message
+'       Assertion message.
+'
+' Example:
+'
+'   Trigger_Assert(
+'       "Invalid state detected"
+'   )
+'
+' Output:
+'
+'   MB_PUML :: <<ASSERT>>
+'   Invalid state detected
+'
+'=========================================================
+!procedure Trigger_Assert($message = "")
+    !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
+!endprocedure
+
+
+'=========================================================
+' Assert_If
+'=========================================================
+'
+' Raises an assertion only when the supplied
+' condition evaluates to true.
+'
+' Parameters:
+'
+'   $condition
+'       Boolean expression.
+'
+'   $message
+'       Assertion message.
+'
+' Example:
+'
+'   Assert_If(
+'       ($name == ""),
+'       "Name cannot be blank"
+'   )
+'
+'=========================================================
+!procedure Assert_If($condition, $message = "")
+    !if ($condition)
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Blank
+'=========================================================
+'
+' Raises an assertion when a value is blank.
+'
+' Example:
+'
+'   Assert_Blank(
+'       $token,
+'       "Token cannot be blank"
+'   )
+'
+'=========================================================
+!procedure Assert_Blank($value, $message = "")
+    !if ($value == "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Not_Blank
+'=========================================================
+'
+' Raises an assertion when a value is not blank.
+'
+' Example:
+'
+'   Assert_Not_Blank(
+'       $trace_error,
+'       "Trace information should be empty"
+'   )
+'
+'=========================================================
+!procedure Assert_Not_Blank($value, $message = "")
+    !if ($value != "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Variable_Exists
+'=========================================================
+'
+' Raises an assertion when a variable
+' does not exist.
+'
+' Uses:
+'
+'   COLOR_PRIMARY
+'   $COLOR_PRIMARY
+'
+'=========================================================
+!procedure Assert_Variable_Exists($name, $message = "")
+    !if ($variable_exists_safe($name) == %false())
+        Trigger_Assert( $first_defined( $message, "Variable does not exist=[" + $name + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Variable_Missing
+'=========================================================
+'
+' Raises an assertion when a variable
+' already exists.
+'
+'=========================================================
+!procedure Assert_Variable_Missing($name, $message = "")
+    !if ($variable_exists_safe($name))
+        Trigger_Assert( $first_defined( $message, "Variable already exists=[" + $name + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Literal_Color
+'=========================================================
+'
+' Raises an assertion when a value is
+' not a valid literal color.
+'
+' Supports:
+'
+'   #RGB
+'   #RRGGBB
+'   #RRGGBBAA
+'
+'=========================================================
+!procedure Assert_Literal_Color($value, $message = "")
+    !if ($is_literal_color($value) == %false())
+        Trigger_Assert( $first_defined( $message, "Invalid literal color=[" + $value + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Hash_Token
+'=========================================================
+'
+' Helpful while debugging semantic
+' color resolution pipelines.
+'
+' Example:
+'
+'   Assert_Hash_Token(
+'       $semantic_suffix,
+'       "Unexpected hash token"
+'   )
+'
+'=========================================================
+!procedure Assert_Hash_Token($value, $message = "")
+    !if (%strpos(%upper($value), "#") == 0)
+        Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
+    !endif
+!endprocedure
+
+
+
+
+!procedure Trigger_Internal_Error($message="")
+    !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
+!endprocedure

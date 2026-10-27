@@ -16,9 +16,10 @@
 
 !global $MARGIN_TITLE ?= 20
 !global $PADDING_TITLE ?= 15
-!global $ROUND_CORNER_TITLE ?= $ROUND_CORNER
 
-!global $COLOR_LINE_TITLE ?= $COLOR_LINE
-!global $SIZE_LINE_TITLE ?= $SIZE_LINE
+Inherit_If("ROUND_CORNER_TITLE", "ROUND_CORNER")
+Inherit_If("COLOR_LINE_TITLE", "COLOR_LINE")
+Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
+
 
 !endprocedure

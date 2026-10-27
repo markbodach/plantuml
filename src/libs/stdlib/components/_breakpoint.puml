@@ -25,7 +25,7 @@
 ' Diagnostics
 '=========================================================
 
-!procedure Dump_Breakpoints()
+!procedure Trigger_Breakpoint_Dump()
     !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
 !endprocedure
 
@@ -61,9 +61,8 @@
 '=========================================================
 !procedure Disable_Breakpoint($name)
 
-    !if ($name == "")
-        !assert 0 == 1 : "MB_PUML :: Breakpoint name cannot be blank (p:Disable_Breakpoint)"
-    !endif
+    Assert_Blank( $name, "Breakpoint name cannot be blank (p:Disable_Breakpoint)" )
+
 
     !if ($Breakpoint_Enabled($name))
 

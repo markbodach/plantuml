@@ -66,16 +66,14 @@
     '
     ' Validate the darkness floor.
     '
-    !if ($darkness_floor < 0) || ($darkness_floor > 255)
-        !assert 0 == 1 : "MB_PUML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)"
-    !endif
+    Assert_If( ($darkness_floor < 0) || ($darkness_floor > 255), "Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)" )
+
 
     '
     ' Validate the minimum correction.
     '
-    !if ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100)
-        !assert 0 == 1 : "MB_PUML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)"
-    !endif
+    Assert_If( ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100), "Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)" )
+
 
     '
     ' Preserve the existing safety behavior for pure black
@@ -269,9 +267,8 @@
 
   Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
   
-  !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_PUML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
-  !endif
+  Assert_If( $is_special_style_token($token), "DARKEN cannot operate on special token=[" + $token + "] (f:darken_color)" )
+
 
   '
   ' Step 1:

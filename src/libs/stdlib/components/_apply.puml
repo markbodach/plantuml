@@ -21,16 +21,14 @@
     '-----------------------------------------
     ' Validate target name
     '-----------------------------------------
-    !if ($is_valid_variable_name($to_var_name($target)) == %false())
-        !assert 0 == 1 : "MB_PUML :: Invalid target variable=[" + $target + "] (p:Apply_If)"
-    !endif
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
+
 
     '-----------------------------------------
     ' Validate source name
     '-----------------------------------------
-    !if ($is_valid_variable_name($to_var_name($source)) == %false())
-        !assert 0 == 1 : "MB_PUML :: Invalid source variable=[" + $source + "] (p:Apply_If)"
-    !endif
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
+
 
     '-----------------------------------------
     ' Source missing -> no action
@@ -42,9 +40,7 @@
         '-------------------------------------
         !if ($strictTarget)
 
-            !if ($variable_exists_safe($target) == %false())
-                !assert 0 == 1 : "MB_PUML :: Target variable does not exist=[" + $target + "] (p:Apply_If)"
-            !endif
+            Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
 
         !endif
 
@@ -56,9 +52,8 @@
         '-------------------------------------
         ' Prevent blank overwrite
         '-------------------------------------
-        !if ($sourceValue == "")
-            !assert 0 == 1 : "MB_PUML :: Source variable is blank=[" + $source + "] (p:Apply_If)"
-        !endif
+        Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
+
 
         '-------------------------------------
         ' Apply value
@@ -74,3 +69,66 @@
     Apply_If( $target, $source, %true() )
 
 !endprocedure
+
+
+'---------------------------------------------------------
+' Inherit Variable Value
+'
+' Implements:
+'
+'     target ??= source
+'
+' Behavior:
+'
+'     Target Exists
+'         -> preserve target
+'
+'     Target Missing
+'     + Source Exists
+'         -> inherit source
+'
+'     Target Missing
+'     + Source Missing
+'         -> ASSERT
+'
+' Intended precedence:
+'
+'     User Override
+'           ↓
+'     Inherited Value
+'           ↓
+'     Root Library Default
+'
+'---------------------------------------------------------
+!procedure Inherit_If($target,$source)
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Inheritance source must exist
+    '-----------------------------------------
+    Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Preserve explicit target value
+    '-----------------------------------------
+    !if ($variable_exists_safe($target))
+        !return
+    !endif
+
+    '-----------------------------------------
+    ' Inherit source value
+    '-----------------------------------------
+    Apply_If($target,$source)
+
+!endprocedure
+
+

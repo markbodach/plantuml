@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-27 16:28:38 EDT
-' Build Commit Hash: 747d86f11fadd080331ae9746fd9b91a135a1d0c
-' Build Commit Comment: Full stack testing
+' Generated on: 2026-10-27 18:43:42 EDT
+' Build Commit Hash: 06f3da13b5e30ce5846c34f02ab8048435d0f61c
+' Build Commit Comment: breakpoint typo
 ' ========================================================
 
 ' src/all.puml
@@ -26,9 +26,8 @@
 
     !$varName = "$" + $registryName
 
-    !if (%variable_exists($varName) == %false())
-        !assert 0 == 1 : "MB_PUML :: Registry variable not found=[" + $registryName + "] (f:registry_get)"
-    !endif
+    Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
+
 
     !return %get_variable_value($varName)
 
@@ -60,9 +59,8 @@
 
 !procedure Register_Lib_Object($name, $registryName)
 
-    !if ($name == "")
-        !assert 0 == 1 : "MB_PUML :: Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)"
-    !endif
+    Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
+
 
     !if ($object_registered($name, $registryName) == %false())
 
@@ -116,9 +114,9 @@
 ' --- End Import: src/libs/stdlib/framework/_helpers.puml ---
 
 ' --- Importing: src/libs/stdlib/framework/_registry.puml ---
-'=================================================================
+'=========================================================
 ' Extension Registry Framework
-'=================================================================
+'=========================================================
 '
 ' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
 '
@@ -151,7 +149,7 @@
 '           - Stereotypes
 '           - Formatting
 '
-'=================================================================
+'=========================================================
 '
 ' REGISTRY
 '
@@ -173,7 +171,7 @@
 '
 '   |ThemeA|ThemeB|
 '
-'=================================================================
+'=========================================================
 
 !global $THEMES = "|"
 !global $SKINPARAMS = "|"
@@ -242,15 +240,15 @@
 ' --- End Import: src/libs/stdlib/framework/_registry.puml ---
 
 ' --- Importing: src/libs/stdlib/framework/_extensions.puml ---
-'=================================================================
+'=========================================================
 ' STYLE EXTENSION HOOKS
-'=================================================================
+'=========================================================
 '
 ' The toolkit provides four optional extension procedures that
 ' allow consumers to customize variables and styles without
 ' modifying the toolkit source code.
 '
-'=================================================================
+'=========================================================
 '
 ' LOADING ORDER
 '
@@ -278,7 +276,7 @@
 '       ↓
 '   Load_Lib_Styles_AFTER()
 '
-'=================================================================
+'=========================================================
 '
 ' BEFORE HOOKS
 '
@@ -299,7 +297,7 @@
 '
 '   !endprocedure
 '
-'=================================================================
+'=========================================================
 '
 ' AFTER HOOKS
 '
@@ -325,7 +323,7 @@
 '
 '   !endprocedure
 '
-'=================================================================
+'=========================================================
 '
 ' RECOMMENDATIONS
 '
@@ -337,7 +335,7 @@
 '
 '   AFTER     -> Override toolkit defaults
 '
-'=================================================================
+'=========================================================
 '
 ' DEFAULT IMPLEMENTATIONS
 '
@@ -367,7 +365,7 @@
 'DO NOT ADD CODE
 !endprocedure
 '
-'=================================================================
+'=========================================================
 ' --- End Import: src/libs/stdlib/framework/_extensions.puml ---
 
 ' --- End Import: src/libs/stdlib/framework/index.puml ---
@@ -436,9 +434,228 @@
 
 'STEP 2 :: COMPONENTS includes
 ' --- Importing: src/libs/stdlib/components/index.puml ---
+
+'---------------------------------------------------------
+' ASSERT UTILITIES
+'=========================================================
+'
+' PURPOSE
+'
+'   Provides reusable assertion helpers for:
+'
+'       - Validation
+'       - Diagnostics
+'       - Contract enforcement
+'       - Runtime debugging
+'
+'---------------------------------------------------------
+' --- Importing: src/libs/stdlib/components/_assert.puml ---
+'=========================================================
+' ASSERT UTILITIES
+'=========================================================
+'
+' PURPOSE
+'
+'   Provides reusable assertion helpers for:
+'
+'       - Validation
+'       - Diagnostics
+'       - Contract enforcement
+'       - Runtime debugging
+'
+'=========================================================
+
+
+'=========================================================
+' Trigger_Assert
+'=========================================================
+'
+' Raises an assertion immediately.
+'
+' Parameters:
+'
+'   $message
+'       Assertion message.
+'
+' Example:
+'
+'   Trigger_Assert(
+'       "Invalid state detected"
+'   )
+'
+' Output:
+'
+'   MB_PUML :: <<ASSERT>>
+'   Invalid state detected
+'
+'=========================================================
+!procedure Trigger_Assert($message = "")
+    !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
+!endprocedure
+
+
+'=========================================================
+' Assert_If
+'=========================================================
+'
+' Raises an assertion only when the supplied
+' condition evaluates to true.
+'
+' Parameters:
+'
+'   $condition
+'       Boolean expression.
+'
+'   $message
+'       Assertion message.
+'
+' Example:
+'
+'   Assert_If(
+'       ($name == ""),
+'       "Name cannot be blank"
+'   )
+'
+'=========================================================
+!procedure Assert_If($condition, $message = "")
+    !if ($condition)
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Blank
+'=========================================================
+'
+' Raises an assertion when a value is blank.
+'
+' Example:
+'
+'   Assert_Blank(
+'       $token,
+'       "Token cannot be blank"
+'   )
+'
+'=========================================================
+!procedure Assert_Blank($value, $message = "")
+    !if ($value == "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Not_Blank
+'=========================================================
+'
+' Raises an assertion when a value is not blank.
+'
+' Example:
+'
+'   Assert_Not_Blank(
+'       $trace_error,
+'       "Trace information should be empty"
+'   )
+'
+'=========================================================
+!procedure Assert_Not_Blank($value, $message = "")
+    !if ($value != "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Variable_Exists
+'=========================================================
+'
+' Raises an assertion when a variable
+' does not exist.
+'
+' Uses:
+'
+'   COLOR_PRIMARY
+'   $COLOR_PRIMARY
+'
+'=========================================================
+!procedure Assert_Variable_Exists($name, $message = "")
+    !if ($variable_exists_safe($name) == %false())
+        Trigger_Assert( $first_defined( $message, "Variable does not exist=[" + $name + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Variable_Missing
+'=========================================================
+'
+' Raises an assertion when a variable
+' already exists.
+'
+'=========================================================
+!procedure Assert_Variable_Missing($name, $message = "")
+    !if ($variable_exists_safe($name))
+        Trigger_Assert( $first_defined( $message, "Variable already exists=[" + $name + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Literal_Color
+'=========================================================
+'
+' Raises an assertion when a value is
+' not a valid literal color.
+'
+' Supports:
+'
+'   #RGB
+'   #RRGGBB
+'   #RRGGBBAA
+'
+'=========================================================
+!procedure Assert_Literal_Color($value, $message = "")
+    !if ($is_literal_color($value) == %false())
+        Trigger_Assert( $first_defined( $message, "Invalid literal color=[" + $value + "]" ) )
+    !endif
+!endprocedure
+
+
+'=========================================================
+' Assert_Hash_Token
+'=========================================================
+'
+' Helpful while debugging semantic
+' color resolution pipelines.
+'
+' Example:
+'
+'   Assert_Hash_Token(
+'       $semantic_suffix,
+'       "Unexpected hash token"
+'   )
+'
+'=========================================================
+!procedure Assert_Hash_Token($value, $message = "")
+    !if (%strpos(%upper($value), "#") == 0)
+        Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
+    !endif
+!endprocedure
+
+
+
+
+!procedure Trigger_Internal_Error($message="")
+    !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
+!endprocedure
+' --- End Import: src/libs/stdlib/components/_assert.puml ---
+
+
+
 '---------------------------------------------------------
 ' Debug Utilities
-'=================================================================
+'=========================================================
 '
 ' PURPOSE
 '
@@ -455,9 +672,9 @@
 '   - Diagnostic panel generation
 '---------------------------------------------------------
 ' --- Importing: src/libs/stdlib/components/_debug.puml ---
-'=================================================================
+'=========================================================
 ' DEBUG UTILITIES
-'=================================================================
+'=========================================================
 '
 ' PURPOSE
 '
@@ -489,11 +706,11 @@
 '   Most helpers are intended for temporary debugging
 '   and should not normally appear in production diagrams.
 '
-'=================================================================
+'=========================================================
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Color
 '
 ' Displays background, font, and line colors.
@@ -507,7 +724,7 @@
 '     $cLineColor
 ' )
 '
-'=================================================================
+'=========================================================
 !function $debug_color( $name, $backgroundColor, $fontColor, $lineColor )
 
     !return $surround($name) + "\nBackground = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor
@@ -516,7 +733,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Variables (Flat Array)
 '
 ' Input Format:
@@ -534,7 +751,7 @@
 '     "ROUND_2", $ROUND_2
 ' ])
 '
-'=================================================================
+'=========================================================
 !function $debug_variables_flat($pairs)
 
     !$result = ""
@@ -560,7 +777,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Variables (Nested Array)
 '
 ' Input Format:
@@ -584,7 +801,7 @@
 '   versions. Prefer the flat-array implementation
 '   when maximum compatibility is required.
 '
-'=================================================================
+'=========================================================
 !function $debug_variables_nested($pairs)
 
     !$result = ""
@@ -612,7 +829,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Panel
 '
 ' Adds a title to any debug content.
@@ -627,7 +844,7 @@
 '     ])
 ' )
 '
-'=================================================================
+'=========================================================
 !function $debug_panel( $title, $content )
 
     !return $surround($title) + "\n" + $content
@@ -636,7 +853,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Variable
 '
 ' Convenience helper for displaying a single value.
@@ -648,7 +865,7 @@
 '     $COLOR_PRIMARY
 ' )
 '
-'=================================================================
+'=========================================================
 !function $debug_variable( $name, $value )
 
     !return $name + " = " + $value
@@ -657,7 +874,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Debug Style
 '
 ' Displays a complete style context.
@@ -673,7 +890,7 @@
 '     $cLineColor
 ' )
 '
-'=================================================================
+'=========================================================
 !function $debug_style( $name, $backgroundColor="", $fontColor="", $lineColor="")
 
     !return $debug_panel( $name, "Background = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor )
@@ -682,9 +899,9 @@
 
 
 
-'=================================================================
+'=========================================================
 ' EXAMPLES
-'=================================================================
+'=========================================================
 '
 ' Single Variable
 '
@@ -727,14 +944,14 @@
 '     ])
 ' )
 '
-'=================================================================
+'=========================================================
 ' --- End Import: src/libs/stdlib/components/_debug.puml ---
 
 
 
 '---------------------------------------------------------
 ' Breakpoint Utilities
-'=================================================================
+'=========================================================
 '
 ' PURPOSE
 '
@@ -779,7 +996,7 @@
 ' Diagnostics
 '=========================================================
 
-!procedure Dump_Breakpoints()
+!procedure Trigger_Breakpoint_Dump()
     !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
 !endprocedure
 
@@ -815,9 +1032,8 @@
 '=========================================================
 !procedure Disable_Breakpoint($name)
 
-    !if ($name == "")
-        !assert 0 == 1 : "MB_PUML :: Breakpoint name cannot be blank (p:Disable_Breakpoint)"
-    !endif
+    Assert_Blank( $name, "Breakpoint name cannot be blank (p:Disable_Breakpoint)" )
+
 
     !if ($Breakpoint_Enabled($name))
 
@@ -988,9 +1204,8 @@
 
     !$clean = %substr($name, 1)
 
-    !if ($has_dollar($clean) == %true())
-        !assert 0 == 1 : "MB_PUML :: Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)"
-    !endif
+    Assert_If( ($has_dollar($clean)), "Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)" )
+
 
     !return $clean
 
@@ -1036,9 +1251,10 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !assert 0 == 1 : "MB_PUML :: Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
-            !else
-                !assert 0 == 1 : "MB_PUML :: Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
+                Trigger_Assert("Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
+
+            !else 
+                Trigger_Assert( "Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
             !endif
         !endif
 
@@ -1060,9 +1276,7 @@
 '
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
-    !if ($is_literal_color($name)) 
-        !assert 0 == 1 : "MB_PUML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
-    !endif
+    Assert_If( $is_literal_color($name), "Literal color passed where variable name expected=[" + $name + "] (" + $trace_error + "f:resolve_variable)" )
 
     !$variable_name = $to_var_name($name)
     !$value = ""
@@ -1070,7 +1284,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error, $trace_error + "f:resolve_variable -> ") == %false())
 
         !if ($raise_error == %true())
-            !assert 0 == 1 : "MB_PUML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
+            Trigger_Assert( "Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)" )
         !endif
 
         !return ""
@@ -1176,6 +1390,44 @@
         !endif
     !endif
 
+        !if ($var3 != "")
+        !$v = $resolve_variable($var3,%false())
+        !if ($variable_exists_safe($var3))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var4 != "")
+        !$v = $resolve_variable($var4,%false())
+        !if ($variable_exists_safe($var4))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var5 != "")
+        !$v = $resolve_variable($var5,%false())
+        !if ($variable_exists_safe($var5))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var6 != "")
+        !$v = $resolve_variable($var6,%false())
+        !if ($variable_exists_safe($var6))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var7 != "")
+        !$v = $resolve_variable($var7,%false())
+        !if ($variable_exists_safe($var7))
+            !return $v
+        !endif
+    !endif
+
+
+    
+
     ' repeat through var7...
 
     !return $UNSET
@@ -1199,9 +1451,9 @@
 '   - Framed text formatting
 '---------------------------------------------------------
 ' --- Importing: src/libs/stdlib/components/_text.puml ---
-'=================================================================
+'=========================================================
 ' TEXT UTILITIES
-'=================================================================
+'=========================================================
 '
 ' PURPOSE
 '
@@ -1256,11 +1508,11 @@
 '   The high-level helpers in this module implement the
 '   preferred rendering pattern automatically.
 '
-'=================================================================
+'=========================================================
 
 
 
-'=================================================================
+'=========================================================
 ' Repeat Text
 '
 ' Repeats a string N times.
@@ -1273,7 +1525,7 @@
 '
 '   -----
 '
-'=================================================================
+'=========================================================
 !function $repeat($text, $count)
 
     !$result = ""
@@ -1292,7 +1544,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' New Line
 '
 ' Returns one or more newline characters.
@@ -1303,7 +1555,7 @@
 '
 '   $nl(2)
 '
-'=================================================================
+'=========================================================
 !function $nl($count = 1)
 
     !return $repeat("\n", $count)
@@ -1312,7 +1564,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Pad Left
 '
 ' Adds padding characters to the left side of a string.
@@ -1325,7 +1577,7 @@
 '
 '       TEXT
 '
-'=================================================================
+'=========================================================
 !function $pad_left($text, $count, $padding = " ")
 
     !return $repeat($padding, $count) + $text
@@ -1334,7 +1586,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Pad Right
 '
 ' Adds padding characters to the right side of a string.
@@ -1347,7 +1599,7 @@
 '
 '   TEXT
 '
-'=================================================================
+'=========================================================
 !function $pad_right($text, $count, $padding = " ")
 
     !return $text + $repeat($padding, $count)
@@ -1356,7 +1608,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Pad Both Sides
 '
 ' Adds equal padding to both sides of a string.
@@ -1369,7 +1621,7 @@
 '
 '       TEXT
 '
-'=================================================================
+'=========================================================
 !function $pad_both($text, $count, $padding = " ")
 
     !$pad = $repeat($padding, $count)
@@ -1380,7 +1632,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Center Text
 '
 ' Centers text within a target width.
@@ -1396,7 +1648,7 @@
 '
 '   $center_text("TITLE",40)
 '
-'=================================================================
+'=========================================================
 !function $center_text($text, $width = 40, $padding = " " )
 
     !$length = %strlen($text)
@@ -1415,7 +1667,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Line Above
 '
 ' Adds one or more blank lines before text.
@@ -1429,7 +1681,7 @@
 '   <blank line>
 '   TEXT
 '
-'=================================================================
+'=========================================================
 !function $line_above($text, $count = 1)
 
     !return $nl($count) + $text
@@ -1438,7 +1690,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Line Below
 '
 ' Adds one or more blank lines after text.
@@ -1452,7 +1704,7 @@
 '   TEXT
 '   <blank line>
 '
-'=================================================================
+'=========================================================
 !function $line_below( $text, $count = 1 )
 
     !return $text + $nl($count)
@@ -1461,7 +1713,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Line Wrap
 '
 ' Adds blank lines above and below text.
@@ -1476,7 +1728,7 @@
 '   TEXT
 '   <blank line>
 '
-'=================================================================
+'=========================================================
 !function $line_wrap( $text, $count = 1 )
 
     !$lines = $nl($count)
@@ -1487,7 +1739,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Surround
 '
 ' High-level formatting helper.
@@ -1516,7 +1768,7 @@
 '       TEXT
 '   \n
 '
-'=================================================================
+'=========================================================
 !function $surround( $text, $horizontal = 4, $vertical = 1, $padding = " " )
 
     !$body = $pad_both( $text, $horizontal, $padding )
@@ -1529,7 +1781,7 @@
 
 
 
-'=================================================================
+'=========================================================
 ' Framed Title
 '
 ' Convenience helper for common banner/title formatting.
@@ -1546,7 +1798,7 @@
 '       "Architecture Overview"
 '   )
 '
-'=================================================================
+'=========================================================
 !function $framed_title( $text, $width = 60, $horizontal = 2, $vertical = 1 )
 
     !$centered = $center_text( $text, $width )
@@ -1628,7 +1880,8 @@
 !function $assert_literal_color($value)
 
   !if ($is_literal_color($value) == %false())
-    !assert 0==1 : "MB_PUML :: Invalid literal color=[" + $value + "]"
+    Trigger_Assert("Invalid literal color=[" + $value + "]")
+
   !endif
 
   !return $value
@@ -1725,7 +1978,8 @@
         !return 15
     !endif
 
-    !assert 0==1 : "MB_PUML :: Invalid hex digit=[" + $c + "]"
+    Trigger_Internal_Error( "Invalid hex digit=[" + $c + "]")
+
     !return -1
 !endfunction
 
@@ -1738,6 +1992,8 @@
 '=========================================================
 
 !function $int_to_hex_digit($n)
+
+    Assert_If( ($n < 0) || ($n > 15), "Hex digit out of range=[" + $n + "]" )
 
     !if $n == 0
         !return "0"
@@ -1784,6 +2040,8 @@
 
 !function $byte_to_hex($n)
 
+    Assert_If( ($n < 0) || ($n > 255), "Hex digit out of range=[" + $n + "]")
+
     !$hi = %intval($n / 16)
     !$lo = $n - ($hi * 16)
 
@@ -1796,7 +2054,7 @@
 !function $hex_byte_to_int($hexByte)
 
   !if (%strlen($hexByte) != 2)
-      !assert 0==1 : "MB_PUML :: Invalid hex byte=[" + $hexByte + "]"
+      Trigger_Internal_Error("Invalid hex byte=[" + $hexByte + "]" )
   !endif
 
   !$hi = $hex_digit_value(%substr($hexByte,0,1))
@@ -1900,16 +2158,14 @@
     '-----------------------------------------
     ' Validate target name
     '-----------------------------------------
-    !if ($is_valid_variable_name($to_var_name($target)) == %false())
-        !assert 0 == 1 : "MB_PUML :: Invalid target variable=[" + $target + "] (p:Apply_If)"
-    !endif
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
+
 
     '-----------------------------------------
     ' Validate source name
     '-----------------------------------------
-    !if ($is_valid_variable_name($to_var_name($source)) == %false())
-        !assert 0 == 1 : "MB_PUML :: Invalid source variable=[" + $source + "] (p:Apply_If)"
-    !endif
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
+
 
     '-----------------------------------------
     ' Source missing -> no action
@@ -1921,9 +2177,7 @@
         '-------------------------------------
         !if ($strictTarget)
 
-            !if ($variable_exists_safe($target) == %false())
-                !assert 0 == 1 : "MB_PUML :: Target variable does not exist=[" + $target + "] (p:Apply_If)"
-            !endif
+            Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
 
         !endif
 
@@ -1935,9 +2189,8 @@
         '-------------------------------------
         ' Prevent blank overwrite
         '-------------------------------------
-        !if ($sourceValue == "")
-            !assert 0 == 1 : "MB_PUML :: Source variable is blank=[" + $source + "] (p:Apply_If)"
-        !endif
+        Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
+
 
         '-------------------------------------
         ' Apply value
@@ -1953,6 +2206,69 @@
     Apply_If( $target, $source, %true() )
 
 !endprocedure
+
+
+'---------------------------------------------------------
+' Inherit Variable Value
+'
+' Implements:
+'
+'     target ??= source
+'
+' Behavior:
+'
+'     Target Exists
+'         -> preserve target
+'
+'     Target Missing
+'     + Source Exists
+'         -> inherit source
+'
+'     Target Missing
+'     + Source Missing
+'         -> ASSERT
+'
+' Intended precedence:
+'
+'     User Override
+'           ↓
+'     Inherited Value
+'           ↓
+'     Root Library Default
+'
+'---------------------------------------------------------
+!procedure Inherit_If($target,$source)
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Inheritance source must exist
+    '-----------------------------------------
+    Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Preserve explicit target value
+    '-----------------------------------------
+    !if ($variable_exists_safe($target))
+        !return
+    !endif
+
+    '-----------------------------------------
+    ' Inherit source value
+    '-----------------------------------------
+    Apply_If($target,$source)
+
+!endprocedure
+
+
 ' --- End Import: src/libs/stdlib/components/_apply.puml ---
 
 
@@ -2031,7 +2347,7 @@
   '------------------------------------------
   !if ($raise_error == %true() )
 
-    !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+    Trigger_Assert( "Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)" )
 
   !endif
 
@@ -2052,9 +2368,8 @@
 
 !function $get_color($value)
 
-  !if ($value == "") 
-    !assert 0 == 1 : "MB_PUML :: get_color() received blank value (f:get_color)" 
-  !endif
+  Assert_Blank($value, "get_color() received blank value (f:get_color)" )
+
 
   !if ($is_literal_color($value))
       !return %upper($value)
@@ -2074,15 +2389,13 @@
 
 !function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
 
-  !if (%strpos(%upper($semantic_suffix), "#") == 0)
-    !assert 0 == 1 : "MB_PUML :: Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)"
-  !endif
+  Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)" )
 
-  !if ($semantic_suffix == "") 
-    !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
-  !endif
 
-  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "get_semantic_color received literal color=[" + $semantic_suffix + "]" )
+  Assert_Blank( $semantic_suffix, "Function received blank semantic suffix (f:get_semantic_color)" )
+
+
+  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "(f:get_semantic_color." + $trace_error + ") received literal color=[" + $semantic_suffix + "]" )
   
   !if $is_special_style_token($semantic_suffix)
       !return $semantic_suffix
@@ -2090,9 +2403,8 @@
 
   !$candidate = $semantic_color_variable($semantic_suffix, %true(), "f:get_semantic_color")
 
-  !if ($candidate == "COLOR_")
-      !assert 0 == 1 : "MB_PUML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"
-  !endif
+  Assert_If( ($candidate == "COLOR_"), "Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color." + $trace_error + ")" )
+
 
   !return $get_color($candidate)
 
@@ -2272,16 +2584,14 @@
     '
     ' Validate the darkness floor.
     '
-    !if ($darkness_floor < 0) || ($darkness_floor > 255)
-        !assert 0 == 1 : "MB_PUML :: Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)"
-    !endif
+    Assert_If( ($darkness_floor < 0) || ($darkness_floor > 255), "Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)" )
+
 
     '
     ' Validate the minimum correction.
     '
-    !if ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100)
-        !assert 0 == 1 : "MB_PUML :: Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)"
-    !endif
+    Assert_If( ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100), "Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)" )
+
 
     '
     ' Preserve the existing safety behavior for pure black
@@ -2475,9 +2785,8 @@
 
   Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
   
-  !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_PUML :: DARKEN (darken_color) cannot operate on special token=[" + $token + "] (f:darken_color)"
-  !endif
+  Assert_If( $is_special_style_token($token), "DARKEN cannot operate on special token=[" + $token + "] (f:darken_color)" )
+
 
   '
   ' Step 1:
@@ -2613,16 +2922,14 @@
     '
     ' Validate the lightness ceiling.
     '
-    !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
-        !assert 0 == 1 : "MB_PUML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
-    !endif
+    Assert_If( ($lightness_ceiling < 0) || ($lightness_ceiling > 255), "Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)" )
+
 
     '
     ' Validate the minimum correction.
     '
-    !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
-        !assert 0 == 1 : "MB_PUML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
-    !endif
+    Assert_If( ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100), "Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)" )
+
 
     '
     ' A color with zero calculated lightness cannot exceed
@@ -2841,9 +3148,8 @@
 
   Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
 
-  !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_PUML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
-  !endif
+  Assert_If( $is_special_style_token($token), "LIGHTEN cannot operate on special token=[" + $token + "] (f:lighten_color)" )
+
 
   '
   ' Step 1:
@@ -2965,9 +3271,8 @@
   '
   ' Validation
   '
-  !if ($tokenOrColor == "") && ($contextColor == "")
-      !assert 0 == 1 : "MB_PUML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
-  !endif
+  Assert_If( ($tokenOrColor == "") && ($contextColor == ""), "BLANK.BLANK[" + $tokenOrColor + "] requires token or context (f:resolve_style_color)" )
+
 
   !if ($has_dollar($tokenOrColor))
 
@@ -2979,7 +3284,7 @@
         ' Prevent infinite recursion
         '------------------------------------------
         !if (%upper("" + $resolved + "") == %upper("" + $tokenOrColor + ""))
-            !assert 0 == 1 : "MB_PUML :: Recursive variable resolution detected. variable=[" + $tokenOrColor + "] value=[" + $resolved + "] (f:resolve_style_color)"
+            Trigger_Assert( "Recursive variable resolution detected. " + "variable=[" + $tokenOrColor + "] " + "value=[" + $resolved + "] " + "(f:resolve_style_color)" )
         !endif
 
         'PRESERVE THE CONTEXT !return $resolve_style_color($resolved)
@@ -2988,8 +3293,7 @@
 
 
     !else
-        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
-
+        Trigger_Assert( "Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)")
     !endif
 
   !endif
@@ -3009,9 +3313,8 @@
   '
   !if ($token == "AUTO")
    
-    !if ($contextColor == "")
-      !assert 0 == 1 : "MB_PUML :: AUTO requires a context color (f:resolve_style_color)"
-    !endif
+    Assert_Blank( $contextColor, "AUTO requires a context color (f:resolve_style_color)" )
+
     !return $get_auto_text_color($contextColor)
 
   '
@@ -3019,12 +3322,9 @@
   '
   !elseif ($token == "CURRENT")
 
-      !if ($contextAsToken == "")
-          !assert 0 == 1 : "MB_PUML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
-      !endif
-      !if ($contextAsToken == "CURRENT")
-          !assert 0 == 1 : "MB_PUML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
-      !endif
+      Assert_Blank($contextAsToken, "CURRENT requires a context color to determine CURRENT (f:resolve_style_color)" )
+
+      Assert_If( ($contextAsToken == "CURRENT"), "CURRENT recursively calls CURRENT (f:resolve_style_color)" )
 
       !return $resolve_style_color($contextColor, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
@@ -3033,9 +3333,7 @@
   '
   !elseif (%strpos($token, "DARKEN") == 0)
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
-      !endif
+      Assert_Blank( $contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
 
       !return $darken_color( $contextColor, $tokenOrColor )
 
@@ -3044,9 +3342,7 @@
   '
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
-      !endif
+      Assert_Blank($contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
 
       !return $lighten_color($contextColor, $tokenOrColor )
 
@@ -3320,19 +3616,19 @@
 ' --- Importing: src/libs/stdlib/theme/_element.puml ---
 !procedure Load_Lib_Theme_StdLib_Element()
 
-!global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
-!global $STYLE_FONT_ELEMENT ?= ""
+    !global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
+    !global $STYLE_FONT_ELEMENT ?= ""
 
-!global $COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
-!global $COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
-!global $ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
+    !global $COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
+    !global $COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
+    !global $ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
 
-!global $MARGIN_ELEMENT ?= 20
-!global $PADDING_ELEMENT ?= 15
-!global $ROUND_CORNER_ELEMENT ?= $ROUND_CORNER
+    !global $MARGIN_ELEMENT ?= 20
+    !global $PADDING_ELEMENT ?= 15
 
-!global $COLOR_LINE_ELEMENT ?= $COLOR_LINE
-!global $SIZE_LINE_ELEMENT ?= $SIZE_LINE
+    Inherit_If("ROUND_CORNER_ELEMENT","ROUND_CORNER") 
+    Inherit_If("COLOR_LINE_ELEMENT","COLOR_LINE") 
+    Inherit_If("SIZE_LINE_ELEMENT","SIZE_LINE")
 
 !endprocedure
 ' --- End Import: src/libs/stdlib/theme/_element.puml ---
@@ -3419,10 +3715,11 @@
 
 !global $MARGIN_TITLE ?= 20
 !global $PADDING_TITLE ?= 15
-!global $ROUND_CORNER_TITLE ?= $ROUND_CORNER
 
-!global $COLOR_LINE_TITLE ?= $COLOR_LINE
-!global $SIZE_LINE_TITLE ?= $SIZE_LINE
+Inherit_If("ROUND_CORNER_TITLE", "ROUND_CORNER")
+Inherit_If("COLOR_LINE_TITLE", "COLOR_LINE")
+Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
+
 
 !endprocedure
 ' --- End Import: src/libs/stdlib/theme/_title.puml ---
@@ -3430,18 +3727,19 @@
 ' --- Importing: src/libs/stdlib/theme/_component.puml ---
 !procedure Load_Lib_Theme_StdLib_Component()
 
-!global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
-!global $STYLE_FONT_COMPONENT ?= ""
+    !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
+    !global $STYLE_FONT_COMPONENT ?= ""
 
-!global $COLOR_BACKGROUND_COMPONENT ?= $COLOR_PRIMARY
-!global $ALIGNMENT_HORIZONTAL_COMPONENT ?= "left"
+    !global $COLOR_BACKGROUND_COMPONENT ?= $COLOR_PRIMARY
+    !global $ALIGNMENT_HORIZONTAL_COMPONENT ?= "left"
 
-!global $MARGIN_COMPONENT ?= 20
-!global $PADDING_COMPONENT ?= 15
-!global $ROUND_CORNER_COMPONENT ?= $ROUND_CORNER
+    !global $MARGIN_COMPONENT ?= 20
+    !global $PADDING_COMPONENT ?= 15
 
-!global $COLOR_LINE_COMPONENT ?= $COLOR_LINE
-!global $SIZE_LINE_COMPONENT ?= $SIZE_LINE
+    
+    Inherit_If("ROUND_CORNER_COMPONENT","ROUND_CORNER") 
+    Inherit_If("COLOR_LINE_COMPONENT","COLOR_LINE") 
+    Inherit_If("SIZE_LINE_COMPONENT","SIZE_LINE")
 
 !endprocedure
 ' --- End Import: src/libs/stdlib/theme/_component.puml ---
@@ -3460,8 +3758,8 @@
     Load_Lib_Theme_StdLib_Widths()
     Load_Lib_Theme_StdLib_Heights()
 
-    Load_Lib_Theme_StdLib_Element()
     Load_Lib_Theme_StdLib_Layout()
+    Load_Lib_Theme_StdLib_Element()
 
     Load_Lib_Theme_StdLib_Icons()
     Load_Lib_Theme_StdLib_Title()

@@ -29,8 +29,8 @@
     Load_Lib_Theme_StdLib_Widths()
     Load_Lib_Theme_StdLib_Heights()
 
-    Load_Lib_Theme_StdLib_Element()
     Load_Lib_Theme_StdLib_Layout()
+    Load_Lib_Theme_StdLib_Element()
 
     Load_Lib_Theme_StdLib_Icons()
     Load_Lib_Theme_StdLib_Title()

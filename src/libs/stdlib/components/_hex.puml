@@ -56,7 +56,8 @@
 !function $assert_literal_color($value)
 
   !if ($is_literal_color($value) == %false())
-    !assert 0==1 : "MB_PUML :: Invalid literal color=[" + $value + "]"
+    Trigger_Assert("Invalid literal color=[" + $value + "]")
+
   !endif
 
   !return $value
@@ -153,7 +154,8 @@
         !return 15
     !endif
 
-    !assert 0==1 : "MB_PUML :: Invalid hex digit=[" + $c + "]"
+    Trigger_Internal_Error( "Invalid hex digit=[" + $c + "]")
+
     !return -1
 !endfunction
 
@@ -166,6 +168,8 @@
 '=========================================================
 
 !function $int_to_hex_digit($n)
+
+    Assert_If( ($n < 0) || ($n > 15), "Hex digit out of range=[" + $n + "]" )
 
     !if $n == 0
         !return "0"
@@ -212,6 +216,8 @@
 
 !function $byte_to_hex($n)
 
+    Assert_If( ($n < 0) || ($n > 255), "Hex digit out of range=[" + $n + "]")
+
     !$hi = %intval($n / 16)
     !$lo = $n - ($hi * 16)
 
@@ -224,7 +230,7 @@
 !function $hex_byte_to_int($hexByte)
 
   !if (%strlen($hexByte) != 2)
-      !assert 0==1 : "MB_PUML :: Invalid hex byte=[" + $hexByte + "]"
+      Trigger_Internal_Error("Invalid hex byte=[" + $hexByte + "]" )
   !endif
 
   !$hi = $hex_digit_value(%substr($hexByte,0,1))

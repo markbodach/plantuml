@@ -59,7 +59,7 @@
   '------------------------------------------
   !if ($raise_error == %true() )
 
-    !assert 0 == 1 : "MB_PUML :: Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)"
+    Trigger_Assert( "Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)" )
 
   !endif
 
@@ -80,9 +80,8 @@
 
 !function $get_color($value)
 
-  !if ($value == "") 
-    !assert 0 == 1 : "MB_PUML :: get_color() received blank value (f:get_color)" 
-  !endif
+  Assert_Blank($value, "get_color() received blank value (f:get_color)" )
+
 
   !if ($is_literal_color($value))
       !return %upper($value)
@@ -102,15 +101,13 @@
 
 !function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
 
-  !if (%strpos(%upper($semantic_suffix), "#") == 0)
-    !assert 0 == 1 : "MB_PUML :: Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)"
-  !endif
+  Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] (f:get_semantic_color)" )
 
-  !if ($semantic_suffix == "") 
-    !assert 0 == 1 : "MB_PUML :: Function received blank semantic suffix (f:get_semantic_color)" 
-  !endif
 
-  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "get_semantic_color received literal color=[" + $semantic_suffix + "]" )
+  Assert_Blank( $semantic_suffix, "Function received blank semantic suffix (f:get_semantic_color)" )
+
+
+  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "(f:get_semantic_color." + $trace_error + ") received literal color=[" + $semantic_suffix + "]" )
   
   !if $is_special_style_token($semantic_suffix)
       !return $semantic_suffix
@@ -118,9 +115,8 @@
 
   !$candidate = $semantic_color_variable($semantic_suffix, %true(), "f:get_semantic_color")
 
-  !if ($candidate == "COLOR_")
-      !assert 0 == 1 : "MB_PUML :: Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color)"
-  !endif
+  Assert_If( ($candidate == "COLOR_"), "Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color." + $trace_error + ")" )
+
 
   !return $get_color($candidate)
 

@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-27 16:28:38 EDT**
-* Build Commit Hash: **747d86f11fadd080331ae9746fd9b91a135a1d0c**
-* Build Commit Comment: **Full stack testing**
+* Generated on: **2026-10-27 18:43:42 EDT**
+* Build Commit Hash: **06f3da13b5e30ce5846c34f02ab8048435d0f61c**
+* Build Commit Comment: **breakpoint typo**
 
 ## Usage
 
@@ -297,6 +297,7 @@ src/all.puml (Root Master)
       └── archimate/vars/index.puml
         └── _root.puml
       └── stdlib/components/index.puml
+        └── _assert.puml
         └── _debug.puml
         └── _breakpoint.puml
         └── _strings.puml

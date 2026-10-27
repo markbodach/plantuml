@@ -16,6 +16,7 @@ src/all.puml (Root Master)
       └── archimate/vars/index.puml
         └── _root.puml
       └── stdlib/components/index.puml
+        └── _assert.puml
         └── _debug.puml
         └── _breakpoint.puml
         └── _strings.puml

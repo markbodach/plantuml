@@ -6,9 +6,8 @@
 
     !$varName = "$" + $registryName
 
-    !if (%variable_exists($varName) == %false())
-        !assert 0 == 1 : "MB_PUML :: Registry variable not found=[" + $registryName + "] (f:registry_get)"
-    !endif
+    Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
+
 
     !return %get_variable_value($varName)
 
@@ -40,9 +39,8 @@
 
 !procedure Register_Lib_Object($name, $registryName)
 
-    !if ($name == "")
-        !assert 0 == 1 : "MB_PUML :: Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)"
-    !endif
+    Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
+
 
     !if ($object_registered($name, $registryName) == %false())
 

@@ -71,16 +71,14 @@
     '
     ' Validate the lightness ceiling.
     '
-    !if ($lightness_ceiling < 0) || ($lightness_ceiling > 255)
-        !assert 0 == 1 : "MB_PUML :: Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)"
-    !endif
+    Assert_If( ($lightness_ceiling < 0) || ($lightness_ceiling > 255), "Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)" )
+
 
     '
     ' Validate the minimum correction.
     '
-    !if ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100)
-        !assert 0 == 1 : "MB_PUML :: Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)"
-    !endif
+    Assert_If( ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100), "Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)" )
+
 
     '
     ' A color with zero calculated lightness cannot exceed
@@ -299,9 +297,8 @@
 
   Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
 
-  !if $is_special_style_token($token)
-    !assert 0 == 1 : "MB_PUML :: LIGHTEN (lighten_color) cannot operate on special token=[" + $token + "] (f:lighten_color)"
-  !endif
+  Assert_If( $is_special_style_token($token), "LIGHTEN cannot operate on special token=[" + $token + "] (f:lighten_color)" )
+
 
   '
   ' Step 1:

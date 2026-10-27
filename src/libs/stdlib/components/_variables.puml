@@ -15,9 +15,8 @@
 
     !$clean = %substr($name, 1)
 
-    !if ($has_dollar($clean) == %true())
-        !assert 0 == 1 : "MB_PUML :: Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)"
-    !endif
+    Assert_If( ($has_dollar($clean)), "Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)" )
+
 
     !return $clean
 
@@ -63,9 +62,10 @@
 
         !if ($raise_error == %true())
             !if ($variable_name != %upper($variable_name))
-                !assert 0 == 1 : "MB_PUML :: Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
-            !else
-                !assert 0 == 1 : "MB_PUML :: Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)"
+                Trigger_Assert("Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
+
+            !else 
+                Trigger_Assert( "Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
             !endif
         !endif
 
@@ -87,9 +87,7 @@
 '
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
-    !if ($is_literal_color($name)) 
-        !assert 0 == 1 : "MB_PUML :: A literal color value was passed [" + $name + "] and function EXPECTS a variable name (" + $trace_error + "f:resolve_variable)"
-    !endif
+    Assert_If( $is_literal_color($name), "Literal color passed where variable name expected=[" + $name + "] (" + $trace_error + "f:resolve_variable)" )
 
     !$variable_name = $to_var_name($name)
     !$value = ""
@@ -97,7 +95,7 @@
     !if ($variable_exists_safe($variable_name, $raise_error, $trace_error + "f:resolve_variable -> ") == %false())
 
         !if ($raise_error == %true())
-            !assert 0 == 1 : "MB_PUML :: Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)"
+            Trigger_Assert( "Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)" )
         !endif
 
         !return ""
@@ -202,6 +200,44 @@
             !return $v
         !endif
     !endif
+
+        !if ($var3 != "")
+        !$v = $resolve_variable($var3,%false())
+        !if ($variable_exists_safe($var3))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var4 != "")
+        !$v = $resolve_variable($var4,%false())
+        !if ($variable_exists_safe($var4))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var5 != "")
+        !$v = $resolve_variable($var5,%false())
+        !if ($variable_exists_safe($var5))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var6 != "")
+        !$v = $resolve_variable($var6,%false())
+        !if ($variable_exists_safe($var6))
+            !return $v
+        !endif
+    !endif
+
+    !if ($var7 != "")
+        !$v = $resolve_variable($var7,%false())
+        !if ($variable_exists_safe($var7))
+            !return $v
+        !endif
+    !endif
+
+
+    
 
     ' repeat through var7...
 

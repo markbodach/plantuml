@@ -52,9 +52,8 @@
   '
   ' Validation
   '
-  !if ($tokenOrColor == "") && ($contextColor == "")
-      !assert 0 == 1 : "MB_PUML :: BLANK.BLANK[" + $tokenOrColor + "] requires a tokenOrColor or context color (f:resolve_style_color)"
-  !endif
+  Assert_If( ($tokenOrColor == "") && ($contextColor == ""), "BLANK.BLANK[" + $tokenOrColor + "] requires token or context (f:resolve_style_color)" )
+
 
   !if ($has_dollar($tokenOrColor))
 
@@ -66,7 +65,7 @@
         ' Prevent infinite recursion
         '------------------------------------------
         !if (%upper("" + $resolved + "") == %upper("" + $tokenOrColor + ""))
-            !assert 0 == 1 : "MB_PUML :: Recursive variable resolution detected. variable=[" + $tokenOrColor + "] value=[" + $resolved + "] (f:resolve_style_color)"
+            Trigger_Assert( "Recursive variable resolution detected. " + "variable=[" + $tokenOrColor + "] " + "value=[" + $resolved + "] " + "(f:resolve_style_color)" )
         !endif
 
         'PRESERVE THE CONTEXT !return $resolve_style_color($resolved)
@@ -75,8 +74,7 @@
 
 
     !else
-        !assert 0 == 1 : "MB_PUML :: Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)"
-
+        Trigger_Assert( "Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)")
     !endif
 
   !endif
@@ -96,9 +94,8 @@
   '
   !if ($token == "AUTO")
    
-    !if ($contextColor == "")
-      !assert 0 == 1 : "MB_PUML :: AUTO requires a context color (f:resolve_style_color)"
-    !endif
+    Assert_Blank( $contextColor, "AUTO requires a context color (f:resolve_style_color)" )
+
     !return $get_auto_text_color($contextColor)
 
   '
@@ -106,12 +103,9 @@
   '
   !elseif ($token == "CURRENT")
 
-      !if ($contextAsToken == "")
-          !assert 0 == 1 : "MB_PUML :: CURRENT requires a context color to determine CURRENT (f:resolve_style_color)"
-      !endif
-      !if ($contextAsToken == "CURRENT")
-          !assert 0 == 1 : "MB_PUML :: CURRENT recursively calls CURRENT (f:resolve_style_color)"
-      !endif
+      Assert_Blank($contextAsToken, "CURRENT requires a context color to determine CURRENT (f:resolve_style_color)" )
+
+      Assert_If( ($contextAsToken == "CURRENT"), "CURRENT recursively calls CURRENT (f:resolve_style_color)" )
 
       !return $resolve_style_color($contextColor, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
@@ -120,9 +114,7 @@
   '
   !elseif (%strpos($token, "DARKEN") == 0)
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
-      !endif
+      Assert_Blank( $contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
 
       !return $darken_color( $contextColor, $tokenOrColor )
 
@@ -131,9 +123,7 @@
   '
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
-      !if ($contextColor == "")
-          !assert 0 == 1 : "MB_PUML :: " + $tokenOrColor + " requires a context color (f:resolve_style_color)"
-      !endif
+      Assert_Blank($contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
 
       !return $lighten_color($contextColor, $tokenOrColor )
 
