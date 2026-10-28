@@ -1,0 +1,110 @@
+'=========================================================
+' CORRUPTION REGISTRY INITIALIZATION
+'=========================================================
+'
+' Registry Storage
+'
+' Stores variables that should be inspected
+' for external library corruption.
+'
+' Registry Format:
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'   |ARCH_MOTIVATION_BORDERCOLOR|
+'
+'=========================================================
+
+!global $CORRUPTION_VARIABLES ?= "|"
+
+!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
+
+
+
+
+'=========================================================
+' DETECT LIB CORRUPTION
+'=========================================================
+'
+' Framework Hook
+'
+' Called automatically during:
+'
+'   Load_Lib_Themes()
+'
+' Enables:
+'
+'   Enable_Breakpoint("CORRUPTED_VARIABLE")
+'
+' Results:
+'
+'   variable=[ARCH_MOTIVATION_FILLCOLOR]
+'   value=[#MOTIVATION]
+'
+'=========================================================
+!procedure Detect_Lib_Corruption()
+
+    Register_Archimate_Corruption_Variables()
+
+    Detect_Registered_Corruption_Variables(
+        "CORRUPTED_VARIABLE"
+    )
+
+!endprocedure
+
+
+
+'=========================================================
+' REPAIR EXTERNAL LIBRARY CORRUPTION
+'=========================================================
+'
+' Run AFTER corruption detection and BEFORE
+' theme/color resolution.
+'
+' Converts:
+'
+'   #MOTIVATION
+'
+'       ->
+'
+'   #CCCCFF
+'
+'=========================================================
+!procedure Repair_Lib_Corruption()
+
+    Repair_Registered_Color_Variables()
+
+!endprocedure
+
+
+
+'=========================================================
+' EXAMPLE USAGE
+'=========================================================
+'
+' DEVELOPMENT MODE
+'
+'   Enable_Breakpoint(
+'       "CORRUPTED_VARIABLE"
+'   )
+'
+'   Detect_Lib_Corruption()
+'
+'
+' PRODUCTION MODE
+'
+'   Repair_Lib_Corruption()
+'
+'
+' HYBRID MODE
+'
+'   Enable_Breakpoint(
+'       "CORRUPTED_VARIABLE"
+'   )
+'
+'   Detect_Lib_Corruption()
+'
+'   Repair_Lib_Corruption()
+'
+'=========================================================

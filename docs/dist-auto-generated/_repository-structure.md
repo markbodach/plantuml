@@ -7,27 +7,30 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/framework/index.puml
+        └── _assert.puml
+        └── _debug.puml
+        └── _breakpoint.puml
+        └── _apply.puml
         └── _helpers.puml
         └── _registry.puml
+        └── _corruption_registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
+        └── _corruption_detection.puml
       └── stdlib/components/index.puml
-        └── _assert.puml
-        └── _debug.puml
-        └── _breakpoint.puml
         └── _strings.puml
         └── _variables.puml
         └── _text.puml
         └── _hex.puml
-        └── _apply.puml
         └── _colors.puml
         └── _darken.puml
         └── _lighten.puml
         └── _resolver.puml
+        └── _corruption_detection.puml
       └── archimate/components/index.puml
         └── _functions.puml
         └── _colors.puml

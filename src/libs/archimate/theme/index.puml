@@ -11,8 +11,11 @@
 !procedure Load_Lib_Theme_Archimate()
 
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        
         Load_Lib_Theme_Archimate_Colors()
         Load_Lib_Theme_Archimate_Mapped_Colors()
+        Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+
         Load_Lib_Theme_Archimate_Fonts()
         Load_Lib_Theme_Archimate_Corners()
         Load_Lib_Theme_Archimate_Widths()

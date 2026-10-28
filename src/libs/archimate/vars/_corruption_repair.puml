@@ -1,0 +1,41 @@
+
+
+
+
+'=========================================================
+' REGISTER ARCHIMATE VARIABLES
+'=========================================================
+'
+' Register all variables that may be corrupted
+' by external Archimate libraries.
+'
+'=========================================================
+!procedure Register_Archimate_Corruption_Variables()
+
+    Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_MOTIVATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_STRATEGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_STRATEGY_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_BUSINESS_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_BUSINESS_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_APPLICATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_APPLICATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_PHYSICAL_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_PHYSICAL_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_OTHER_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_OTHER_BORDERCOLOR")
+
+!endprocedure
+
+

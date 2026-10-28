@@ -1,66 +1,5 @@
 
 '---------------------------------------------------------
-' ASSERT UTILITIES
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable assertion helpers for:
-'
-'       - Validation
-'       - Diagnostics
-'       - Contract enforcement
-'       - Runtime debugging
-'
-'---------------------------------------------------------
-!include _assert.puml
-
-
-'---------------------------------------------------------
-' Debug Utilities
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable diagnostics and troubleshooting helpers
-'   for framework development, theme validation, style
-'   inspection, and runtime variable analysis.
-'
-' CAPABILITIES
-'
-'   - Variable inspection
-'   - Color inspection
-'   - Style inspection
-'   - Theme troubleshooting
-'   - Diagnostic panel generation
-'---------------------------------------------------------
-!include _debug.puml
-
-
-'---------------------------------------------------------
-' Breakpoint Utilities
-'=========================================================
-'
-' PURPOSE
-'
-'   This allows developers to trace and debug complex resolution pipelines 
-'   (such as semantic colors, style inheritance, automatic contrast selection, 
-'   and token transformations) without modifying framework code or adding 
-'   temporary logging statements.
-'
-' CAPABILITIES
-'
-'   - Built on the existing registry framework
-'   - Zero overhead when breakpoints are disabled
-'   - Non-invasive and cross-cutting
-'   - Suitable for framework internals and diagnostic scenarios
-'   - Uses PlantUML assertions as a controlled execution stop mechanism
-'---------------------------------------------------------
-!include _breakpoint.puml
-
-
-
-'---------------------------------------------------------
 ' String Utilities
 '
 ' Core string manipulation helpers used throughout the
@@ -86,7 +25,6 @@
 '   - Variable validation
 '---------------------------------------------------------
 !include _variables.puml
-
 
 '---------------------------------------------------------
 ' Text Utilities
@@ -119,10 +57,7 @@
 
 
 
-'---------------------------------------------------------
-' Apply Variable Override If Source Exists
-'---------------------------------------------------------
-!include _apply.puml
+
 
 
 '---------------------------------------------------------
@@ -185,3 +120,26 @@
 ' layer used by framework styles.
 '---------------------------------------------------------
 !include _resolver.puml
+
+
+
+'--------------------------------------------------------- 
+' CORRUPTION DETECTION LIBRARY 
+'========================================================= 
+' 
+' PURPOSE 
+' 
+' Detects and optionally repairs variable corruption 
+' introduced by external PlantUML libraries. 
+' 
+' COMMON SOURCES 
+' 
+' - Archimate-PlantUML 
+' - C4-PlantUML 
+' - AWS-PlantUML 
+' - Azure-PlantUML 
+' - Corporate libraries 
+' - Future third-party includes 
+'
+'---------------------------------------------------------
+!include _corruption_detection.puml

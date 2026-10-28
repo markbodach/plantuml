@@ -3,3 +3,6 @@
 
 
 !include _root.puml
+!include _corruption_detection.puml
+
+Register_Archimate_Corruption_Variables()

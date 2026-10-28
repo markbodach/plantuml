@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-28 13:35:22 EDT**
-* Build Commit Hash: **7319def1c0ff22a3860a388b0e27df94613226ec**
-* Build Commit Comment: **STYLE_COLOR_HASH_TOKEN**
+* Generated on: **2026-10-28 15:18:42 EDT**
+* Build Commit Hash: **6067994dd53006f9cb8512fe82c4845ebaa46bdd**
+* Build Commit Comment: **bp: ARCH_MOTIVATION_VALUE**
 
 ## Usage
 
@@ -288,27 +288,30 @@ src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/framework/index.puml
+        └── _assert.puml
+        └── _debug.puml
+        └── _breakpoint.puml
+        └── _apply.puml
         └── _helpers.puml
         └── _registry.puml
+        └── _corruption_registry.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
+        └── _corruption_detection.puml
       └── stdlib/components/index.puml
-        └── _assert.puml
-        └── _debug.puml
-        └── _breakpoint.puml
         └── _strings.puml
         └── _variables.puml
         └── _text.puml
         └── _hex.puml
-        └── _apply.puml
         └── _colors.puml
         └── _darken.puml
         └── _lighten.puml
         └── _resolver.puml
+        └── _corruption_detection.puml
       └── archimate/components/index.puml
         └── _functions.puml
         └── _colors.puml

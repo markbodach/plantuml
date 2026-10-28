@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-28 13:35:22 EDT
-' Build Commit Hash: 7319def1c0ff22a3860a388b0e27df94613226ec
-' Build Commit Comment: STYLE_COLOR_HASH_TOKEN
+' Generated on: 2026-10-28 15:18:42 EDT
+' Build Commit Hash: 6067994dd53006f9cb8512fe82c4845ebaa46bdd
+' Build Commit Comment: bp: ARCH_MOTIVATION_VALUE
 ' ========================================================
 
 ' src/all.puml
@@ -17,424 +17,6 @@
 
 
 ' --- Importing: src/libs/stdlib/framework/index.puml ---
-' --- Importing: src/libs/stdlib/framework/_helpers.puml ---
-'=========================================================
-' Registry Variable Access
-'=========================================================
-
-!function $Registry_Get($registryName)
-
-    !$varName = "$" + $registryName
-
-    Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
-
-
-    !return %get_variable_value($varName)
-
-!endfunction
-
-
-!procedure Registry_Set($registryName, $value)
-
-    !$varName = "$" + $registryName
-
-    %set_variable_value($varName, $value)
-
-!endprocedure
-
-
-
-!function $object_registered($name, $registryName)
-
-    !if ($name == "")
-        !return %false()
-    !endif
-
-    !$registry = $Registry_Get($registryName)
-
-    !return (%strpos($registry, "|" + $name + "|") >= 0)
-
-!endfunction
-
-
-!procedure Register_Lib_Object($name, $registryName)
-
-    Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
-
-
-    !if ($object_registered($name, $registryName) == %false())
-
-        !$registry = $Registry_Get($registryName)
-
-        !$registry = $registry + $name + "|"
-
-        Registry_Set($registryName, $registry)
-
-    !endif
-
-!endprocedure
-
-
-!procedure For_Each_Lib_Object($prefix, $registryName)
-
-    !$remaining = $Registry_Get($registryName)
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-
-        !$pos = %strpos($remaining,"|")
-
-        !$name = %substr($remaining,0,$pos)
-
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($name != "")
-
-            !$proc = $prefix + $name
-
-            !log "[" + $registryName + "] " + $proc
-
-            %invoke_procedure($proc)
-
-        !endif
-
-    !endwhile
-
-!endprocedure
-
-
-!procedure Dump_Registries()
-
-    !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
-    !log "SKINPARAMS=[" + $Registry_Get($REGISTRY_SKINPARAMS) + "]"
-    !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
-
-!endprocedure
-' --- End Import: src/libs/stdlib/framework/_helpers.puml ---
-
-' --- Importing: src/libs/stdlib/framework/_registry.puml ---
-'=========================================================
-' Extension Registry Framework
-'=========================================================
-'
-' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
-'
-' Themes are processed in registration order.
-'
-' Example:
-'
-'   Register_Lib_All("ThemeA")
-'   Register_Lib_All("ThemeB")
-'
-' Execution Order:
-'
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-' Registered extensions may provide:
-'
-'   Load_Theme_<Theme>()
-'
-'       Used for:
-'           - Variables
-'           - Theme initialization
-'           - Configuration
-'
-'   Load_Styles_<Theme>()
-'
-'       Used for:
-'           - Styles
-'           - Stereotypes
-'           - Formatting
-'
-'=========================================================
-'
-' REGISTRY
-'
-' Stores registered theme names using a delimiter-string
-' registry implementation.
-'
-' Registry Format:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-' Leading and trailing delimiters allow exact matching
-' using %strpos() without partial-match collisions.
-'
-' Example:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-'=========================================================
-
-!global $THEMES = "|"
-!global $SKINPARAMS = "|"
-!global $STYLES = "|"
-
-!global $REGISTRY_THEMES = "THEMES"
-!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
-!global $REGISTRY_STYLES = "STYLES"
-
-
-
-!function $Is_Theme_Registered($name)
-    !return $object_registered($name, $REGISTRY_THEMES)
-!endfunction
-
-!function $Is_Skinparam_Registered($name)
-    !return $object_registered($name, $REGISTRY_SKINPARAMS)
-!endfunction
-
-!function $Is_Style_Registered($name)
-    !return $object_registered($name, $REGISTRY_STYLES)
-!endfunction
-
-
-!procedure Register_Lib_Theme($name)
-    Register_Lib_Object($name, $REGISTRY_THEMES)
-!endprocedure
-
-!procedure Register_Lib_Skinparam($name)
-    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
-!endprocedure
-
-!procedure Register_Lib_Style($name)
-    Register_Lib_Object($name, $REGISTRY_STYLES)
-!endprocedure
-
-!procedure Register_Lib_All($name)
-    Register_Lib_Theme($name)
-    Register_Lib_Skinparam($name)
-    Register_Lib_Style($name)
-    
-!endprocedure
-
-!procedure Load_Registered_Themes()
-
-    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
-
-!endprocedure
-
-
-
-!procedure Load_Registered_Skinparams()
-
-    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
-
-!endprocedure
-
-
-
-!procedure Load_Registered_Styles()
-
-    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
-
-!endprocedure
-
-' --- End Import: src/libs/stdlib/framework/_registry.puml ---
-
-' --- Importing: src/libs/stdlib/framework/_extensions.puml ---
-'=========================================================
-' STYLE EXTENSION HOOKS
-'=========================================================
-'
-' The toolkit provides four optional extension procedures that
-' allow consumers to customize variables and styles without
-' modifying the toolkit source code.
-'
-'=========================================================
-'
-' LOADING ORDER
-'
-'   Load_Lib_Theme_BEFORE()
-'       ↓
-'   Load_Lib_Theme_Stdlib()
-'   Load_Lib_Theme_Archimate()
-'   Registered Theme Procedures
-'       ↓
-'   Load_Lib_Theme_AFTER()
-'
-'       ↓
-'   Load_Lib_Skinparams_BEFORE()
-'       ↓
-'   Load_Lib_Skinparams_Stdlib()
-'   Load_Lib_Skinparams_Archimate()
-'   Registered Skinparams Procedures
-'       ↓
-'
-'   Load_Lib_Styles_BEFORE()
-'       ↓
-'   Load_Lib_Styles_Stdlib()
-'   Load_Lib_Styles_Archimate()
-'   Registered Theme Style Procedures
-'       ↓
-'   Load_Lib_Styles_AFTER()
-'
-'=========================================================
-'
-' BEFORE HOOKS
-'
-' Intended for:
-'
-'   - Override toolkit defaults
-'   - Configure variables
-'   - Select active themes
-'   - Replace framework values
-'
-' Example:
-'
-'   !procedure Load_Lib_Theme_BEFORE()
-'
-'       !$SPACING_UNIT = 8
-'
-'       !$ROUND_2 = 12
-'
-'   !endprocedure
-'
-'=========================================================
-'
-' AFTER HOOKS
-'
-' Intended for:
-'
-'   - Final overrides
-'   - Project-specific stereotypes
-'   - Local utility styles
-'   - Style customizations
-'
-' Example:
-'
-'   !procedure Load_Lib_Styles_AFTER()
-'
-'   <style>
-'
-'   .projectCard {
-'       Padding 20
-'       RoundCorner 10
-'   }
-'
-'   </style>
-'
-'   !endprocedure
-'
-'=========================================================
-'
-' RECOMMENDATIONS
-'
-'   Variables -> PRELOAD hooks
-'
-'   Styles    -> LOAD hooks
-'
-'   BEFORE    -> Configure toolkit behavior
-'
-'   AFTER     -> Override toolkit defaults
-'
-'=========================================================
-'
-' DEFAULT IMPLEMENTATIONS
-'
-' Consumers may redefine these procedures.
-'
-!procedure Load_Lib_Theme_BEFORE()
-'DO NOT ADD CODE
-!endprocedure
-
-!procedure Load_Lib_Theme_AFTER()
-'DO NOT ADD CODE
-!endprocedure
-
-!procedure Load_Lib_Skinparams_BEFORE()
-'DO NOT ADD CODE
-!endprocedure
-
-!procedure Load_Lib_Skinparams_AFTER()
-'DO NOT ADD CODE
-!endprocedure
-
-!procedure Load_Lib_Styles_BEFORE()
-'DO NOT ADD CODE
-!endprocedure
-
-!procedure Load_Lib_Styles_AFTER()
-'DO NOT ADD CODE
-!endprocedure
-'
-'=========================================================
-' --- End Import: src/libs/stdlib/framework/_extensions.puml ---
-
-' --- End Import: src/libs/stdlib/framework/index.puml ---
-
-
-'STEP 1 :: VARS includes
-' --- Importing: src/libs/stdlib/vars/index.puml ---
-' --- Importing: src/libs/stdlib/vars/_root.puml ---
-
-
-!global $SKINPARAM_ENABLED ?= %false()
-
-!global $UNSET ?= "__UML_UNSET__"
-
-!global $POUND ?= "#"
-' --- End Import: src/libs/stdlib/vars/_root.puml ---
-
-' --- Importing: src/libs/stdlib/vars/_colors.puml ---
-
-
-'---------------------------------------------------------
-' Contrast defaults
-'---------------------------------------------------------
-!global $CONTRAST_THRESHOLD ?= 128
-
-'---------------------------------------------------------
-' Darkening defaults
-'---------------------------------------------------------
-
-' Darkening default
-!global $DARKEN_DEFAULT_PERCENT = 5
-
-' RGB luminance floor (0-255)
-!global $DARKNESS_THRESHOLD = 32
-
-
-'---------------------------------------------------------
-' Lightening defaults
-'---------------------------------------------------------
-
-' Lightening default
-!global $LIGHTEN_DEFAULT_PERCENT = 5
-
-' RGB luminance ceiling (0-255)
-!global $LIGHTNESS_THRESHOLD = 223
-
-' --- End Import: src/libs/stdlib/vars/_colors.puml ---
-
-
-' --- End Import: src/libs/stdlib/vars/index.puml ---
-
-' --- Importing: src/libs/archimate/vars/index.puml ---
-' src/themes/archimate/index.puml
-' Module Entry Point: Archimate Theme Variables
-
-
-' --- Importing: src/libs/archimate/vars/_root.puml ---
-
-!global $ARCHIMATE_LIB_ENABLED ?= %false()
-
-!global $ARCHIMATE_DEFAULT_LAYER ?= ""
-' --- End Import: src/libs/archimate/vars/_root.puml ---
-
-' --- End Import: src/libs/archimate/vars/index.puml ---
-
-
-'STEP 2 :: COMPONENTS includes
-' --- Importing: src/libs/stdlib/components/index.puml ---
-
 '---------------------------------------------------------
 ' ASSERT UTILITIES
 '=========================================================
@@ -449,7 +31,7 @@
 '       - Runtime debugging
 '
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_assert.puml ---
+' --- Importing: src/libs/stdlib/framework/_assert.puml ---
 '=========================================================
 ' ASSERT UTILITIES
 '=========================================================
@@ -649,7 +231,7 @@
 !procedure Trigger_Internal_Error($message="")
     !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
 !endprocedure
-' --- End Import: src/libs/stdlib/components/_assert.puml ---
+' --- End Import: src/libs/stdlib/framework/_assert.puml ---
 
 
 
@@ -671,7 +253,7 @@
 '   - Theme troubleshooting
 '   - Diagnostic panel generation
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_debug.puml ---
+' --- Importing: src/libs/stdlib/framework/_debug.puml ---
 '=========================================================
 ' DEBUG UTILITIES
 '=========================================================
@@ -945,7 +527,7 @@
 ' )
 '
 '=========================================================
-' --- End Import: src/libs/stdlib/components/_debug.puml ---
+' --- End Import: src/libs/stdlib/framework/_debug.puml ---
 
 
 
@@ -968,7 +550,7 @@
 '   - Suitable for framework internals and diagnostic scenarios
 '   - Uses PlantUML assertions as a controlled execution stop mechanism
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_breakpoint.puml ---
+' --- Importing: src/libs/stdlib/framework/_breakpoint.puml ---
 '=========================================================
 ' BREAKPOINT REGISTRY
 '=========================================================
@@ -1099,10 +681,693 @@
     !endif
 
 !endprocedure
-' --- End Import: src/libs/stdlib/components/_breakpoint.puml ---
+' --- End Import: src/libs/stdlib/framework/_breakpoint.puml ---
 
 
 
+'---------------------------------------------------------
+' Apply Variable Override If Source Exists
+'---------------------------------------------------------
+' --- Importing: src/libs/stdlib/framework/_apply.puml ---
+'=========================================================
+' Apply Variable Override If Source Exists
+'
+' Copies source value into target if source exists.
+'
+' Parameters:
+'
+'   target
+'       Variable to receive the value
+'
+'   source
+'       Variable providing the value
+'
+'   strictTarget
+'       %false() = create target if missing
+'       %true()  = target must already exist
+'
+'=========================================================
+!procedure Apply_If( $target, $source, $strictTarget = %false() )
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
+
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
+
+
+    '-----------------------------------------
+    ' Source missing -> no action
+    '-----------------------------------------
+    !if ($variable_exists_safe($source))
+
+        '-------------------------------------
+        ' Strict target validation
+        '-------------------------------------
+        !if ($strictTarget)
+
+            Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
+
+        !endif
+
+        '-------------------------------------
+        ' Read source value
+        '-------------------------------------
+        !$sourceValue = %get_variable_value( $to_var_name($source) )
+
+        '-------------------------------------
+        ' Prevent blank overwrite
+        '-------------------------------------
+        Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
+
+
+        '-------------------------------------
+        ' Apply value
+        '-------------------------------------
+        %set_variable_value( $to_var_name($target), $sourceValue )
+
+    !endif
+
+!endprocedure
+
+!procedure Apply_If_Strict($target,$source)
+
+    Apply_If( $target, $source, %true() )
+
+!endprocedure
+
+
+'---------------------------------------------------------
+' Inherit Variable Value
+'
+' Implements:
+'
+'     target ??= source
+'
+' Behavior:
+'
+'     Target Exists
+'         -> preserve target
+'
+'     Target Missing
+'     + Source Exists
+'         -> inherit source
+'
+'     Target Missing
+'     + Source Missing
+'         -> ASSERT
+'
+' Intended precedence:
+'
+'     User Override
+'           ↓
+'     Inherited Value
+'           ↓
+'     Root Library Default
+'
+'---------------------------------------------------------
+!procedure Inherit_If($target,$source)
+
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Inheritance source must exist
+    '-----------------------------------------
+    Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
+
+    '-----------------------------------------
+    ' Inherit source value
+    '-----------------------------------------
+    !if ($variable_exists_safe($target) == %false())
+        %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
+    !endif
+
+    
+
+!endprocedure
+
+
+' --- End Import: src/libs/stdlib/framework/_apply.puml ---
+
+
+
+' --- Importing: src/libs/stdlib/framework/_helpers.puml ---
+'=========================================================
+' Registry Variable Access
+'=========================================================
+
+!function $Registry_Get($registryName)
+
+    !$varName = "$" + $registryName
+
+    Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
+
+
+    !return %get_variable_value($varName)
+
+!endfunction
+
+
+!procedure Registry_Set($registryName, $value)
+
+    !$varName = "$" + $registryName
+
+    %set_variable_value($varName, $value)
+
+!endprocedure
+
+
+
+!function $object_registered($name, $registryName)
+
+    !if ($name == "")
+        !return %false()
+    !endif
+
+    !$registry = $Registry_Get($registryName)
+
+    !return (%strpos($registry, "|" + $name + "|") >= 0)
+
+!endfunction
+
+
+!procedure Register_Lib_Object($name, $registryName)
+
+    Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
+
+
+    !if ($object_registered($name, $registryName) == %false())
+
+        !$registry = $Registry_Get($registryName)
+
+        !$registry = $registry + $name + "|"
+
+        Registry_Set($registryName, $registry)
+
+    !endif
+
+!endprocedure
+
+
+!procedure For_Each_Lib_Object($prefix, $registryName)
+
+    !$remaining = $Registry_Get($registryName)
+
+    !while ($remaining != "|")
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,"|")
+
+        !$name = %substr($remaining,0,$pos)
+
+        !$remaining = "|" + %substr($remaining,$pos + 1)
+
+        !if ($name != "")
+
+            !$proc = $prefix + $name
+
+            !log "[" + $registryName + "] " + $proc
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+
+!procedure Dump_Registries()
+
+    !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
+    !log "SKINPARAMS=[" + $Registry_Get($REGISTRY_SKINPARAMS) + "]"
+    !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
+
+!endprocedure
+' --- End Import: src/libs/stdlib/framework/_helpers.puml ---
+
+' --- Importing: src/libs/stdlib/framework/_registry.puml ---
+'=========================================================
+' Extension Registry Framework
+'=========================================================
+'
+' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
+'
+' Themes are processed in registration order.
+'
+' Example:
+'
+'   Register_Lib_All("ThemeA")
+'   Register_Lib_All("ThemeB")
+'
+' Execution Order:
+'
+'   ThemeA
+'       ↓
+'   ThemeB
+'
+' Registered extensions may provide:
+'
+'   Load_Theme_<Theme>()
+'
+'       Used for:
+'           - Variables
+'           - Theme initialization
+'           - Configuration
+'
+'   Load_Styles_<Theme>()
+'
+'       Used for:
+'           - Styles
+'           - Stereotypes
+'           - Formatting
+'
+'=========================================================
+'
+' REGISTRY
+'
+' Stores registered theme names using a delimiter-string
+' registry implementation.
+'
+' Registry Format:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+' Leading and trailing delimiters allow exact matching
+' using %strpos() without partial-match collisions.
+'
+' Example:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+'=========================================================
+
+!global $THEMES = "|"
+!global $SKINPARAMS = "|"
+!global $STYLES = "|"
+
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
+
+
+
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
+
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
+
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
+!endfunction
+
+
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
+
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
+
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
+
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    
+!endprocedure
+
+!procedure Load_Registered_Themes()
+
+    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
+
+!endprocedure
+
+
+
+!procedure Load_Registered_Skinparams()
+
+    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
+
+!endprocedure
+
+
+
+!procedure Load_Registered_Styles()
+
+    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
+
+!endprocedure
+
+' --- End Import: src/libs/stdlib/framework/_registry.puml ---
+
+
+' --- Importing: src/libs/stdlib/framework/_corruption_registry.puml ---
+'=========================================================
+' CORRUPTION REGISTRY INITIALIZATION
+'=========================================================
+'
+' Registry Storage
+'
+' Stores variables that should be inspected
+' for external library corruption.
+'
+' Registry Format:
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'   |ARCH_MOTIVATION_BORDERCOLOR|
+'
+'=========================================================
+
+!global $CORRUPTION_VARIABLES ?= "|"
+
+!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
+
+
+
+
+'=========================================================
+' DETECT LIB CORRUPTION
+'=========================================================
+'
+' Framework Hook
+'
+' Called automatically during:
+'
+'   Load_Lib_Themes()
+'
+' Enables:
+'
+'   Enable_Breakpoint("CORRUPTED_VARIABLE")
+'
+' Results:
+'
+'   variable=[ARCH_MOTIVATION_FILLCOLOR]
+'   value=[#MOTIVATION]
+'
+'=========================================================
+!procedure Detect_Lib_Corruption()
+
+    Register_Archimate_Corruption_Variables()
+
+    Detect_Registered_Corruption_Variables(
+        "CORRUPTED_VARIABLE"
+    )
+
+!endprocedure
+
+
+
+'=========================================================
+' REPAIR EXTERNAL LIBRARY CORRUPTION
+'=========================================================
+'
+' Run AFTER corruption detection and BEFORE
+' theme/color resolution.
+'
+' Converts:
+'
+'   #MOTIVATION
+'
+'       ->
+'
+'   #CCCCFF
+'
+'=========================================================
+!procedure Repair_Lib_Corruption()
+
+    Repair_Registered_Color_Variables()
+
+!endprocedure
+
+
+
+'=========================================================
+' EXAMPLE USAGE
+'=========================================================
+'
+' DEVELOPMENT MODE
+'
+'   Enable_Breakpoint(
+'       "CORRUPTED_VARIABLE"
+'   )
+'
+'   Detect_Lib_Corruption()
+'
+'
+' PRODUCTION MODE
+'
+'   Repair_Lib_Corruption()
+'
+'
+' HYBRID MODE
+'
+'   Enable_Breakpoint(
+'       "CORRUPTED_VARIABLE"
+'   )
+'
+'   Detect_Lib_Corruption()
+'
+'   Repair_Lib_Corruption()
+'
+'=========================================================
+' --- End Import: src/libs/stdlib/framework/_corruption_registry.puml ---
+
+
+' --- Importing: src/libs/stdlib/framework/_extensions.puml ---
+'=========================================================
+' STYLE EXTENSION HOOKS
+'=========================================================
+'
+' The toolkit provides four optional extension procedures that
+' allow consumers to customize variables and styles without
+' modifying the toolkit source code.
+'
+'=========================================================
+'
+' LOADING ORDER
+'
+'   Load_Lib_Theme_BEFORE()
+'       ↓
+'   Load_Lib_Theme_Stdlib()
+'   Load_Lib_Theme_Archimate()
+'   Registered Theme Procedures
+'       ↓
+'   Load_Lib_Theme_AFTER()
+'
+'       ↓
+'   Load_Lib_Skinparams_BEFORE()
+'       ↓
+'   Load_Lib_Skinparams_Stdlib()
+'   Load_Lib_Skinparams_Archimate()
+'   Registered Skinparams Procedures
+'       ↓
+'
+'   Load_Lib_Styles_BEFORE()
+'       ↓
+'   Load_Lib_Styles_Stdlib()
+'   Load_Lib_Styles_Archimate()
+'   Registered Theme Style Procedures
+'       ↓
+'   Load_Lib_Styles_AFTER()
+'
+'=========================================================
+'
+' BEFORE HOOKS
+'
+' Intended for:
+'
+'   - Override toolkit defaults
+'   - Configure variables
+'   - Select active themes
+'   - Replace framework values
+'
+' Example:
+'
+'   !procedure Load_Lib_Theme_BEFORE()
+'
+'       !$SPACING_UNIT = 8
+'
+'       !$ROUND_2 = 12
+'
+'   !endprocedure
+'
+'=========================================================
+'
+' AFTER HOOKS
+'
+' Intended for:
+'
+'   - Final overrides
+'   - Project-specific stereotypes
+'   - Local utility styles
+'   - Style customizations
+'
+' Example:
+'
+'   !procedure Load_Lib_Styles_AFTER()
+'
+'   <style>
+'
+'   .projectCard {
+'       Padding 20
+'       RoundCorner 10
+'   }
+'
+'   </style>
+'
+'   !endprocedure
+'
+'=========================================================
+'
+' RECOMMENDATIONS
+'
+'   Variables -> PRELOAD hooks
+'
+'   Styles    -> LOAD hooks
+'
+'   BEFORE    -> Configure toolkit behavior
+'
+'   AFTER     -> Override toolkit defaults
+'
+'=========================================================
+'
+' DEFAULT IMPLEMENTATIONS
+'
+' Consumers may redefine these procedures.
+'
+!procedure Load_Lib_Theme_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+
+!procedure Load_Lib_Theme_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+'
+'=========================================================
+
+
+
+
+
+
+' --- End Import: src/libs/stdlib/framework/_extensions.puml ---
+
+' --- End Import: src/libs/stdlib/framework/index.puml ---
+
+
+'STEP 1 :: VARS includes
+' --- Importing: src/libs/stdlib/vars/index.puml ---
+' --- Importing: src/libs/stdlib/vars/_root.puml ---
+
+
+!global $SKINPARAM_ENABLED ?= %false()
+
+!global $UNSET ?= "__UML_UNSET__"
+
+!global $POUND ?= "#"
+' --- End Import: src/libs/stdlib/vars/_root.puml ---
+
+' --- Importing: src/libs/stdlib/vars/_colors.puml ---
+
+
+'---------------------------------------------------------
+' Contrast defaults
+'---------------------------------------------------------
+!global $CONTRAST_THRESHOLD ?= 128
+
+'---------------------------------------------------------
+' Darkening defaults
+'---------------------------------------------------------
+
+' Darkening default
+!global $DARKEN_DEFAULT_PERCENT = 5
+
+' RGB luminance floor (0-255)
+!global $DARKNESS_THRESHOLD = 32
+
+
+'---------------------------------------------------------
+' Lightening defaults
+'---------------------------------------------------------
+
+' Lightening default
+!global $LIGHTEN_DEFAULT_PERCENT = 5
+
+' RGB luminance ceiling (0-255)
+!global $LIGHTNESS_THRESHOLD = 223
+
+' --- End Import: src/libs/stdlib/vars/_colors.puml ---
+
+
+' --- End Import: src/libs/stdlib/vars/index.puml ---
+
+' --- Importing: src/libs/archimate/vars/index.puml ---
+' src/themes/archimate/index.puml
+' Module Entry Point: Archimate Theme Variables
+
+
+' --- Importing: src/libs/archimate/vars/_root.puml ---
+
+!global $ARCHIMATE_LIB_ENABLED ?= %false()
+
+!global $ARCHIMATE_DEFAULT_LAYER ?= ""
+' --- End Import: src/libs/archimate/vars/_root.puml ---
+
+' --- Importing: src/libs/archimate/vars/_corruption_detection.puml ---
+' --- End Import: src/libs/archimate/vars/_corruption_detection.puml ---
+
+
+Register_Archimate_Corruption_Variables()
+' --- End Import: src/libs/archimate/vars/index.puml ---
+
+
+'STEP 2 :: COMPONENTS includes
+' --- Importing: src/libs/stdlib/components/index.puml ---
 
 '---------------------------------------------------------
 ' String Utilities
@@ -1434,7 +1699,6 @@
 
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_variables.puml ---
-
 
 
 '---------------------------------------------------------
@@ -2133,142 +2397,6 @@
 
 
 
-'---------------------------------------------------------
-' Apply Variable Override If Source Exists
-'---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_apply.puml ---
-'=========================================================
-' Apply Variable Override If Source Exists
-'
-' Copies source value into target if source exists.
-'
-' Parameters:
-'
-'   target
-'       Variable to receive the value
-'
-'   source
-'       Variable providing the value
-'
-'   strictTarget
-'       %false() = create target if missing
-'       %true()  = target must already exist
-'
-'=========================================================
-!procedure Apply_If( $target, $source, $strictTarget = %false() )
-
-    '-----------------------------------------
-    ' Validate target name
-    '-----------------------------------------
-    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
-
-
-    '-----------------------------------------
-    ' Validate source name
-    '-----------------------------------------
-    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
-
-
-    '-----------------------------------------
-    ' Source missing -> no action
-    '-----------------------------------------
-    !if ($variable_exists_safe($source))
-
-        '-------------------------------------
-        ' Strict target validation
-        '-------------------------------------
-        !if ($strictTarget)
-
-            Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
-
-        !endif
-
-        '-------------------------------------
-        ' Read source value
-        '-------------------------------------
-        !$sourceValue = %get_variable_value( $to_var_name($source) )
-
-        '-------------------------------------
-        ' Prevent blank overwrite
-        '-------------------------------------
-        Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
-
-
-        '-------------------------------------
-        ' Apply value
-        '-------------------------------------
-        %set_variable_value( $to_var_name($target), $sourceValue )
-
-    !endif
-
-!endprocedure
-
-!procedure Apply_If_Strict($target,$source)
-
-    Apply_If( $target, $source, %true() )
-
-!endprocedure
-
-
-'---------------------------------------------------------
-' Inherit Variable Value
-'
-' Implements:
-'
-'     target ??= source
-'
-' Behavior:
-'
-'     Target Exists
-'         -> preserve target
-'
-'     Target Missing
-'     + Source Exists
-'         -> inherit source
-'
-'     Target Missing
-'     + Source Missing
-'         -> ASSERT
-'
-' Intended precedence:
-'
-'     User Override
-'           ↓
-'     Inherited Value
-'           ↓
-'     Root Library Default
-'
-'---------------------------------------------------------
-!procedure Inherit_If($target,$source)
-
-    '-----------------------------------------
-    ' Validate target name
-    '-----------------------------------------
-    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
-
-    '-----------------------------------------
-    ' Validate source name
-    '-----------------------------------------
-    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
-
-    '-----------------------------------------
-    ' Inheritance source must exist
-    '-----------------------------------------
-    Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
-
-    '-----------------------------------------
-    ' Inherit source value
-    '-----------------------------------------
-    !if ($variable_exists_safe($target) == %false())
-        %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
-    !endif
-
-    
-
-!endprocedure
-
-
-' --- End Import: src/libs/stdlib/components/_apply.puml ---
 
 
 
@@ -3382,6 +3510,376 @@
 !endfunction
 ' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
+
+
+
+'--------------------------------------------------------- 
+' CORRUPTION DETECTION LIBRARY 
+'========================================================= 
+' 
+' PURPOSE 
+' 
+' Detects and optionally repairs variable corruption 
+' introduced by external PlantUML libraries. 
+' 
+' COMMON SOURCES 
+' 
+' - Archimate-PlantUML 
+' - C4-PlantUML 
+' - AWS-PlantUML 
+' - Azure-PlantUML 
+' - Corporate libraries 
+' - Future third-party includes 
+'
+'---------------------------------------------------------
+' --- Importing: src/libs/stdlib/components/_corruption_detection.puml ---
+'=========================================================
+' CORRUPTION DETECTION LIBRARY
+'=========================================================
+'
+' PURPOSE
+'
+'   Detects and optionally repairs variable corruption
+'   introduced by external PlantUML libraries.
+'
+' COMMON SOURCES
+'
+'   - Archimate-PlantUML
+'   - C4-PlantUML
+'   - AWS-PlantUML
+'   - Azure-PlantUML
+'   - Corporate libraries
+'   - Future third-party includes
+'
+' TYPICAL CORRUPTION
+'
+'   #MOTIVATION
+'   #BUSINESS
+'   #APPLICATION
+'   #PERSON
+'   #CONTAINER
+'
+' EXPECTED VALUES
+'
+'   MOTIVATION
+'   BUSINESS
+'   APPLICATION
+'
+' OR
+'
+'   #CCCCFF
+'   #047BC1
+'   #FFFFFF
+'
+' DESIGN PRINCIPLES
+'
+'   ✅ Generic
+'   ✅ Library Agnostic
+'   ✅ Breakpoint Driven
+'   ✅ C4 Compatible
+'   ✅ Archimate Compatible
+'   ✅ Extensible
+'
+'=========================================================
+
+
+
+'=========================================================
+' CORRUPTION DETECTION
+'=========================================================
+'
+' Detects values that:
+'
+'     Start With #
+'     AND
+'     Are Not Literal Colors
+'
+' Examples:
+'
+'     #MOTIVATION  -> CORRUPTED
+'     #BUSINESS    -> CORRUPTED
+'     #CCCCFF      -> VALID
+'
+'=========================================================
+!function $is_corrupted_hash_token($value)
+
+    !if ($is_literal_color($value))
+        !return %false()
+    !endif
+
+    !if (%strpos(%upper($value), $POUND) != 0)
+        !return %false()
+    !endif
+
+    !return %true()
+
+!endfunction
+
+
+
+'=========================================================
+' BREAKPOINT CORRUPTED HASH TOKEN
+'=========================================================
+'
+' Emits a breakpoint when corruption is detected.
+'
+'=========================================================
+!procedure Breakpoint_Corrupted_Hash_Token($breakpoint_name, $variable_name, $value)
+
+    Breakpoint_If($breakpoint_name, $is_corrupted_hash_token($value), "variable=[" + $variable_name + "] value=[" + $value + "]")
+
+!endprocedure
+
+
+
+'=========================================================
+' DETECT CORRUPTED VARIABLE
+'=========================================================
+'
+' Reads a variable and evaluates corruption.
+'
+'=========================================================
+!procedure Detect_Corrupted_Variable($breakpoint_name, $variable_name)
+
+    !if ($variable_exists_safe($variable_name))
+
+        !$value = %get_variable_value($to_var_name($variable_name))
+
+        Breakpoint_Corrupted_Hash_Token($breakpoint_name, $variable_name, $value)
+
+    !endif
+
+!endprocedure
+
+
+
+'=========================================================
+' REMOVE HASH PREFIX
+'=========================================================
+'
+' Example:
+'
+'     #MOTIVATION
+'
+'         ->
+'
+'     MOTIVATION
+'
+'=========================================================
+!function $remove_hash_prefix($value)
+
+    !if ($is_corrupted_hash_token($value))
+        !return %substr($value, %strlen($POUND))
+    !endif
+
+    !return $value
+
+!endfunction
+
+
+
+'=========================================================
+' REPAIR CORRUPTED VARIABLE
+'=========================================================
+'
+' Generic repair.
+'
+'     #MOTIVATION
+'
+'         ->
+'
+'     MOTIVATION
+'
+'=========================================================
+!procedure Repair_Corrupted_Variable($variable_name)
+
+    !if ($variable_exists_safe($variable_name))
+
+        !$current = %get_variable_value($to_var_name($variable_name))
+
+        !if ($is_corrupted_hash_token($current))
+
+            %set_variable_value($to_var_name($variable_name), $remove_hash_prefix($current))
+
+        !endif
+
+    !endif
+
+!endprocedure
+
+
+
+'=========================================================
+' SEMANTIC CORRUPTION DETECTION
+'=========================================================
+'
+' Determines whether:
+'
+'     #MOTIVATION
+'
+' maps to:
+'
+'     COLOR_MOTIVATION
+'
+'=========================================================
+!function $is_corrupted_semantic_hash($value)
+
+    !if ($is_literal_color($value))
+        !return %false()
+    !endif
+
+    !if (%strpos(%upper($value), $POUND) != 0)
+        !return %false()
+    !endif
+
+    !$candidate = %substr($value, %strlen($POUND))
+
+    !if ($semantic_color_variable($candidate, %false()) != "")
+        !return %true()
+    !endif
+
+    !return %false()
+
+!endfunction
+
+
+
+'=========================================================
+' REPAIR CORRUPTED SEMANTIC HASH
+'=========================================================
+'
+' Example:
+'
+'     #MOTIVATION
+'
+'         ->
+'
+'     #CCCCFF
+'
+'=========================================================
+!function $repair_corrupted_semantic_hash($value)
+
+    !if ($is_corrupted_semantic_hash($value) == %false())
+        !return $value
+    !endif
+
+    !$semantic = %substr($value, %strlen($POUND))
+
+    !return $get_semantic_color($semantic)
+
+!endfunction
+
+
+
+'=========================================================
+' REPAIR COLOR VARIABLE
+'=========================================================
+'
+' Repairs semantic corruption directly.
+'
+'=========================================================
+!procedure Repair_Color_Variable($variable_name)
+
+    !if ($variable_exists_safe($variable_name))
+
+        !$current = %get_variable_value($to_var_name($variable_name))
+        !$fixed = $repair_corrupted_semantic_hash($current)
+
+        !if ($fixed != $current)
+
+            %set_variable_value($to_var_name($variable_name), $fixed)
+
+        !endif
+
+    !endif
+
+!endprocedure
+
+
+
+'=========================================================
+' SANITIZE RESOLVED COLOR
+'=========================================================
+'
+' Repairs semantic corruption before use.
+'
+'=========================================================
+!procedure Sanitize_Resolved_Color($variable_name)
+
+    !if ($variable_exists_safe($variable_name))
+
+        !$value = %get_variable_value($to_var_name($variable_name))
+
+        !if ($is_corrupted_semantic_hash($value))
+
+            %set_variable_value($to_var_name($variable_name), $repair_corrupted_semantic_hash($value))
+
+        !endif
+
+    !endif
+
+!endprocedure
+
+
+
+!procedure Breakpoint_Corrupted_Color_Variable($variable_name)
+
+    Detect_Corrupted_Variable( "CORRUPTED_VARIABLE", $variable_name )
+
+!endprocedure
+
+
+
+'=========================================================
+' DEVELOPMENT MODE
+'=========================================================
+'
+' Enable:
+'
+'     Enable_Breakpoint(
+'         "CORRUPTED_VARIABLE"
+'     )
+'
+' Example:
+'
+'     Detect_Corrupted_Variable(
+'         "CORRUPTED_VARIABLE",
+'         "ARCH_MOTIVATION_FILLCOLOR"
+'     )
+'
+' Output:
+'
+'     <<BREAKPOINT>>
+'
+'     variable=[ARCH_MOTIVATION_FILLCOLOR]
+'
+'     value=[#MOTIVATION]
+'
+'=========================================================
+
+
+
+'=========================================================
+' PRODUCTION MODE
+'=========================================================
+'
+' Repair:
+'
+'     Repair_Color_Variable(
+'         "ARCH_MOTIVATION_FILLCOLOR"
+'     )
+'
+' Result:
+'
+'     #MOTIVATION
+'
+'         ->
+'
+'     #CCCCFF
+'
+'=========================================================
+' --- End Import: src/libs/stdlib/components/_corruption_detection.puml ---
+
 ' --- End Import: src/libs/stdlib/components/index.puml ---
 
 ' --- Importing: src/libs/archimate/components/index.puml ---
@@ -4134,8 +4632,11 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 !procedure Load_Lib_Theme_Archimate()
 
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        
         Load_Lib_Theme_Archimate_Colors()
         Load_Lib_Theme_Archimate_Mapped_Colors()
+        Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+
         Load_Lib_Theme_Archimate_Fonts()
         Load_Lib_Theme_Archimate_Corners()
         Load_Lib_Theme_Archimate_Widths()
@@ -4629,6 +5130,9 @@ component {
     '--------------------------------------------    
     Load_Lib_Theme_BEFORE()
 
+
+    Detect_Lib_Corruption()
+    Repair_Lib_Corruption()
     
     Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_Archimate()
@@ -4668,6 +5172,7 @@ component {
 
 
 !procedure Load_Lib_All()
+
     Load_Lib_Themes()
     Load_Lib_Skinparams()
     Load_Lib_Styles()
