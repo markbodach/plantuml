@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-28 13:13:02 EDT
-' Build Commit Hash: 0eee30a3bde7e274bf712428edc5e073d5b665c2
-' Build Commit Comment: more fixes
+' Generated on: 2026-10-28 13:20:22 EDT
+' Build Commit Hash: 4d60c579eeb290f11fc39cc80cc1222a5ac12cea
+' Build Commit Comment: more breakpoints
 ' ========================================================
 
 ' src/all.puml
@@ -3956,6 +3956,9 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
+    
+    Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+    
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
     !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
     !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
