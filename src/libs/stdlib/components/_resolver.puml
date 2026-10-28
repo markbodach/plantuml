@@ -84,6 +84,7 @@
   ' Literal color
   '
   !if ($is_literal_color($tokenOrColor))
+    Trigger_Breakpoint( "STYLE_COLOR_LITERAL", "token=[" + $tokenOrColor + "]" )
     !return %upper($tokenOrColor)
   !endif
 
