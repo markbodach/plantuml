@@ -5,9 +5,10 @@
     !$defaultFg = ""
     !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
+    Breakpoint_If( "ARCH_MOTIVATION_VALUE", %upper($ARCH_MOTIVATION_FILLCOLOR) == "#MOTIVATION", "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     
-    Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+    'Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
     !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )

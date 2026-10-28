@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-28 13:27:01 EDT
-' Build Commit Hash: 6873312cf25229889311ef61aaf0820798846b64
-' Build Commit Comment: Breakpoint ARCH_MOTIVATION_VALUE
+' Generated on: 2026-10-28 13:35:22 EDT
+' Build Commit Hash: 7319def1c0ff22a3860a388b0e27df94613226ec
+' Build Commit Comment: STYLE_COLOR_HASH_TOKEN
 ' ========================================================
 
 ' src/all.puml
@@ -3262,9 +3262,10 @@
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   
-  Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
   
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  
+  Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), "#") == 0) && ($is_literal_color($tokenOrColor) == %false()), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
   
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
@@ -3958,9 +3959,10 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !$defaultFg = ""
     !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
+    Breakpoint_If( "ARCH_MOTIVATION_VALUE", %upper($ARCH_MOTIVATION_FILLCOLOR) == "#MOTIVATION", "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
     
-    Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+    'Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
     !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )

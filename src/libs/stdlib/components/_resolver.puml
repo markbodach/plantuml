@@ -41,9 +41,10 @@
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
   '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
   
-  Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
   
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  
+  Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), "#") == 0) && ($is_literal_color($tokenOrColor) == %false()), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
   
   !$contextAsToken = %upper($contextColor)
   !$token = %upper($tokenOrColor)
