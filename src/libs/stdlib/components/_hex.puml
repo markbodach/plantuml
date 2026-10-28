@@ -21,12 +21,14 @@
 
 !function $is_literal_color($value)
 
-    !$value = %upper($value)
+    Trigger_Breakpoint("IS_LITERAL_COLOR", "value=[" + $value + "] len=[" + %strlen($value) + "]")
 
+    !$value = %upper($value)
+    !$POUNDlen = %strlen($POUND)
     '
     ' Must start with #
     '
-    !if (%substr($value,0,1) != $POUND )
+    !if (%substr($value,0,$POUNDlen) != $POUND )
         !return %false()
     !endif
 
@@ -36,7 +38,7 @@
         !return %false()
     !endif
 
-    !$i = 1
+    !$i = $POUNDlen
 
     !while ($i < $len)
 

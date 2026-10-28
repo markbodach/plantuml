@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-27 19:45:54 EDT
-' Build Commit Hash: cb42dcaf78e148ca48e45fed57016c466aba8751
-' Build Commit Comment: MOTIVATION issue
+' Generated on: 2026-10-28 10:54:36 EDT
+' Build Commit Hash: c00fd2953bb14558e0e8a3e49b1471dc3fcf22c2
+' Build Commit Comment: debugging
 ' ========================================================
 
 ' src/all.puml
@@ -1845,12 +1845,14 @@
 
 !function $is_literal_color($value)
 
-    !$value = %upper($value)
+    Trigger_Breakpoint("IS_LITERAL_COLOR", "value=[" + $value + "] len=[" + %strlen($value) + "]")
 
+    !$value = %upper($value)
+    !$POUNDlen = %strlen($POUND)
     '
     ' Must start with #
     '
-    !if (%substr($value,0,1) != $POUND )
+    !if (%substr($value,0,$POUNDlen) != $POUND )
         !return %false()
     !endif
 
@@ -1860,7 +1862,7 @@
         !return %false()
     !endif
 
-    !$i = 1
+    !$i = $POUNDlen
 
     !while ($i < $len)
 
