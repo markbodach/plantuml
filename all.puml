@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-28 11:53:22 EDT
-' Build Commit Hash: fd791921e2a020dcd58531befa50700a6a47482a
-' Build Commit Comment: tracing pound
+' Generated on: 2026-10-28 13:13:02 EDT
+' Build Commit Hash: 0eee30a3bde7e274bf712428edc5e073d5b665c2
+' Build Commit Comment: more fixes
 ' ========================================================
 
 ' src/all.puml
@@ -3357,7 +3357,9 @@
   '
   !else
 
-    Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
+    'Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
+    'Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+    Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "HASH TOKEN=[" + $tokenOrColor + "]" )
     Assert_Hash_Token( $tokenOrColor, "resolve_style_color received hash token=[" + $tokenOrColor + "]" )
     !return $get_semantic_color($tokenOrColor)
 

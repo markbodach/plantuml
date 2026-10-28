@@ -136,7 +136,9 @@
   '
   !else
 
-    Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
+    'Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
+    'Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+    Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "HASH TOKEN=[" + $tokenOrColor + "]" )
     Assert_Hash_Token( $tokenOrColor, "resolve_style_color received hash token=[" + $tokenOrColor + "]" )
     !return $get_semantic_color($tokenOrColor)
 
