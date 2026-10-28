@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-10-28 13:20:22 EDT**
-* Build Commit Hash: **4d60c579eeb290f11fc39cc80cc1222a5ac12cea**
-* Build Commit Comment: **more breakpoints**
+* Generated on: **2026-10-28 13:27:01 EDT**
+* Build Commit Hash: **6873312cf25229889311ef61aaf0820798846b64**
+* Build Commit Comment: **Breakpoint ARCH_MOTIVATION_VALUE**
 
 ## Usage
 
