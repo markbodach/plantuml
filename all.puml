@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-10-28 15:18:42 EDT
-' Build Commit Hash: 6067994dd53006f9cb8512fe82c4845ebaa46bdd
-' Build Commit Comment: bp: ARCH_MOTIVATION_VALUE
+' Generated on: 2026-10-30 11:13:42 EDT
+' Build Commit Hash: cb7d3721268619ef2d8dc23cd3a2bd1a6fe9287e
+' Build Commit Comment: corruption detection
 ' ========================================================
 
 ' src/all.puml
@@ -1358,8 +1358,49 @@
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 ' --- End Import: src/libs/archimate/vars/_root.puml ---
 
-' --- Importing: src/libs/archimate/vars/_corruption_detection.puml ---
-' --- End Import: src/libs/archimate/vars/_corruption_detection.puml ---
+' --- Importing: src/libs/archimate/vars/_corruption_repair.puml ---
+
+
+
+
+'=========================================================
+' REGISTER ARCHIMATE VARIABLES
+'=========================================================
+'
+' Register all variables that may be corrupted
+' by external Archimate libraries.
+'
+'=========================================================
+!procedure Register_Archimate_Corruption_Variables()
+
+    Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_MOTIVATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_STRATEGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_STRATEGY_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_BUSINESS_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_BUSINESS_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_APPLICATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_APPLICATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_PHYSICAL_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_PHYSICAL_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_BORDERCOLOR")
+
+    Register_Corruption_Variable("ARCH_OTHER_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_OTHER_BORDERCOLOR")
+
+!endprocedure
+
+
+' --- End Import: src/libs/archimate/vars/_corruption_repair.puml ---
 
 
 Register_Archimate_Corruption_Variables()

@@ -20,7 +20,7 @@ src/all.puml (Root Master)
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
-        └── _corruption_detection.puml
+        └── _corruption_repair.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
