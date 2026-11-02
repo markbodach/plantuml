@@ -90,6 +90,20 @@
 !endfunction
 
 
+!function $Next_Corruption_Variable($remaining)
+
+    !$remaining = %substr($remaining,1)
+
+    !$pos = %strpos($remaining,"|")
+
+    !if ($pos < 0)
+        Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+    !endif
+
+    !return %substr($remaining,0,$pos)
+
+!endfunction
+
 
 '=========================================================
 ' BREAKPOINT HELPERS
@@ -158,38 +172,44 @@
 '=========================================================
 ' VARIABLE REPAIR
 '=========================================================
-
 !procedure Repair_Corrupted_Variable($variable_name)
 
     !if ($variable_exists_safe($variable_name))
 
-        !$current = %get_variable_value($to_var_name($variable_name))
+        !$current = %get_variable_value( $to_var_name($variable_name) )
 
         !if ($is_corrupted_hash_token($current))
-            %set_variable_value($to_var_name($variable_name),$remove_hash_prefix($current))
+
+            %set_variable_value( $to_var_name($variable_name), $remove_hash_prefix($current) )
+
         !endif
 
     !endif
 
 !endprocedure
-
 
 
 !procedure Repair_Color_Variable($variable_name)
 
     !if ($variable_exists_safe($variable_name))
 
-        !$current = %get_variable_value($to_var_name($variable_name))
-        !$fixed = $repair_corrupted_semantic_hash($current)
+        !$current = %get_variable_value( $to_var_name($variable_name) )
+
+        !$fixed =
+            $repair_corrupted_semantic_hash($current)
 
         !if ($fixed != $current)
-            Breakpoint_If( "CORRUPTION_REPAIR", ($fixed != $current), "variable=[" + $variable_name + "] old=[" + $current + "] new=[" + $fixed + "]" )
-            %set_variable_value($to_var_name($variable_name),$fixed)
+
+            Breakpoint_If( "CORRUPTION_REPAIR", %true(), "variable=[" + $variable_name + "] old=[" + $current + "] new=[" + $fixed + "]" )
+
+            %set_variable_value( $to_var_name($variable_name), $fixed )
+
         !endif
 
     !endif
 
 !endprocedure
+
 
 
 
@@ -228,7 +248,12 @@
 !endfunction
 
 
-!procedure For_Each_Corruption_Variable($callback,$arg="")
+'=========================================================
+' REGISTRY PROCESSING
+'=========================================================
+
+
+!procedure Detect_Registered_Corruption_Variables( $breakpoint_name )
 
     !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
 
@@ -239,7 +264,61 @@
         !$iteration = $iteration + 1
 
         !if ($iteration > 100)
-            Trigger_Internal_Error( "Corruption registry iteration limit exceeded. " + "remaining=[" + $remaining + "]" )
+            Trigger_Internal_Error( "Corruption registry iteration limit exceeded" )
+        !endif
+
+        !$remainingBody = %substr($remaining,1)
+
+        !$pos = %strpos($remainingBody,"|")
+
+        !$variable_name = %substr($remainingBody,0,$pos)
+
+        !$remaining = "|" + %substr($remainingBody,$pos+1)
+
+        !if ($variable_name != "")
+
+            Detect_Corrupted_Variable( $breakpoint_name, $variable_name )
+
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+
+!procedure Repair_Color_Variable($variable_name)
+
+    !if ($variable_exists_safe($variable_name))
+
+        !$current = %get_variable_value( $to_var_name($variable_name) )
+
+        !$fixed = $repair_corrupted_semantic_hash($current)
+
+        !if ($fixed != $current)
+
+            Breakpoint_If("CORRUPTION_REPAIR", %true(), "variable=[" + $variable_name + "] old=[" + $current + "] new=[" + $fixed + "]" )
+
+            %set_variable_value( $to_var_name($variable_name), $fixed )
+
+        !endif
+
+    !endif
+
+!endprocedure
+
+
+!procedure Repair_Registered_Corruption_Variables()
+
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+
+    !$iteration = 0
+
+    !while ($remaining != "|")
+
+        !$iteration = $iteration + 1
+
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Corruption registry iteration limit exceeded" )
         !endif
 
         !$remaining = %substr($remaining,1)
@@ -255,49 +334,47 @@
         !$remaining = "|" + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
-        !assert 0 == 1 : "VARIABLE=[" + $variable_name + "]"
-            %invoke_procedure( $callback, $variable_name, $arg )
+            Repair_Corrupted_Variable( $variable_name )
         !endif
 
     !endwhile
 
 !endprocedure
 
-
-'=========================================================
-' REGISTRY PROCESSING
-'=========================================================
-!procedure Detect_Corruption_Callback( $variable_name, $breakpoint_name )
-
-    Detect_Corrupted_Variable( $breakpoint_name, $variable_name )
-
-!endprocedure
-
-
-!procedure Detect_Registered_Corruption_Variables( $breakpoint_name)
-    For_Each_Corruption_Variable( "Detect_Corruption_Callback", $breakpoint_name )
-!endprocedure
-
-
-!procedure Repair_Corruption_Callback( $variable_name, $unused)
-    Repair_Corrupted_Variable( $variable_name )
-!endprocedure
-
-
-!procedure Repair_Registered_Corruption_Variables()
-    For_Each_Corruption_Variable( "Repair_Corruption_Callback" )
-!endprocedure
-
-
-
-!procedure Repair_Color_Callback( $variable_name, $unused)
-    Repair_Color_Variable( $variable_name )
-!endprocedure
-
-
 !procedure Repair_Registered_Color_Variables()
-    For_Each_Corruption_Variable("Repair_Color_Callback" )
+
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+
+    !$iteration = 0
+
+    !while ($remaining != "|")
+
+        !$iteration = $iteration + 1
+
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Color repair registry iteration limit exceeded" )
+        !endif
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,"|")
+
+        !if ($pos < 0)
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+        !endif
+
+        !$variable_name = %substr($remaining,0,$pos)
+
+        !$remaining = "|" + %substr($remaining,$pos + 1)
+
+        !if ($variable_name != "")
+            Repair_Color_Variable( $variable_name )
+        !endif
+
+    !endwhile
+
 !endprocedure
+
 
 
 '=========================================================
