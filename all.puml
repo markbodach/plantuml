@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-02 13:31:13 EST
-' Build Commit Hash: 1d4e945b18025cd6a6b13a73c2cdad07229f6870
-' Build Commit Comment: callbacks
+' Generated on: 2026-11-02 17:38:03 EST
+' Build Commit Hash: 3f0ea89687f2786dda5c5c3f2f2ba5a618a7f750
+' Build Commit Comment: still trying to fix
 ' ========================================================
 
 ' src/all.puml
@@ -3843,6 +3843,9 @@
         !$remainingBody = %substr($remaining,1)
 
         !$pos = %strpos($remainingBody,"|")
+        !if ($pos < 0) 
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remainingBody + "]" )
+        !endif
 
         !$variable_name = %substr($remainingBody,0,$pos)
 
@@ -3859,25 +3862,6 @@
 !endprocedure
 
 
-!procedure Repair_Color_Variable($variable_name)
-
-    !if ($variable_exists_safe($variable_name))
-
-        !$current = %get_variable_value( $to_var_name($variable_name) )
-
-        !$fixed = $repair_corrupted_semantic_hash($current)
-
-        !if ($fixed != $current)
-
-            Breakpoint_If("CORRUPTION_REPAIR", %true(), "variable=[" + $variable_name + "] old=[" + $current + "] new=[" + $fixed + "]" )
-
-            %set_variable_value( $to_var_name($variable_name), $fixed )
-
-        !endif
-
-    !endif
-
-!endprocedure
 
 
 !procedure Repair_Registered_Corruption_Variables()
