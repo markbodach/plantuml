@@ -195,8 +195,7 @@
 
         !$current = %get_variable_value( $to_var_name($variable_name) )
 
-        !$fixed =
-            $repair_corrupted_semantic_hash($current)
+        !$fixed = $repair_corrupted_semantic_hash($current)
 
         !if ($fixed != $current)
 

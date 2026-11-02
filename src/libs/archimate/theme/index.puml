@@ -21,7 +21,7 @@
         ' *****
         '!assert 0 == 1 : "CORRUPTIONS=[" + $Registry_Get($REGISTRY_CORRUPTION_VARIABLES) + "]"
 
-        Detect_Lib_Corruption()
+        'ZZZ Detect_Lib_Corruption()
         Repair_Lib_Corruption()
         ' *****
 
