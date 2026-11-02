@@ -45,8 +45,6 @@
 '=========================================================
 !procedure Detect_Lib_Corruption()
 
-    Register_Archimate_Corruption_Variables()
-
     Detect_Registered_Corruption_Variables(
         "CORRUPTED_VARIABLE"
     )

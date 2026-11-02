@@ -1,15 +1,10 @@
 !procedure Load_Lib_Themes()
     '--------------------------------------------    
     Load_Lib_Theme_BEFORE()
-
-
-    Detect_Lib_Corruption()
-    Repair_Lib_Corruption()
     
     Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_Archimate()
     Load_Registered_Themes()
-
  
     Load_Lib_Theme_AFTER()
     '--------------------------------------------
