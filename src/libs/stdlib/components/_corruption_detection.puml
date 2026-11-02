@@ -255,6 +255,7 @@
         !$remaining = "|" + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
+        !assert 0 == 1 : "VARIABLE=[" + $variable_name + "]"
             %invoke_procedure( $callback, $variable_name, $arg )
         !endif
 
