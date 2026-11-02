@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-02 12:28:19 EST
-' Build Commit Hash: 93123dff2d3ca3974bb86cb12af6012af7ca3b09
-' Build Commit Comment: refactoring corruption
+' Generated on: 2026-11-02 12:54:03 EST
+' Build Commit Hash: 392f857791aa004016aa3b0d32ce341b0f65e422
+' Build Commit Comment: until001
 ' ========================================================
 
 ' src/all.puml
@@ -3801,72 +3801,75 @@
 !endfunction
 
 
+!procedure For_Each_Corruption_Variable($callback,$arg="")
+
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+
+    !$iteration = 0
+
+    !while ($remaining != "|")
+
+        !$iteration = $iteration + 1
+
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Corruption registry iteration limit exceeded. " + "remaining=[" + $remaining + "]" )
+        !endif
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,"|")
+
+        !if ($pos < 0)
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+        !endif
+
+        !$variable_name = %substr($remaining,0,$pos)
+
+        !$remaining = "|" + %substr($remaining,$pos + 1)
+
+        !if ($variable_name != "")
+            %invoke_procedure( $callback, $variable_name, $arg )
+        !endif
+
+    !endwhile
+
+!endprocedure
+
 
 '=========================================================
 ' REGISTRY PROCESSING
 '=========================================================
+!procedure Detect_Corruption_Callback( $variable_name, $breakpoint_name )
 
-!procedure Detect_Registered_Corruption_Variables($breakpoint_name)
-
-    !$remaining = $Registry_Get($REGISTRY_CORRUPTION_VARIABLES)
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-        !$pos = %strpos($remaining,"|")
-        !$variable_name = %substr($remaining,0,$pos)
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($variable_name != "")
-            Detect_Corrupted_Variable($breakpoint_name,$variable_name)
-        !endif
-
-    !endwhile
+    Detect_Corrupted_Variable( $breakpoint_name, $variable_name )
 
 !endprocedure
 
+
+!procedure Detect_Registered_Corruption_Variables( $breakpoint_name)
+    For_Each_Corruption_Variable( "Detect_Corruption_Callback", $breakpoint_name )
+!endprocedure
+
+
+!procedure Repair_Corruption_Callback( $variable_name, $unused)
+    Repair_Corrupted_Variable( $variable_name )
+!endprocedure
 
 
 !procedure Repair_Registered_Corruption_Variables()
-
-    !$remaining = $Registry_Get($REGISTRY_CORRUPTION_VARIABLES)
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-        !$pos = %strpos($remaining,"|")
-        !$variable_name = %substr($remaining,0,$pos)
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($variable_name != "")
-            Repair_Corrupted_Variable($variable_name)
-        !endif
-
-    !endwhile
-
+    For_Each_Corruption_Variable( "Repair_Corruption_Callback" )
 !endprocedure
 
+
+
+!procedure Repair_Color_Callback( $variable_name, $unused)
+    Repair_Color_Variable( $variable_name )
+!endprocedure
 
 
 !procedure Repair_Registered_Color_Variables()
-
-    !$remaining = $Registry_Get($REGISTRY_CORRUPTION_VARIABLES)
-
-    !while ($remaining != "|")
-
-        !$remaining = %substr($remaining,1)
-        !$pos = %strpos($remaining,"|")
-        !$variable_name = %substr($remaining,0,$pos)
-        !$remaining = "|" + %substr($remaining,$pos + 1)
-
-        !if ($variable_name != "")
-            Repair_Color_Variable($variable_name)
-        !endif
-
-    !endwhile
-
+    For_Each_Corruption_Variable("Repair_Color_Callback" )
 !endprocedure
-
 
 
 '=========================================================
