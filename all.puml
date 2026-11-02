@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-02 11:19:48 EST
-' Build Commit Hash: 79bc78f6a69135520404040012a27d74a848f016
-' Build Commit Comment: corruption repair
+' Generated on: 2026-11-02 12:05:02 EST
+' Build Commit Hash: 33d3f2f43731dc7c3dbeb92eab7f360c36d84351
+' Build Commit Comment: Corruption detection
 ' ========================================================
 
 ' src/all.puml
@@ -4667,6 +4667,9 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 !procedure Load_Lib_Theme_Archimate()
 
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        ' *****
+        Register_Archimate_Corruption_Variables()
+        ' *****
         
         Load_Lib_Theme_Archimate_Colors()
         Load_Lib_Theme_Archimate_Mapped_Colors()
@@ -4675,7 +4678,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         Detect_Lib_Corruption()
         Repair_Lib_Corruption()
         ' *****
-        
+
         Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
 
         Load_Lib_Theme_Archimate_Fonts()
