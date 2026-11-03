@@ -1,7 +1,7 @@
 !include _fonts.puml
 !include _colors.puml
 
-!include _mapped_colors.puml
+!include _derived_variables.puml
 
 !include _corners.puml
 !include _widths.puml
@@ -13,17 +13,12 @@
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
         ' *****
         Register_Archimate_Corruption_Variables()
+        Register_Lib_Theme_Derived("Archimate")
         ' *****
 
         Load_Lib_Theme_Archimate_Colors()
-        'ZZZ MOVING TO Load_Lib_Themes :: 
-        Load_Lib_Theme_Archimate_Mapped_Colors()
 
-        ' *****
-        Detect_Lib_Corruption()
-        Repair_Lib_Corruption()
-        ' *****
-
+        
         Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
 
         Load_Lib_Theme_Archimate_Fonts()

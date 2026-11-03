@@ -12,11 +12,12 @@ src/all.puml (Root Master)
         └── _breakpoint.puml
         └── _apply.puml
         └── _helpers.puml
-        └── _registry.puml
-        └── _corruption_registry.puml
+        └── _corruption.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
         └── _root.puml
+        └── _corruption_registry.puml
+        └── _extension_registry.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
@@ -50,7 +51,7 @@ src/all.puml (Root Master)
       └── archimate/theme/index.puml
         └── _fonts.puml
         └── _colors.puml
-        └── _mapped_colors.puml
+        └── _derived_variables.puml
         └── _corners.puml
         └── _widths.puml
         └── _element.puml

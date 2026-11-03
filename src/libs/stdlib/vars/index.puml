@@ -1,3 +1,5 @@
 !include _root.puml
+!include _corruption_registry.puml
+!include _extension_registry.puml
 !include _colors.puml
 

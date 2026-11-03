@@ -1,0 +1,25 @@
+'=========================================================
+' CORRUPTION REGISTRY INITIALIZATION
+'=========================================================
+'
+' Registry Storage
+'
+' Stores variables that should be inspected
+' for external library corruption.
+'
+' Registry Format:
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'   |ARCH_MOTIVATION_BORDERCOLOR|
+'
+'=========================================================
+
+!global $CORRUPTION_DIAGNOSTICS ?= %false()
+
+!global $CORRUPTION_VARIABLE_DEL = "|"
+!global $CORRUPTION_VARIABLES ?= "" + $CORRUPTION_VARIABLE_DEL + ""
+
+!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
+

@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-03 13:04:36 EST**
-* Build Commit Hash: **dfe06eda6055c4175d8fc6425875d0f6dbbd41d9**
-* Build Commit Comment: **ZZZ con't**
+* Generated on: **2026-11-03 15:01:03 EST**
+* Build Commit Hash: **80e744d9a893d566ee133d852e7621881e6235c1**
+* Build Commit Comment: **ZZZ sorting**
 
 ## Usage
 
@@ -293,11 +293,12 @@ src/all.puml (Root Master)
         └── _breakpoint.puml
         └── _apply.puml
         └── _helpers.puml
-        └── _registry.puml
-        └── _corruption_registry.puml
+        └── _corruption.puml
         └── _extensions.puml
       └── stdlib/vars/index.puml
         └── _root.puml
+        └── _corruption_registry.puml
+        └── _extension_registry.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
@@ -331,7 +332,7 @@ src/all.puml (Root Master)
       └── archimate/theme/index.puml
         └── _fonts.puml
         └── _colors.puml
-        └── _mapped_colors.puml
+        └── _derived_variables.puml
         └── _corners.puml
         └── _widths.puml
         └── _element.puml

@@ -6,8 +6,15 @@
     Load_Lib_Theme_Archimate()
     Load_Registered_Themes()
     
-    'ZZZ added to work around a ordering issue
-    'ZZZ Load_Lib_Theme_Archimate_Mapped_Colors()
+    Build_Registered_Theme_Derived_Variables()
+    
+    ' *****
+    Repair_Lib_Corruption()
+    !if ($CORRUPTION_DIAGNOSTICS) 
+        Detect_Lib_Corruption() 
+    !endif
+    ' *****
+
 
     Load_Lib_Theme_AFTER()
     '--------------------------------------------

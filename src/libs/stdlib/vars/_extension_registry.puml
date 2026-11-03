@@ -1,0 +1,38 @@
+'=========================================================
+' Extension Registry Framework
+'=========================================================
+'
+' REGISTRY
+'
+' Stores registered theme names using a delimiter-string
+' registry implementation.
+'
+' Registry Format:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+' Leading and trailing delimiters allow exact matching
+' using %strpos() without partial-match collisions.
+'
+' Example:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+'=========================================================
+
+!global $REGISTRY_DEL = "|" 
+
+!global $THEMES = "" + $REGISTRY_DEL + ""
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
+!global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
+
+
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
+!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"

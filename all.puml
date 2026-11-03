@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-03 13:04:36 EST
-' Build Commit Hash: dfe06eda6055c4175d8fc6425875d0f6dbbd41d9
-' Build Commit Comment: ZZZ con't
+' Generated on: 2026-11-03 15:01:03 EST
+' Build Commit Hash: 80e744d9a893d566ee133d852e7621881e6235c1
+' Build Commit Comment: ZZZ sorting
 ' ========================================================
 
 ' src/all.puml
@@ -907,156 +907,6 @@
 
 !endprocedure
 
-'=========================================================
-' Extension Registry Framework
-'=========================================================
-'
-' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
-'
-' Themes are processed in registration order.
-'
-' Example:
-'
-'   Register_Lib_All("ThemeA")
-'   Register_Lib_All("ThemeB")
-'
-' Execution Order:
-'
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-' Registered extensions may provide:
-'
-'   Load_Theme_<Theme>()
-'
-'       Used for:
-'           - Variables
-'           - Theme initialization
-'           - Configuration
-'
-'   Load_Styles_<Theme>()
-'
-'       Used for:
-'           - Styles
-'           - Stereotypes
-'           - Formatting
-'
-'=========================================================
-'
-' REGISTRY
-'
-' Stores registered theme names using a delimiter-string
-' registry implementation.
-'
-' Registry Format:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-' Leading and trailing delimiters allow exact matching
-' using %strpos() without partial-match collisions.
-'
-' Example:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-'=========================================================
-
-!global $REGISTRY_DEL = "|" 
-
-!global $THEMES = "" + $REGISTRY_DEL + ""
-!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
-!global $STYLES = "" + $REGISTRY_DEL + ""
-
-!global $REGISTRY_THEMES = "THEMES"
-!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
-!global $REGISTRY_STYLES = "STYLES"
-
-
-
-!function $Is_Theme_Registered($name)
-    !return $object_registered($name, $REGISTRY_THEMES)
-!endfunction
-
-!function $Is_Skinparam_Registered($name)
-    !return $object_registered($name, $REGISTRY_SKINPARAMS)
-!endfunction
-
-!function $Is_Style_Registered($name)
-    !return $object_registered($name, $REGISTRY_STYLES)
-!endfunction
-
-
-!procedure Register_Lib_Theme($name)
-    Register_Lib_Object($name, $REGISTRY_THEMES)
-!endprocedure
-
-!procedure Register_Lib_Skinparam($name)
-    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
-!endprocedure
-
-!procedure Register_Lib_Style($name)
-    Register_Lib_Object($name, $REGISTRY_STYLES)
-!endprocedure
-
-!procedure Register_Lib_All($name)
-    Register_Lib_Theme($name)
-    Register_Lib_Skinparam($name)
-    Register_Lib_Style($name)
-    
-!endprocedure
-
-!procedure Load_Registered_Themes()
-
-    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
-
-!endprocedure
-
-
-
-!procedure Load_Registered_Skinparams()
-
-    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
-
-!endprocedure
-
-
-
-!procedure Load_Registered_Styles()
-
-    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
-
-!endprocedure
-
-
-
-'=========================================================
-' CORRUPTION REGISTRY INITIALIZATION
-'=========================================================
-'
-' Registry Storage
-'
-' Stores variables that should be inspected
-' for external library corruption.
-'
-' Registry Format:
-'
-'   |ARCH_MOTIVATION_FILLCOLOR|
-'
-'   |ARCH_MOTIVATION_FILLCOLOR|
-'   |ARCH_MOTIVATION_BORDERCOLOR|
-'
-'=========================================================
-
-!global $CORRUPTION_VARIABLE_DEL = "|"
-!global $CORRUPTION_VARIABLES ?= "" + $CORRUPTION_VARIABLE_DEL + ""
-
-!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
-
 
 
 
@@ -1141,6 +991,109 @@
 '   Repair_Lib_Corruption()
 '
 '=========================================================
+
+'=========================================================
+' Extension Registry Framework
+'=========================================================
+'
+' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
+'
+' Themes are processed in registration order.
+'
+' Example:
+'
+'   Register_Lib_All("ThemeA")
+'   Register_Lib_All("ThemeB")
+'
+' Execution Order:
+'
+'   ThemeA
+'       ↓
+'   ThemeB
+'
+' Registered extensions may provide:
+'
+'   Load_Theme_<Theme>()
+'
+'       Used for:
+'           - Variables
+'           - Theme initialization
+'           - Configuration
+'
+'   Load_Styles_<Theme>()
+'
+'       Used for:
+'           - Styles
+'           - Stereotypes
+'           - Formatting
+'
+'=========================================================
+
+
+
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
+
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
+
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
+!endfunction
+
+
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
+
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
+
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
+
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    
+!endprocedure
+
+!procedure Load_Registered_Themes()
+
+    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
+
+!endprocedure
+
+
+
+!procedure Load_Registered_Skinparams()
+
+    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
+
+!endprocedure
+
+
+
+!procedure Load_Registered_Styles()
+
+    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
+
+!endprocedure
+
+
+!procedure Register_Lib_Theme_Derived($name)
+    Register_Lib_Object($name, $REGISTRY_THEME_DERIVED)
+!endprocedure
+
+!procedure Build_Registered_Theme_Derived_Variables()
+    For_Each_Lib_Object("Build_Lib_Derived_Variables_", $REGISTRY_THEME_DERIVED )
+!endprocedure
+
 
 
 '=========================================================
@@ -1287,6 +1240,71 @@
 !global $UNSET ?= "__UML_UNSET__"
 
 !global $POUND ?= "#"
+
+'=========================================================
+' CORRUPTION REGISTRY INITIALIZATION
+'=========================================================
+'
+' Registry Storage
+'
+' Stores variables that should be inspected
+' for external library corruption.
+'
+' Registry Format:
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'
+'   |ARCH_MOTIVATION_FILLCOLOR|
+'   |ARCH_MOTIVATION_BORDERCOLOR|
+'
+'=========================================================
+
+!global $CORRUPTION_DIAGNOSTICS ?= %false()
+
+!global $CORRUPTION_VARIABLE_DEL = "|"
+!global $CORRUPTION_VARIABLES ?= "" + $CORRUPTION_VARIABLE_DEL + ""
+
+!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
+
+
+'=========================================================
+' Extension Registry Framework
+'=========================================================
+'
+' REGISTRY
+'
+' Stores registered theme names using a delimiter-string
+' registry implementation.
+'
+' Registry Format:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+' Leading and trailing delimiters allow exact matching
+' using %strpos() without partial-match collisions.
+'
+' Example:
+'
+'   |ThemeA|
+'
+'   |ThemeA|ThemeB|
+'
+'=========================================================
+
+!global $REGISTRY_DEL = "|" 
+
+!global $THEMES = "" + $REGISTRY_DEL + ""
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
+!global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
+
+
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
+!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
 
 
 
@@ -4346,7 +4364,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 
 
-!procedure Load_Lib_Theme_Archimate_Mapped_Colors()
+!procedure Build_Lib_Derived_Variables_Archimate()
     '**********************
     '* HARD SET THE VALUES 
     '**********************
@@ -4633,17 +4651,12 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
         ' *****
         Register_Archimate_Corruption_Variables()
+        Register_Lib_Theme_Derived("Archimate")
         ' *****
 
         Load_Lib_Theme_Archimate_Colors()
-        'ZZZ MOVING TO Load_Lib_Themes :: 
-        Load_Lib_Theme_Archimate_Mapped_Colors()
 
-        ' *****
-        Detect_Lib_Corruption()
-        Repair_Lib_Corruption()
-        ' *****
-
+        
         Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
 
         Load_Lib_Theme_Archimate_Fonts()
@@ -5119,8 +5132,15 @@ component {
     Load_Lib_Theme_Archimate()
     Load_Registered_Themes()
     
-    'ZZZ added to work around a ordering issue
-    'ZZZ Load_Lib_Theme_Archimate_Mapped_Colors()
+    Build_Registered_Theme_Derived_Variables()
+    
+    ' *****
+    Repair_Lib_Corruption()
+    !if ($CORRUPTION_DIAGNOSTICS) 
+        Detect_Lib_Corruption() 
+    !endif
+    ' *****
+
 
     Load_Lib_Theme_AFTER()
     '--------------------------------------------

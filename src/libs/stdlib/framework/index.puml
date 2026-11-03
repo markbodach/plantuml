@@ -65,8 +65,5 @@
 
 
 !include _helpers.puml
-!include _registry.puml
-
-!include _corruption_registry.puml
-
+!include _corruption.puml
 !include _extensions.puml

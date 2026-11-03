@@ -1,6 +1,6 @@
 
 
-!procedure Load_Lib_Theme_Archimate_Mapped_Colors()
+!procedure Build_Lib_Derived_Variables_Archimate()
     '**********************
     '* HARD SET THE VALUES 
     '**********************
