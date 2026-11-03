@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-03 11:48:57 EST
-' Build Commit Hash: de45655f72460f65357535d69411b027a6079721
-' Build Commit Comment: ZZZ
+' Generated on: 2026-11-03 13:04:36 EST
+' Build Commit Hash: dfe06eda6055c4175d8fc6425875d0f6dbbd41d9
+' Build Commit Comment: ZZZ con't
 ' ========================================================
 
 ' src/all.puml
@@ -4347,43 +4347,52 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 
 !procedure Load_Lib_Theme_Archimate_Mapped_Colors()
+    '**********************
+    '* HARD SET THE VALUES 
+    '**********************
+
 
     '=====================================================
     ' Layer Colors
     '=====================================================
-
-    !global $ARCH_STRATEGY_FILLCOLOR ?= $resolve_literal_color($COLOR_STRATEGY)
-    !global $ARCH_BUSINESS_FILLCOLOR ?= $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
     !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
-    !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
+    '=====================================================
     ' ArchiMate physical layer
-    !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
+    '=====================================================
+    !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
 
-    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
-    !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
+    '=====================================================
     ' Other layer
-    !global $ARCH_OTHER_FILLCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    '=====================================================
+    !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
 
     '=====================================================
     ' Border Colors
     '=====================================================
-    !global $ARCH_STRATEGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_STRATEGY_DARK)
-    !global $ARCH_BUSINESS_BORDERCOLOR ?= $resolve_literal_color($COLOR_BUSINESS_DARK)
-    !global $ARCH_APPLICATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_APPLICATION_DARK)
-    !global $ARCH_TECHNOLOGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+    !global $ARCH_STRATEGY_BORDERCOLOR = $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_BUSINESS_BORDERCOLOR = $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_APPLICATION_BORDERCOLOR = $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_TECHNOLOGY_BORDERCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
 
     ' ArchiMate physical layer
-    !global $ARCH_PHYSICAL_BORDERCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL_DARK)
+    !global $ARCH_PHYSICAL_BORDERCOLOR = $resolve_literal_color($COLOR_PHYSICAL_DARK)
 
-    !global $ARCH_MOTIVATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION_DARK)
+    !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
 
-    !global $ARCH_IMPLEMENTATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
+    !global $ARCH_IMPLEMENTATION_BORDERCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
 
+    '=====================================================
     ' Other layer
-    !global $ARCH_OTHER_BORDERCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_DARK)
+    '=====================================================
+    !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
 
 
     '=====================================================
@@ -4395,23 +4404,23 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     ' Junction Colors
     '=====================================================
 
-    !global $ARCH_JUNCTIONOR_FILLCOLOR ?= $resolve_literal_color($COLOR_BODY)
-    !global $ARCH_JUNCTIONAND_FILLCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !global $ARCH_GROUP_FILLCOLOR ?= $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !global $ARCH_FOLDER_LINECOLOR ?= $resolve_literal_color($COLOR_BORDER)
+    !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !global $ARCH_RELATIONSHIP_LINECOLOR ?= $resolve_literal_color($COLOR_LINE)
-    !global $ARCH_RELATIONSHIP_FONTCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
 
@@ -4627,7 +4636,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         ' *****
 
         Load_Lib_Theme_Archimate_Colors()
-        'ZZZ MOVING TO Load_Lib_Themes :: Load_Lib_Theme_Archimate_Mapped_Colors()
+        'ZZZ MOVING TO Load_Lib_Themes :: 
+        Load_Lib_Theme_Archimate_Mapped_Colors()
 
         ' *****
         Detect_Lib_Corruption()
@@ -5110,7 +5120,7 @@ component {
     Load_Registered_Themes()
     
     'ZZZ added to work around a ordering issue
-    Load_Lib_Theme_Archimate_Mapped_Colors()
+    'ZZZ Load_Lib_Theme_Archimate_Mapped_Colors()
 
     Load_Lib_Theme_AFTER()
     '--------------------------------------------

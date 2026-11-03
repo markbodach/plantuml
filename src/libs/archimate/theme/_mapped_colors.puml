@@ -1,43 +1,52 @@
 
 
 !procedure Load_Lib_Theme_Archimate_Mapped_Colors()
+    '**********************
+    '* HARD SET THE VALUES 
+    '**********************
+
 
     '=====================================================
     ' Layer Colors
     '=====================================================
-
-    !global $ARCH_STRATEGY_FILLCOLOR ?= $resolve_literal_color($COLOR_STRATEGY)
-    !global $ARCH_BUSINESS_FILLCOLOR ?= $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
     !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
-    !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
 
+    '=====================================================
     ' ArchiMate physical layer
-    !global $ARCH_MOTIVATION_FILLCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION)
+    '=====================================================
+    !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
 
-    !global $ARCH_PHYSICAL_FILLCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL)
-    !global $ARCH_IMPLEMENTATION_FILLCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
 
+    '=====================================================
     ' Other layer
-    !global $ARCH_OTHER_FILLCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    '=====================================================
+    !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
 
 
     '=====================================================
     ' Border Colors
     '=====================================================
-    !global $ARCH_STRATEGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_STRATEGY_DARK)
-    !global $ARCH_BUSINESS_BORDERCOLOR ?= $resolve_literal_color($COLOR_BUSINESS_DARK)
-    !global $ARCH_APPLICATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_APPLICATION_DARK)
-    !global $ARCH_TECHNOLOGY_BORDERCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+    !global $ARCH_STRATEGY_BORDERCOLOR = $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_BUSINESS_BORDERCOLOR = $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_APPLICATION_BORDERCOLOR = $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_TECHNOLOGY_BORDERCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
 
     ' ArchiMate physical layer
-    !global $ARCH_PHYSICAL_BORDERCOLOR ?= $resolve_literal_color($COLOR_PHYSICAL_DARK)
+    !global $ARCH_PHYSICAL_BORDERCOLOR = $resolve_literal_color($COLOR_PHYSICAL_DARK)
 
-    !global $ARCH_MOTIVATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_MOTIVATION_DARK)
+    !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
 
-    !global $ARCH_IMPLEMENTATION_BORDERCOLOR ?= $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
+    !global $ARCH_IMPLEMENTATION_BORDERCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
 
+    '=====================================================
     ' Other layer
-    !global $ARCH_OTHER_BORDERCOLOR ?= $resolve_literal_color($COLOR_EMPHASIS_DARK)
+    '=====================================================
+    !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
 
 
     '=====================================================
@@ -49,22 +58,22 @@
     ' Junction Colors
     '=====================================================
 
-    !global $ARCH_JUNCTIONOR_FILLCOLOR ?= $resolve_literal_color($COLOR_BODY)
-    !global $ARCH_JUNCTIONAND_FILLCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     '=====================================================
     ' Containers
     '=====================================================
 
-    !global $ARCH_GROUP_FILLCOLOR ?= $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
-    !global $ARCH_FOLDER_LINECOLOR ?= $resolve_literal_color($COLOR_BORDER)
+    !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
     ' Relationships
     '=====================================================
 
-    !global $ARCH_RELATIONSHIP_LINECOLOR ?= $resolve_literal_color($COLOR_LINE)
-    !global $ARCH_RELATIONSHIP_FONTCOLOR ?= $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
