@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-03 10:52:15 EST
-' Build Commit Hash: 7ae5befdf8fc048b22e37d7b33df1a47c886c7b7
-' Build Commit Comment: zzz
+' Generated on: 2026-11-03 11:35:42 EST
+' Build Commit Hash: 5d5ca7f3f7b10942ef9ac5df943a820675642b08
+' Build Commit Comment: removed ZZZ
 ' ========================================================
 
 ' src/all.puml
@@ -4627,7 +4627,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         ' *****
 
         Load_Lib_Theme_Archimate_Colors()
-        Load_Lib_Theme_Archimate_Mapped_Colors()
+        'ZZZ MOVING TO Load_Lib_Themes :: Load_Lib_Theme_Archimate_Mapped_Colors()
 
         ' *****
         Detect_Lib_Corruption()
@@ -5108,7 +5108,10 @@ component {
     Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_Archimate()
     Load_Registered_Themes()
- 
+    
+    'ZZZ added to work around a ordering issue
+    Load_Lib_Theme_Archimate_Mapped_Colors()
+
     Load_Lib_Theme_AFTER()
     '--------------------------------------------
 !endprocedure

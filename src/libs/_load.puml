@@ -5,7 +5,10 @@
     Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_Archimate()
     Load_Registered_Themes()
- 
+    
+    'ZZZ added to work around a ordering issue
+    Load_Lib_Theme_Archimate_Mapped_Colors()
+
     Load_Lib_Theme_AFTER()
     '--------------------------------------------
 !endprocedure
