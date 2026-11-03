@@ -8,7 +8,7 @@
 
     !global $ARCH_STRATEGY_FILLCOLOR ?= $resolve_literal_color($COLOR_STRATEGY)
     !global $ARCH_BUSINESS_FILLCOLOR ?= $resolve_literal_color($COLOR_BUSINESS)
-    !global $ARCH_APPLICATION_FILLCOLOR ?= $resolve_literal_color($COLOR_APPLICATION)
+    !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
     !global $ARCH_TECHNOLOGY_FILLCOLOR ?= $resolve_literal_color($COLOR_TECHNOLOGY)
 
     ' ArchiMate physical layer
