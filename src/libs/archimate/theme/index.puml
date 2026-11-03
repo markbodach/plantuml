@@ -19,7 +19,7 @@
         Load_Lib_Theme_Archimate_Mapped_Colors()
 
         ' *****
-        'ZZZ Detect_Lib_Corruption()
+        Detect_Lib_Corruption()
         Repair_Lib_Corruption()
         ' *****
 
