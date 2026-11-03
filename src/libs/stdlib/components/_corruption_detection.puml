@@ -94,7 +94,7 @@
 
     !$remaining = %substr($remaining,1)
 
-    !$pos = %strpos($remaining,"|")
+    !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
     !if ($pos < 0)
         Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -258,7 +258,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -268,14 +268,14 @@
 
         !$remainingBody = %substr($remaining,1)
 
-        !$pos = %strpos($remainingBody,"|")
+        !$pos = %strpos($remainingBody, $CORRUPTION_VARIABLE_DEL)
         !if ($pos < 0) 
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remainingBody + "]" )
         !endif
 
         !$variable_name = %substr($remainingBody,0,$pos)
 
-        !$remaining = "|" + %substr($remainingBody,$pos+1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remainingBody,$pos+1)
 
         !if ($variable_name != "")
 
@@ -296,7 +296,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -306,7 +306,7 @@
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
         !if ($pos < 0)
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -314,7 +314,7 @@
 
         !$variable_name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
             Repair_Corrupted_Variable( $variable_name )
@@ -330,7 +330,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -340,7 +340,7 @@
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
         !if ($pos < 0)
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -348,7 +348,7 @@
 
         !$variable_name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
             Repair_Color_Variable( $variable_name )

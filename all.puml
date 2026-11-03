@@ -1,22 +1,19 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-02 18:32:46 EST
-' Build Commit Hash: 86a2f999437e0338e05fe2ae0237847620099aa8
-' Build Commit Comment: re-refactored
+' Generated on: 2026-11-03 10:33:03 EST
+' Build Commit Hash: 88d0fc2d097d882adcd206c99ba6e4a4be9d801d
+' Build Commit Comment: zzz
 ' ========================================================
 
 ' src/all.puml
 ' Module Entry Point: OH + Archimate Component Pack
 
-' --- Importing: src/index.puml ---
 
-' --- Importing: src/libs/index.puml ---
 ' src/index.puml
 ' Module Entry Point: OH + Archimate Component Pack
 
 
-' --- Importing: src/libs/stdlib/framework/index.puml ---
 '---------------------------------------------------------
 ' ASSERT UTILITIES
 '=========================================================
@@ -31,7 +28,6 @@
 '       - Runtime debugging
 '
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/framework/_assert.puml ---
 '=========================================================
 ' ASSERT UTILITIES
 '=========================================================
@@ -231,7 +227,6 @@
 !procedure Trigger_Internal_Error($message="")
     !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
 !endprocedure
-' --- End Import: src/libs/stdlib/framework/_assert.puml ---
 
 
 
@@ -253,7 +248,6 @@
 '   - Theme troubleshooting
 '   - Diagnostic panel generation
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/framework/_debug.puml ---
 '=========================================================
 ' DEBUG UTILITIES
 '=========================================================
@@ -527,7 +521,6 @@
 ' )
 '
 '=========================================================
-' --- End Import: src/libs/stdlib/framework/_debug.puml ---
 
 
 
@@ -550,13 +543,12 @@
 '   - Suitable for framework internals and diagnostic scenarios
 '   - Uses PlantUML assertions as a controlled execution stop mechanism
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/framework/_breakpoint.puml ---
 '=========================================================
 ' BREAKPOINT REGISTRY
 '=========================================================
 
-!global $BREAKPOINTS ?= "|"
-
+!global $BREAKPOINTS_DEL = "|"
+!global $BREAKPOINTS ?= "" + $BREAKPOINTS_DEL + ""
 !global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
 
 
@@ -620,9 +612,9 @@
     !if ($Breakpoint_Enabled($name))
 
         !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
-        !$token = "|" + $name + "|"
+        !$token = $BREAKPOINTS_DEL + $name + $BREAKPOINTS_DEL
 
-        !$registry = %replace($registry, $token, "|")
+        !$registry = %replace($registry, $token, $BREAKPOINTS_DEL)
 
         Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
 
@@ -647,7 +639,7 @@
 ' Clear All Breakpoints
 '=========================================================
 !procedure Clear_Breakpoints()
-    Registry_Set($REGISTRY_BREAKPOINTS, "|" )
+    Registry_Set($REGISTRY_BREAKPOINTS, $BREAKPOINTS_DEL )
 !endprocedure
 
 
@@ -657,11 +649,11 @@
 
     !$count = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $BREAKPOINTS_DEL)
 
         !$remaining = %substr($remaining,1)
-        !$pos = %strpos($remaining,"|")
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$pos = %strpos($remaining,$BREAKPOINTS_DEL)
+        !$remaining = $BREAKPOINTS_DEL + %substr($remaining,$pos + 1)
 
         !$count = $count + 1
 
@@ -681,14 +673,12 @@
     !endif
 
 !endprocedure
-' --- End Import: src/libs/stdlib/framework/_breakpoint.puml ---
 
 
 
 '---------------------------------------------------------
 ' Apply Variable Override If Source Exists
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/framework/_apply.puml ---
 '=========================================================
 ' Apply Variable Override If Source Exists
 '
@@ -820,11 +810,9 @@
 !endprocedure
 
 
-' --- End Import: src/libs/stdlib/framework/_apply.puml ---
 
 
 
-' --- Importing: src/libs/stdlib/framework/_helpers.puml ---
 '=========================================================
 ' Registry Variable Access
 '=========================================================
@@ -859,7 +847,7 @@
 
     !$registry = $Registry_Get($registryName)
 
-    !return (%strpos($registry, "|" + $name + "|") >= 0)
+    !return (%strpos($registry, $REGISTRY_DEL + $name + $REGISTRY_DEL) >= 0)
 
 !endfunction
 
@@ -873,7 +861,7 @@
 
         !$registry = $Registry_Get($registryName)
 
-        !$registry = $registry + $name + "|"
+        !$registry = $registry + $name + $REGISTRY_DEL
 
         Registry_Set($registryName, $registry)
 
@@ -886,15 +874,15 @@
 
     !$remaining = $Registry_Get($registryName)
 
-    !while ($remaining != "|")
+    !while ($remaining != $REGISTRY_DEL)
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
 
         !$name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
 
         !if ($name != "")
 
@@ -918,9 +906,7 @@
     !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
 
 !endprocedure
-' --- End Import: src/libs/stdlib/framework/_helpers.puml ---
 
-' --- Importing: src/libs/stdlib/framework/_registry.puml ---
 '=========================================================
 ' Extension Registry Framework
 '=========================================================
@@ -980,9 +966,11 @@
 '
 '=========================================================
 
-!global $THEMES = "|"
-!global $SKINPARAMS = "|"
-!global $STYLES = "|"
+!global $REGISTRY_DEL = "|" 
+
+!global $THEMES = "" + $REGISTRY_DEL + ""
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
 
 !global $REGISTRY_THEMES = "THEMES"
 !global $REGISTRY_SKINPARAMS = "SKINPARAMS"
@@ -1044,10 +1032,8 @@
 
 !endprocedure
 
-' --- End Import: src/libs/stdlib/framework/_registry.puml ---
 
 
-' --- Importing: src/libs/stdlib/framework/_corruption_registry.puml ---
 '=========================================================
 ' CORRUPTION REGISTRY INITIALIZATION
 '=========================================================
@@ -1066,7 +1052,8 @@
 '
 '=========================================================
 
-!global $CORRUPTION_VARIABLES ?= "|"
+!global $CORRUPTION_VARIABLE_DEL = "|"
+!global $CORRUPTION_VARIABLES ?= "" + $CORRUPTION_VARIABLE_DEL + ""
 
 !global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
 
@@ -1095,9 +1082,7 @@
 '=========================================================
 !procedure Detect_Lib_Corruption()
 
-    Detect_Registered_Corruption_Variables(
-        "CORRUPTED_VARIABLE"
-    )
+    Detect_Registered_Corruption_Variables( "CORRUPTED_VARIABLE")
 
 !endprocedure
 
@@ -1156,10 +1141,8 @@
 '   Repair_Lib_Corruption()
 '
 '=========================================================
-' --- End Import: src/libs/stdlib/framework/_corruption_registry.puml ---
 
 
-' --- Importing: src/libs/stdlib/framework/_extensions.puml ---
 '=========================================================
 ' STYLE EXTENSION HOOKS
 '=========================================================
@@ -1293,14 +1276,10 @@
 
 
 
-' --- End Import: src/libs/stdlib/framework/_extensions.puml ---
 
-' --- End Import: src/libs/stdlib/framework/index.puml ---
 
 
 'STEP 1 :: VARS includes
-' --- Importing: src/libs/stdlib/vars/index.puml ---
-' --- Importing: src/libs/stdlib/vars/_root.puml ---
 
 
 !global $SKINPARAM_ENABLED ?= %false()
@@ -1308,9 +1287,7 @@
 !global $UNSET ?= "__UML_UNSET__"
 
 !global $POUND ?= "#"
-' --- End Import: src/libs/stdlib/vars/_root.puml ---
 
-' --- Importing: src/libs/stdlib/vars/_colors.puml ---
 
 
 '---------------------------------------------------------
@@ -1339,24 +1316,18 @@
 ' RGB luminance ceiling (0-255)
 !global $LIGHTNESS_THRESHOLD = 223
 
-' --- End Import: src/libs/stdlib/vars/_colors.puml ---
 
 
-' --- End Import: src/libs/stdlib/vars/index.puml ---
 
-' --- Importing: src/libs/archimate/vars/index.puml ---
 ' src/themes/archimate/index.puml
 ' Module Entry Point: Archimate Theme Variables
 
 
-' --- Importing: src/libs/archimate/vars/_root.puml ---
 
 !global $ARCHIMATE_LIB_ENABLED ?= %false()
 
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
-' --- End Import: src/libs/archimate/vars/_root.puml ---
 
-' --- Importing: src/libs/archimate/vars/_corruption_repair.puml ---
 
 
 
@@ -1398,14 +1369,11 @@
 !endprocedure
 
 
-' --- End Import: src/libs/archimate/vars/_corruption_repair.puml ---
 
 
-' --- End Import: src/libs/archimate/vars/index.puml ---
 
 
 'STEP 2 :: COMPONENTS includes
-' --- Importing: src/libs/stdlib/components/index.puml ---
 
 '---------------------------------------------------------
 ' String Utilities
@@ -1418,7 +1386,6 @@
 '   - Suffix detection
 '   - Style token detection
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_strings.puml ---
 
 
 !function $strip_prefix($value, $prefix)
@@ -1426,10 +1393,7 @@
     !$prefixWithSeparator = $prefix + "_"
 
     !if %strpos($value, $prefixWithSeparator) == 0
-        !return %substr(
-            $value,
-            %strlen($prefixWithSeparator)
-        )
+        !return %substr( $value, %strlen($prefixWithSeparator) )
     !endif
 
     !return $value
@@ -1474,7 +1438,6 @@
 
 !endfunction
 
-' --- End Import: src/libs/stdlib/components/_strings.puml ---
 
 
 
@@ -1489,7 +1452,6 @@
 '   - Dynamic variable access
 '   - Variable validation
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_variables.puml ---
 '---------------------------------------------------------
 ' Variable Helpers
 '---------------------------------------------------------
@@ -1736,7 +1698,6 @@
     !return $UNSET
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_variables.puml ---
 
 
 '---------------------------------------------------------
@@ -1752,7 +1713,6 @@
 '   - Line spacing
 '   - Framed text formatting
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_text.puml ---
 '=========================================================
 ' TEXT UTILITIES
 '=========================================================
@@ -2108,7 +2068,6 @@
     !return $surround( $centered, $horizontal, $vertical )
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_text.puml ---
 
 
 
@@ -2123,7 +2082,6 @@
 '   - Hex conversion
 '   - Luminance calculation
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_hex.puml ---
 '=========================================================
 ' Literal Color Validation
 '
@@ -2181,16 +2139,6 @@
 !endfunction
 
 
-!function $assert_literal_color($value)
-
-  !if ($is_literal_color($value) == %false())
-    Trigger_Assert("Invalid literal color=[" + $value + "]")
-
-  !endif
-
-  !return $value
-
-!endfunction
 
 
 '=========================================================
@@ -2207,7 +2155,7 @@
 
 !function $normalize_hex_rgb($hex)
 
-  $assert_literal_color($hex)
+  Assert_Literal_Color($hex, "f.normalize_hex_rgb")
   !$len = %strlen($hex)
 
   '
@@ -2430,7 +2378,6 @@
   !return $POUND + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_hex.puml ---
 
 
 
@@ -2450,7 +2397,6 @@
 '   - Contrast calculations
 '   - Theme-safe color lookups
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_colors.puml ---
 
 !function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
   
@@ -2668,7 +2614,6 @@
 !endfunction
 
 
-' --- End Import: src/libs/stdlib/components/_colors.puml ---
 
 
 
@@ -2683,7 +2628,6 @@
 '   - RGB darkening
 '   - Darkness normalization
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_darken.puml ---
 
 '---------------------------------------------------------
 ' Parse DARKEN token
@@ -2744,7 +2688,8 @@
     '
     ' Validate and normalize the input color.
     '
-    $assert_literal_color($hex)
+    Assert_Literal_Color($hex, "f.normalize_darkness_floor")
+    
 
     !$color = $normalize_hex_rgb($hex)
     !$darkness = $hex_luminance($color)
@@ -2842,7 +2787,7 @@
 
     !endwhile
 
-    $assert_literal_color($normalized)
+    Assert_Literal_Color($normalized, "f.normalize_darkness_floor:upper:normalized")
 
     !return %upper($normalized)
 
@@ -2994,14 +2939,13 @@
 
   !endif
 
-  $assert_literal_color($dark)
+  Assert_Literal_Color($dark, "f.darken_color")
 
   !$dark = $normalize_hex_rgb($dark)
 
   !return $normalize_darkness_floor($dark)
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_darken.puml ---
 
 
 
@@ -3016,7 +2960,6 @@
 '   - RGB lightening
 '   - Lightness normalization
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_lighten.puml ---
 
 
 '---------------------------------------------------------
@@ -3082,7 +3025,7 @@
     '
     ' Validate and normalize the input color.
     '
-    $assert_literal_color($hex)
+    Assert_Literal_Color($hex, "f.normalize_lightness_ceiling")
 
     !$color = $normalize_hex_rgb($hex)
     !$lightness = $hex_luminance($color)
@@ -3184,7 +3127,7 @@
 
     !endwhile
 
-    $assert_literal_color($normalized)
+    Assert_Literal_Color($normalized, "f.normalize_lightness_ceiling")
 
     !return %upper($normalized)
 
@@ -3357,14 +3300,13 @@
 
   !endif
 
-  $assert_literal_color($light)
+  Assert_Literal_Color($light, "f.lighten_color")
 
   !$light = $normalize_hex_rgb($light)
 
   !return $normalize_lightness_ceiling($light)
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_lighten.puml ---
 
 
 
@@ -3384,7 +3326,6 @@
 ' Acts as the primary color/style abstraction
 ' layer used by framework styles.
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_resolver.puml ---
 !function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
 
   !if ($context0 != "") && ($is_special_style_token($context0) == %false())
@@ -3539,14 +3480,14 @@
 !endfunction
  
 
- !function $resolve_literal_color($tokenOrColor)
+!function $resolve_literal_color($tokenOrColor)
   !$color = $resolve_style_color($tokenOrColor)
 
-  $assert_literal_color($color)
+  Assert_Literal_Color($color, "f.resolve_literal_color")
+
   !return %upper($color)
 
 !endfunction
-' --- End Import: src/libs/stdlib/components/_resolver.puml ---
 
 
 
@@ -3570,7 +3511,6 @@
 ' - Future third-party includes 
 '
 '---------------------------------------------------------
-' --- Importing: src/libs/stdlib/components/_corruption_detection.puml ---
 '=========================================================
 ' CORRUPTION DETECTION LIBRARY
 '=========================================================
@@ -3667,7 +3607,7 @@
 
     !$remaining = %substr($remaining,1)
 
-    !$pos = %strpos($remaining,"|")
+    !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
     !if ($pos < 0)
         Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -3831,7 +3771,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -3841,14 +3781,14 @@
 
         !$remainingBody = %substr($remaining,1)
 
-        !$pos = %strpos($remainingBody,"|")
+        !$pos = %strpos($remainingBody, $CORRUPTION_VARIABLE_DEL)
         !if ($pos < 0) 
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remainingBody + "]" )
         !endif
 
         !$variable_name = %substr($remainingBody,0,$pos)
 
-        !$remaining = "|" + %substr($remainingBody,$pos+1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remainingBody,$pos+1)
 
         !if ($variable_name != "")
 
@@ -3869,7 +3809,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -3879,7 +3819,7 @@
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
         !if ($pos < 0)
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -3887,7 +3827,7 @@
 
         !$variable_name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
             Repair_Corrupted_Variable( $variable_name )
@@ -3903,7 +3843,7 @@
 
     !$iteration = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
 
         !$iteration = $iteration + 1
 
@@ -3913,7 +3853,7 @@
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
 
         !if ($pos < 0)
             Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
@@ -3921,7 +3861,7 @@
 
         !$variable_name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
 
         !if ($variable_name != "")
             Repair_Color_Variable( $variable_name )
@@ -3976,16 +3916,12 @@
 '   #CCCCFF
 '
 '=========================================================
-' --- End Import: src/libs/stdlib/components/_corruption_detection.puml ---
 
-' --- End Import: src/libs/stdlib/components/index.puml ---
 
-' --- Importing: src/libs/archimate/components/index.puml ---
 ' src/libraries/archimate/index.puml
 ' Module Entry Point: Libraries / Archimate Component Pack 
 
 
-' --- Importing: src/libs/archimate/components/_functions.puml ---
 ' src/libraries/archimate/_functions.puml
 
 '---------------------------------------------------------
@@ -4017,19 +3953,13 @@
 
 ' !unquoted procedure 
 ' !unquoted function  
-' --- End Import: src/libs/archimate/components/_functions.puml ---
-
-' --- Importing: src/libs/archimate/components/_colors.puml ---
-' --- End Import: src/libs/archimate/components/_colors.puml ---
 
 
-' --- End Import: src/libs/archimate/components/index.puml ---
+
 
 
 'STEP 3 :: THEME includes
-' --- Importing: src/libs/stdlib/theme/index.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_colors.puml ---
 
 !procedure Load_Lib_Theme_StdLib_Colors()
 '---------------------------------------------------------
@@ -4083,9 +4013,7 @@
 !global $COLOR_DISABLED_LIGHT ?= "#737373"
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_colors.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_fonts.puml ---
 !procedure Load_Lib_Theme_StdLib_Fonts()
 
 '---------------------------------------------------------
@@ -4103,10 +4031,8 @@
 !global $COLOR_FONT ?= $COLOR_TEXT
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_fonts.puml ---
 
 
-' --- Importing: src/libs/stdlib/theme/_spacing.puml ---
 !procedure Load_Lib_Theme_StdLib_Spacing()
 
 '---------------------------------------------------------
@@ -4136,9 +4062,7 @@
 !endif
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_spacing.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_borders.puml ---
 
 !procedure Load_Lib_Theme_StdLib_Borders()
 '---------------------------------------------------------
@@ -4159,9 +4083,7 @@
 !global $BORDER_5 ?= 5
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_borders.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_corners.puml ---
 !procedure Load_Lib_Theme_StdLib_Corners()
 '---------------------------------------------------------
 ' Border Radius Utility Variables
@@ -4184,9 +4106,7 @@
 
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_corners.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_widths.puml ---
 !procedure Load_Lib_Theme_StdLib_Widths()
 '---------------------------------------------------------
 ' Width Utility Variables
@@ -4201,9 +4121,7 @@
 
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_widths.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_heights.puml ---
 !procedure Load_Lib_Theme_StdLib_Heights()
 '---------------------------------------------------------
 ' Height Utility Variables
@@ -4217,10 +4135,8 @@
 
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_heights.puml ---
 
 
-' --- Importing: src/libs/stdlib/theme/_element.puml ---
 !procedure Load_Lib_Theme_StdLib_Element()
 
     !global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
@@ -4238,9 +4154,7 @@
     Inherit_If("SIZE_LINE_ELEMENT","SIZE_LINE")
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_element.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_layout.puml ---
 !procedure Load_Lib_Theme_StdLib_Layout()
 '---------------------------------------------------------
 ' Layout Constants
@@ -4280,10 +4194,8 @@
 ' endlegend
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_layout.puml ---
 
 
-' --- Importing: src/libs/stdlib/theme/_icons.puml ---
 !procedure Load_Lib_Theme_StdLib_Icons()
 '---------------------------------------------------------
 ' Icon Constants
@@ -4300,10 +4212,8 @@
 !global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_icons.puml ---
 
 
-' --- Importing: src/libs/stdlib/theme/_title.puml ---
 !procedure Load_Lib_Theme_StdLib_Title()
 
 '---------------------------------------------------------
@@ -4329,9 +4239,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_title.puml ---
 
-' --- Importing: src/libs/stdlib/theme/_component.puml ---
 !procedure Load_Lib_Theme_StdLib_Component()
 
     !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
@@ -4349,7 +4257,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     Inherit_If("SIZE_LINE_COMPONENT","SIZE_LINE")
 
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/_component.puml ---
 
 
 
@@ -4373,10 +4280,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     Load_Lib_Theme_StdLib_Component()
     
 !endprocedure
-' --- End Import: src/libs/stdlib/theme/index.puml ---
 
-' --- Importing: src/libs/archimate/theme/index.puml ---
-' --- Importing: src/libs/archimate/theme/_fonts.puml ---
 !procedure Load_Lib_Theme_Archimate_Fonts()
 
     '=====================================================
@@ -4392,9 +4296,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_fonts.puml ---
 
-' --- Importing: src/libs/archimate/theme/_colors.puml ---
 
 !procedure Load_Lib_Theme_Archimate_Colors()
 
@@ -4440,10 +4342,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_colors.puml ---
 
 
-' --- Importing: src/libs/archimate/theme/_mapped_colors.puml ---
 
 
 !procedure Load_Lib_Theme_Archimate_Mapped_Colors()
@@ -4514,10 +4414,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_RELATIONSHIP_FONTCOLOR ?= $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_mapped_colors.puml ---
 
 
-' --- Importing: src/libs/archimate/theme/_corners.puml ---
 
 !procedure Load_Lib_Theme_Archimate_Corners()
 
@@ -4531,9 +4429,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_corners.puml ---
 
-' --- Importing: src/libs/archimate/theme/_widths.puml ---
 
 !procedure Load_Lib_Theme_Archimate_Widths()
 
@@ -4545,9 +4441,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_widths.puml ---
 
-' --- Importing: src/libs/archimate/theme/_element.puml ---
 !procedure Write_Lib_Style_Archimate_Element()
 
     
@@ -4723,7 +4617,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 
 !endprocedure
-' --- End Import: src/libs/archimate/theme/_element.puml ---
 
 
 
@@ -4762,11 +4655,9 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !endif
 
 !endprocedure 
-' --- End Import: src/libs/archimate/theme/index.puml ---
 
 
 'STEP 4 :: Skin Params includes
-' --- Importing: src/libs/stdlib/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
@@ -4796,9 +4687,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !endif
 
 !endprocedure
-' --- End Import: src/libs/stdlib/skinparams/index.puml ---
 
-' --- Importing: src/libs/archimate/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
@@ -4811,12 +4700,9 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !endif
     
 !endprocedure
-' --- End Import: src/libs/archimate/skinparams/index.puml ---
 
 
 'STEP 5 :: STYLES includes
-' --- Importing: src/libs/stdlib/styles/index.puml ---
-' --- Importing: src/libs/stdlib/styles/_utilities.puml ---
 !procedure Write_Lib_Style_Stdlib_Utilities()
 
 <style>
@@ -4973,10 +4859,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 </style>
 
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_utilities.puml ---
 
 
-' --- Importing: src/libs/stdlib/styles/_card.puml ---
 !procedure Write_Lib_Style_Stdlib_Card()
 
 <style>
@@ -5029,9 +4913,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 </style>
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_card.puml ---
 
-' --- Importing: src/libs/stdlib/styles/_panel.puml ---
 !procedure Write_Lib_Style_Stdlib_Panel()
 
 <style>
@@ -5080,9 +4962,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 </style>
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_panel.puml ---
 
-' --- Importing: src/libs/stdlib/styles/_containers.puml ---
 !procedure Write_Lib_Style_Stdlib_Containers()
 
 <style>
@@ -5117,10 +4997,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 </style>
 
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_containers.puml ---
 
 
-' --- Importing: src/libs/stdlib/styles/_title.puml ---
 '---------------------------------------------------------
 ' Title Styles
 '---------------------------------------------------------
@@ -5152,9 +5030,7 @@ title {
 '---------------------------------------------------------
 ' Title Element
 '---------------------------------------------------------
-' --- End Import: src/libs/stdlib/styles/_title.puml ---
 
-' --- Importing: src/libs/stdlib/styles/_element.puml ---
 
 '---------------------------------------------------------
 ' Element Styles
@@ -5196,9 +5072,7 @@ component {
 </style>
 
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_element.puml ---
 
-' --- Importing: src/libs/stdlib/styles/_component.puml ---
 
 '---------------------------------------------------------
 ' Component Styles
@@ -5208,7 +5082,6 @@ component {
 
 
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/_component.puml ---
 
 
 
@@ -5226,15 +5099,11 @@ component {
     
 
 !endprocedure
-' --- End Import: src/libs/stdlib/styles/index.puml ---
 
-' --- Importing: src/libs/archimate/styles/index.puml ---
 
-' --- End Import: src/libs/archimate/styles/index.puml ---
 
 
 'STEP 6 :: Add to Load_Lib_All
-' --- Importing: src/libs/_load.puml ---
 !procedure Load_Lib_Themes()
     '--------------------------------------------    
     Load_Lib_Theme_BEFORE()
@@ -5284,10 +5153,7 @@ component {
   
 
 
-' --- End Import: src/libs/_load.puml ---
 
 
-' --- End Import: src/libs/index.puml ---
 
-' --- End Import: src/index.puml ---
 

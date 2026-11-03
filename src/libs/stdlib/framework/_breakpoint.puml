@@ -2,8 +2,8 @@
 ' BREAKPOINT REGISTRY
 '=========================================================
 
-!global $BREAKPOINTS ?= "|"
-
+!global $BREAKPOINTS_DEL = "|"
+!global $BREAKPOINTS ?= "" + $BREAKPOINTS_DEL + ""
 !global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
 
 
@@ -67,9 +67,9 @@
     !if ($Breakpoint_Enabled($name))
 
         !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
-        !$token = "|" + $name + "|"
+        !$token = $BREAKPOINTS_DEL + $name + $BREAKPOINTS_DEL
 
-        !$registry = %replace($registry, $token, "|")
+        !$registry = %replace($registry, $token, $BREAKPOINTS_DEL)
 
         Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
 
@@ -94,7 +94,7 @@
 ' Clear All Breakpoints
 '=========================================================
 !procedure Clear_Breakpoints()
-    Registry_Set($REGISTRY_BREAKPOINTS, "|" )
+    Registry_Set($REGISTRY_BREAKPOINTS, $BREAKPOINTS_DEL )
 !endprocedure
 
 
@@ -104,11 +104,11 @@
 
     !$count = 0
 
-    !while ($remaining != "|")
+    !while ($remaining != $BREAKPOINTS_DEL)
 
         !$remaining = %substr($remaining,1)
-        !$pos = %strpos($remaining,"|")
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$pos = %strpos($remaining,$BREAKPOINTS_DEL)
+        !$remaining = $BREAKPOINTS_DEL + %substr($remaining,$pos + 1)
 
         !$count = $count + 1
 

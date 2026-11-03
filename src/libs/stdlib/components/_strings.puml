@@ -5,10 +5,7 @@
     !$prefixWithSeparator = $prefix + "_"
 
     !if %strpos($value, $prefixWithSeparator) == 0
-        !return %substr(
-            $value,
-            %strlen($prefixWithSeparator)
-        )
+        !return %substr( $value, %strlen($prefixWithSeparator) )
     !endif
 
     !return $value

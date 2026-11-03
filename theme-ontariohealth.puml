@@ -1,26 +1,22 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-11-02 18:32:46 EST
-' Build Commit Hash: 86a2f999437e0338e05fe2ae0237847620099aa8
-' Build Commit Comment: re-refactored
+' Generated on: 2026-11-03 10:33:03 EST
+' Build Commit Hash: 88d0fc2d097d882adcd206c99ba6e4a4be9d801d
+' Build Commit Comment: zzz
 ' ========================================================
 
 
 
 
 'STEP 1 :: VARS includes
-' --- Importing: src/themes/ontariohealth/vars/index.puml ---
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/themes/ontariohealth/vars/_root.puml ---
 
 
 !global $OH_THEME_NAME = "OntarioHealth"
-' --- End Import: src/themes/ontariohealth/vars/_root.puml ---
 
-' --- Importing: src/themes/ontariohealth/vars/_colors.puml ---
 
 '---------------------------------------------------------
 ' Color Constants
@@ -93,12 +89,8 @@
 !global $COLOR_OH_NEW_LIGHT ?= "#DDEDC7"
 !global $COLOR_OH_NEW_DARK ?= "#005700"
 
-' --- End Import: src/themes/ontariohealth/vars/_colors.puml ---
 
-' --- Importing: src/themes/ontariohealth/vars/_fonts.puml ---
-' --- End Import: src/themes/ontariohealth/vars/_fonts.puml ---
 
-' --- Importing: src/themes/ontariohealth/vars/_layout.puml ---
 
 
 '---------------------------------------------------------
@@ -107,10 +99,8 @@
 
 
 
-' --- End Import: src/themes/ontariohealth/vars/_layout.puml ---
 
 
-' --- Importing: src/themes/ontariohealth/vars/_title.puml ---
 '---------------------------------------------------------
 ' Title Constants
 '---------------------------------------------------------
@@ -124,37 +114,25 @@
 !global $COLOR_OH_FONT_TITLE ?= "AUTO"
     
 !global $COLOR_OH_LINE_TITLE ?= "CURRENT" 
-' --- End Import: src/themes/ontariohealth/vars/_title.puml ---
 
-' --- End Import: src/themes/ontariohealth/vars/index.puml ---
 
 
 'STEP 2 :: COMPONENTS includes
-' --- Importing: src/themes/ontariohealth/components/index.puml ---
 ' src/libraries/ontario-health/index.puml
 ' Module Entry Point: Libraries / Ontario Health Component Pack 
 
-' --- Importing: src/themes/ontariohealth/components/_title.puml ---
 
 
 
-' --- End Import: src/themes/ontariohealth/components/_title.puml ---
 
-' --- Importing: src/themes/ontariohealth/components/_patterns.puml ---
-' --- End Import: src/themes/ontariohealth/components/_patterns.puml ---
 
-' --- Importing: src/themes/ontariohealth/components/_sbbs.puml ---
-' --- End Import: src/themes/ontariohealth/components/_sbbs.puml ---
 
-' --- End Import: src/themes/ontariohealth/components/index.puml ---
 
 
 'STEP 3 :: THEME includes
-' --- Importing: src/themes/ontariohealth/theme/index.puml ---
 ' src/themes/ontario-health/index.puml
 ' Module Entry Point: Ontario Health Theme Variables
 
-' --- Importing: src/themes/ontariohealth/theme/_colors.puml ---
 '---------------------------------------------------------
 ' Color Constants Applied
 '---------------------------------------------------------
@@ -236,9 +214,7 @@
 
 !endprocedure
 
-' --- End Import: src/themes/ontariohealth/theme/_colors.puml ---
 
-' --- Importing: src/themes/ontariohealth/theme/_layout.puml ---
 
 '---------------------------------------------------------
 ' Layout Constants Applied
@@ -249,9 +225,7 @@
 
 
 !endprocedure
-' --- End Import: src/themes/ontariohealth/theme/_layout.puml ---
 
-' --- Importing: src/themes/ontariohealth/theme/_title.puml ---
 
 
 '---------------------------------------------------------
@@ -273,7 +247,6 @@
 
 !endprocedure
 
-' --- End Import: src/themes/ontariohealth/theme/_title.puml ---
 
 
 
@@ -289,11 +262,9 @@
     !endif
 
 !endprocedure
-' --- End Import: src/themes/ontariohealth/theme/index.puml ---
 
 
 'STEP 4 :: Skin Params includes
-' --- Importing: src/themes/ontariohealth/skinparams/index.puml ---
 
 '---------------------------------------------------------
 ' skinparam Initialization
@@ -308,20 +279,16 @@
     !endif
     !endif
 !endprocedure
-' --- End Import: src/themes/ontariohealth/skinparams/index.puml ---
 
 
 'STEP 5 :: STYLES includes
-' --- Importing: src/themes/ontariohealth/styles/index.puml ---
 
 
-' --- Importing: src/themes/ontariohealth/styles/_title.puml ---
 
 
 !procedure Write_Lib_Style_OntarioHealth_Title()
 
 !endprocedure 
-' --- End Import: src/themes/ontariohealth/styles/_title.puml ---
 
 
 
@@ -336,5 +303,4 @@
 
 
 !endprocedure 
-' --- End Import: src/themes/ontariohealth/styles/index.puml ---
 

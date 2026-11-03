@@ -55,16 +55,6 @@
 !endfunction
 
 
-!function $assert_literal_color($value)
-
-  !if ($is_literal_color($value) == %false())
-    Trigger_Assert("Invalid literal color=[" + $value + "]")
-
-  !endif
-
-  !return $value
-
-!endfunction
 
 
 '=========================================================
@@ -81,7 +71,7 @@
 
 !function $normalize_hex_rgb($hex)
 
-  $assert_literal_color($hex)
+  Assert_Literal_Color($hex, "f.normalize_hex_rgb")
   !$len = %strlen($hex)
 
   '

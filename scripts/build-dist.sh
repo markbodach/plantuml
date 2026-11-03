@@ -111,7 +111,7 @@ compile_file() {
 
             echo "${indent}└── $relative_include" >> "$tree_file"
 
-            echo "' --- Importing: $full_path ---" >> "$output_file"
+            # echo "' --- Importing: $full_path ---" >> "$output_file"
 
             compile_file \
                 "$full_path" \
@@ -119,7 +119,7 @@ compile_file() {
                 "$output_file" \
                 "$tree_file"
 
-            echo "' --- End Import: $full_path ---" >> "$output_file"
+            # echo "' --- End Import: $full_path ---" >> "$output_file"
             echo "" >> "$output_file"
 
         elif [[ ! "$line" =~ ^@startuml && ! "$line" =~ ^@enduml ]]; then

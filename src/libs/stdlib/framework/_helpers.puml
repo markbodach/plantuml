@@ -32,7 +32,7 @@
 
     !$registry = $Registry_Get($registryName)
 
-    !return (%strpos($registry, "|" + $name + "|") >= 0)
+    !return (%strpos($registry, $REGISTRY_DEL + $name + $REGISTRY_DEL) >= 0)
 
 !endfunction
 
@@ -46,7 +46,7 @@
 
         !$registry = $Registry_Get($registryName)
 
-        !$registry = $registry + $name + "|"
+        !$registry = $registry + $name + $REGISTRY_DEL
 
         Registry_Set($registryName, $registry)
 
@@ -59,15 +59,15 @@
 
     !$remaining = $Registry_Get($registryName)
 
-    !while ($remaining != "|")
+    !while ($remaining != $REGISTRY_DEL)
 
         !$remaining = %substr($remaining,1)
 
-        !$pos = %strpos($remaining,"|")
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
 
         !$name = %substr($remaining,0,$pos)
 
-        !$remaining = "|" + %substr($remaining,$pos + 1)
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
 
         !if ($name != "")
 

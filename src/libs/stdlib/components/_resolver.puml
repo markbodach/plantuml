@@ -152,10 +152,11 @@
 !endfunction
  
 
- !function $resolve_literal_color($tokenOrColor)
+!function $resolve_literal_color($tokenOrColor)
   !$color = $resolve_style_color($tokenOrColor)
 
-  $assert_literal_color($color)
+  Assert_Literal_Color($color, "f.resolve_literal_color")
+
   !return %upper($color)
 
 !endfunction

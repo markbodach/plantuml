@@ -63,7 +63,7 @@
     '
     ' Validate and normalize the input color.
     '
-    $assert_literal_color($hex)
+    Assert_Literal_Color($hex, "f.normalize_lightness_ceiling")
 
     !$color = $normalize_hex_rgb($hex)
     !$lightness = $hex_luminance($color)
@@ -165,7 +165,7 @@
 
     !endwhile
 
-    $assert_literal_color($normalized)
+    Assert_Literal_Color($normalized, "f.normalize_lightness_ceiling")
 
     !return %upper($normalized)
 
@@ -338,7 +338,7 @@
 
   !endif
 
-  $assert_literal_color($light)
+  Assert_Literal_Color($light, "f.lighten_color")
 
   !$light = $normalize_hex_rgb($light)
 

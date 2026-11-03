@@ -57,9 +57,11 @@
 '
 '=========================================================
 
-!global $THEMES = "|"
-!global $SKINPARAMS = "|"
-!global $STYLES = "|"
+!global $REGISTRY_DEL = "|" 
+
+!global $THEMES = "" + $REGISTRY_DEL + ""
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
 
 !global $REGISTRY_THEMES = "THEMES"
 !global $REGISTRY_SKINPARAMS = "SKINPARAMS"
