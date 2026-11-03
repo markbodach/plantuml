@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-03 10:33:03 EST
-' Build Commit Hash: 88d0fc2d097d882adcd206c99ba6e4a4be9d801d
-' Build Commit Comment: zzz
+' Generated on: 2026-11-03 10:42:54 EST
+' Build Commit Hash: 53eaac3881abfb409ac50b19b7fde4a294badb18
+' Build Commit Comment: motivation issue
 ' ========================================================
 
 ' src/all.puml
@@ -4451,8 +4451,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
     Breakpoint_If( "ARCH_MOTIVATION_VALUE", %upper($ARCH_MOTIVATION_FILLCOLOR) == "#MOTIVATION", "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
-    !assert 0 == 1 : "motivationBg=[" + $motivationBg + "]"
-    'Breakpoint_If( "ARCH_MOTIVATION_VALUE", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+    Breakpoint_If( "ARCH_MOTIVATION_VALUE_BG", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
     !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
@@ -4631,8 +4630,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         Load_Lib_Theme_Archimate_Mapped_Colors()
 
         ' *****
-        '!assert 0 == 1 : "CORRUPTIONS=[" + $Registry_Get($REGISTRY_CORRUPTION_VARIABLES) + "]"
-
         'ZZZ Detect_Lib_Corruption()
         Repair_Lib_Corruption()
         ' *****

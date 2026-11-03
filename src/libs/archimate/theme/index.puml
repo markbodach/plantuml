@@ -19,8 +19,6 @@
         Load_Lib_Theme_Archimate_Mapped_Colors()
 
         ' *****
-        '!assert 0 == 1 : "CORRUPTIONS=[" + $Registry_Get($REGISTRY_CORRUPTION_VARIABLES) + "]"
-
         'ZZZ Detect_Lib_Corruption()
         Repair_Lib_Corruption()
         ' *****
