@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle (SASS-Style Compilation)
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-11-03 15:12:45 EST
-' Build Commit Hash: 1ae45be1950828d1e39718f93d64ec6797bec15b
-' Build Commit Comment: derived variables
+' Generated on: 2026-11-05 15:52:10 EST
+' Build Commit Hash: d49331824da3c75530ed9b2fa144854adbd13f86
+' Build Commit Comment: Build_Registered_Theme_Derived_Variables fixes
 ' ========================================================
 
 
@@ -80,10 +80,10 @@
 !global $COLOR_OH_APPLICATION_DARK ?= "#3193CC"
 !global $COLOR_OH_TECHNOLOGY_LIGHT ?= "#D1EFD4"
 !global $COLOR_OH_TECHNOLOGY_DARK ?= "#39B54A"
-!global $COLOR_OH_PHYSICAL_LIGHT ?= "#FEE1D9"
-!global $COLOR_OH_PHYSICAL_DARK ?= "#F15A22"
-!global $COLOR_OH_IMPLEMENTATION_LIGHT ?= "#FEE1D9"
-!global $COLOR_OH_IMPLEMENTATION_DARK ?= "#F15A22"
+!global $COLOR_OH_PHYSICAL_LIGHT ?= "#D1EFD4"
+!global $COLOR_OH_PHYSICAL_DARK ?= "#39B54A"
+!global $COLOR_OH_IMPLEMENTATION_LIGHT ?= "#D1EFD4"
+!global $COLOR_OH_IMPLEMENTATION_DARK ?= "#39B54A"
 !global $COLOR_OH_HIGHLIGHTED_LIGHT ?= "#CFEDED"
 !global $COLOR_OH_HIGHLIGHTED_DARK ?= "#0050EF"
 !global $COLOR_OH_NEW_LIGHT ?= "#DDEDC7"
