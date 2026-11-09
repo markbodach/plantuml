@@ -1,0 +1,14 @@
+!function $archimate_sprite($stereotype)
+
+    !$s = %lower($stereotype)
+
+    !$pos = %strpos($s,"-")
+
+    !if ($pos >= 0)
+        !return "sprite_arch_" + %replace($s,"-","_")
+    !endif
+
+    !return ""
+
+!endfunction
+

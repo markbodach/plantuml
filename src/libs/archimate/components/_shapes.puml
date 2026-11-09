@@ -1,0 +1,174 @@
+!unquoted procedure ArchActor( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_business_actor")
+
+        actor $label as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
+
+    !else
+
+        actor $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchComponent( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_application_component")
+
+        component $label as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_service")
+
+        component $label as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
+
+    !else
+
+        component $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchNode( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_node")
+
+        node $label as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+
+    !else
+
+        node $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchQueue( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_business_role")
+
+        queue $label as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+
+    !else
+
+        queue $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchFrame( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_business_product")
+
+        frame $label as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+
+    !else
+
+        frame $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchFile( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_artifact")
+
+        file $label as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+
+        file $label as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+
+    !else
+
+        file $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchCloud( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_communicationnetwork")
+
+        cloud $label as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+
+        cloud $label as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+
+        cloud $label as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+
+    !else
+
+        cloud $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchUseCase( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_motivation_value")
+
+        usecase $label as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+
+    !else
+
+        usecase $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchPackage( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_implementation_workpackage")
+
+        package $label as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_plateau")
+
+        package $label as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+
+    !else
+
+        package $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+!unquoted procedure ArchProcess( $alias, $label, $sprite, $layer )
+
+    ArchRectangle( $alias, $label, $sprite, $layer )
+
+!endprocedure
+
+
+!unquoted procedure ArchFolder( $alias, $label, $sprite, $layer )
+
+    folder $label as $alias <<%lower($layer)>>
+
+!endprocedure
+
+
+!unquoted procedure ArchCircle( $alias, $label, $sprite, $layer )
+
+    circle $label as $alias <<%lower($layer)>>
+
+!endprocedure

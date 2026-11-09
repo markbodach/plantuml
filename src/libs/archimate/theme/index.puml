@@ -5,7 +5,7 @@
 
 !include _corners.puml
 !include _widths.puml
-!include _element.puml
+
 
 
 !procedure Load_Lib_Theme_Archimate()
@@ -29,11 +29,3 @@
 
 !endprocedure 
 
-
-!procedure Load_Lib_Styles_Archimate()
-    !if ($ARCHIMATE_LIB_ENABLED == %true() )
-
-        Write_Lib_Style_Archimate_Element()
-    !endif
-
-!endprocedure 

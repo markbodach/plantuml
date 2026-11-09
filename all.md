@@ -1,0 +1,2177 @@
+========================================================
+Bundle Documentation
+Bundle Name: Core Framework
+Generated on: 2026-11-09 13:30:45 EST
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/all.puml
+========================================================
+
+src/all.puml
+Module Entry Point: OH + Archimate Component Pack
+========================================================
+FILE: /c/dev/plantuml/src/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/index.puml
+========================================================
+
+src/index.puml
+Module Entry Point: OH + Archimate Component Pack
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/index.puml
+========================================================
+
+---------------------------------------------------------
+ASSERT UTILITIES
+=========================================================
+
+PURPOSE
+
+Provides reusable assertion helpers for:
+
+- Validation
+- Diagnostics
+- Contract enforcement
+- Runtime debugging
+
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_assert.puml
+========================================================
+
+=========================================================
+ASSERT UTILITIES
+=========================================================
+
+PURPOSE
+
+Provides reusable assertion helpers for:
+
+- Validation
+- Diagnostics
+- Contract enforcement
+- Runtime debugging
+
+=========================================================
+=========================================================
+Trigger_Assert
+=========================================================
+
+Raises an assertion immediately.
+
+Parameters:
+
+$message
+Assertion message.
+
+Example:
+
+Trigger_Assert(
+"Invalid state detected"
+)
+
+Output:
+
+MB_PUML :: <<ASSERT>>
+Invalid state detected
+
+=========================================================
+=========================================================
+Assert_If
+=========================================================
+
+Raises an assertion only when the supplied
+condition evaluates to true.
+
+Parameters:
+
+$condition
+Boolean expression.
+
+$message
+Assertion message.
+
+Example:
+
+Assert_If(
+($name == ""),
+"Name cannot be blank"
+)
+
+=========================================================
+=========================================================
+Assert_Blank
+=========================================================
+
+Raises an assertion when a value is blank.
+
+Example:
+
+Assert_Blank(
+$token,
+"Token cannot be blank"
+)
+
+=========================================================
+=========================================================
+Assert_Not_Blank
+=========================================================
+
+Raises an assertion when a value is not blank.
+
+Example:
+
+Assert_Not_Blank(
+$trace_error,
+"Trace information should be empty"
+)
+
+=========================================================
+=========================================================
+Assert_Variable_Exists
+=========================================================
+
+Raises an assertion when a variable
+does not exist.
+
+Uses:
+
+COLOR_PRIMARY
+$COLOR_PRIMARY
+
+=========================================================
+=========================================================
+Assert_Variable_Missing
+=========================================================
+
+Raises an assertion when a variable
+already exists.
+
+=========================================================
+=========================================================
+Assert_Literal_Color
+=========================================================
+
+Raises an assertion when a value is
+not a valid literal color.
+
+Supports:
+
+#RGB
+#RRGGBB
+#RRGGBBAA
+
+=========================================================
+=========================================================
+Assert_Hash_Token
+=========================================================
+
+Helpful while debugging semantic
+color resolution pipelines.
+
+Example:
+
+Assert_Hash_Token(
+$semantic_suffix,
+"Unexpected hash token"
+)
+
+=========================================================
+---------------------------------------------------------
+Debug Utilities
+=========================================================
+
+PURPOSE
+
+Provides reusable diagnostics and troubleshooting helpers
+for framework development, theme validation, style
+inspection, and runtime variable analysis.
+
+CAPABILITIES
+
+- Variable inspection
+- Color inspection
+- Style inspection
+- Theme troubleshooting
+- Diagnostic panel generation
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_debug.puml
+========================================================
+
+=========================================================
+DEBUG UTILITIES
+=========================================================
+
+PURPOSE
+
+Provides reusable debugging helpers for:
+
+- Variable inspection
+- Color inspection
+- Style troubleshooting
+- Theme debugging
+- Diagnostic output
+
+DESIGN GOALS
+
+- Simple to use
+- PlantUML compatible
+- Rectangle-friendly output
+- Theme troubleshooting support
+- Framework diagnostics
+
+NOTES
+
+Functions return formatted text suitable for:
+
+rectangle
+note
+title
+legend
+
+Most helpers are intended for temporary debugging
+and should not normally appear in production diagrams.
+
+=========================================================
+=========================================================
+Debug Color
+
+Displays background, font, and line colors.
+
+Example:
+
+rectangle $debug_color(
+"Web UI",
+$cBackgroundColor,
+$cFontColor,
+$cLineColor
+)
+
+=========================================================
+=========================================================
+Debug Variables (Flat Array)
+
+Input Format:
+
+[
+"Name1","Value1",
+"Name2","Value2"
+]
+
+Example:
+
+rectangle $debug_variables_flat([
+"COLOR_PRIMARY", $COLOR_PRIMARY,
+"COLOR_TEXT", $COLOR_TEXT,
+"ROUND_2", $ROUND_2
+])
+
+=========================================================
+=========================================================
+Debug Variables (Nested Array)
+
+Input Format:
+
+[
+["Name1","Value1"],
+["Name2","Value2"]
+]
+
+Example:
+
+rectangle $debug_variables_nested([
+["COLOR_PRIMARY",$COLOR_PRIMARY],
+["COLOR_TEXT",$COLOR_TEXT],
+["ROUND_2",$ROUND_2]
+])
+
+NOTES
+
+Nested array support may vary between PlantUML
+versions. Prefer the flat-array implementation
+when maximum compatibility is required.
+
+=========================================================
+=========================================================
+Debug Panel
+
+Adds a title to any debug content.
+
+Example:
+
+rectangle $debug_panel(
+"Web UI",
+$debug_variables_flat([
+"COLOR_PRIMARY",$COLOR_PRIMARY,
+"COLOR_TEXT",$COLOR_TEXT
+])
+)
+
+=========================================================
+=========================================================
+Debug Variable
+
+Convenience helper for displaying a single value.
+
+Example:
+
+rectangle $debug_variable(
+"COLOR_PRIMARY",
+$COLOR_PRIMARY
+)
+
+=========================================================
+=========================================================
+Debug Style
+
+Displays a complete style context.
+
+Useful during style generation and color resolution.
+
+Example:
+
+rectangle $debug_style(
+"Web UI",
+$cBackgroundColor,
+$cFontColor,
+$cLineColor
+)
+
+=========================================================
+=========================================================
+EXAMPLES
+=========================================================
+
+Single Variable
+
+rectangle $debug_variable(
+"ROUND_2",
+$ROUND_2
+)
+
+
+Color Diagnostic
+
+rectangle $debug_color(
+"Primary Theme",
+$COLOR_PRIMARY,
+$COLOR_TEXT,
+$COLOR_BORDER
+)
+
+
+Flat Variable List
+
+rectangle $debug_panel(
+"Theme Variables",
+$debug_variables_flat([
+"COLOR_PRIMARY",$COLOR_PRIMARY,
+"COLOR_TEXT",$COLOR_TEXT,
+"ROUND_2",$ROUND_2
+])
+)
+
+
+Nested Variable List
+
+rectangle $debug_panel(
+"Theme Variables",
+$debug_variables_nested([
+["COLOR_PRIMARY",$COLOR_PRIMARY],
+["COLOR_TEXT",$COLOR_TEXT],
+["ROUND_2",$ROUND_2]
+])
+)
+
+=========================================================
+---------------------------------------------------------
+Breakpoint Utilities
+=========================================================
+
+PURPOSE
+
+This allows developers to trace and debug complex resolution pipelines 
+(such as semantic colors, style inheritance, automatic contrast selection, 
+and token transformations) without modifying framework code or adding 
+temporary logging statements.
+
+CAPABILITIES
+
+- Built on the existing registry framework
+- Zero overhead when breakpoints are disabled
+- Non-invasive and cross-cutting
+- Suitable for framework internals and diagnostic scenarios
+- Uses PlantUML assertions as a controlled execution stop mechanism
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_breakpoint.puml
+========================================================
+
+=========================================================
+BREAKPOINT REGISTRY
+=========================================================
+=========================================================
+Breakpoint Registration
+=========================================================
+=========================================================
+Diagnostics
+=========================================================
+=========================================================
+Trigger_Breakpoint Assert
+=========================================================
+=========================================================
+Breakpoint Removal
+=========================================================
+=========================================================
+Conditional Breakpoint Removal
+=========================================================
+=========================================================
+Clear All Breakpoints
+=========================================================
+=========================================================
+Conditional Breakpoint Registration
+=========================================================
+---------------------------------------------------------
+Apply Variable Override If Source Exists
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_apply.puml
+========================================================
+
+=========================================================
+Apply Variable Override If Source Exists
+
+Copies source value into target if source exists.
+
+Parameters:
+
+target
+Variable to receive the value
+
+source
+Variable providing the value
+
+strictTarget
+%false() = create target if missing
+%true()  = target must already exist
+
+=========================================================
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    '-----------------------------------------
+    ' Source missing -> no action
+    '-----------------------------------------
+        '-------------------------------------
+        ' Strict target validation
+        '-------------------------------------
+        '-------------------------------------
+        ' Read source value
+        '-------------------------------------
+        '-------------------------------------
+        ' Prevent blank overwrite
+        '-------------------------------------
+        '-------------------------------------
+        ' Apply value
+        '-------------------------------------
+---------------------------------------------------------
+Inherit Variable Value
+
+Implements:
+
+target ??= source
+
+Behavior:
+
+Target Exists
+-> preserve target
+
+Target Missing
++ Source Exists
+-> inherit source
+
+Target Missing
++ Source Missing
+-> ASSERT
+
+Intended precedence:
+
+User Override
+↓
+Inherited Value
+↓
+Root Library Default
+
+---------------------------------------------------------
+    '-----------------------------------------
+    ' Validate target name
+    '-----------------------------------------
+    '-----------------------------------------
+    ' Validate source name
+    '-----------------------------------------
+    '-----------------------------------------
+    ' Inheritance source must exist
+    '-----------------------------------------
+    '-----------------------------------------
+    ' Inherit source value
+    '-----------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_helpers.puml
+========================================================
+
+=========================================================
+Registry Variable Access
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_corruption.puml
+========================================================
+
+=========================================================
+DETECT LIB CORRUPTION
+=========================================================
+
+Framework Hook
+
+Called automatically during:
+
+Load_Lib_Themes()
+
+Enables:
+
+Enable_Breakpoint("CORRUPTED_VARIABLE")
+
+Results:
+
+variable=[ARCH_MOTIVATION_FILLCOLOR]
+value=[#MOTIVATION]
+
+=========================================================
+=========================================================
+REPAIR EXTERNAL LIBRARY CORRUPTION
+=========================================================
+
+Run AFTER corruption detection and BEFORE
+theme/color resolution.
+
+Converts:
+
+#MOTIVATION
+
+->
+
+#CCCCFF
+
+=========================================================
+=========================================================
+EXAMPLE USAGE
+=========================================================
+
+DEVELOPMENT MODE
+
+Enable_Breakpoint(
+"CORRUPTED_VARIABLE"
+)
+
+Detect_Lib_Corruption()
+
+
+PRODUCTION MODE
+
+Repair_Lib_Corruption()
+
+
+HYBRID MODE
+
+Enable_Breakpoint(
+"CORRUPTED_VARIABLE"
+)
+
+Detect_Lib_Corruption()
+
+Repair_Lib_Corruption()
+
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/framework/_extensions.puml
+========================================================
+
+=========================================================
+Extension Registry Framework
+=========================================================
+
+Provides registration and invocation support for themes, styles, skinparams, and future extension types.
+
+Themes are processed in registration order.
+
+Example:
+
+Register_Lib_All("ThemeA")
+Register_Lib_All("ThemeB")
+
+Execution Order:
+
+ThemeA
+↓
+ThemeB
+
+Registered extensions may provide:
+
+Load_Theme_<Theme>()
+
+Used for:
+- Variables
+- Theme initialization
+- Configuration
+
+Load_Styles_<Theme>()
+
+Used for:
+- Styles
+- Stereotypes
+- Formatting
+
+=========================================================
+=========================================================
+STYLE EXTENSION HOOKS
+=========================================================
+
+The toolkit provides four optional extension procedures that
+allow consumers to customize variables and styles without
+modifying the toolkit source code.
+
+=========================================================
+
+LOADING ORDER
+
+Load_Lib_Theme_BEFORE()
+↓
+Load_Lib_Theme_Stdlib()
+Load_Lib_Theme_Archimate()
+Registered Theme Procedures
+↓
+Load_Lib_Theme_AFTER()
+
+↓
+Load_Lib_Skinparams_BEFORE()
+↓
+Load_Lib_Skinparams_Stdlib()
+Load_Lib_Skinparams_Archimate()
+Registered Skinparams Procedures
+↓
+
+Load_Lib_Styles_BEFORE()
+↓
+Load_Lib_Styles_Stdlib()
+Load_Lib_Styles_Archimate()
+Registered Theme Style Procedures
+↓
+Load_Lib_Styles_AFTER()
+
+=========================================================
+
+BEFORE HOOKS
+
+Intended for:
+
+- Override toolkit defaults
+- Configure variables
+- Select active themes
+- Replace framework values
+
+Example:
+
+!procedure Load_Lib_Theme_BEFORE()
+
+!$SPACING_UNIT = 8
+
+!$ROUND_2 = 12
+
+!endprocedure
+
+=========================================================
+
+AFTER HOOKS
+
+Intended for:
+
+- Final overrides
+- Project-specific stereotypes
+- Local utility styles
+- Style customizations
+
+Example:
+
+!procedure Load_Lib_Styles_AFTER()
+
+<style>
+
+.projectCard {
+Padding 20
+RoundCorner 10
+}
+
+</style>
+
+!endprocedure
+
+=========================================================
+
+RECOMMENDATIONS
+
+Variables -> PRELOAD hooks
+
+Styles    -> LOAD hooks
+
+BEFORE    -> Configure toolkit behavior
+
+AFTER     -> Override toolkit defaults
+
+=========================================================
+
+DEFAULT IMPLEMENTATIONS
+
+Consumers may redefine these procedures.
+
+DO NOT ADD CODE
+DO NOT ADD CODE
+DO NOT ADD CODE
+DO NOT ADD CODE
+DO NOT ADD CODE
+DO NOT ADD CODE
+
+=========================================================
+STEP 1 :: VARS includes
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/vars/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/vars/_root.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/vars/_corruption_registry.puml
+========================================================
+
+=========================================================
+CORRUPTION REGISTRY INITIALIZATION
+=========================================================
+
+Registry Storage
+
+Stores variables that should be inspected
+for external library corruption.
+
+Registry Format:
+
+|ARCH_MOTIVATION_FILLCOLOR|
+
+|ARCH_MOTIVATION_FILLCOLOR|
+|ARCH_MOTIVATION_BORDERCOLOR|
+
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/vars/_extension_registry.puml
+========================================================
+
+=========================================================
+Extension Registry Framework
+=========================================================
+
+REGISTRY
+
+Stores registered theme names using a delimiter-string
+registry implementation.
+
+Registry Format:
+
+|ThemeA|
+
+|ThemeA|ThemeB|
+
+Leading and trailing delimiters allow exact matching
+using %strpos() without partial-match collisions.
+
+Example:
+
+|ThemeA|
+
+|ThemeA|ThemeB|
+
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/vars/_colors.puml
+========================================================
+
+---------------------------------------------------------
+Contrast defaults
+---------------------------------------------------------
+---------------------------------------------------------
+Darkening defaults
+---------------------------------------------------------
+Darkening default
+RGB luminance floor (0-255)
+---------------------------------------------------------
+Lightening defaults
+---------------------------------------------------------
+Lightening default
+RGB luminance ceiling (0-255)
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/vars/index.puml
+========================================================
+
+src/themes/archimate/index.puml
+Module Entry Point: Archimate Theme Variables
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/vars/_root.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/vars/_corruption_repair.puml
+========================================================
+
+=========================================================
+REGISTER ARCHIMATE VARIABLES
+=========================================================
+
+Register all variables that may be corrupted
+by external Archimate libraries.
+
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/vars/_sprites.puml
+========================================================
+
+=========================================================
+Strategy
+=========================================================
+=========================================================
+Business
+=========================================================
+=========================================================
+Application
+=========================================================
+=========================================================
+Technology
+=========================================================
+=========================================================
+Motivation
+=========================================================
+=========================================================
+Implementation & Migration
+=========================================================
+=========================================================
+Other
+=========================================================
+STEP 2 :: COMPONENTS includes
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/index.puml
+========================================================
+
+---------------------------------------------------------
+String Utilities
+
+Core string manipulation helpers used throughout the
+framework.
+
+Provides:
+- Prefix handling
+- Suffix detection
+- Style token detection
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_strings.puml
+========================================================
+
+  'token value should not be coming in with a prefix, like being processed by get_semantic_color
+---------------------------------------------------------
+Variable Utilities
+
+Dynamic PlantUML variable resolution, validation,
+existence checking, and indirection helpers.
+
+Provides:
+- Variable lookup
+- Dynamic variable access
+- Variable validation
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_variables.puml
+========================================================
+
+---------------------------------------------------------
+Variable Helpers
+---------------------------------------------------------
+
+Resolves a dynamically named PlantUML variable.
+
+Accepted inputs:
+COLOR_PRIMARY
+$COLOR_PRIMARY
+
+=========================================================
+First Defined Value
+
+Preserves:
+""
+
+Treats only:
+$UNSET
+
+as undefined.
+
+=========================================================
+=========================================================
+First Non-Blank Value
+
+Returns the first value that is not blank.
+
+Safe for:
+- Undefined variables
+- Empty strings
+- Literal colors
+- Semantic tokens
+
+Similar to:
+
+value0 ?? value1 ?? value2 ...
+
+=========================================================
+    ' repeat through var7...
+---------------------------------------------------------
+Text Utilities
+
+Formatting helpers for generated text content,
+titles, notes, legends, diagnostics, and
+documentation output.
+
+Provides:
+- Padding
+- Centering
+- Line spacing
+- Framed text formatting
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_text.puml
+========================================================
+
+=========================================================
+TEXT UTILITIES
+=========================================================
+
+PURPOSE
+
+Provides reusable text-formatting helpers for:
+
+- String repetition
+- Horizontal padding
+- Vertical spacing
+- Content framing
+- Text centering
+
+DESIGN GOALS
+
+- PlantUML compatibility first
+- No arrays
+- No !foreach
+- No collection functions
+- No version-sensitive features
+- Composable utility functions
+
+COMPATIBILITY
+
+Uses:
+
+!function
+!while
+%strlen()
+%intval()
+
+Avoids:
+
+!foreach
+Arrays
+%array_*
+%splitstr()
+
+FORMATTING MODEL
+
+PlantUML renders padding most reliably when horizontal
+padding is placed INSIDE line boundaries.
+
+Preferred:
+
+\n
+TEXT
+\n
+
+Avoid:
+
+\nTEXT\n
+
+The high-level helpers in this module implement the
+preferred rendering pattern automatically.
+
+=========================================================
+=========================================================
+Repeat Text
+
+Repeats a string N times.
+
+Example:
+
+$repeat("-",5)
+
+Returns:
+
+-----
+
+=========================================================
+=========================================================
+New Line
+
+Returns one or more newline characters.
+
+Examples:
+
+$nl()
+
+$nl(2)
+
+=========================================================
+=========================================================
+Pad Left
+
+Adds padding characters to the left side of a string.
+
+Example:
+
+$pad_left("TEXT",4)
+
+Returns:
+
+TEXT
+
+=========================================================
+=========================================================
+Pad Right
+
+Adds padding characters to the right side of a string.
+
+Example:
+
+$pad_right("TEXT",4)
+
+Returns:
+
+TEXT
+
+=========================================================
+=========================================================
+Pad Both Sides
+
+Adds equal padding to both sides of a string.
+
+Example:
+
+$pad_both("TEXT",4)
+
+Returns:
+
+TEXT
+
+=========================================================
+=========================================================
+Center Text
+
+Centers text within a target width.
+
+NOTES
+
+This applies left padding only.
+
+The goal is visual alignment rather than exact
+monospaced centering.
+
+Example:
+
+$center_text("TITLE",40)
+
+=========================================================
+=========================================================
+Line Above
+
+Adds one or more blank lines before text.
+
+Example:
+
+$line_above("TEXT")
+
+Result:
+
+<blank line>
+TEXT
+
+=========================================================
+=========================================================
+Line Below
+
+Adds one or more blank lines after text.
+
+Example:
+
+$line_below("TEXT")
+
+Result:
+
+TEXT
+<blank line>
+
+=========================================================
+=========================================================
+Line Wrap
+
+Adds blank lines above and below text.
+
+Example:
+
+$line_wrap("TEXT")
+
+Result:
+
+<blank line>
+TEXT
+<blank line>
+
+=========================================================
+=========================================================
+Surround
+
+High-level formatting helper.
+
+Adds:
+
+- Blank lines above
+- Blank lines below
+- Horizontal padding INSIDE those boundaries
+
+This is the preferred formatting helper for:
+
+- Notes
+- Legends
+- Titles
+- Diagnostics
+- Generated markdown content
+
+Example:
+
+$surround("TEXT")
+
+Returns:
+
+\n
+TEXT
+\n
+
+=========================================================
+=========================================================
+Framed Title
+
+Convenience helper for common banner/title formatting.
+
+Combines:
+
+- Centering
+- Internal padding
+- Vertical spacing
+
+Example:
+
+title $framed_title(
+"Architecture Overview"
+)
+
+=========================================================
+---------------------------------------------------------
+Hex Utilities
+
+RGB and hexadecimal color processing functions.
+
+Provides:
+- Color validation
+- RGB extraction
+- Hex conversion
+- Luminance calculation
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_hex.puml
+========================================================
+
+=========================================================
+Literal Color Validation
+
+Supports:
+#RGB
+#RRGGBB
+#RRGGBBAA
+=========================================================
+    '
+    ' Must start with #
+    '
+=========================================================
+Hex Normalization
+
+Supports:
+#RGB
+#RRGGBB
+#RRGGBBAA
+
+Returns:
+#RRGGBB
+=========================================================
+  '
+  ' #RGB -> #RRGGBB
+  '
+  '
+  ' #RRGGBBAA -> #RRGGBB
+  '
+  '
+  ' Assume #RRGGBB
+  '
+=========================================================
+Hex Decoder
+=========================================================
+=========================================================
+Integer -> Hex Digit
+
+Input: 0-15
+Output: 0-F
+=========================================================
+=========================================================
+Byte -> 2 Digit Hex
+
+Input: 0-255
+Output: 00-FF
+=========================================================
+=========================================================
+RGB Component Extraction
+=========================================================
+=========================================================
+RGB Luminance
+
+W3C Relative Luminance Approximation
+
+Range:
+0   = Black
+255 = White
+=========================================================
+  '!return ( (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b) )
+=========================================================
+RGB -> #RRGGBB
+=========================================================
+---------------------------------------------------------
+Color Utilities
+
+Semantic color resolution and contrast-aware
+text color selection.
+
+Provides:
+- Semantic colors
+- Auto text colors
+- Contrast calculations
+- Theme-safe color lookups
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_colors.puml
+========================================================
+
+
+Normalizes a color variable reference:
+COLOR_PRIMARY     -> PRIMARY
+$COLOR_PRIMARY    -> PRIMARY
+$PRIMARY          -> PRIMARY
+PRIMARY           -> PRIMARY
+
+  '------------------------------------------
+  ' Exact variable exists
+  '------------------------------------------
+  '------------------------------------------
+  ' Semantic COLOR_ variable
+  '------------------------------------------
+  '------------------------------------------
+  ' Error
+  '------------------------------------------
+  ' Call the base contrast function using the constructed variable name
+=========================================================
+Darkness / Lightness Detection
+=========================================================
+=========================================================
+Contrast Text Color Selection
+
+Returns:
+dark text color
+OR
+light text color
+=========================================================
+=========================================================
+AUTO Text Color Resolution
+
+Supports:
+PRIMARY_DARK
+PRIMARY
+#023451
+#D6EAF8
+=========================================================
+=========================================================
+Variable-Based Contrast Helper
+
+Example:
+
+!$bg = $resolve_variable("COLOR_PRIMARY_DARK")
+
+FontColor $get_variable_text_color(
+"COLOR_PRIMARY_DARK",
+"COLOR_TEXT",
+"COLOR_TEXT_LIGHT"
+)
+
+=========================================================
+---------------------------------------------------------
+Darken Utilities
+
+Semantic and RGB-based darkening operations
+with brightness floor protection.
+
+Provides:
+- Semantic color progression
+- RGB darkening
+- Darkness normalization
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_darken.puml
+========================================================
+
+---------------------------------------------------------
+Parse DARKEN token
+
+Supported:
+DARKEN
+DARKEN_10
+DARKEN_20
+DARKEN_30
+---------------------------------------------------------
+---------------------------------------------------------
+Normalize Darkness Floor
+
+Prevents a color from becoming darker than the configured
+darkness floor.
+
+Behavior:
+- Normalizes #RGB and #RRGGBBAA to #RRGGBB.
+- Returns compliant colors unchanged.
+- Preserves existing zero-lightness safety behavior.
+- Lightens proportionally based on how far the color is
+below the darkness floor.
+- Applies bounded follow-up corrections for rounding.
+
+Existing usage remains valid:
+
+$normalize_darkness_floor("#050505")
+
+---------------------------------------------------------
+    '
+    ' Validate and normalize the input color.
+    '
+    '
+    ' Validate the darkness floor.
+    '
+    '
+    ' Validate the minimum correction.
+    '
+    '
+    ' Preserve the existing safety behavior for pure black
+    ' or another color with zero calculated lightness.
+    '
+    '
+    ' The color already satisfies the darkness floor.
+    '
+    '
+    ' Determine how far the color is below the floor.
+    '
+    '
+    ' Convert the shortfall into a proportional lightening
+    ' percentage.
+    '
+    ' Multiplication occurs before division to avoid losing
+    ' the fractional value through integer truncation.
+    '
+    '
+    ' Apply the configured minimum correction.
+    '
+    '
+    ' Protect the PlantUML lightening operation.
+    '
+    '
+    ' Apply the initial proportional correction.
+    '
+    '
+    ' PlantUML color calculations and integer rounding may
+    ' leave the result slightly below the darkness floor.
+    '
+    ' Apply bounded one-percent corrections until the color
+    ' reaches the configured floor.
+    '
+        '
+        ' Stop if PlantUML no longer changes the color.
+        '
+---------------------------------------------------------
+Semantic Token Progression
+
+LIGHT -> BASE -> DARK -> DARKEST
+
+PRIMARY_LIGHT
+-> PRIMARY
+
+PRIMARY
+-> PRIMARY_DARK
+
+PRIMARY_DARK
+-> PRIMARY_DARKEST
+
+PRIMARY_DARKEST
+-> RGB darkening fallback
+---------------------------------------------------------
+  '
+  ' PRIMARY_LIGHT -> PRIMARY
+  '
+  '
+  ' PRIMARY_DARK -> PRIMARY_DARKEST
+  '
+  '
+  ' PRIMARY_DARKEST
+  ' No darker semantic promotion available
+  '
+  '
+  ' PRIMARY -> PRIMARY_DARK
+  '
+---------------------------------------------------------
+Darken Resolver
+
+Resolution Order:
+
+1. Semantic Promotion
+LIGHT -> BASE
+BASE -> DARK
+DARK -> DARKEST
+
+2. RGB Darken
+
+3. Threshold Clamp
+---------------------------------------------------------
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  '
+  ' Step 2:
+  ' Resolve current value to a literal color
+  '
+  '
+  ' Step 3:
+  ' Determine darkening percentage
+  '
+  '
+  ' Step 4:
+  ' RGB Darkening
+  '
+---------------------------------------------------------
+Lighten Utilities
+
+Semantic and RGB-based lightening operations
+with brightness ceiling protection.
+
+Provides:
+- Semantic color progression
+- RGB lightening
+- Lightness normalization
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_lighten.puml
+========================================================
+
+---------------------------------------------------------
+Parse LIGHTEN token
+
+Supported:
+LIGHTEN
+LIGHTEN_10
+LIGHTEN_20
+LIGHTEN_30
+---------------------------------------------------------
+---------------------------------------------------------
+Brightness Detection
+---------------------------------------------------------
+---------------------------------------------------------
+Normalize Lightness Ceiling
+
+Prevents a color from becoming lighter than the configured
+lightness ceiling.
+
+Behavior:
+- Normalizes #RGB and #RRGGBBAA to #RRGGBB.
+- Returns compliant colors unchanged.
+- Darkens proportionally based on how far the color is
+above the lightness ceiling.
+- Avoids direct fractional RGB-channel scaling.
+- Applies bounded follow-up corrections for rounding.
+
+Existing usage remains valid:
+
+$normalize_lightness_ceiling("#D6EAF8")
+
+---------------------------------------------------------
+    '
+    ' Validate and normalize the input color.
+    '
+    '
+    ' Validate the lightness ceiling.
+    '
+    '
+    ' Validate the minimum correction.
+    '
+    '
+    ' A color with zero calculated lightness cannot exceed
+    ' a valid lightness ceiling.
+    '
+    '
+    ' The color already satisfies the lightness ceiling.
+    '
+    '
+    ' Determine how far the color exceeds the ceiling.
+    '
+    '
+    ' Convert the overage into a proportional darkening
+    ' percentage.
+    '
+    ' Example:
+    '
+    '   Lightness = 235
+    '   Ceiling   = 223
+    '   Overage   = 12
+    '   Percent   = (12 * 100) / 235
+    '
+    '
+    ' Apply the configured minimum correction.
+    '
+    '
+    ' Protect the PlantUML darkening operation.
+    '
+    '
+    ' Apply the initial proportional correction.
+    '
+    '
+    ' PlantUML color calculations and integer rounding may
+    ' leave the result slightly above the lightness ceiling.
+    '
+    ' Apply bounded one-percent corrections until the color
+    ' reaches the configured ceiling.
+    '
+        '
+        ' Stop if PlantUML no longer changes the color.
+        '
+---------------------------------------------------------
+Semantic Token Progression
+
+DARKEST -> DARK
+DARK -> BASE
+BASE -> LIGHT
+LIGHT -> LIGHTEST
+
+PRIMARY_DARKEST
+-> PRIMARY_DARK
+
+PRIMARY_DARK
+-> PRIMARY
+
+PRIMARY
+-> PRIMARY_LIGHT
+
+PRIMARY_LIGHT
+-> PRIMARY_LIGHTEST
+
+PRIMARY_LIGHTEST
+-> RGB Lightening
+---------------------------------------------------------
+  '
+  ' PRIMARY_DARKEST -> PRIMARY_DARK
+  '
+  '
+  ' PRIMARY_DARK -> PRIMARY
+  '
+  '
+  ' PRIMARY_LIGHTEST
+  ' No lighter semantic promotion available
+  '
+  '
+  ' PRIMARY_LIGHT -> PRIMARY_LIGHTEST
+  '
+  '
+  ' PRIMARY -> PRIMARY_LIGHT
+  '
+---------------------------------------------------------
+Lighten Resolver
+
+Resolution Order:
+
+1. Semantic Progression
+DARKEST -> DARK
+DARK -> BASE
+BASE -> LIGHT
+LIGHT -> LIGHTEST
+
+2. RGB Lightening
+
+3. Threshold Clamp
+---------------------------------------------------------
+  '
+  ' Step 1:
+  ' Semantic progression
+  '
+  '
+  ' Step 2:
+  ' Resolve current color
+  '
+    '
+  ' Step 3:
+  ' Determine lighten percentage
+  '
+  '
+  ' Step 4:
+  ' RGB Lightening
+  '
+---------------------------------------------------------
+Style Resolver
+
+Central style resolution engine.
+
+Resolves:
+- Semantic colors
+- AUTO
+- CURRENT
+- DARKEN*
+- LIGHTEN*
+- Literal colors
+
+Acts as the primary color/style abstraction
+layer used by framework styles.
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_resolver.puml
+========================================================
+
+  '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
+  '
+  ' Validation
+  '
+        '------------------------------------------
+        ' Prevent infinite recursion
+        '------------------------------------------
+        'PRESERVE THE CONTEXT !return $resolve_style_color($resolved)
+  '
+  ' Literal color
+  '
+  '
+  ' AUTO
+  '
+  '
+  ' CURRENT
+  '
+  '
+  ' DARKEN
+  '
+  '
+  ' LIGHTEN
+  '
+  '
+  ' Semantic color token
+  '
+    'Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
+    'Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+--------------------------------------------------------- 
+CORRUPTION DETECTION LIBRARY 
+========================================================= 
+
+PURPOSE 
+
+Detects and optionally repairs variable corruption 
+introduced by external PlantUML libraries. 
+
+COMMON SOURCES 
+
+- Archimate-PlantUML 
+- C4-PlantUML 
+- AWS-PlantUML 
+- Azure-PlantUML 
+- Corporate libraries 
+- Future third-party includes 
+
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/components/_corruption_detection.puml
+========================================================
+
+=========================================================
+CORRUPTION DETECTION LIBRARY
+=========================================================
+
+PURPOSE
+
+Detects and repairs variable corruption
+introduced by external PlantUML libraries.
+
+COMMON SOURCES
+
+- Archimate-PlantUML
+- C4-PlantUML
+- AWS-PlantUML
+- Azure-PlantUML
+- Corporate libraries
+- Future third-party includes
+
+TYPICAL CORRUPTION
+
+#MOTIVATION
+#BUSINESS
+#APPLICATION
+#PERSON
+#CONTAINER
+
+EXPECTED VALUES
+
+MOTIVATION
+BUSINESS
+APPLICATION
+
+OR
+
+#CCCCFF
+#047BC1
+#FFFFFF
+
+DESIGN PRINCIPLES
+
+✅ Generic
+✅ Library Agnostic
+✅ Breakpoint Driven
+✅ C4 Compatible
+✅ Archimate Compatible
+✅ Extensible
+
+=========================================================
+=========================================================
+DETECTION
+=========================================================
+=========================================================
+BREAKPOINT HELPERS
+=========================================================
+=========================================================
+REPAIR HELPERS
+=========================================================
+=========================================================
+VARIABLE REPAIR
+=========================================================
+=========================================================
+CORRUPTION REGISTRY
+=========================================================
+=========================================================
+REGISTRY PROCESSING
+=========================================================
+=========================================================
+DIAGNOSTICS
+=========================================================
+=========================================================
+DEVELOPMENT MODE
+=========================================================
+
+Enable_Breakpoint(
+"CORRUPTED_VARIABLE"
+)
+
+Detect_Registered_Corruption_Variables(
+"CORRUPTED_VARIABLE"
+)
+
+=========================================================
+=========================================================
+PRODUCTION MODE
+=========================================================
+
+Repair_Registered_Color_Variables()
+
+Example:
+
+#MOTIVATION
+
+->
+
+#CCCCFF
+
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/index.puml
+========================================================
+
+src/libraries/archimate/index.puml
+Module Entry Point: Libraries / Archimate Component Pack 
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/_sprite.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/_shapes.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/_rectangle.puml
+========================================================
+
+    ' =====================================================
+    ' Business
+    ' =====================================================
+    ' =====================================================
+    ' Application
+    ' =====================================================
+    ' =====================================================
+    ' Technology
+    ' =====================================================
+    ' =====================================================
+    ' Motivation
+    ' =====================================================
+    ' =====================================================
+    ' Implementation
+    ' =====================================================
+    ' =====================================================
+    ' Other
+    ' =====================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/_element.puml
+========================================================
+
+    '------------------------------------------
+    ' Resolve Layer
+    '------------------------------------------
+    '------------------------------------------
+    ' Validate Layer
+    '------------------------------------------
+    '------------------------------------------
+    ' Resolve Shape
+    '------------------------------------------
+    '------------------------------------------
+    ' Build Label
+    '------------------------------------------
+    '------------------------------------------
+    ' Render Element
+    '------------------------------------------
+STEP 3 :: THEME includes
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_colors.puml
+========================================================
+
+---------------------------------------------------------
+Color Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+NEED TO FIX NAMING
+COLOR_LIGHT
+COLOR_DARK
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_fonts.puml
+========================================================
+
+---------------------------------------------------------
+Font Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_spacing.puml
+========================================================
+
+---------------------------------------------------------
+Bootstrap-inspired spacing scale
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_borders.puml
+========================================================
+
+---------------------------------------------------------
+Border Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_corners.puml
+========================================================
+
+---------------------------------------------------------
+Border Radius Utility Variables
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_widths.puml
+========================================================
+
+---------------------------------------------------------
+Width Utility Variables
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_heights.puml
+========================================================
+
+---------------------------------------------------------
+Height Utility Variables
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_element.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_layout.puml
+========================================================
+
+---------------------------------------------------------
+Layout Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+---------------------------------------------------------
+Container / Boundary Constants
+---------------------------------------------------------
+---------------------------------------------------------
+Legend Functions
+---------------------------------------------------------
+legend right
+|= Archimate Category |= Color |
+| <back:E8DAEF>      </back> | External System |
+| <back:D6EAF8>      </back> | Logical Component / Service |
+| <back:FCF3CF>      </back> | Business Information Authority |
+endlegend
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_icons.puml
+========================================================
+
+---------------------------------------------------------
+Icon Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+Actors
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_title.puml
+========================================================
+
+---------------------------------------------------------
+Title Constants
+
+!$variable_name ?= "variable_value"
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/theme/_component.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/_fonts.puml
+========================================================
+
+    '=====================================================
+    ' Typography
+    '=====================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/_colors.puml
+========================================================
+
+    'DERIVATES
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/_derived_variables.puml
+========================================================
+
+    '**********************
+    '* HARD SET THE VALUES 
+    '**********************
+    '=====================================================
+    ' Layer Colors
+    '=====================================================
+    '=====================================================
+    ' ArchiMate physical layer
+    '=====================================================
+    '!global $ARCH_PHYSICAL_BORDERCOLOR = $resolve_literal_color($COLOR_PHYSICAL_DARK)
+    '!global $ARCH_IMPLEMENTATION_BORDERCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
+    '=====================================================
+    ' Other layer
+    '=====================================================
+    '=====================================================
+    ' Composite Colors
+    '=====================================================
+    '=====================================================
+    ' Junction Colors
+    '=====================================================
+    '=====================================================
+    ' Containers
+    '=====================================================
+    '=====================================================
+    ' Relationships
+    '=====================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/_corners.puml
+========================================================
+
+    '=====================================================
+    ' Corner Radius
+    '=====================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/theme/_widths.puml
+========================================================
+
+    '=====================================================
+    ' Widths
+    '=====================================================
+        ' *****
+        ' *****
+STEP 4 :: Skin Params includes
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/skinparams/index.puml
+========================================================
+
+---------------------------------------------------------
+skinparam Initialization
+---------------------------------------------------------
+skinparam linetype polyline
+skinparam linetype ortho
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/skinparams/index.puml
+========================================================
+
+---------------------------------------------------------
+skinparam Initialization
+---------------------------------------------------------
+STEP 5 :: STYLES includes
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_utilities.puml
+========================================================
+
+=========================================================
+PADDING
+=========================================================
+=========================================================
+DIRECTIONAL PADDING
+=========================================================
+=========================================================
+MARGIN
+=========================================================
+=========================================================
+DIRECTIONAL MARGIN
+=========================================================
+=========================================================
+BORDER THICKNESS
+=========================================================
+=========================================================
+ROUNDING
+=========================================================
+=========================================================
+SHADOWS
+=========================================================
+=========================================================
+WIDTHS
+=========================================================
+=========================================================
+HEIGHTS
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_card.puml
+========================================================
+
+=========================================================
+CARD
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_panel.puml
+========================================================
+
+=========================================================
+PANEL
+
+Stronger visual grouping.
+Ideal for architecture boundaries.
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_containers.puml
+========================================================
+
+=========================================================
+ARCHITECTURE CONTAINERS
+=========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_title.puml
+========================================================
+
+---------------------------------------------------------
+Title Styles
+---------------------------------------------------------
+---------------------------------------------------------
+Title Element
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_element.puml
+========================================================
+
+---------------------------------------------------------
+Element Styles
+---------------------------------------------------------
+    'COLOR_BACKGROUND_ELEMENT_COMPOSITE
+========================================================
+FILE: /c/dev/plantuml/src/libs/stdlib/styles/_component.puml
+========================================================
+
+---------------------------------------------------------
+Component Styles
+---------------------------------------------------------
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/styles/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/styles/_element.puml
+========================================================
+
+STEP 6 :: Add to Load_Lib_All
+========================================================
+FILE: /c/dev/plantuml/src/libs/_load.puml
+========================================================
+
+    '--------------------------------------------    
+    ' *****
+    ' *****
+    '--------------------------------------------
+    '--------------------------------------------    
+    '--------------------------------------------
+    '--------------------------------------------    
+    '--------------------------------------------

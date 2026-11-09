@@ -1,1 +1,11 @@
 
+!include _element.puml
+
+
+!procedure Load_Lib_Styles_Archimate()
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+
+        Write_Lib_Style_Archimate_Element()
+    !endif
+
+!endprocedure 

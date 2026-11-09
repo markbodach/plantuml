@@ -1,37 +1,15 @@
 ' ========================================================
-' Combined PlantUML Library Bundle (SASS-Style Compilation)
+' Combined PlantUML Library Bundle
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-11-05 15:52:10 EST
-' Build Commit Hash: d49331824da3c75530ed9b2fa144854adbd13f86
-' Build Commit Comment: Build_Registered_Theme_Derived_Variables fixes
+' Generated on: 2026-11-09 13:30:45 EST
+' Build Commit Hash: 2a7002709b4d570ee7230f67b7c63fa6b730fd96
+' Build Commit Comment: phys and impl fix
 ' ========================================================
-
-
-
-
-'STEP 1 :: VARS includes
-' src/themes/ontario-health/index.puml
-' Module Entry Point: Ontario Health Theme Variables
-
-
 
 !global $OH_THEME_NAME = "OntarioHealth"
 
-
-'---------------------------------------------------------
-' Color Constants
-'---------------------------------------------------------
-
 !global $COLOR_OH_LABEL ?= "#4D4D4D"
 !global $COLOR_OH_PLACEHOLDER ?= "#737373"
-
-
-'$COLOR_OH_BRAND_HOVER ?= "#049A5"
-
-'FOCUS_COLOR ?= "#F2FBFF"
-'ACCENT_COLOR ?= "#00B2E3" 
-'BRIGHT BLUE
-
 
 !global $COLOR_OH_PRIMARY ?= "#047BC1"
 !global $COLOR_OH_PRIMARY_LIGHT ?= "#D6EAF8"
@@ -40,7 +18,6 @@
 !global $COLOR_OH_WARNING ?= "#FCAF17"
 !global $COLOR_OH_WARNING_LIGHT ?= "#EFB243"
 !$COLOR_OH_WARNING_DARK ?= "#FFFAEB"
-'FFFAEB
 
 !global $COLOR_OH_SUCCESS ?= "#118847"
 !global $COLOR_OH_SUCCESS_LIGHT ?= "#EAF5EA"
@@ -50,15 +27,9 @@
 !global $COLOR_OH_ERROR_LIGHT ?= "#FCEFF0"
 !global $COLOR_OH_ERROR_DARK ?= "#8a0101"
 
-'! $COLOR_OH_EMPHASIS ?= "#9333EA"
-'! $COLOR_OH_EMPHASIS_LIGHT ?= $POUND
-'! $COLOR_OH_EMPHASIS_DARK ?= $POUND
-
 !global $COLOR_OH_TEXT ?= "#1A1A1A"
 !global $COLOR_OH_BORDER ?= "#5D6D7E"
 
-
-'Set OH Colours to ARCH
 !global $COLOR_OH_MOTIVATION ?= "#CCCCFF"
 !global $COLOR_OH_BUSINESS ?= $COLOR_OH_WARNING
 !global $COLOR_OH_LOGICAL ?= $COLOR_OH_PRIMARY
@@ -68,7 +39,6 @@
 !global $COLOR_OH_PHYSICAL ?= $COLOR_OH_SUCCESS
 !global $COLOR_OH_IMPLEMENTATION ?= $COLOR_OH_SUCCESS
 !global $COLOR_OH_EXTERNAL ?= "#E8DAEF"
-
 
 !global $COLOR_OH_MOTIVATION_LIGHT ?= "#F1E3F2"
 !global $COLOR_OH_MOTIVATION_DARK ?= "#B975B7"
@@ -89,58 +59,17 @@
 !global $COLOR_OH_NEW_LIGHT ?= "#DDEDC7"
 !global $COLOR_OH_NEW_DARK ?= "#005700"
 
-
-
-
-
-'---------------------------------------------------------
-' Layout Constants
-'---------------------------------------------------------
-
-
-
-
-
-'---------------------------------------------------------
-' Title Constants
-'---------------------------------------------------------
-
 !global $MARGIN_OH_TITLE ?= 20
 !global $PADDING_OH_TITLE ?= 15
 !global $ROUND_OH_CORNER_TITLE ?= 0
-
 
 !global $COLOR_OH_BACKGROUND_TITLE ?= "PRIMARY_DARK"
 !global $COLOR_OH_FONT_TITLE ?= "AUTO"
     
 !global $COLOR_OH_LINE_TITLE ?= "CURRENT" 
 
-
-
-'STEP 2 :: COMPONENTS includes
-' src/libraries/ontario-health/index.puml
-' Module Entry Point: Libraries / Ontario Health Component Pack 
-
-
-
-
-
-
-
-
-
-'STEP 3 :: THEME includes
-' src/themes/ontario-health/index.puml
-' Module Entry Point: Ontario Health Theme Variables
-
-'---------------------------------------------------------
-' Color Constants Applied
-'---------------------------------------------------------
-
-
 !procedure Load_Theme_OntarioHealth_Colors()
 
-    'Set OH Colours
     !global $COLOR_PRIMARY = $COLOR_OH_PRIMARY
     !global $COLOR_PRIMARY_LIGHT = $COLOR_OH_PRIMARY_LIGHT
     !global $COLOR_PRIMARY_DARK = $COLOR_OH_PRIMARY_DARK
@@ -160,15 +89,12 @@
     !global $COLOR_TEXT = $COLOR_OH_TEXT
     !global $COLOR_BORDER = $COLOR_OH_BORDER
 
-
     !global $COLOR_DISABLED_DARK = $COLOR_OH_LABEL
     !global $COLOR_DISABLED = $COLOR_OH_PLACEHOLDER
 
 !endprocedure
 
-
 !procedure Load_Theme_OntarioHealth_ArchimateColors()
-    'If there are a lot of variables, this could be moved into a separate _archimate.puml file
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
 
         Apply_If("COLOR_MOTIVATION",     "COLOR_OH_MOTIVATION")
@@ -208,30 +134,13 @@
         Apply_If("COLOR_NEW_LIGHT",            "COLOR_OH_NEW_LIGHT")
         Apply_If("COLOR_NEW_DARK",             "COLOR_OH_NEW_DARK")
 
-
-
     !endif
 
 !endprocedure
 
-
-
-'---------------------------------------------------------
-' Layout Constants Applied
-'---------------------------------------------------------
-
-
 !procedure Load_Theme_OntarioHealth_Layout()
 
-
 !endprocedure
-
-
-
-'---------------------------------------------------------
-' Title Constants Applied
-'---------------------------------------------------------
-
 
 !procedure Load_Theme_OntarioHealth_Title()
 
@@ -247,9 +156,6 @@
 
 !endprocedure
 
-
-
-
 !procedure Load_Theme_OntarioHealth()
 
     !if ($Is_Theme_Registered($OH_THEME_NAME) == %true() )
@@ -263,36 +169,18 @@
 
 !endprocedure
 
-
-'STEP 4 :: Skin Params includes
-
-'---------------------------------------------------------
-' skinparam Initialization
-'---------------------------------------------------------
-
 !procedure Load_Skinparams_OntarioHealth()
 
     !if ($Is_Skinparam_Registered($OH_THEME_NAME) == %true() )
     !if ($SKINPARAM_ENABLED)
 
-
     !endif
     !endif
 !endprocedure
 
-
-'STEP 5 :: STYLES includes
-
-
-
-
 !procedure Write_Lib_Style_OntarioHealth_Title()
 
 !endprocedure 
-
-
-
-
 
 !procedure Load_Styles_OntarioHealth()
 
@@ -301,6 +189,4 @@
 
     !endif
 
-
 !endprocedure 
-

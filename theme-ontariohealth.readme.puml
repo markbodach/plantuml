@@ -1,0 +1,121 @@
+' ========================================================
+' Bundle Documentation
+' Bundle Name: Theme: ontariohealth
+' Generated on: 2026-11-09 13:30:45 EST
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/index.puml
+' ========================================================
+
+'STEP 1 :: VARS includes
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/index.puml
+' ========================================================
+
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/_root.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/_colors.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Color Constants
+'---------------------------------------------------------
+'$COLOR_OH_BRAND_HOVER ?= "#049A5"
+'FOCUS_COLOR ?= "#F2FBFF"
+'ACCENT_COLOR ?= "#00B2E3" 
+'BRIGHT BLUE
+'FFFAEB
+'! $COLOR_OH_EMPHASIS ?= "#9333EA"
+'! $COLOR_OH_EMPHASIS_LIGHT ?= $POUND
+'! $COLOR_OH_EMPHASIS_DARK ?= $POUND
+'Set OH Colours to ARCH
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/_fonts.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/_layout.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Layout Constants
+'---------------------------------------------------------
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/vars/_title.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Title Constants
+'---------------------------------------------------------
+'STEP 2 :: COMPONENTS includes
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/components/index.puml
+' ========================================================
+
+' src/libraries/ontario-health/index.puml
+' Module Entry Point: Libraries / Ontario Health Component Pack 
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/components/_title.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/components/_patterns.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/components/_sbbs.puml
+' ========================================================
+
+'STEP 3 :: THEME includes
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/theme/index.puml
+' ========================================================
+
+' src/themes/ontario-health/index.puml
+' Module Entry Point: Ontario Health Theme Variables
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/theme/_colors.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Color Constants Applied
+'---------------------------------------------------------
+    'Set OH Colours
+    'If there are a lot of variables, this could be moved into a separate _archimate.puml file
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/theme/_layout.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Layout Constants Applied
+'---------------------------------------------------------
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/theme/_title.puml
+' ========================================================
+
+'---------------------------------------------------------
+' Title Constants Applied
+'---------------------------------------------------------
+'STEP 4 :: Skin Params includes
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/skinparams/index.puml
+' ========================================================
+
+'---------------------------------------------------------
+' skinparam Initialization
+'---------------------------------------------------------
+'STEP 5 :: STYLES includes
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/styles/index.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/themes/ontariohealth/styles/_title.puml
+' ========================================================
+

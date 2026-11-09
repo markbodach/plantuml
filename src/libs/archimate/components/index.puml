@@ -2,6 +2,9 @@
 ' Module Entry Point: Libraries / Archimate Component Pack 
 
 
-!include _functions.puml
-!include _colors.puml
+!include _sprite.puml
+!include _shapes.puml
+!include _rectangle.puml
+
+!include _element.puml
 

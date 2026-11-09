@@ -21,15 +21,17 @@ set -euo pipefail
 
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-CORE_ENTRY="src/all.puml"
 
-THEMES_DIR="src/themes"
+CORE_ENTRY="${REPO_ROOT}/src/all.puml"
+THEMES_DIR="${REPO_ROOT}/src/themes"
+
 
 DIST_DIR=""
 OUTPUT_FILE="${DIST_DIR}all.puml"
 
-DOC_DIR="docs/dist-auto-generated"
+DOC_DIR="${REPO_ROOT}/docs/dist-auto-generated"
 
 DIST_README="${DOC_DIR}/_dist-metadata.md"
 DIST_TREE="${DOC_DIR}/_repository-structure.md"
@@ -51,6 +53,44 @@ LAST_COMMIT_MESSAGE=$(git log -1 --pretty=%B)
 
 BUILD_TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S %Z')
 
+
+# =========================================================
+# Utilities
+# =========================================================
+
+collapse_blank_lines() {
+
+    local file="$1"
+
+    awk '
+    NF {
+        blank=0
+        print
+        next
+    }
+
+    !blank {
+        print
+        blank=1
+    }
+    ' "$file" > "${file}.tmp"
+
+    mv "${file}.tmp" "$file"
+}
+
+convert_readme_to_md() {
+
+    local input_file="$1"
+    local output_file="$2"
+
+    sed \
+    -e "s/^'[ ]\{0,\}//" \
+    -e "s/^'//" \
+    "$input_file" \
+    > "$output_file"
+
+}
+
 # =========================================================
 # Generic Bundle Compiler
 # =========================================================
@@ -62,8 +102,18 @@ compile_bundle() {
     local tree_file="$3"
     local bundle_name="$4"
 
+    local readme_file
+    local markdown_file
+
+    readme_file="${output_file%.puml}.readme.puml"
+    markdown_file="${output_file%.puml}.md"
+
+    # -----------------------------------------------------
+    # Code Bundle
+    # -----------------------------------------------------
+
     echo "' ========================================================" > "$output_file"
-    echo "' Combined PlantUML Library Bundle (SASS-Style Compilation)" >> "$output_file"
+    echo "' Combined PlantUML Library Bundle" >> "$output_file"
     echo "' Bundle Name: $bundle_name" >> "$output_file"
     echo "' Generated on: $BUILD_TIMESTAMP" >> "$output_file"
     echo "' Build Commit Hash: $LAST_COMMIT" >> "$output_file"
@@ -71,23 +121,49 @@ compile_bundle() {
     echo "' ========================================================" >> "$output_file"
     echo "" >> "$output_file"
 
+    # -----------------------------------------------------
+    # Documentation Bundle
+    # -----------------------------------------------------
+
+    echo "' ========================================================" > "$readme_file"
+    echo "' Bundle Documentation" >> "$readme_file"
+    echo "' Bundle Name: $bundle_name" >> "$readme_file"
+    echo "' Generated on: $BUILD_TIMESTAMP" >> "$readme_file"
+    echo "' ========================================================" >> "$readme_file"
+    echo "" >> "$readme_file"
+
     echo "$entry_file (Root Master)" > "$tree_file"
 
-    compile_file "$entry_file" 1 "$output_file" "$tree_file"
+    compile_file \
+        "$entry_file" \
+        1 \
+        "$output_file" \
+        "$readme_file" \
+        "$tree_file"
 
-    echo "└── Successfully compiled '$bundle_name' into '$output_file'"
+
+    collapse_blank_lines "$output_file"
+    collapse_blank_lines "$readme_file"
+
+    convert_readme_to_md \
+        "$readme_file" \
+        "$markdown_file"
+
+
+    echo "└── Successfully compiled '$bundle_name'"
 }
+
 
 # =========================================================
 # Recursive Compiler
 # =========================================================
-
 compile_file() {
 
     local target_file="$1"
     local depth="$2"
     local output_file="$3"
-    local tree_file="$4"
+    local readme_file="$4"
+    local tree_file="$5"
 
     local current_dir
     current_dir=$(dirname "$target_file")
@@ -96,6 +172,15 @@ compile_file() {
         echo "└──X Warning: File not found -> $target_file" >&2
         return
     fi
+
+    # -----------------------------------------------------
+    # File Header In Documentation
+    # -----------------------------------------------------
+
+    echo "' ========================================================" >> "$readme_file"
+    echo "' FILE: $target_file" >> "$readme_file"
+    echo "' ========================================================" >> "$readme_file"
+    echo "" >> "$readme_file"
 
     while IFS= read -r line || [[ -n "$line" ]]; do
 
@@ -111,19 +196,22 @@ compile_file() {
 
             echo "${indent}└── $relative_include" >> "$tree_file"
 
-            # echo "' --- Importing: $full_path ---" >> "$output_file"
-
             compile_file \
                 "$full_path" \
                 $((depth + 1)) \
                 "$output_file" \
+                "$readme_file" \
                 "$tree_file"
 
-            # echo "' --- End Import: $full_path ---" >> "$output_file"
-            echo "" >> "$output_file"
+        elif [[ "$line" =~ ^[[:space:]]*\' ]]; then
 
-        elif [[ ! "$line" =~ ^@startuml && ! "$line" =~ ^@enduml ]]; then
+            # Documentation only
+            echo "$line" >> "$readme_file"
 
+        elif [[ ! "$line" =~ ^@startuml ]] && \
+             [[ ! "$line" =~ ^@enduml ]]; then
+
+            # Executable code only
             echo "$line" >> "$output_file"
 
         fi

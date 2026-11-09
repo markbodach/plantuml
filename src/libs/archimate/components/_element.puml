@@ -1,0 +1,94 @@
+!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="")
+
+    '------------------------------------------
+    ' Resolve Layer
+    '------------------------------------------
+
+    !if ($layer == "")
+        !$derivedLayer = $archimate_layer_from_stereotype($stereotype)
+        !if ($derivedLayer != "OTHER")
+            !$layer = $derivedLayer
+        !else
+            !$layer = $ARCHIMATE_DEFAULT_LAYER
+        !endif
+    !endif
+
+
+    '------------------------------------------
+    ' Validate Layer
+    '------------------------------------------
+    !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
+    Assert_If( (%variable_exists($archElementColorName) == %false()),  "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
+
+    '------------------------------------------
+    ' Resolve Shape
+    '------------------------------------------
+    !if ($shape == "")
+        !$shape = $archimate_shape($stereotype)
+    !endif
+
+    '------------------------------------------
+    ' Build Label
+    '------------------------------------------
+    !$sprite = $archimate_sprite($stereotype)
+
+    '------------------------------------------
+    ' Render Element
+    '------------------------------------------
+    
+    !if (%lower($shape) == "actor")
+
+        ArchActor($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "queue")
+
+        ArchQueue($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "frame")
+
+        ArchFrame($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "component")
+
+        ArchComponent($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "node")
+
+        ArchNode($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "file")
+
+        ArchFile($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "cloud")
+
+        ArchCloud($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "usecase")
+
+        ArchUseCase($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "package")
+
+        ArchPackage($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "process")
+
+        ArchProcess($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "folder")
+
+        ArchFolder($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "circle")
+
+        ArchCircle($alias,$label,$sprite,$layer)
+
+    !else
+
+        ArchRectangle($alias,$label,$sprite,$layer)
+
+    !endif
+
+
+!endprocedure

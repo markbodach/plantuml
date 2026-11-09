@@ -1,333 +1,67 @@
 ' ========================================================
-' Combined PlantUML Library Bundle (SASS-Style Compilation)
+' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-05 15:52:10 EST
-' Build Commit Hash: d49331824da3c75530ed9b2fa144854adbd13f86
-' Build Commit Comment: Build_Registered_Theme_Derived_Variables fixes
+' Generated on: 2026-11-09 13:30:45 EST
+' Build Commit Hash: 2a7002709b4d570ee7230f67b7c63fa6b730fd96
+' Build Commit Comment: phys and impl fix
 ' ========================================================
 
-' src/all.puml
-' Module Entry Point: OH + Archimate Component Pack
-
-
-' src/index.puml
-' Module Entry Point: OH + Archimate Component Pack
-
-
-'---------------------------------------------------------
-' ASSERT UTILITIES
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable assertion helpers for:
-'
-'       - Validation
-'       - Diagnostics
-'       - Contract enforcement
-'       - Runtime debugging
-'
-'---------------------------------------------------------
-'=========================================================
-' ASSERT UTILITIES
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable assertion helpers for:
-'
-'       - Validation
-'       - Diagnostics
-'       - Contract enforcement
-'       - Runtime debugging
-'
-'=========================================================
-
-
-'=========================================================
-' Trigger_Assert
-'=========================================================
-'
-' Raises an assertion immediately.
-'
-' Parameters:
-'
-'   $message
-'       Assertion message.
-'
-' Example:
-'
-'   Trigger_Assert(
-'       "Invalid state detected"
-'   )
-'
-' Output:
-'
-'   MB_PUML :: <<ASSERT>>
-'   Invalid state detected
-'
-'=========================================================
 !procedure Trigger_Assert($message = "")
     !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
 !endprocedure
 
-
-'=========================================================
-' Assert_If
-'=========================================================
-'
-' Raises an assertion only when the supplied
-' condition evaluates to true.
-'
-' Parameters:
-'
-'   $condition
-'       Boolean expression.
-'
-'   $message
-'       Assertion message.
-'
-' Example:
-'
-'   Assert_If(
-'       ($name == ""),
-'       "Name cannot be blank"
-'   )
-'
-'=========================================================
 !procedure Assert_If($condition, $message = "")
     !if ($condition)
         Trigger_Assert($message)
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Blank
-'=========================================================
-'
-' Raises an assertion when a value is blank.
-'
-' Example:
-'
-'   Assert_Blank(
-'       $token,
-'       "Token cannot be blank"
-'   )
-'
-'=========================================================
 !procedure Assert_Blank($value, $message = "")
     !if ($value == "")
         Trigger_Assert($message)
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Not_Blank
-'=========================================================
-'
-' Raises an assertion when a value is not blank.
-'
-' Example:
-'
-'   Assert_Not_Blank(
-'       $trace_error,
-'       "Trace information should be empty"
-'   )
-'
-'=========================================================
 !procedure Assert_Not_Blank($value, $message = "")
     !if ($value != "")
         Trigger_Assert($message)
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Variable_Exists
-'=========================================================
-'
-' Raises an assertion when a variable
-' does not exist.
-'
-' Uses:
-'
-'   COLOR_PRIMARY
-'   $COLOR_PRIMARY
-'
-'=========================================================
 !procedure Assert_Variable_Exists($name, $message = "")
     !if ($variable_exists_safe($name) == %false())
         Trigger_Assert( $first_defined( $message, "Variable does not exist=[" + $name + "]" ) )
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Variable_Missing
-'=========================================================
-'
-' Raises an assertion when a variable
-' already exists.
-'
-'=========================================================
 !procedure Assert_Variable_Missing($name, $message = "")
     !if ($variable_exists_safe($name))
         Trigger_Assert( $first_defined( $message, "Variable already exists=[" + $name + "]" ) )
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Literal_Color
-'=========================================================
-'
-' Raises an assertion when a value is
-' not a valid literal color.
-'
-' Supports:
-'
-'   #RGB
-'   #RRGGBB
-'   #RRGGBBAA
-'
-'=========================================================
 !procedure Assert_Literal_Color($value, $message = "")
     !if ($is_literal_color($value) == %false())
         Trigger_Assert( $first_defined( $message, "Invalid literal color=[" + $value + "]" ) )
     !endif
 !endprocedure
 
-
-'=========================================================
-' Assert_Hash_Token
-'=========================================================
-'
-' Helpful while debugging semantic
-' color resolution pipelines.
-'
-' Example:
-'
-'   Assert_Hash_Token(
-'       $semantic_suffix,
-'       "Unexpected hash token"
-'   )
-'
-'=========================================================
 !procedure Assert_Hash_Token($value, $message = "")
     !if (%strpos(%upper($value), "#" ) == 0)
         Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
     !endif
 !endprocedure
 
-
-
-
 !procedure Trigger_Internal_Error($message="")
     !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
 !endprocedure
 
-
-
-'---------------------------------------------------------
-' Debug Utilities
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable diagnostics and troubleshooting helpers
-'   for framework development, theme validation, style
-'   inspection, and runtime variable analysis.
-'
-' CAPABILITIES
-'
-'   - Variable inspection
-'   - Color inspection
-'   - Style inspection
-'   - Theme troubleshooting
-'   - Diagnostic panel generation
-'---------------------------------------------------------
-'=========================================================
-' DEBUG UTILITIES
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable debugging helpers for:
-'
-'       - Variable inspection
-'       - Color inspection
-'       - Style troubleshooting
-'       - Theme debugging
-'       - Diagnostic output
-'
-' DESIGN GOALS
-'
-'   - Simple to use
-'   - PlantUML compatible
-'   - Rectangle-friendly output
-'   - Theme troubleshooting support
-'   - Framework diagnostics
-'
-' NOTES
-'
-'   Functions return formatted text suitable for:
-'
-'       rectangle
-'       note
-'       title
-'       legend
-'
-'   Most helpers are intended for temporary debugging
-'   and should not normally appear in production diagrams.
-'
-'=========================================================
-
-
-
-'=========================================================
-' Debug Color
-'
-' Displays background, font, and line colors.
-'
-' Example:
-'
-' rectangle $debug_color(
-'     "Web UI",
-'     $cBackgroundColor,
-'     $cFontColor,
-'     $cLineColor
-' )
-'
-'=========================================================
 !function $debug_color( $name, $backgroundColor, $fontColor, $lineColor )
 
     !return $surround($name) + "\nBackground = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor
 
 !endfunction
 
-
-
-'=========================================================
-' Debug Variables (Flat Array)
-'
-' Input Format:
-'
-' [
-'   "Name1","Value1",
-'   "Name2","Value2"
-' ]
-'
-' Example:
-'
-' rectangle $debug_variables_flat([
-'     "COLOR_PRIMARY", $COLOR_PRIMARY,
-'     "COLOR_TEXT", $COLOR_TEXT,
-'     "ROUND_2", $ROUND_2
-' ])
-'
-'=========================================================
 !function $debug_variables_flat($pairs)
 
     !$result = ""
@@ -351,33 +85,6 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Debug Variables (Nested Array)
-'
-' Input Format:
-'
-' [
-'   ["Name1","Value1"],
-'   ["Name2","Value2"]
-' ]
-'
-' Example:
-'
-' rectangle $debug_variables_nested([
-'     ["COLOR_PRIMARY",$COLOR_PRIMARY],
-'     ["COLOR_TEXT",$COLOR_TEXT],
-'     ["ROUND_2",$ROUND_2]
-' ])
-'
-' NOTES
-'
-'   Nested array support may vary between PlantUML
-'   versions. Prefer the flat-array implementation
-'   when maximum compatibility is required.
-'
-'=========================================================
 !function $debug_variables_nested($pairs)
 
     !$result = ""
@@ -403,181 +110,39 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Debug Panel
-'
-' Adds a title to any debug content.
-'
-' Example:
-'
-' rectangle $debug_panel(
-'     "Web UI",
-'     $debug_variables_flat([
-'         "COLOR_PRIMARY",$COLOR_PRIMARY,
-'         "COLOR_TEXT",$COLOR_TEXT
-'     ])
-' )
-'
-'=========================================================
 !function $debug_panel( $title, $content )
 
     !return $surround($title) + "\n" + $content
 
 !endfunction
 
-
-
-'=========================================================
-' Debug Variable
-'
-' Convenience helper for displaying a single value.
-'
-' Example:
-'
-' rectangle $debug_variable(
-'     "COLOR_PRIMARY",
-'     $COLOR_PRIMARY
-' )
-'
-'=========================================================
 !function $debug_variable( $name, $value )
 
     !return $name + " = " + $value
 
 !endfunction
 
-
-
-'=========================================================
-' Debug Style
-'
-' Displays a complete style context.
-'
-' Useful during style generation and color resolution.
-'
-' Example:
-'
-' rectangle $debug_style(
-'     "Web UI",
-'     $cBackgroundColor,
-'     $cFontColor,
-'     $cLineColor
-' )
-'
-'=========================================================
 !function $debug_style( $name, $backgroundColor="", $fontColor="", $lineColor="")
 
     !return $debug_panel( $name, "Background = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor )
 
 !endfunction
 
-
-
-'=========================================================
-' EXAMPLES
-'=========================================================
-'
-' Single Variable
-'
-' rectangle $debug_variable(
-'     "ROUND_2",
-'     $ROUND_2
-' )
-'
-'
-' Color Diagnostic
-'
-' rectangle $debug_color(
-'     "Primary Theme",
-'     $COLOR_PRIMARY,
-'     $COLOR_TEXT,
-'     $COLOR_BORDER
-' )
-'
-'
-' Flat Variable List
-'
-' rectangle $debug_panel(
-'     "Theme Variables",
-'     $debug_variables_flat([
-'         "COLOR_PRIMARY",$COLOR_PRIMARY,
-'         "COLOR_TEXT",$COLOR_TEXT,
-'         "ROUND_2",$ROUND_2
-'     ])
-' )
-'
-'
-' Nested Variable List
-'
-' rectangle $debug_panel(
-'     "Theme Variables",
-'     $debug_variables_nested([
-'         ["COLOR_PRIMARY",$COLOR_PRIMARY],
-'         ["COLOR_TEXT",$COLOR_TEXT],
-'         ["ROUND_2",$ROUND_2]
-'     ])
-' )
-'
-'=========================================================
-
-
-
-'---------------------------------------------------------
-' Breakpoint Utilities
-'=========================================================
-'
-' PURPOSE
-'
-'   This allows developers to trace and debug complex resolution pipelines 
-'   (such as semantic colors, style inheritance, automatic contrast selection, 
-'   and token transformations) without modifying framework code or adding 
-'   temporary logging statements.
-'
-' CAPABILITIES
-'
-'   - Built on the existing registry framework
-'   - Zero overhead when breakpoints are disabled
-'   - Non-invasive and cross-cutting
-'   - Suitable for framework internals and diagnostic scenarios
-'   - Uses PlantUML assertions as a controlled execution stop mechanism
-'---------------------------------------------------------
-'=========================================================
-' BREAKPOINT REGISTRY
-'=========================================================
-
 !global $BREAKPOINTS_DEL = "|"
 !global $BREAKPOINTS ?= "" + $BREAKPOINTS_DEL + ""
 !global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
-
-
-'=========================================================
-' Breakpoint Registration
-'=========================================================
 
 !procedure Enable_Breakpoint($name)
     Register_Lib_Object($name,$REGISTRY_BREAKPOINTS)
 !endprocedure
 
-
 !function $Breakpoint_Enabled($name)
     !return $object_registered($name,$REGISTRY_BREAKPOINTS)
 !endfunction
 
-
-'=========================================================
-' Diagnostics
-'=========================================================
-
 !procedure Trigger_Breakpoint_Dump()
     !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
 !endprocedure
-
-
-'=========================================================
-' Trigger_Breakpoint Assert
-'=========================================================
 
 !procedure Trigger_Breakpoint($name, $message = "" )
 
@@ -586,7 +151,6 @@
     !endif
 
 !endprocedure
-
 
 !procedure Breakpoint_If( $name, $condition, $message = "" )
 
@@ -600,14 +164,9 @@
 
 !endprocedure
 
-
-'=========================================================
-' Breakpoint Removal
-'=========================================================
 !procedure Disable_Breakpoint($name)
 
     Assert_Blank( $name, "Breakpoint name cannot be blank (p:Disable_Breakpoint)" )
-
 
     !if ($Breakpoint_Enabled($name))
 
@@ -622,10 +181,6 @@
 
 !endprocedure
 
-
-'=========================================================
-' Conditional Breakpoint Removal
-'=========================================================
 !procedure Disable_Breakpoint_If( $name, $condition)
 
     !if ($condition)
@@ -634,14 +189,9 @@
 
 !endprocedure
 
-
-'=========================================================
-' Clear All Breakpoints
-'=========================================================
 !procedure Clear_Breakpoints()
     Registry_Set($REGISTRY_BREAKPOINTS, $BREAKPOINTS_DEL )
 !endprocedure
-
 
 !function $Breakpoint_Count()
 
@@ -663,10 +213,6 @@
 
 !endfunction
 
-
-'=========================================================
-' Conditional Breakpoint Registration
-'=========================================================
 !procedure Enable_Breakpoint_If($name, $condition)
     !if ($condition)
         Enable_Breakpoint($name)
@@ -674,71 +220,24 @@
 
 !endprocedure
 
-
-
-'---------------------------------------------------------
-' Apply Variable Override If Source Exists
-'---------------------------------------------------------
-'=========================================================
-' Apply Variable Override If Source Exists
-'
-' Copies source value into target if source exists.
-'
-' Parameters:
-'
-'   target
-'       Variable to receive the value
-'
-'   source
-'       Variable providing the value
-'
-'   strictTarget
-'       %false() = create target if missing
-'       %true()  = target must already exist
-'
-'=========================================================
 !procedure Apply_If( $target, $source, $strictTarget = %false() )
 
-    '-----------------------------------------
-    ' Validate target name
-    '-----------------------------------------
     Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
 
-
-    '-----------------------------------------
-    ' Validate source name
-    '-----------------------------------------
     Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
 
-
-    '-----------------------------------------
-    ' Source missing -> no action
-    '-----------------------------------------
     !if ($variable_exists_safe($source))
 
-        '-------------------------------------
-        ' Strict target validation
-        '-------------------------------------
         !if ($strictTarget)
 
             Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
 
         !endif
 
-        '-------------------------------------
-        ' Read source value
-        '-------------------------------------
         !$sourceValue = %get_variable_value( $to_var_name($source) )
 
-        '-------------------------------------
-        ' Prevent blank overwrite
-        '-------------------------------------
         Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
 
-
-        '-------------------------------------
-        ' Apply value
-        '-------------------------------------
         %set_variable_value( $to_var_name($target), $sourceValue )
 
     !endif
@@ -751,71 +250,19 @@
 
 !endprocedure
 
-
-'---------------------------------------------------------
-' Inherit Variable Value
-'
-' Implements:
-'
-'     target ??= source
-'
-' Behavior:
-'
-'     Target Exists
-'         -> preserve target
-'
-'     Target Missing
-'     + Source Exists
-'         -> inherit source
-'
-'     Target Missing
-'     + Source Missing
-'         -> ASSERT
-'
-' Intended precedence:
-'
-'     User Override
-'           ↓
-'     Inherited Value
-'           ↓
-'     Root Library Default
-'
-'---------------------------------------------------------
 !procedure Inherit_If($target,$source)
 
-    '-----------------------------------------
-    ' Validate target name
-    '-----------------------------------------
     Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
 
-    '-----------------------------------------
-    ' Validate source name
-    '-----------------------------------------
     Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
 
-    '-----------------------------------------
-    ' Inheritance source must exist
-    '-----------------------------------------
     Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
 
-    '-----------------------------------------
-    ' Inherit source value
-    '-----------------------------------------
     !if ($variable_exists_safe($target) == %false())
         %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
     !endif
 
-    
-
 !endprocedure
-
-
-
-
-
-'=========================================================
-' Registry Variable Access
-'=========================================================
 
 !function $Registry_Get($registryName)
 
@@ -823,11 +270,9 @@
 
     Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
 
-
     !return %get_variable_value($varName)
 
 !endfunction
-
 
 !procedure Registry_Set($registryName, $value)
 
@@ -836,8 +281,6 @@
     %set_variable_value($varName, $value)
 
 !endprocedure
-
-
 
 !function $object_registered($name, $registryName)
 
@@ -851,11 +294,9 @@
 
 !endfunction
 
-
 !procedure Register_Lib_Object($name, $registryName)
 
     Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
-
 
     !if ($object_registered($name, $registryName) == %false())
 
@@ -868,7 +309,6 @@
     !endif
 
 !endprocedure
-
 
 !procedure For_Each_Lib_Object($prefix, $registryName)
 
@@ -898,7 +338,6 @@
 
 !endprocedure
 
-
 !procedure Dump_Registries()
 
     !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
@@ -907,129 +346,17 @@
 
 !endprocedure
 
-
-
-
-'=========================================================
-' DETECT LIB CORRUPTION
-'=========================================================
-'
-' Framework Hook
-'
-' Called automatically during:
-'
-'   Load_Lib_Themes()
-'
-' Enables:
-'
-'   Enable_Breakpoint("CORRUPTED_VARIABLE")
-'
-' Results:
-'
-'   variable=[ARCH_MOTIVATION_FILLCOLOR]
-'   value=[#MOTIVATION]
-'
-'=========================================================
 !procedure Detect_Lib_Corruption()
 
     Detect_Registered_Corruption_Variables( "CORRUPTED_VARIABLE")
 
 !endprocedure
 
-
-
-'=========================================================
-' REPAIR EXTERNAL LIBRARY CORRUPTION
-'=========================================================
-'
-' Run AFTER corruption detection and BEFORE
-' theme/color resolution.
-'
-' Converts:
-'
-'   #MOTIVATION
-'
-'       ->
-'
-'   #CCCCFF
-'
-'=========================================================
 !procedure Repair_Lib_Corruption()
 
     Repair_Registered_Color_Variables()
 
 !endprocedure
-
-
-
-'=========================================================
-' EXAMPLE USAGE
-'=========================================================
-'
-' DEVELOPMENT MODE
-'
-'   Enable_Breakpoint(
-'       "CORRUPTED_VARIABLE"
-'   )
-'
-'   Detect_Lib_Corruption()
-'
-'
-' PRODUCTION MODE
-'
-'   Repair_Lib_Corruption()
-'
-'
-' HYBRID MODE
-'
-'   Enable_Breakpoint(
-'       "CORRUPTED_VARIABLE"
-'   )
-'
-'   Detect_Lib_Corruption()
-'
-'   Repair_Lib_Corruption()
-'
-'=========================================================
-
-'=========================================================
-' Extension Registry Framework
-'=========================================================
-'
-' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
-'
-' Themes are processed in registration order.
-'
-' Example:
-'
-'   Register_Lib_All("ThemeA")
-'   Register_Lib_All("ThemeB")
-'
-' Execution Order:
-'
-'   ThemeA
-'       ↓
-'   ThemeB
-'
-' Registered extensions may provide:
-'
-'   Load_Theme_<Theme>()
-'
-'       Used for:
-'           - Variables
-'           - Theme initialization
-'           - Configuration
-'
-'   Load_Styles_<Theme>()
-'
-'       Used for:
-'           - Styles
-'           - Stereotypes
-'           - Formatting
-'
-'=========================================================
-
-
 
 !function $Is_Theme_Registered($name)
     !return $object_registered($name, $REGISTRY_THEMES)
@@ -1042,7 +369,6 @@
 !function $Is_Style_Registered($name)
     !return $object_registered($name, $REGISTRY_STYLES)
 !endfunction
-
 
 !procedure Register_Lib_Theme($name)
     Register_Lib_Object($name, $REGISTRY_THEMES)
@@ -1069,22 +395,17 @@
 
 !endprocedure
 
-
-
 !procedure Load_Registered_Skinparams()
 
     For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
 
 !endprocedure
 
-
-
 !procedure Load_Registered_Styles()
 
     For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
 
 !endprocedure
-
 
 !procedure Register_Lib_Theme_Derived($name)
     Register_Lib_Object($name, $REGISTRY_THEME_DERIVED)
@@ -1094,170 +415,29 @@
     For_Each_Lib_Object("Build_Lib_Derived_Variables_", $REGISTRY_THEME_DERIVED )
 !endprocedure
 
-
-
-'=========================================================
-' STYLE EXTENSION HOOKS
-'=========================================================
-'
-' The toolkit provides four optional extension procedures that
-' allow consumers to customize variables and styles without
-' modifying the toolkit source code.
-'
-'=========================================================
-'
-' LOADING ORDER
-'
-'   Load_Lib_Theme_BEFORE()
-'       ↓
-'   Load_Lib_Theme_Stdlib()
-'   Load_Lib_Theme_Archimate()
-'   Registered Theme Procedures
-'       ↓
-'   Load_Lib_Theme_AFTER()
-'
-'       ↓
-'   Load_Lib_Skinparams_BEFORE()
-'       ↓
-'   Load_Lib_Skinparams_Stdlib()
-'   Load_Lib_Skinparams_Archimate()
-'   Registered Skinparams Procedures
-'       ↓
-'
-'   Load_Lib_Styles_BEFORE()
-'       ↓
-'   Load_Lib_Styles_Stdlib()
-'   Load_Lib_Styles_Archimate()
-'   Registered Theme Style Procedures
-'       ↓
-'   Load_Lib_Styles_AFTER()
-'
-'=========================================================
-'
-' BEFORE HOOKS
-'
-' Intended for:
-'
-'   - Override toolkit defaults
-'   - Configure variables
-'   - Select active themes
-'   - Replace framework values
-'
-' Example:
-'
-'   !procedure Load_Lib_Theme_BEFORE()
-'
-'       !$SPACING_UNIT = 8
-'
-'       !$ROUND_2 = 12
-'
-'   !endprocedure
-'
-'=========================================================
-'
-' AFTER HOOKS
-'
-' Intended for:
-'
-'   - Final overrides
-'   - Project-specific stereotypes
-'   - Local utility styles
-'   - Style customizations
-'
-' Example:
-'
-'   !procedure Load_Lib_Styles_AFTER()
-'
-'   <style>
-'
-'   .projectCard {
-'       Padding 20
-'       RoundCorner 10
-'   }
-'
-'   </style>
-'
-'   !endprocedure
-'
-'=========================================================
-'
-' RECOMMENDATIONS
-'
-'   Variables -> PRELOAD hooks
-'
-'   Styles    -> LOAD hooks
-'
-'   BEFORE    -> Configure toolkit behavior
-'
-'   AFTER     -> Override toolkit defaults
-'
-'=========================================================
-'
-' DEFAULT IMPLEMENTATIONS
-'
-' Consumers may redefine these procedures.
-'
 !procedure Load_Lib_Theme_BEFORE()
-'DO NOT ADD CODE
 !endprocedure
 
-
 !procedure Load_Lib_Theme_AFTER()
-'DO NOT ADD CODE
 !endprocedure
 
 !procedure Load_Lib_Skinparams_BEFORE()
-'DO NOT ADD CODE
 !endprocedure
 
 !procedure Load_Lib_Skinparams_AFTER()
-'DO NOT ADD CODE
 !endprocedure
 
 !procedure Load_Lib_Styles_BEFORE()
-'DO NOT ADD CODE
 !endprocedure
 
 !procedure Load_Lib_Styles_AFTER()
-'DO NOT ADD CODE
 !endprocedure
-'
-'=========================================================
-
-
-
-
-
-
-
-
-
-'STEP 1 :: VARS includes
-
 
 !global $SKINPARAM_ENABLED ?= %false()
 
 !global $UNSET ?= "__UML_UNSET__"
 
 !global $POUND ?= "#"
-
-'=========================================================
-' CORRUPTION REGISTRY INITIALIZATION
-'=========================================================
-'
-' Registry Storage
-'
-' Stores variables that should be inspected
-' for external library corruption.
-'
-' Registry Format:
-'
-'   |ARCH_MOTIVATION_FILLCOLOR|
-'
-'   |ARCH_MOTIVATION_FILLCOLOR|
-'   |ARCH_MOTIVATION_BORDERCOLOR|
-'
-'=========================================================
 
 !global $CORRUPTION_DIAGNOSTICS ?= %false()
 
@@ -1266,33 +446,6 @@
 
 !global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
 
-
-'=========================================================
-' Extension Registry Framework
-'=========================================================
-'
-' REGISTRY
-'
-' Stores registered theme names using a delimiter-string
-' registry implementation.
-'
-' Registry Format:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-' Leading and trailing delimiters allow exact matching
-' using %strpos() without partial-match collisions.
-'
-' Example:
-'
-'   |ThemeA|
-'
-'   |ThemeA|ThemeB|
-'
-'=========================================================
-
 !global $REGISTRY_DEL = "|" 
 
 !global $THEMES = "" + $REGISTRY_DEL + ""
@@ -1300,64 +453,25 @@
 !global $STYLES = "" + $REGISTRY_DEL + ""
 !global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
 
-
 !global $REGISTRY_THEMES = "THEMES"
 !global $REGISTRY_SKINPARAMS = "SKINPARAMS"
 !global $REGISTRY_STYLES = "STYLES"
 !global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
 
-
-
-'---------------------------------------------------------
-' Contrast defaults
-'---------------------------------------------------------
 !global $CONTRAST_THRESHOLD ?= 128
 
-'---------------------------------------------------------
-' Darkening defaults
-'---------------------------------------------------------
-
-' Darkening default
 !global $DARKEN_DEFAULT_PERCENT = 5
 
-' RGB luminance floor (0-255)
 !global $DARKNESS_THRESHOLD = 32
 
-
-'---------------------------------------------------------
-' Lightening defaults
-'---------------------------------------------------------
-
-' Lightening default
 !global $LIGHTEN_DEFAULT_PERCENT = 5
 
-' RGB luminance ceiling (0-255)
 !global $LIGHTNESS_THRESHOLD = 223
-
-
-
-
-' src/themes/archimate/index.puml
-' Module Entry Point: Archimate Theme Variables
-
-
 
 !global $ARCHIMATE_LIB_ENABLED ?= %false()
 
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 
-
-
-
-
-'=========================================================
-' REGISTER ARCHIMATE VARIABLES
-'=========================================================
-'
-' Register all variables that may be corrupted
-' by external Archimate libraries.
-'
-'=========================================================
 !procedure Register_Archimate_Corruption_Variables()
 
     Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
@@ -1386,25 +500,73 @@
 
 !endprocedure
 
+sprite $sprite_arch_strategy_resource              jar:archimate/strategy-resource
+sprite $sprite_arch_strategy_capability            jar:archimate/strategy-capability
+sprite $sprite_arch_strategy_courseofaction        jar:archimate/strategy-courseofaction
+sprite $sprite_arch_strategy_valuestream           jar:archimate/strategy-valuestream
 
+sprite $sprite_arch_business_actor                jar:archimate/business-actor
+sprite $sprite_arch_business_role                 jar:archimate/business-role
+sprite $sprite_arch_business_collaboration        jar:archimate/business-collaboration
+sprite $sprite_arch_business_interface            jar:archimate/business-interface
+sprite $sprite_arch_business_process              jar:archimate/business-process
+sprite $sprite_arch_business_function             jar:archimate/business-function
+sprite $sprite_arch_business_interaction          jar:archimate/business-interaction
+sprite $sprite_arch_business_event                jar:archimate/business-event
+sprite $sprite_arch_business_service              jar:archimate/business-service
+sprite $sprite_arch_business_object               jar:archimate/business-object
+sprite $sprite_arch_business_contract             jar:archimate/business-contract
+sprite $sprite_arch_business_representation       jar:archimate/business-representation
+sprite $sprite_arch_business_product              jar:archimate/business-product
+sprite $sprite_arch_business_location             jar:archimate/business-location
 
+sprite $sprite_arch_application_component         jar:archimate/application-component
+sprite $sprite_arch_application_collaboration     jar:archimate/application-collaboration
+sprite $sprite_arch_application_interface         jar:archimate/application-interface
+sprite $sprite_arch_application_function          jar:archimate/application-function
+sprite $sprite_arch_application_interaction       jar:archimate/application-interaction
+sprite $sprite_arch_application_process           jar:archimate/application-process
+sprite $sprite_arch_application_event             jar:archimate/application-event
+sprite $sprite_arch_application_service           jar:archimate/application-service
+sprite $sprite_arch_application_dataobject        jar:archimate/application-dataobject
 
+sprite $sprite_arch_technology_node               jar:archimate/technology-node
+sprite $sprite_arch_technology_device             jar:archimate/technology-device
+sprite $sprite_arch_technology_systemsoftware     jar:archimate/technology-systemsoftware
+sprite $sprite_arch_technology_collaboration      jar:archimate/technology-collaboration
+sprite $sprite_arch_technology_interface          jar:archimate/technology-interface
+sprite $sprite_arch_technology_path               jar:archimate/technology-path
+sprite $sprite_arch_technology_communicationnetwork jar:archimate/technology-communicationnetwork
+sprite $sprite_arch_technology_function           jar:archimate/technology-function
+sprite $sprite_arch_technology_process            jar:archimate/technology-process
+sprite $sprite_arch_technology_interaction        jar:archimate/technology-interaction
+sprite $sprite_arch_technology_event              jar:archimate/technology-event
+sprite $sprite_arch_technology_service            jar:archimate/technology-service
+sprite $sprite_arch_technology_artifact           jar:archimate/technology-artifact
+sprite $sprite_arch_technology_equipment          jar:archimate/technology-equipment
+sprite $sprite_arch_technology_facility           jar:archimate/technology-facility
+sprite $sprite_arch_technology_distributionnetwork jar:archimate/technology-distributionnetwork
+sprite $sprite_arch_technology_material           jar:archimate/technology-material
 
+sprite $sprite_arch_motivation_stakeholder        jar:archimate/motivation-stakeholder
+sprite $sprite_arch_motivation_driver             jar:archimate/motivation-driver
+sprite $sprite_arch_motivation_assessment         jar:archimate/motivation-assessment
+sprite $sprite_arch_motivation_goal               jar:archimate/motivation-goal
+sprite $sprite_arch_motivation_outcome            jar:archimate/motivation-outcome
+sprite $sprite_arch_motivation_principle          jar:archimate/motivation-principle
+sprite $sprite_arch_motivation_requirement        jar:archimate/motivation-requirement
+sprite $sprite_arch_motivation_constraint         jar:archimate/motivation-constraint
+sprite $sprite_arch_motivation_meaning            jar:archimate/motivation-meaning
+sprite $sprite_arch_motivation_value              jar:archimate/motivation-value
 
-'STEP 2 :: COMPONENTS includes
+sprite $sprite_arch_implementation_workpackage    jar:archimate/implementation-workpackage
+sprite $sprite_arch_implementation_deliverable    jar:archimate/implementation-deliverable
+sprite $sprite_arch_implementation_event          jar:archimate/implementation-event
+sprite $sprite_arch_implementation_plateau        jar:archimate/implementation-plateau
+sprite $sprite_arch_implementation_gap            jar:archimate/implementation-gap
 
-'---------------------------------------------------------
-' String Utilities
-'
-' Core string manipulation helpers used throughout the
-' framework.
-'
-' Provides:
-'   - Prefix handling
-'   - Suffix detection
-'   - Style token detection
-'---------------------------------------------------------
-
+sprite $sprite_arch_other_grouping                jar:archimate/other-grouping
+sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !function $strip_prefix($value, $prefix)
 
@@ -1417,7 +579,6 @@
     !return $value
 
 !endfunction
-
 
 !function $ends_with($value, $suffix)
 
@@ -1437,11 +598,9 @@
 
 !endfunction
 
-
 !function $is_special_style_token($token)
   !$tokenU = %upper($token)
 
-  'token value should not be coming in with a prefix, like being processed by get_semantic_color
   !if $tokenU == "AUTO" 
     !return %true()
   !elseif $tokenU == "CURRENT"
@@ -1456,28 +615,9 @@
 
 !endfunction
 
-
-
-
-'---------------------------------------------------------
-' Variable Utilities
-'
-' Dynamic PlantUML variable resolution, validation,
-' existence checking, and indirection helpers.
-'
-' Provides:
-'   - Variable lookup
-'   - Dynamic variable access
-'   - Variable validation
-'---------------------------------------------------------
-'---------------------------------------------------------
-' Variable Helpers
-'---------------------------------------------------------
-
 !function $has_dollar($name)
     !return (%strlen($name) > 0) && (%substr($name, 0, 1) == %chr(36))
 !endfunction
-
 
 !function $strip_dollar($name)
 
@@ -1489,16 +629,13 @@
 
     Assert_If( ($has_dollar($clean)), "Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)" )
 
-
     !return $clean
 
 !endfunction
 
-
 !function $to_var_name($name)
     !return %chr(36) + $strip_dollar($name)
 !endfunction
-
 
 !function $is_valid_variable_name($name)
 
@@ -1524,8 +661,6 @@
 
 !endfunction
 
-
-
 !function $variable_exists_safe($name, $raise_error = %false(), $trace_error = "")
 
     !$variable_name = $to_var_name($name)
@@ -1549,14 +684,6 @@
 
 !endfunction
 
-
-'
-' Resolves a dynamically named PlantUML variable.
-'
-' Accepted inputs:
-'   COLOR_PRIMARY
-'   $COLOR_PRIMARY
-'
 !function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
 
     Assert_If( $is_literal_color($name), "Literal color passed where variable name expected=[" + $name + "] (" + $trace_error + "f:resolve_variable)" )
@@ -1580,21 +707,6 @@
 
 !endfunction
 
-
-
-
-'=========================================================
-' First Defined Value
-'
-' Preserves:
-'   ""
-'
-' Treats only:
-'   $UNSET
-'
-' as undefined.
-'
-'=========================================================
 !function $first_defined( $value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET )
 
     !if ($value0 != $UNSET)
@@ -1633,22 +745,6 @@
 
 !endfunction
 
-'=========================================================
-' First Non-Blank Value
-'
-' Returns the first value that is not blank.
-'
-' Safe for:
-'   - Undefined variables
-'   - Empty strings
-'   - Literal colors
-'   - Semantic tokens
-'
-' Similar to:
-'
-'   value0 ?? value1 ?? value2 ...
-'
-'=========================================================
 !function $first_defined_variable( $var0="", $var1="", $var2="", $var3="", $var4="", $var5="", $var6="", $var7="" )
 
     !$v = $UNSET
@@ -1708,104 +804,10 @@
         !endif
     !endif
 
-
-    
-
-    ' repeat through var7...
-
     !return $UNSET
 
 !endfunction
 
-
-'---------------------------------------------------------
-' Text Utilities
-'
-' Formatting helpers for generated text content,
-' titles, notes, legends, diagnostics, and
-' documentation output.
-'
-' Provides:
-'   - Padding
-'   - Centering
-'   - Line spacing
-'   - Framed text formatting
-'---------------------------------------------------------
-'=========================================================
-' TEXT UTILITIES
-'=========================================================
-'
-' PURPOSE
-'
-'   Provides reusable text-formatting helpers for:
-'
-'       - String repetition
-'       - Horizontal padding
-'       - Vertical spacing
-'       - Content framing
-'       - Text centering
-'
-' DESIGN GOALS
-'
-'   - PlantUML compatibility first
-'   - No arrays
-'   - No !foreach
-'   - No collection functions
-'   - No version-sensitive features
-'   - Composable utility functions
-'
-' COMPATIBILITY
-'
-'   Uses:
-'
-'       !function
-'       !while
-'       %strlen()
-'       %intval()
-'
-'   Avoids:
-'
-'       !foreach
-'       Arrays
-'       %array_*
-'       %splitstr()
-'
-' FORMATTING MODEL
-'
-'   PlantUML renders padding most reliably when horizontal
-'   padding is placed INSIDE line boundaries.
-'
-'   Preferred:
-'
-'       \n
-'           TEXT
-'       \n
-'
-'   Avoid:
-'
-'       \nTEXT\n
-'
-'   The high-level helpers in this module implement the
-'   preferred rendering pattern automatically.
-'
-'=========================================================
-
-
-
-'=========================================================
-' Repeat Text
-'
-' Repeats a string N times.
-'
-' Example:
-'
-'   $repeat("-",5)
-'
-' Returns:
-'
-'   -----
-'
-'=========================================================
 !function $repeat($text, $count)
 
     !$result = ""
@@ -1822,86 +824,24 @@
 
 !endfunction
 
-
-
-'=========================================================
-' New Line
-'
-' Returns one or more newline characters.
-'
-' Examples:
-'
-'   $nl()
-'
-'   $nl(2)
-'
-'=========================================================
 !function $nl($count = 1)
 
     !return $repeat("\n", $count)
 
 !endfunction
 
-
-
-'=========================================================
-' Pad Left
-'
-' Adds padding characters to the left side of a string.
-'
-' Example:
-'
-'   $pad_left("TEXT",4)
-'
-' Returns:
-'
-'       TEXT
-'
-'=========================================================
 !function $pad_left($text, $count, $padding = " ")
 
     !return $repeat($padding, $count) + $text
 
 !endfunction
 
-
-
-'=========================================================
-' Pad Right
-'
-' Adds padding characters to the right side of a string.
-'
-' Example:
-'
-'   $pad_right("TEXT",4)
-'
-' Returns:
-'
-'   TEXT
-'
-'=========================================================
 !function $pad_right($text, $count, $padding = " ")
 
     !return $text + $repeat($padding, $count)
 
 !endfunction
 
-
-
-'=========================================================
-' Pad Both Sides
-'
-' Adds equal padding to both sides of a string.
-'
-' Example:
-'
-'   $pad_both("TEXT",4)
-'
-' Returns:
-'
-'       TEXT
-'
-'=========================================================
 !function $pad_both($text, $count, $padding = " ")
 
     !$pad = $repeat($padding, $count)
@@ -1910,25 +850,6 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Center Text
-'
-' Centers text within a target width.
-'
-' NOTES
-'
-'   This applies left padding only.
-'
-'   The goal is visual alignment rather than exact
-'   monospaced centering.
-'
-' Example:
-'
-'   $center_text("TITLE",40)
-'
-'=========================================================
 !function $center_text($text, $width = 40, $padding = " " )
 
     !$length = %strlen($text)
@@ -1945,70 +866,18 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Line Above
-'
-' Adds one or more blank lines before text.
-'
-' Example:
-'
-'   $line_above("TEXT")
-'
-' Result:
-'
-'   <blank line>
-'   TEXT
-'
-'=========================================================
 !function $line_above($text, $count = 1)
 
     !return $nl($count) + $text
 
 !endfunction
 
-
-
-'=========================================================
-' Line Below
-'
-' Adds one or more blank lines after text.
-'
-' Example:
-'
-'   $line_below("TEXT")
-'
-' Result:
-'
-'   TEXT
-'   <blank line>
-'
-'=========================================================
 !function $line_below( $text, $count = 1 )
 
     !return $text + $nl($count)
 
 !endfunction
 
-
-
-'=========================================================
-' Line Wrap
-'
-' Adds blank lines above and below text.
-'
-' Example:
-'
-'   $line_wrap("TEXT")
-'
-' Result:
-'
-'   <blank line>
-'   TEXT
-'   <blank line>
-'
-'=========================================================
 !function $line_wrap( $text, $count = 1 )
 
     !$lines = $nl($count)
@@ -2017,38 +886,6 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Surround
-'
-' High-level formatting helper.
-'
-' Adds:
-'
-'   - Blank lines above
-'   - Blank lines below
-'   - Horizontal padding INSIDE those boundaries
-'
-' This is the preferred formatting helper for:
-'
-'   - Notes
-'   - Legends
-'   - Titles
-'   - Diagnostics
-'   - Generated markdown content
-'
-' Example:
-'
-'   $surround("TEXT")
-'
-' Returns:
-'
-'   \n
-'       TEXT
-'   \n
-'
-'=========================================================
 !function $surround( $text, $horizontal = 4, $vertical = 1, $padding = " " )
 
     !$body = $pad_both( $text, $horizontal, $padding )
@@ -2059,26 +896,6 @@
 
 !endfunction
 
-
-
-'=========================================================
-' Framed Title
-'
-' Convenience helper for common banner/title formatting.
-'
-' Combines:
-'
-'   - Centering
-'   - Internal padding
-'   - Vertical spacing
-'
-' Example:
-'
-'   title $framed_title(
-'       "Architecture Overview"
-'   )
-'
-'=========================================================
 !function $framed_title( $text, $width = 60, $horizontal = 2, $vertical = 1 )
 
     !$centered = $center_text( $text, $width )
@@ -2086,28 +903,6 @@
     !return $surround( $centered, $horizontal, $vertical )
 
 !endfunction
-
-
-
-'---------------------------------------------------------
-' Hex Utilities
-'
-' RGB and hexadecimal color processing functions.
-'
-' Provides:
-'   - Color validation
-'   - RGB extraction
-'   - Hex conversion
-'   - Luminance calculation
-'---------------------------------------------------------
-'=========================================================
-' Literal Color Validation
-'
-' Supports:
-'   #RGB
-'   #RRGGBB
-'   #RRGGBBAA
-'=========================================================
 
 !function $is_hex_digit($c)
 
@@ -2127,9 +922,6 @@
 
     !$value = %upper($value)
     !$POUNDlen = %strlen($POUND)
-    '
-    ' Must start with #
-    '
     !if (%substr($value,0,$POUNDlen) != $POUND )
         !return %false()
     !endif
@@ -2156,29 +948,11 @@
 
 !endfunction
 
-
-
-
-'=========================================================
-' Hex Normalization
-'
-' Supports:
-'   #RGB
-'   #RRGGBB
-'   #RRGGBBAA
-'
-' Returns:
-'   #RRGGBB
-'=========================================================
-
 !function $normalize_hex_rgb($hex)
 
   Assert_Literal_Color($hex, "f.normalize_hex_rgb")
   !$len = %strlen($hex)
 
-  '
-  ' #RGB -> #RRGGBB
-  '
   !if ($len == 4)
 
     !$r = %substr($hex,1,1)
@@ -2189,26 +963,15 @@
 
   !endif
 
-  '
-  ' #RRGGBBAA -> #RRGGBB
-  '
   !if ($len == 9)
 
     !return $POUND + %substr($hex,1,6)
 
   !endif
 
-  '
-  ' Assume #RRGGBB
-  '
   !return %upper($hex)
 
 !endfunction
-
-
-'=========================================================
-' Hex Decoder
-'=========================================================
 
 !function $hex_digit_value($c)
 
@@ -2253,14 +1016,6 @@
     !return -1
 !endfunction
 
-
-'=========================================================
-' Integer -> Hex Digit
-'
-' Input: 0-15
-' Output: 0-F
-'=========================================================
-
 !function $int_to_hex_digit($n)
 
     Assert_If( ($n < 0) || ($n > 15), "Hex digit out of range=[" + $n + "]" )
@@ -2301,13 +1056,6 @@
 
 !endfunction
 
-'=========================================================
-' Byte -> 2 Digit Hex
-'
-' Input: 0-255
-' Output: 00-FF
-'=========================================================
-
 !function $byte_to_hex($n)
 
     Assert_If( ($n < 0) || ($n > 255), "Hex digit out of range=[" + $n + "]")
@@ -2318,8 +1066,6 @@
     !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
 
 !endfunction
-
-
 
 !function $hex_byte_to_int($hexByte)
 
@@ -2334,23 +1080,16 @@
 
 !endfunction
 
-
-'=========================================================
-' RGB Component Extraction
-'=========================================================
-
 !function $hex_red($hex)
   !$hex = $normalize_hex_rgb($hex)
   !return $hex_byte_to_int( %substr($hex,1,2) )
 
 !endfunction
 
-
 !function $hex_green($hex)
   !$hex = $normalize_hex_rgb($hex)
   !return $hex_byte_to_int( %substr($hex,3,2))
 !endfunction
-
 
 !function $hex_blue($hex)
   !$hex = $normalize_hex_rgb($hex)
@@ -2358,22 +1097,9 @@
 
 !endfunction
 
-
-'=========================================================
-' RGB Luminance
-'
-' W3C Relative Luminance Approximation
-'
-' Range:
-'   0   = Black
-'   255 = White
-'=========================================================
-
 !function $rgb_luminance($r,$g,$b)
-  '!return ( (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b) )
   !return ( ((299 * $r) + (587 * $g) + (114 * $b)) / 1000)
 !endfunction
-
 
 !function $hex_luminance($hex)
 
@@ -2385,36 +1111,10 @@
 
 !endfunction
 
-
-
-
-'=========================================================
-' RGB -> #RRGGBB
-'=========================================================
-
 !function $rgb_to_hex($r,$g,$b)
   !return $POUND + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
 
 !endfunction
-
-
-
-
-
-
-
-'---------------------------------------------------------
-' Color Utilities
-'
-' Semantic color resolution and contrast-aware
-' text color selection.
-'
-' Provides:
-'   - Semantic colors
-'   - Auto text colors
-'   - Contrast calculations
-'   - Theme-safe color lookups
-'---------------------------------------------------------
 
 !function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
   
@@ -2422,16 +1122,6 @@
 
 !endfunction
 
-
-
-
-'
-' Normalizes a color variable reference:
-'   COLOR_PRIMARY     -> PRIMARY
-'   $COLOR_PRIMARY    -> PRIMARY
-'   $PRIMARY          -> PRIMARY
-'   PRIMARY           -> PRIMARY
-'
 !function $normalize_color_name($name)
   !$clean = %upper($strip_dollar($name))
   !if %substr($clean, 0, 6) == "COLOR_"
@@ -2439,7 +1129,6 @@
   !endif
   !return $clean
 !endfunction
-
 
 !function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
 
@@ -2451,29 +1140,18 @@
       !return %upper($name)
   !endif
 
-
-
   !$normalized = $normalize_color_name($name)
 
-  '------------------------------------------
-  ' Exact variable exists
-  '------------------------------------------
   !if ($variable_exists_safe($normalized))
       !return $normalized
   !endif
 
-  '------------------------------------------
-  ' Semantic COLOR_ variable
-  '------------------------------------------
   !$candidate = "COLOR_" + $normalized
 
   !if ($variable_exists_safe($candidate))
       !return $candidate
   !endif
 
-  '------------------------------------------
-  ' Error
-  '------------------------------------------
   !if ($raise_error == %true() )
 
     Trigger_Assert( "Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)" )
@@ -2484,21 +1162,16 @@
 
 !endfunction
 
-
-
 !function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
   
-  ' Call the base contrast function using the constructed variable name
   !$semantic_color = $semantic_color_variable( $semantic_suffix, %true(), "f:get_semantic_text_color" )
   !return $get_text_color( $semantic_color, $dark_text_var_name, $light_text_var_name )
 
 !endfunction
 
-
 !function $get_color($value)
 
   Assert_Blank($value, "get_color() received blank value (f:get_color)" )
-
 
   !if ($is_literal_color($value))
       !return %upper($value)
@@ -2514,18 +1187,13 @@
 
 !endfunction
 
-
-
 !function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
-
 
   Breakpoint_If( "HASH_TOKEN_TRACE", (%strpos(%upper($semantic_suffix), $POUND ) == 0), "semantic_suffix=[" + $semantic_suffix + "] trace=[" + $trace_error + "]" )
 
   Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] trace=[" + $trace_error + "] (f:get_semantic_color)" )
 
-
   Assert_Blank( $semantic_suffix, "Function received blank semantic suffix (f:get_semantic_color)" )
-
 
   Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "(f:get_semantic_color." + $trace_error + ") received literal color=[" + $semantic_suffix + "]" )
   
@@ -2537,36 +1205,14 @@
 
   Assert_If( ($candidate == "COLOR_"), "Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color." + $trace_error + ")" )
 
-
   !return $get_color($candidate)
 
 !endfunction
-
-
-
-
-'=========================================================
-' Darkness / Lightness Detection
-'=========================================================
-
 
 !function $needs_light_text($hex)
   !$lum = $hex_luminance($hex)
   !return ($lum <= $CONTRAST_THRESHOLD)
 !endfunction
-
-
-
-
-
-'=========================================================
-' Contrast Text Color Selection
-'
-' Returns:
-'   dark text color
-'   OR
-'   light text color
-'=========================================================
 
 !function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
 
@@ -2578,15 +1224,6 @@
 
 !endfunction
 
-'=========================================================
-' AUTO Text Color Resolution
-'
-' Supports:
-'   PRIMARY_DARK
-'   PRIMARY
-'   #023451
-'   #D6EAF8
-'=========================================================
 !function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
 
   !if ($is_literal_color($background))
@@ -2600,21 +1237,6 @@
   !return $get_semantic_text_color( $background, $dark_text_var_name, $light_text_var_name )
 
 !endfunction
-
-'=========================================================
-' Variable-Based Contrast Helper
-'
-' Example:
-'
-' !$bg = $resolve_variable("COLOR_PRIMARY_DARK")
-'
-' FontColor $get_variable_text_color(
-'     "COLOR_PRIMARY_DARK",
-'     "COLOR_TEXT",
-'     "COLOR_TEXT_LIGHT"
-' )
-'
-'=========================================================
 
 !function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
 
@@ -2631,32 +1253,6 @@
 
 !endfunction
 
-
-
-
-
-'---------------------------------------------------------
-' Darken Utilities
-'
-' Semantic and RGB-based darkening operations
-' with brightness floor protection.
-'
-' Provides:
-'   - Semantic color progression
-'   - RGB darkening
-'   - Darkness normalization
-'---------------------------------------------------------
-
-'---------------------------------------------------------
-' Parse DARKEN token
-'
-' Supported:
-'   DARKEN
-'   DARKEN_10
-'   DARKEN_20
-'   DARKEN_30
-'---------------------------------------------------------
-
 !function $get_darken_percent($token)
   !$token = %upper($token)
   !if $token == "DARKEN"
@@ -2671,8 +1267,6 @@
 
 !endfunction
 
-
-
 !function $is_too_dark($hex)
 
   !$lum = $hex_luminance($hex)
@@ -2681,107 +1275,42 @@
 
 !endfunction
 
-
-'---------------------------------------------------------
-' Normalize Darkness Floor
-'
-' Prevents a color from becoming darker than the configured
-' darkness floor.
-'
-' Behavior:
-'   - Normalizes #RGB and #RRGGBBAA to #RRGGBB.
-'   - Returns compliant colors unchanged.
-'   - Preserves existing zero-lightness safety behavior.
-'   - Lightens proportionally based on how far the color is
-'     below the darkness floor.
-'   - Applies bounded follow-up corrections for rounding.
-'
-' Existing usage remains valid:
-'
-'   $normalize_darkness_floor("#050505")
-'
-'---------------------------------------------------------
 !function $normalize_darkness_floor($hex, $darkness_floor = $DARKNESS_THRESHOLD, $minimum_lighten_percent = 1)
 
-    '
-    ' Validate and normalize the input color.
-    '
     Assert_Literal_Color($hex, "f.normalize_darkness_floor")
     
-
     !$color = $normalize_hex_rgb($hex)
     !$darkness = $hex_luminance($color)
 
-    '
-    ' Validate the darkness floor.
-    '
     Assert_If( ($darkness_floor < 0) || ($darkness_floor > 255), "Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)" )
 
-
-    '
-    ' Validate the minimum correction.
-    '
     Assert_If( ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100), "Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)" )
 
-
-    '
-    ' Preserve the existing safety behavior for pure black
-    ' or another color with zero calculated lightness.
-    '
     !if ($darkness <= 0)
         !return %upper($color)
     !endif
 
-    '
-    ' The color already satisfies the darkness floor.
-    '
     !if ($darkness >= $darkness_floor)
         !return %upper($color)
     !endif
 
-    '
-    ' Determine how far the color is below the floor.
-    '
     !$shortfall = $darkness_floor - $darkness
 
-    '
-    ' Convert the shortfall into a proportional lightening
-    ' percentage.
-    '
-    ' Multiplication occurs before division to avoid losing
-    ' the fractional value through integer truncation.
-    '
     !$lighten_percent = %intval( ($shortfall * 100) / $darkness_floor )
 
-    '
-    ' Apply the configured minimum correction.
-    '
     !if ($lighten_percent < $minimum_lighten_percent)
         !$lighten_percent = $minimum_lighten_percent
     !endif
 
-    '
-    ' Protect the PlantUML lightening operation.
-    '
     !if ($lighten_percent > 100)
         !$lighten_percent = 100
     !endif
 
-    '
-    ' Apply the initial proportional correction.
-    '
     !$normalized = %lighten( $color, $lighten_percent )
 
     !$normalized = $normalize_hex_rgb($normalized)
     !$normalized_darkness = $hex_luminance($normalized)
 
-    '
-    ' PlantUML color calculations and integer rounding may
-    ' leave the result slightly below the darkness floor.
-    '
-    ' Apply bounded one-percent corrections until the color
-    ' reaches the configured floor.
-    '
     !$correction_count = 0
     !$maximum_corrections = 100
 
@@ -2793,9 +1322,6 @@
 
         !$normalized = $normalize_hex_rgb($normalized)
 
-        '
-        ' Stop if PlantUML no longer changes the color.
-        '
         !if ($normalized == $previous)
             !$correction_count = $maximum_corrections
         !else
@@ -2811,28 +1337,6 @@
 
 !endfunction
 
-
-
-
-
-'---------------------------------------------------------
-' Semantic Token Progression
-'
-' LIGHT -> BASE -> DARK -> DARKEST
-'
-' PRIMARY_LIGHT
-'     -> PRIMARY
-'
-' PRIMARY
-'     -> PRIMARY_DARK
-'
-' PRIMARY_DARK
-'     -> PRIMARY_DARKEST
-'
-' PRIMARY_DARKEST
-'     -> RGB darkening fallback
-'---------------------------------------------------------
-
 !function $get_darker_semantic_token($token)
   !$token = %upper($token)
 
@@ -2842,9 +1346,6 @@
       !return ""
   !endif
 
-  '
-  ' PRIMARY_LIGHT -> PRIMARY
-  '
   !if $ends_with($token, "_LIGHT")
 
     !$candidate = %substr( $token,0,%strlen($token)-6 )
@@ -2853,10 +1354,6 @@
       !return $candidate
     !endif
 
-
-  '
-  ' PRIMARY_DARK -> PRIMARY_DARKEST
-  '
   !elseif $ends_with($token, "_DARK")
 
     !$base = %substr( $token, 0, %strlen($token)-5 )
@@ -2867,20 +1364,10 @@
 
     !endif
 
-
-  '
-  ' PRIMARY_DARKEST
-  ' No darker semantic promotion available
-  '
   !elseif $ends_with($token, "_DARKEST")
 
     !return ""
 
-
-
-  '
-  ' PRIMARY -> PRIMARY_DARK
-  '
   !else
 
     !$candidate = $token + "_DARK"
@@ -2897,32 +1384,12 @@
 
 !endfunction
 
-
-'---------------------------------------------------------
-' Darken Resolver
-'
-' Resolution Order:
-'
-'   1. Semantic Promotion
-'      LIGHT -> BASE
-'      BASE -> DARK
-'      DARK -> DARKEST
-'
-'   2. RGB Darken
-'
-'   3. Threshold Clamp
-'---------------------------------------------------------
 !function $darken_color($token, $darken_token = "DARKEN")
 
   Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
   
   Assert_If( $is_special_style_token($token), "DARKEN cannot operate on special token=[" + $token + "] (f:darken_color)" )
 
-
-  '
-  ' Step 1:
-  ' Semantic progression
-  '
   !if (%upper($darken_token) == "DARKEN")
 
     !$darker = $get_darker_semantic_token($token)
@@ -2933,22 +1400,10 @@
 
   !endif
 
-  '
-  ' Step 2:
-  ' Resolve current value to a literal color
-  '
   !$color = $resolve_literal_color($token)
 
-  '
-  ' Step 3:
-  ' Determine darkening percentage
-  '
   !$pct = $get_darken_percent($darken_token)
 
-  '
-  ' Step 4:
-  ' RGB Darkening
-  '
   !$dark = %darken($color, $pct)
 
   !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
@@ -2965,31 +1420,6 @@
 
 !endfunction
 
-
-
-'---------------------------------------------------------
-' Lighten Utilities
-'
-' Semantic and RGB-based lightening operations
-' with brightness ceiling protection.
-'
-' Provides:
-'   - Semantic color progression
-'   - RGB lightening
-'   - Lightness normalization
-'---------------------------------------------------------
-
-
-'---------------------------------------------------------
-' Parse LIGHTEN token
-'
-' Supported:
-'   LIGHTEN
-'   LIGHTEN_10
-'   LIGHTEN_20
-'   LIGHTEN_30
-'---------------------------------------------------------
-
 !function $get_lighten_percent($token)
   !$token = %upper($token)
   !if $token == "LIGHTEN"
@@ -3004,11 +1434,6 @@
 
 !endfunction
 
-
-'---------------------------------------------------------
-' Brightness Detection
-'---------------------------------------------------------
-
 !function $is_too_light($hex)
 
   !$lum = $hex_luminance($hex)
@@ -3017,111 +1442,42 @@
 
 !endfunction
 
-
-
-'---------------------------------------------------------
-' Normalize Lightness Ceiling
-'
-' Prevents a color from becoming lighter than the configured
-' lightness ceiling.
-'
-' Behavior:
-'   - Normalizes #RGB and #RRGGBBAA to #RRGGBB.
-'   - Returns compliant colors unchanged.
-'   - Darkens proportionally based on how far the color is
-'     above the lightness ceiling.
-'   - Avoids direct fractional RGB-channel scaling.
-'   - Applies bounded follow-up corrections for rounding.
-'
-' Existing usage remains valid:
-'
-'   $normalize_lightness_ceiling("#D6EAF8")
-'
-'---------------------------------------------------------
 !function $normalize_lightness_ceiling($hex, $lightness_ceiling = $LIGHTNESS_THRESHOLD, $minimum_darken_percent = 1)
 
-    '
-    ' Validate and normalize the input color.
-    '
     Assert_Literal_Color($hex, "f.normalize_lightness_ceiling")
 
     !$color = $normalize_hex_rgb($hex)
     !$lightness = $hex_luminance($color)
 
-    '
-    ' Validate the lightness ceiling.
-    '
     Assert_If( ($lightness_ceiling < 0) || ($lightness_ceiling > 255), "Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)" )
 
-
-    '
-    ' Validate the minimum correction.
-    '
     Assert_If( ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100), "Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)" )
 
-
-    '
-    ' A color with zero calculated lightness cannot exceed
-    ' a valid lightness ceiling.
-    '
     !if ($lightness <= 0)
         !return %upper($color)
     !endif
 
-    '
-    ' The color already satisfies the lightness ceiling.
-    '
     !if ($lightness <= $lightness_ceiling)
         !return %upper($color)
     !endif
 
-    '
-    ' Determine how far the color exceeds the ceiling.
-    '
     !$overage = $lightness - $lightness_ceiling
 
-    '
-    ' Convert the overage into a proportional darkening
-    ' percentage.
-    '
-    ' Example:
-    '
-    '   Lightness = 235
-    '   Ceiling   = 223
-    '   Overage   = 12
-    '   Percent   = (12 * 100) / 235
-    '
     !$darken_percent = %intval( ($overage * 100) / $lightness )
 
-    '
-    ' Apply the configured minimum correction.
-    '
     !if ($darken_percent < $minimum_darken_percent)
         !$darken_percent = $minimum_darken_percent
     !endif
 
-    '
-    ' Protect the PlantUML darkening operation.
-    '
     !if ($darken_percent > 100)
         !$darken_percent = 100
     !endif
 
-    '
-    ' Apply the initial proportional correction.
-    '
     !$normalized = %darken($color, $darken_percent)
 
     !$normalized = $normalize_hex_rgb($normalized)
     !$normalized_lightness = $hex_luminance($normalized)
 
-    '
-    ' PlantUML color calculations and integer rounding may
-    ' leave the result slightly above the lightness ceiling.
-    '
-    ' Apply bounded one-percent corrections until the color
-    ' reaches the configured ceiling.
-    '
     !$correction_count = 0
     !$maximum_corrections = 100
 
@@ -3133,9 +1489,6 @@
 
         !$normalized = $normalize_hex_rgb($normalized)
 
-        '
-        ' Stop if PlantUML no longer changes the color.
-        '
         !if ($normalized == $previous)
             !$correction_count = $maximum_corrections
         !else
@@ -3151,30 +1504,6 @@
 
 !endfunction
 
-'---------------------------------------------------------
-' Semantic Token Progression
-'
-' DARKEST -> DARK
-' DARK -> BASE
-' BASE -> LIGHT
-' LIGHT -> LIGHTEST
-'
-' PRIMARY_DARKEST
-'     -> PRIMARY_DARK
-'
-' PRIMARY_DARK
-'     -> PRIMARY
-'
-' PRIMARY
-'     -> PRIMARY_LIGHT
-'
-' PRIMARY_LIGHT
-'     -> PRIMARY_LIGHTEST
-'
-' PRIMARY_LIGHTEST
-'     -> RGB Lightening
-'---------------------------------------------------------
-
 !function $get_lighter_semantic_token($token)
   !$token = %upper($token)
 
@@ -3184,9 +1513,6 @@
       !return ""
   !endif
 
-  '
-  ' PRIMARY_DARKEST -> PRIMARY_DARK
-  '
   !if $ends_with($token, "_DARKEST")
 
     !$base = %substr($token, 0, %strlen($token) - 8)
@@ -3198,10 +1524,6 @@
 
     !endif
 
-
-  '
-  ' PRIMARY_DARK -> PRIMARY
-  '
   !elseif $ends_with($token, "_DARK")
 
     !$candidate = %substr( $token, 0, %strlen($token) - 5 )
@@ -3212,19 +1534,10 @@
 
     !endif
 
-
-  '
-  ' PRIMARY_LIGHTEST
-  ' No lighter semantic promotion available
-  '
   !elseif $ends_with($token, "_LIGHTEST")
 
     !return ""
 
-
-  '
-  ' PRIMARY_LIGHT -> PRIMARY_LIGHTEST
-  '
   !elseif $ends_with($token, "_LIGHT")
 
     !$candidate = $token + "EST"
@@ -3235,10 +1548,6 @@
 
     !endif
 
-
-  '
-  ' PRIMARY -> PRIMARY_LIGHT
-  '
   !else
 
     !$candidate = $token + "_LIGHT"
@@ -3255,35 +1564,12 @@
 
 !endfunction
 
-
-'---------------------------------------------------------
-' Lighten Resolver
-'
-' Resolution Order:
-'
-'   1. Semantic Progression
-'      DARKEST -> DARK
-'      DARK -> BASE
-'      BASE -> LIGHT
-'      LIGHT -> LIGHTEST
-'
-'   2. RGB Lightening
-'
-'   3. Threshold Clamp
-'---------------------------------------------------------
-
 !function $lighten_color($token, $lighten_token = "LIGHTEN")
   
-
   Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
 
   Assert_If( $is_special_style_token($token), "LIGHTEN cannot operate on special token=[" + $token + "] (f:lighten_color)" )
 
-
-  '
-  ' Step 1:
-  ' Semantic progression
-  '
   !if (%upper($lighten_token) == "LIGHTEN")
 
     !$lighter = $get_lighter_semantic_token($token)
@@ -3294,22 +1580,10 @@
 
   !endif
 
-  '
-  ' Step 2:
-  ' Resolve current color
-  '
   !$color = $resolve_literal_color($token)
 
-    '
-  ' Step 3:
-  ' Determine lighten percentage
-  '
   !$pct = $get_lighten_percent($lighten_token)
 
-  '
-  ' Step 4:
-  ' RGB Lightening
-  '
   !$light = %lighten($color, $pct)
 
   !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
@@ -3326,24 +1600,6 @@
 
 !endfunction
 
-
-
-'---------------------------------------------------------
-' Style Resolver
-'
-' Central style resolution engine.
-'
-' Resolves:
-'   - Semantic colors
-'   - AUTO
-'   - CURRENT
-'   - DARKEN*
-'   - LIGHTEN*
-'   - Literal colors
-'
-' Acts as the primary color/style abstraction
-' layer used by framework styles.
-'---------------------------------------------------------
 !function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
 
   !if ($context0 != "") && ($is_special_style_token($context0) == %false())
@@ -3382,11 +1638,7 @@
 
 !endfunction
 
-
-
 !function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
-  '!$tokenOrColorIsSpecial = $is_special_style_token($tokenOrColor)
-  
   
   !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
   
@@ -3399,11 +1651,7 @@
 
   Breakpoint_If( "STYLE_COLOR_MOTIVATION.50", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
 
-  '
-  ' Validation
-  '
   Assert_If( ($tokenOrColor == "") && ($contextColor == ""), "BLANK.BLANK[" + $tokenOrColor + "] requires token or context (f:resolve_style_color)" )
-
 
   !if ($has_dollar($tokenOrColor))
 
@@ -3411,17 +1659,11 @@
 
     !if ($resolved != "")
 
-        '------------------------------------------
-        ' Prevent infinite recursion
-        '------------------------------------------
         !if (%upper("" + $resolved + "") == %upper("" + $tokenOrColor + ""))
             Trigger_Assert( "Recursive variable resolution detected. " + "variable=[" + $tokenOrColor + "] " + "value=[" + $resolved + "] " + "(f:resolve_style_color)" )
         !endif
 
-        'PRESERVE THE CONTEXT !return $resolve_style_color($resolved)
-
         !return $resolve_style_color($resolved, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7 )
-
 
     !else
         Trigger_Assert( "Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)")
@@ -3429,29 +1671,17 @@
 
   !endif
 
-  
-  '
-  ' Literal color
-  '
   !if ($is_literal_color($tokenOrColor))
     Trigger_Breakpoint( "STYLE_COLOR_LITERAL", "token=[" + $tokenOrColor + "]" )
     !return %upper($tokenOrColor)
   !endif
 
-
-
-  '
-  ' AUTO
-  '
   !if ($token == "AUTO")
    
     Assert_Blank( $contextColor, "AUTO requires a context color (f:resolve_style_color)" )
 
     !return $get_auto_text_color($contextColor)
 
-  '
-  ' CURRENT
-  '
   !elseif ($token == "CURRENT")
 
       Assert_Blank($contextAsToken, "CURRENT requires a context color to determine CURRENT (f:resolve_style_color)" )
@@ -3460,18 +1690,12 @@
 
       !return $resolve_style_color($contextColor, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
 
-  '
-  ' DARKEN
-  '
   !elseif (%strpos($token, "DARKEN") == 0)
 
       Assert_Blank( $contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
 
       !return $darken_color( $contextColor, $tokenOrColor )
 
-  '
-  ' LIGHTEN
-  '
   !elseif (%strpos($token, "LIGHTEN") == 0)
 
       Assert_Blank($contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
@@ -3481,23 +1705,16 @@
   !elseif ($ends_with_text($tokenOrColor) == %true())
       !$base = %substr($tokenOrColor, 0,%strlen($tokenOrColor) - 5 )
       !return $get_semantic_text_color($base)
-  '
-  ' Semantic color token
-  '
   !else
 
-    'Trigger_Breakpoint( "STYLE_COLOR_SEMANTIC", "token=[" + $tokenOrColor + "]" )
-    'Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
     Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "HASH TOKEN=[" + $tokenOrColor + "]" )
     Assert_Hash_Token( $tokenOrColor, "resolve_style_color received hash token=[" + $tokenOrColor + "]" )
     !return $get_semantic_color($tokenOrColor)
 
   !endif
 
-
 !endfunction
  
-
 !function $resolve_literal_color($tokenOrColor)
   !$color = $resolve_style_color($tokenOrColor)
 
@@ -3506,83 +1723,6 @@
   !return %upper($color)
 
 !endfunction
-
-
-
-
-'--------------------------------------------------------- 
-' CORRUPTION DETECTION LIBRARY 
-'========================================================= 
-' 
-' PURPOSE 
-' 
-' Detects and optionally repairs variable corruption 
-' introduced by external PlantUML libraries. 
-' 
-' COMMON SOURCES 
-' 
-' - Archimate-PlantUML 
-' - C4-PlantUML 
-' - AWS-PlantUML 
-' - Azure-PlantUML 
-' - Corporate libraries 
-' - Future third-party includes 
-'
-'---------------------------------------------------------
-'=========================================================
-' CORRUPTION DETECTION LIBRARY
-'=========================================================
-'
-' PURPOSE
-'
-'   Detects and repairs variable corruption
-'   introduced by external PlantUML libraries.
-'
-' COMMON SOURCES
-'
-'   - Archimate-PlantUML
-'   - C4-PlantUML
-'   - AWS-PlantUML
-'   - Azure-PlantUML
-'   - Corporate libraries
-'   - Future third-party includes
-'
-' TYPICAL CORRUPTION
-'
-'   #MOTIVATION
-'   #BUSINESS
-'   #APPLICATION
-'   #PERSON
-'   #CONTAINER
-'
-' EXPECTED VALUES
-'
-'   MOTIVATION
-'   BUSINESS
-'   APPLICATION
-'
-' OR
-'
-'   #CCCCFF
-'   #047BC1
-'   #FFFFFF
-'
-' DESIGN PRINCIPLES
-'
-'   ✅ Generic
-'   ✅ Library Agnostic
-'   ✅ Breakpoint Driven
-'   ✅ C4 Compatible
-'   ✅ Archimate Compatible
-'   ✅ Extensible
-'
-'=========================================================
-
-
-
-'=========================================================
-' DETECTION
-'=========================================================
 
 !function $is_corrupted_hash_token($value)
 
@@ -3597,8 +1737,6 @@
     !return %true()
 
 !endfunction
-
-
 
 !function $is_corrupted_semantic_hash($value)
 
@@ -3620,7 +1758,6 @@
 
 !endfunction
 
-
 !function $Next_Corruption_Variable($remaining)
 
     !$remaining = %substr($remaining,1)
@@ -3635,18 +1772,11 @@
 
 !endfunction
 
-
-'=========================================================
-' BREAKPOINT HELPERS
-'=========================================================
-
 !procedure Breakpoint_Corrupted_Hash_Token($breakpoint_name,$variable_name,$value)
 
     Breakpoint_If($breakpoint_name,$is_corrupted_hash_token($value),"variable=[" + $variable_name + "] value=[" + $value + "]")
 
 !endprocedure
-
-
 
 !procedure Detect_Corrupted_Variable($breakpoint_name,$variable_name)
 
@@ -3660,19 +1790,11 @@
 
 !endprocedure
 
-
-
 !procedure Breakpoint_Corrupted_Color_Variable($variable_name)
 
     Detect_Corrupted_Variable("CORRUPTED_VARIABLE",$variable_name)
 
 !endprocedure
-
-
-
-'=========================================================
-' REPAIR HELPERS
-'=========================================================
 
 !function $remove_hash_prefix($value)
 
@@ -3683,8 +1805,6 @@
     !return $value
 
 !endfunction
-
-
 
 !function $repair_corrupted_semantic_hash($value)
 
@@ -3698,11 +1818,6 @@
 
 !endfunction
 
-
-
-'=========================================================
-' VARIABLE REPAIR
-'=========================================================
 !procedure Repair_Corrupted_Variable($variable_name)
 
     !if ($variable_exists_safe($variable_name))
@@ -3718,7 +1833,6 @@
     !endif
 
 !endprocedure
-
 
 !procedure Repair_Color_Variable($variable_name)
 
@@ -3740,9 +1854,6 @@
 
 !endprocedure
 
-
-
-
 !procedure Sanitize_Resolved_Color($variable_name)
 
     !if ($variable_exists_safe($variable_name))
@@ -3757,31 +1868,17 @@
 
 !endprocedure
 
-
-
-'=========================================================
-' CORRUPTION REGISTRY
-'=========================================================
-
 !procedure Register_Corruption_Variable($variable_name)
 
     Register_Lib_Object($variable_name,$REGISTRY_CORRUPTION_VARIABLES)
 
 !endprocedure
 
-
-
 !function $Is_Corruption_Variable_Registered($variable_name)
 
     !return $object_registered($variable_name,$REGISTRY_CORRUPTION_VARIABLES)
 
 !endfunction
-
-
-'=========================================================
-' REGISTRY PROCESSING
-'=========================================================
-
 
 !procedure Detect_Registered_Corruption_Variables( $breakpoint_name )
 
@@ -3817,9 +1914,6 @@
     !endwhile
 
 !endprocedure
-
-
-
 
 !procedure Repair_Registered_Corruption_Variables()
 
@@ -3889,112 +1983,469 @@
 
 !endprocedure
 
-
-
-'=========================================================
-' DIAGNOSTICS
-'=========================================================
-
 !procedure Dump_Corruption_Registry()
 
     Trigger_Breakpoint("CORRUPTION_REGISTRY","variables=[" + $Registry_Get($REGISTRY_CORRUPTION_VARIABLES) + "]")
 
 !endprocedure
 
+!function $archimate_sprite($stereotype)
 
+    !$s = %lower($stereotype)
 
-'=========================================================
-' DEVELOPMENT MODE
-'=========================================================
-'
-' Enable_Breakpoint(
-'     "CORRUPTED_VARIABLE"
-' )
-'
-' Detect_Registered_Corruption_Variables(
-'     "CORRUPTED_VARIABLE"
-' )
-'
-'=========================================================
+    !$pos = %strpos($s,"-")
 
+    !if ($pos >= 0)
+        !return "sprite_arch_" + %replace($s,"-","_")
+    !endif
 
+    !return ""
 
-'=========================================================
-' PRODUCTION MODE
-'=========================================================
-'
-' Repair_Registered_Color_Variables()
-'
-' Example:
-'
-'   #MOTIVATION
-'
-'       ->
-'
-'   #CCCCFF
-'
-'=========================================================
-
-
-' src/libraries/archimate/index.puml
-' Module Entry Point: Libraries / Archimate Component Pack 
-
-
-' src/libraries/archimate/_functions.puml
-
-'---------------------------------------------------------
-' Helper Functions for Archimate library integration
-'---------------------------------------------------------
-
-'!function $archimate_layer_name($tg_name)
-'  !if ($tg_name == "technology")
-'
-'  !return $first + " " + $last
-'!endfunction
-
-!function $archimate_layer_color($state)
-  !if ($state == "success")
-    !return "Green"
-  !else
-    !return "Red"
-  !endif
 !endfunction
 
-' %get_variable_value
-' %set_variable_value
-' %upper
+!unquoted procedure ArchActor( $alias, $label, $sprite, $layer )
 
-' %invoke_procedure($wrapper)
-' %call_user_func
+    !if ($sprite == "sprite_arch_business_actor")
 
-' %boolval
+        actor $label as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
 
-' !unquoted procedure 
-' !unquoted function  
+    !else
 
+        actor $label as $alias <<%lower($layer)>>
 
+    !endif
 
+!endprocedure
 
+!unquoted procedure ArchComponent( $alias, $label, $sprite, $layer )
 
-'STEP 3 :: THEME includes
+    !if ($sprite == "sprite_arch_application_component")
 
+        component $label as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_service")
+
+        component $label as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
+
+    !else
+
+        component $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchNode( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_node")
+
+        node $label as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+
+    !else
+
+        node $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchQueue( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_business_role")
+
+        queue $label as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+
+    !else
+
+        queue $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchFrame( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_business_product")
+
+        frame $label as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+
+    !else
+
+        frame $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchFile( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_artifact")
+
+        file $label as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+
+        file $label as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+
+    !else
+
+        file $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchCloud( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_technology_communicationnetwork")
+
+        cloud $label as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+
+        cloud $label as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+
+        cloud $label as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+
+    !else
+
+        cloud $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchUseCase( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_motivation_value")
+
+        usecase $label as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+
+    !else
+
+        usecase $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchPackage( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "sprite_arch_implementation_workpackage")
+
+        package $label as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_plateau")
+
+        package $label as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+
+    !else
+
+        package $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchProcess( $alias, $label, $sprite, $layer )
+
+    ArchRectangle( $alias, $label, $sprite, $layer )
+
+!endprocedure
+
+!unquoted procedure ArchFolder( $alias, $label, $sprite, $layer )
+
+    folder $label as $alias <<%lower($layer)>>
+
+!endprocedure
+
+!unquoted procedure ArchCircle( $alias, $label, $sprite, $layer )
+
+    circle $label as $alias <<%lower($layer)>>
+
+!endprocedure
+!unquoted procedure ArchRectangle( $alias, $label, $sprite, $layer )
+
+    !if ($sprite == "")
+        rectangle $label as $alias <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_resource")
+        rectangle $label as $alias <<$sprite_arch_strategy_resource>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_capability")
+        rectangle $label as $alias <<$sprite_arch_strategy_capability>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_courseofaction")
+        rectangle $label as $alias <<$sprite_arch_strategy_courseofaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_valuestream")
+        rectangle $label as $alias <<$sprite_arch_strategy_valuestream>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_actor")
+        rectangle $label as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_role")
+        rectangle $label as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_collaboration")
+        rectangle $label as $alias <<$sprite_arch_business_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_interface")
+        rectangle $label as $alias <<$sprite_arch_business_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_process")
+        rectangle $label as $alias <<$sprite_arch_business_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_function")
+        rectangle $label as $alias <<$sprite_arch_business_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_interaction")
+        rectangle $label as $alias <<$sprite_arch_business_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_event")
+        rectangle $label as $alias <<$sprite_arch_business_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_service")
+        rectangle $label as $alias <<$sprite_arch_business_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_object")
+        rectangle $label as $alias <<$sprite_arch_business_object>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_contract")
+        rectangle $label as $alias <<$sprite_arch_business_contract>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_representation")
+        rectangle $label as $alias <<$sprite_arch_business_representation>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_product")
+        rectangle $label as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_location")
+        rectangle $label as $alias <<$sprite_arch_business_location>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_component")
+        rectangle $label as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_collaboration")
+        rectangle $label as $alias <<$sprite_arch_application_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_interface")
+        rectangle $label as $alias <<$sprite_arch_application_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_function")
+        rectangle $label as $alias <<$sprite_arch_application_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_interaction")
+        rectangle $label as $alias <<$sprite_arch_application_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_process")
+        rectangle $label as $alias <<$sprite_arch_application_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_event")
+        rectangle $label as $alias <<$sprite_arch_application_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_service")
+        rectangle $label as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_dataobject")
+        rectangle $label as $alias <<$sprite_arch_application_dataobject>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_node")
+        rectangle $label as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_device")
+        rectangle $label as $alias <<$sprite_arch_technology_device>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_systemsoftware")
+        rectangle $label as $alias <<$sprite_arch_technology_systemsoftware>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_collaboration")
+        rectangle $label as $alias <<$sprite_arch_technology_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_interface")
+        rectangle $label as $alias <<$sprite_arch_technology_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_path")
+        rectangle $label as $alias <<$sprite_arch_technology_path>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_communicationnetwork")
+        rectangle $label as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_function")
+        rectangle $label as $alias <<$sprite_arch_technology_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_process")
+        rectangle $label as $alias <<$sprite_arch_technology_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_interaction")
+        rectangle $label as $alias <<$sprite_arch_technology_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_event")
+        rectangle $label as $alias <<$sprite_arch_technology_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_service")
+        rectangle $label as $alias <<$sprite_arch_technology_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_artifact")
+        rectangle $label as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_equipment")
+        rectangle $label as $alias <<$sprite_arch_technology_equipment>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_facility")
+        rectangle $label as $alias <<$sprite_arch_technology_facility>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+        rectangle $label as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_material")
+        rectangle $label as $alias <<$sprite_arch_technology_material>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_stakeholder")
+        rectangle $label as $alias <<$sprite_arch_motivation_stakeholder>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_driver")
+        rectangle $label as $alias <<$sprite_arch_motivation_driver>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_assessment")
+        rectangle $label as $alias <<$sprite_arch_motivation_assessment>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_goal")
+        rectangle $label as $alias <<$sprite_arch_motivation_goal>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_outcome")
+        rectangle $label as $alias <<$sprite_arch_motivation_outcome>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_principle")
+        rectangle $label as $alias <<$sprite_arch_motivation_principle>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_requirement")
+        rectangle $label as $alias <<$sprite_arch_motivation_requirement>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_constraint")
+        rectangle $label as $alias <<$sprite_arch_motivation_constraint>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+        rectangle $label as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_value")
+        rectangle $label as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_workpackage")
+        rectangle $label as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+        rectangle $label as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_event")
+        rectangle $label as $alias <<$sprite_arch_implementation_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_plateau")
+        rectangle $label as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_gap")
+        rectangle $label as $alias <<$sprite_arch_implementation_gap>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_other_grouping")
+        rectangle $label as $alias <<$sprite_arch_other_grouping>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_other_location")
+        rectangle $label as $alias <<$sprite_arch_other_location>> <<%lower($layer)>>
+
+    !else
+
+        rectangle $label as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="")
+
+    !if ($layer == "")
+        !$derivedLayer = $archimate_layer_from_stereotype($stereotype)
+        !if ($derivedLayer != "OTHER")
+            !$layer = $derivedLayer
+        !else
+            !$layer = $ARCHIMATE_DEFAULT_LAYER
+        !endif
+    !endif
+
+    !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
+    Assert_If( (%variable_exists($archElementColorName) == %false()),  "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
+
+    !if ($shape == "")
+        !$shape = $archimate_shape($stereotype)
+    !endif
+
+    !$sprite = $archimate_sprite($stereotype)
+
+    !if (%lower($shape) == "actor")
+
+        ArchActor($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "queue")
+
+        ArchQueue($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "frame")
+
+        ArchFrame($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "component")
+
+        ArchComponent($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "node")
+
+        ArchNode($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "file")
+
+        ArchFile($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "cloud")
+
+        ArchCloud($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "usecase")
+
+        ArchUseCase($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "package")
+
+        ArchPackage($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "process")
+
+        ArchProcess($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "folder")
+
+        ArchFolder($alias,$label,$sprite,$layer)
+
+    !elseif (%lower($shape) == "circle")
+
+        ArchCircle($alias,$label,$sprite,$layer)
+
+    !else
+
+        ArchRectangle($alias,$label,$sprite,$layer)
+
+    !endif
+
+!endprocedure
 
 !procedure Load_Lib_Theme_StdLib_Colors()
-'---------------------------------------------------------
-' Color Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
 
 !global $COLOR_BODY ?= "#ffffff"
 !global $COLOR_TEXT ?= "#000000"
 !global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
 
-
 !global $COLOR_TRANSPARENT = "#FFFFFF00"
 !global $COLOR_NONE ?= $COLOR_TRANSPARENT
-
-
 
 !global $COLOR_PRIMARY ?= "#D6EAF8"
 !global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
@@ -4012,36 +2463,22 @@
 !global $COLOR_ERROR_LIGHT ?= "#CD0000"
 !global $COLOR_ERROR_DARK ?= "#CD0000"
 
-'NEED TO FIX NAMING
 !global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
 !global $COLOR_BORDER ?= "#5D6D7E"
-
-
 
 !global $COLOR_EMPHASIS ?= "#E0B8D4"
 !global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
 !global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
-
-
-' COLOR_LIGHT
-' COLOR_DARK
 
 !global $COLOR_DISABLED_DARK ?= "#4D4D4D"
 !global $COLOR_DISABLED ?= "#737373"
 !global $COLOR_DISABLED_LIGHT ?= "#737373"
 
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Fonts()
 
-'---------------------------------------------------------
-' Font Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
 !global $NAME_FONT ?= "Segoe UI"
-!global $SIZE_FONT ?= 14
+!global $SIZE_FONT ?= 16
 !global $SIZE_FONT_TITLE ?= 18
 !global $SIZE_FONT_LEGEND ?= 11
 !global $SIZE_FONT_ARROW ?= 11
@@ -4050,16 +2487,10 @@
 
 !endprocedure
 
-
 !procedure Load_Lib_Theme_StdLib_Spacing()
-
-'---------------------------------------------------------
-' Bootstrap-inspired spacing scale
-'---------------------------------------------------------
 
 !global $SPACING_UNIT_ENABLED ?= %true()
 !global $SPACING_UNIT ?= 5
-
 
 !if $SPACING_UNIT_ENABLED == %true()
     !global $SPACING_0 ?= 0
@@ -4081,13 +2512,7 @@
 
 !endprocedure
 
-
 !procedure Load_Lib_Theme_StdLib_Borders()
-'---------------------------------------------------------
-' Border Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
 
 !global $BORDER_THICKNESS ?= 1
 !global $BORDER_THICKNESS_BOLD ?= 2
@@ -4101,11 +2526,7 @@
 !global $BORDER_5 ?= 5
 
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Corners()
-'---------------------------------------------------------
-' Border Radius Utility Variables
-'---------------------------------------------------------
 
 !global $ROUND_SHARP ?= 1
 !global $ROUND_DIAGONAL ?= 12
@@ -4122,13 +2543,8 @@
 !global $ROUND_PILL ?= 100
 !global $ROUND_CIRCLE ?= 200
 
-
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Widths()
-'---------------------------------------------------------
-' Width Utility Variables
-'---------------------------------------------------------
 
 !global $WIDTH_XS ?= 75
 !global $WIDTH_SM ?= 150
@@ -4137,13 +2553,8 @@
 !global $WIDTH_XL ?= 600
 !global $WIDTH_XXL ?= 800
 
-
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Heights()
-'---------------------------------------------------------
-' Height Utility Variables
-'---------------------------------------------------------
 
 !global $HEIGHT_XS ?= 50
 !global $HEIGHT_SM ?= 75
@@ -4151,9 +2562,7 @@
 !global $HEIGHT_LG ?= 150
 !global $HEIGHT_XL ?= 200
 
-
 !endprocedure
-
 
 !procedure Load_Lib_Theme_StdLib_Element()
 
@@ -4172,13 +2581,7 @@
     Inherit_If("SIZE_LINE_ELEMENT","SIZE_LINE")
 
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Layout()
-'---------------------------------------------------------
-' Layout Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
 
 !global $NODE_SEP ?= 75
 !global $RANK_SEP ?= 75
@@ -4193,36 +2596,12 @@
 
 !global $DEFAULT_TEXT_ALIGNMENT ?= "center"
 
-
-'---------------------------------------------------------
-' Container / Boundary Constants
-'---------------------------------------------------------
-
 !global $COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
-
-'---------------------------------------------------------
-' Legend Functions
-'---------------------------------------------------------
-
-' legend right
-' |= Archimate Category |= Color |
-' | <back:E8DAEF>      </back> | External System |
-' | <back:D6EAF8>      </back> | Logical Component / Service |
-' | <back:FCF3CF>      </back> | Business Information Authority |
-' endlegend
 
 !endprocedure
 
-
 !procedure Load_Lib_Theme_StdLib_Icons()
-'---------------------------------------------------------
-' Icon Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
 
-
-'Actors
 !global $STYLE_ACTOR ?= awesome
 
 !global $COLOR_BORDER_ACTOR ?= "#0D47A1"
@@ -4231,16 +2610,7 @@
 
 !endprocedure
 
-
 !procedure Load_Lib_Theme_StdLib_Title()
-
-'---------------------------------------------------------
-' Title Constants
-'
-' !$variable_name ?= "variable_value"
-'---------------------------------------------------------
-
-
 
 !global $COLOR_FONT_TITLE ?= $COLOR_FONT
 !global $STYLE_FONT_TITLE ?= "bold"
@@ -4255,9 +2625,7 @@ Inherit_If("ROUND_CORNER_TITLE", "ROUND_CORNER")
 Inherit_If("COLOR_LINE_TITLE", "COLOR_LINE")
 Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
-
 !endprocedure
-
 !procedure Load_Lib_Theme_StdLib_Component()
 
     !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
@@ -4269,16 +2637,11 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $MARGIN_COMPONENT ?= 20
     !global $PADDING_COMPONENT ?= 15
 
-    
     Inherit_If("ROUND_CORNER_COMPONENT","ROUND_CORNER") 
     Inherit_If("COLOR_LINE_COMPONENT","COLOR_LINE") 
     Inherit_If("SIZE_LINE_COMPONENT","SIZE_LINE")
 
 !endprocedure
-
-
-
-
 
 !procedure Load_Lib_Theme_Stdlib()
     Load_Lib_Theme_StdLib_Colors()
@@ -4298,12 +2661,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     Load_Lib_Theme_StdLib_Component()
     
 !endprocedure
-
 !procedure Load_Lib_Theme_Archimate_Fonts()
-
-    '=====================================================
-    ' Typography
-    '=====================================================
 
     !global $ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
 
@@ -4314,7 +2672,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
 
 !endprocedure
-
 
 !procedure Load_Lib_Theme_Archimate_Colors()
 
@@ -4329,8 +2686,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $COLOR_HIGHLIGHTED ?= "#005DEF"
     !global $COLOR_NEW ?= "#005700"
 
-
-    'DERIVATES
     !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
     !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
 
@@ -4349,7 +2704,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $COLOR_PHYSICAL_LIGHT ?= $lighten_color($COLOR_PHYSICAL)
     !global $COLOR_PHYSICAL_DARK ?= $darken_color($COLOR_PHYSICAL)
     
-
     !global $COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
     !global $COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
 
@@ -4361,18 +2715,8 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 !endprocedure
 
-
-
-
 !procedure Build_Lib_Derived_Variables_Archimate()
-    '**********************
-    '* HARD SET THE VALUES 
-    '**********************
 
-
-    '=====================================================
-    ' Layer Colors
-    '=====================================================
     !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
     !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
 
@@ -4385,94 +2729,407 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
     !global $ARCH_APPLICATION_BORDERCOLOR = $resolve_literal_color($COLOR_APPLICATION_DARK)
     
-
-    '=====================================================
-    ' ArchiMate physical layer
-    '=====================================================
     !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
     !global $ARCH_TECHNOLOGY_BORDERCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
 
     !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
-    '!global $ARCH_PHYSICAL_BORDERCOLOR = $resolve_literal_color($COLOR_PHYSICAL_DARK)
     !global $ARCH_PHYSICAL_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
   
     !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
-    '!global $ARCH_IMPLEMENTATION_BORDERCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
     !global $ARCH_IMPLEMENTATION_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
 
-    
-
-
-    
-
-    
-
-    '=====================================================
-    ' Other layer
-    '=====================================================
     !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
     !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
-
-
-    '=====================================================
-    ' Composite Colors
-    '=====================================================
-
-
-    '=====================================================
-    ' Junction Colors
-    '=====================================================
 
     !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
     !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
-    '=====================================================
-    ' Containers
-    '=====================================================
-
     !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
 
     !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
-
-    '=====================================================
-    ' Relationships
-    '=====================================================
 
     !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
     !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
 
 !endprocedure
 
-
-
 !procedure Load_Lib_Theme_Archimate_Corners()
 
-    '=====================================================
-    ' Corner Radius
-    '=====================================================
     !global $ARCH_SHARP_CORNER = $ROUND_SHARP
     !global $ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
     !global $ARCH_ROUND_CORNER = $ROUND_STANDARD
     !global $ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
 
-
 !endprocedure
 
-
 !procedure Load_Lib_Theme_Archimate_Widths()
-
-    '=====================================================
-    ' Widths
-    '=====================================================
 
     !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
     !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
 
 !endprocedure
 
+!procedure Load_Lib_Theme_Archimate()
+
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        Register_Archimate_Corruption_Variables()
+        Register_Lib_Theme_Derived("Archimate")
+
+        Load_Lib_Theme_Archimate_Colors()
+
+        Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+
+        Load_Lib_Theme_Archimate_Fonts()
+        Load_Lib_Theme_Archimate_Corners()
+        Load_Lib_Theme_Archimate_Widths()
+
+    !endif
+
+!endprocedure 
+
+!procedure Load_Lib_Skinparams_Stdlib()
+    skinparam linetype $LINE_TYPE
+    skinparam nodesep $NODE_SEP
+    skinparam ranksep $RANK_SEP
+
+    !if ($SKINPARAM_ENABLED)
+
+        skinparam shadowing $SHADOWING
+        skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+
+        skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
+
+        skinparam actorStyle $STYLE_ACTOR
+        skinparam actorBorderColor $COLOR_BORDER_ACTOR
+        skinparam actorBorderThickness $SIZE_BORDER_ACTOR
+        skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
+
+    !endif
+
+!endprocedure
+
+!procedure Load_Lib_Skinparams_Archimate()
+
+    !if ($SKINPARAM_ENABLED)
+
+    !endif
+    
+!endprocedure
+
+!procedure Write_Lib_Style_Stdlib_Utilities()
+
+<style>
+
+.p0 { Padding $SPACING_0 }
+.p1 { Padding $SPACING_1 }
+.p2 { Padding $SPACING_2 }
+.p3 { Padding $SPACING_3 }
+.p4 { Padding $SPACING_4 }
+.p5 { Padding $SPACING_5 }
+
+.pt0 { PaddingTop $SPACING_0 }
+.pt1 { PaddingTop $SPACING_1 }
+.pt2 { PaddingTop $SPACING_2 }
+.pt3 { PaddingTop $SPACING_3 }
+.pt4 { PaddingTop $SPACING_4 }
+.pt5 { PaddingTop $SPACING_5 }
+
+.pb0 { PaddingBottom $SPACING_0 }
+.pb1 { PaddingBottom $SPACING_1 }
+.pb2 { PaddingBottom $SPACING_2 }
+.pb3 { PaddingBottom $SPACING_3 }
+.pb4 { PaddingBottom $SPACING_4 }
+.pb5 { PaddingBottom $SPACING_5 }
+
+.pl0 { PaddingLeft $SPACING_0 }
+.pl1 { PaddingLeft $SPACING_1 }
+.pl2 { PaddingLeft $SPACING_2 }
+.pl3 { PaddingLeft $SPACING_3 }
+.pl4 { PaddingLeft $SPACING_4 }
+.pl5 { PaddingLeft $SPACING_5 }
+
+.pr0 { PaddingRight $SPACING_0 }
+.pr1 { PaddingRight $SPACING_1 }
+.pr2 { PaddingRight $SPACING_2 }
+.pr3 { PaddingRight $SPACING_3 }
+.pr4 { PaddingRight $SPACING_4 }
+.pr5 { PaddingRight $SPACING_5 }
+
+.m0 { Margin $SPACING_0 }
+.m1 { Margin $SPACING_1 }
+.m2 { Margin $SPACING_2 }
+.m3 { Margin $SPACING_3 }
+.m4 { Margin $SPACING_4 }
+.m5 { Margin $SPACING_5 }
+
+.mt0 { MarginTop $SPACING_0 }
+.mt1 { MarginTop $SPACING_1 }
+.mt2 { MarginTop $SPACING_2 }
+.mt3 { MarginTop $SPACING_3 }
+.mt4 { MarginTop $SPACING_4 }
+.mt5 { MarginTop $SPACING_5 }
+
+.mb0 { MarginBottom $SPACING_0 }
+.mb1 { MarginBottom $SPACING_1 }
+.mb2 { MarginBottom $SPACING_2 }
+.mb3 { MarginBottom $SPACING_3 }
+.mb4 { MarginBottom $SPACING_4 }
+.mb5 { MarginBottom $SPACING_5 }
+
+.ml0 { MarginLeft $SPACING_0 }
+.ml1 { MarginLeft $SPACING_1 }
+.ml2 { MarginLeft $SPACING_2 }
+.ml3 { MarginLeft $SPACING_3 }
+.ml4 { MarginLeft $SPACING_4 }
+.ml5 { MarginLeft $SPACING_5 }
+
+.mr0 { MarginRight $SPACING_0 }
+.mr1 { MarginRight $SPACING_1 }
+.mr2 { MarginRight $SPACING_2 }
+.mr3 { MarginRight $SPACING_3 }
+.mr4 { MarginRight $SPACING_4 }
+.mr5 { MarginRight $SPACING_5 }
+
+.border0 { LineThickness $BORDER_0 }
+.border1 { LineThickness $BORDER_1 }
+.border2 { LineThickness $BORDER_2 }
+.border3 { LineThickness $BORDER_3 }
+.border4 { LineThickness $BORDER_4 }
+.border5 { LineThickness $BORDER_5 }
+
+.rounded0 { RoundCorner $ROUND_0 }
+.rounded1 { RoundCorner $ROUND_1 }
+.rounded2 { RoundCorner $ROUND_2 }
+.rounded3 { RoundCorner $ROUND_3 }
+.rounded4 { RoundCorner $ROUND_4 }
+.rounded5 { RoundCorner $ROUND_5 }
+
+.roundedPill {
+    RoundCorner $ROUND_PILL
+}
+
+.roundedCircle {
+    RoundCorner $ROUND_CIRCLE
+}
+
+.shadow {
+    Shadowing true
+}
+
+.noShadow {
+    Shadowing false
+}
+
+.wXs { MinimumWidth $WIDTH_XS }
+.wSm { MinimumWidth $WIDTH_SM }
+.wMd { MinimumWidth $WIDTH_MD }
+.wLg { MinimumWidth $WIDTH_LG }
+.wXl { MinimumWidth $WIDTH_XL }
+.wXxl { MinimumWidth $WIDTH_XXL }
+
+.hXs { MinimumHeight $HEIGHT_XS }
+.hSm { MinimumHeight $HEIGHT_SM }
+.hMd { MinimumHeight $HEIGHT_MD }
+.hLg { MinimumHeight $HEIGHT_LG }
+.hXl { MinimumHeight $HEIGHT_XL }
+
+</style>
+
+!endprocedure
+
+!procedure Write_Lib_Style_Stdlib_Card()
+
+<style>
+
+.card {
+
+    Padding $SPACING_3
+    Margin $SPACING_2
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_1
+
+    Shadowing true
+
+}
+
+.cardCompact {
+
+    Padding $SPACING_2
+    Margin $SPACING_1
+
+    RoundCorner $ROUND_1
+
+    LineThickness $BORDER_1
+
+    Shadowing true
+
+}
+
+.cardLg {
+
+    Padding $SPACING_4
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_3
+
+    LineThickness $BORDER_2
+
+    Shadowing true
+
+}
+
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Panel()
+
+<style>
+
+.panel {
+
+    Padding $SPACING_4
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_2
+
+}
+
+.panelCompact {
+
+    Padding $SPACING_2
+    Margin $SPACING_2
+
+    RoundCorner $ROUND_1
+
+    LineThickness $BORDER_1
+
+}
+
+.panelLg {
+
+    Padding $SPACING_5
+    Margin $SPACING_4
+
+    RoundCorner $ROUND_3
+
+    LineThickness $BORDER_3
+
+}
+
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Containers()
+
+<style>
+
+.boundary {
+
+    Padding $SPACING_5
+    Margin $SPACING_3
+
+    RoundCorner $ROUND_2
+
+    LineThickness $BORDER_2
+
+}
+
+.boundaryLg {
+
+    Padding $SPACING_5
+    Margin $SPACING_5
+
+    RoundCorner $ROUND_4
+
+    LineThickness $BORDER_3
+
+}
+
+</style>
+
+!endprocedure
+
+!procedure Write_Lib_Style_Stdlib_Title()
+
+!$tBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_TITLE)
+!$tFontColor = $resolve_style_color($COLOR_FONT_TITLE, $COLOR_BACKGROUND_TITLE, $COLOR_BACKGROUND, $COLOR_BODY )
+
+<style>
+title {
+    BackgroundColor $tBackgroundColor
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
+    FontColor $tFontColor
+    FontStyle $STYLE_FONT_TITLE
+    LineColor $tBackgroundColor
+
+    LineThickness $SIZE_LINE_TITLE
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+</style>
+
+!endprocedure
+
+!procedure Write_Lib_Style_Stdlib_Element()
+
+    !$cBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_ELEMENT)
+    !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
+
+    !$ccBackgroundColor = $resolve_style_color("DARKEN", $cBackgroundColor)
+    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
+
+<style>
+
+element {
+    BackgroundColor $cBackgroundColor
+    LineColor $ccFontColor
+    FontColor $cFontColor
+
+    LineThickness $SIZE_LINE_ELEMENT
+    RoundCorner $ROUND_CORNER_ELEMENT
+    Margin $MARGIN_ELEMENT
+    Padding $PADDING_ELEMENT
+
+}
+
+component {
+
+}
+
+.composite-container {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+
+</style>
+
+!endprocedure
+
+!procedure Write_Lib_Style_Stdlib_Component()
+
+!endprocedure
+
+!procedure Load_Lib_Styles_Stdlib()
+
+    Write_Lib_Style_Stdlib_Utilities()
+
+    Write_Lib_Style_Stdlib_Card()
+    Write_Lib_Style_Stdlib_Panel()
+    Write_Lib_Style_Stdlib_Containers()
+
+    Write_Lib_Style_Stdlib_Title()
+    Write_Lib_Style_Stdlib_Element()
+    Write_Lib_Style_Stdlib_Component()
+    
+!endprocedure
+
 !procedure Write_Lib_Style_Archimate_Element()
 
-    
     !$defaultBg = ""
     !$defaultFg = ""
     !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
@@ -4510,7 +3167,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultLc = $businessLc
     !endif
     
-
     !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
     !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
     !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
@@ -4521,7 +3177,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultLc = $applicationLc
     !endif
     
-
     !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
     !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
     !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
@@ -4532,7 +3187,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultLc = $technologyLc
     !endif
     
-
     !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
     !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
     !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
@@ -4543,7 +3197,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultLc = $physicalLc
     !endif
     
-
     !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
     !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
     !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
@@ -4554,7 +3207,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultLc = $implementationLc
     !endif
     
-
     !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
     !$otherFg = $resolve_style_color("AUTO", $otherBg)
     !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
@@ -4564,7 +3216,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
         !$defaultFg = $otherFg
         !$defaultLc = $otherLc
     !endif
-    
     
     <style>
     .motivation {
@@ -4619,7 +3270,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     
 </style>
 
-
 !if ($defaultBg != "") && ($defaultFg != "")
 <style>
     element {
@@ -4642,32 +3292,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 !endif
 
-
 !endprocedure
-
-
-
-!procedure Load_Lib_Theme_Archimate()
-
-    !if ($ARCHIMATE_LIB_ENABLED == %true() )
-        ' *****
-        Register_Archimate_Corruption_Variables()
-        Register_Lib_Theme_Derived("Archimate")
-        ' *****
-
-        Load_Lib_Theme_Archimate_Colors()
-
-        
-        Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
-
-        Load_Lib_Theme_Archimate_Fonts()
-        Load_Lib_Theme_Archimate_Corners()
-        Load_Lib_Theme_Archimate_Widths()
-
-    !endif
-
-!endprocedure 
-
 
 !procedure Load_Lib_Styles_Archimate()
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
@@ -4677,458 +3302,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 !endprocedure 
 
-
-'STEP 4 :: Skin Params includes
-
-'---------------------------------------------------------
-' skinparam Initialization
-'---------------------------------------------------------
-
-
-' skinparam linetype polyline
-' skinparam linetype ortho
-
-!procedure Load_Lib_Skinparams_Stdlib()
-    skinparam linetype $LINE_TYPE
-    skinparam nodesep $NODE_SEP
-    skinparam ranksep $RANK_SEP
-
-    !if ($SKINPARAM_ENABLED)
-
-        skinparam shadowing $SHADOWING
-        skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-
-        skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
-
-        skinparam actorStyle $STYLE_ACTOR
-        skinparam actorBorderColor $COLOR_BORDER_ACTOR
-        skinparam actorBorderThickness $SIZE_BORDER_ACTOR
-        skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
-
-    !endif
-
-!endprocedure
-
-
-'---------------------------------------------------------
-' skinparam Initialization
-'---------------------------------------------------------
-
-!procedure Load_Lib_Skinparams_Archimate()
-
-    !if ($SKINPARAM_ENABLED)
-
-    !endif
-    
-!endprocedure
-
-
-'STEP 5 :: STYLES includes
-!procedure Write_Lib_Style_Stdlib_Utilities()
-
-<style>
-
-'=========================================================
-' PADDING
-'=========================================================
-
-.p0 { Padding $SPACING_0 }
-.p1 { Padding $SPACING_1 }
-.p2 { Padding $SPACING_2 }
-.p3 { Padding $SPACING_3 }
-.p4 { Padding $SPACING_4 }
-.p5 { Padding $SPACING_5 }
-
-'=========================================================
-' DIRECTIONAL PADDING
-'=========================================================
-
-.pt0 { PaddingTop $SPACING_0 }
-.pt1 { PaddingTop $SPACING_1 }
-.pt2 { PaddingTop $SPACING_2 }
-.pt3 { PaddingTop $SPACING_3 }
-.pt4 { PaddingTop $SPACING_4 }
-.pt5 { PaddingTop $SPACING_5 }
-
-.pb0 { PaddingBottom $SPACING_0 }
-.pb1 { PaddingBottom $SPACING_1 }
-.pb2 { PaddingBottom $SPACING_2 }
-.pb3 { PaddingBottom $SPACING_3 }
-.pb4 { PaddingBottom $SPACING_4 }
-.pb5 { PaddingBottom $SPACING_5 }
-
-.pl0 { PaddingLeft $SPACING_0 }
-.pl1 { PaddingLeft $SPACING_1 }
-.pl2 { PaddingLeft $SPACING_2 }
-.pl3 { PaddingLeft $SPACING_3 }
-.pl4 { PaddingLeft $SPACING_4 }
-.pl5 { PaddingLeft $SPACING_5 }
-
-.pr0 { PaddingRight $SPACING_0 }
-.pr1 { PaddingRight $SPACING_1 }
-.pr2 { PaddingRight $SPACING_2 }
-.pr3 { PaddingRight $SPACING_3 }
-.pr4 { PaddingRight $SPACING_4 }
-.pr5 { PaddingRight $SPACING_5 }
-
-'=========================================================
-' MARGIN
-'=========================================================
-
-.m0 { Margin $SPACING_0 }
-.m1 { Margin $SPACING_1 }
-.m2 { Margin $SPACING_2 }
-.m3 { Margin $SPACING_3 }
-.m4 { Margin $SPACING_4 }
-.m5 { Margin $SPACING_5 }
-
-'=========================================================
-' DIRECTIONAL MARGIN
-'=========================================================
-
-.mt0 { MarginTop $SPACING_0 }
-.mt1 { MarginTop $SPACING_1 }
-.mt2 { MarginTop $SPACING_2 }
-.mt3 { MarginTop $SPACING_3 }
-.mt4 { MarginTop $SPACING_4 }
-.mt5 { MarginTop $SPACING_5 }
-
-.mb0 { MarginBottom $SPACING_0 }
-.mb1 { MarginBottom $SPACING_1 }
-.mb2 { MarginBottom $SPACING_2 }
-.mb3 { MarginBottom $SPACING_3 }
-.mb4 { MarginBottom $SPACING_4 }
-.mb5 { MarginBottom $SPACING_5 }
-
-.ml0 { MarginLeft $SPACING_0 }
-.ml1 { MarginLeft $SPACING_1 }
-.ml2 { MarginLeft $SPACING_2 }
-.ml3 { MarginLeft $SPACING_3 }
-.ml4 { MarginLeft $SPACING_4 }
-.ml5 { MarginLeft $SPACING_5 }
-
-.mr0 { MarginRight $SPACING_0 }
-.mr1 { MarginRight $SPACING_1 }
-.mr2 { MarginRight $SPACING_2 }
-.mr3 { MarginRight $SPACING_3 }
-.mr4 { MarginRight $SPACING_4 }
-.mr5 { MarginRight $SPACING_5 }
-
-'=========================================================
-' BORDER THICKNESS
-'=========================================================
-
-.border0 { LineThickness $BORDER_0 }
-.border1 { LineThickness $BORDER_1 }
-.border2 { LineThickness $BORDER_2 }
-.border3 { LineThickness $BORDER_3 }
-.border4 { LineThickness $BORDER_4 }
-.border5 { LineThickness $BORDER_5 }
-
-'=========================================================
-' ROUNDING
-'=========================================================
-
-.rounded0 { RoundCorner $ROUND_0 }
-.rounded1 { RoundCorner $ROUND_1 }
-.rounded2 { RoundCorner $ROUND_2 }
-.rounded3 { RoundCorner $ROUND_3 }
-.rounded4 { RoundCorner $ROUND_4 }
-.rounded5 { RoundCorner $ROUND_5 }
-
-.roundedPill {
-    RoundCorner $ROUND_PILL
-}
-
-.roundedCircle {
-    RoundCorner $ROUND_CIRCLE
-}
-
-'=========================================================
-' SHADOWS
-'=========================================================
-
-.shadow {
-    Shadowing true
-}
-
-.noShadow {
-    Shadowing false
-}
-
-'=========================================================
-' WIDTHS
-'=========================================================
-
-.wXs { MinimumWidth $WIDTH_XS }
-.wSm { MinimumWidth $WIDTH_SM }
-.wMd { MinimumWidth $WIDTH_MD }
-.wLg { MinimumWidth $WIDTH_LG }
-.wXl { MinimumWidth $WIDTH_XL }
-.wXxl { MinimumWidth $WIDTH_XXL }
-
-'=========================================================
-' HEIGHTS
-'=========================================================
-
-.hXs { MinimumHeight $HEIGHT_XS }
-.hSm { MinimumHeight $HEIGHT_SM }
-.hMd { MinimumHeight $HEIGHT_MD }
-.hLg { MinimumHeight $HEIGHT_LG }
-.hXl { MinimumHeight $HEIGHT_XL }
-
-</style>
-
-!endprocedure
-
-
-!procedure Write_Lib_Style_Stdlib_Card()
-
-<style>
-
-
-
-'=========================================================
-' CARD
-'=========================================================
-
-.card {
-
-    Padding $SPACING_3
-    Margin $SPACING_2
-
-    RoundCorner $ROUND_2
-
-    LineThickness $BORDER_1
-
-    Shadowing true
-
-}
-
-.cardCompact {
-
-    Padding $SPACING_2
-    Margin $SPACING_1
-
-    RoundCorner $ROUND_1
-
-    LineThickness $BORDER_1
-
-    Shadowing true
-
-}
-
-.cardLg {
-
-    Padding $SPACING_4
-    Margin $SPACING_3
-
-    RoundCorner $ROUND_3
-
-    LineThickness $BORDER_2
-
-    Shadowing true
-
-}
-
-
-</style>
-!endprocedure
-
-!procedure Write_Lib_Style_Stdlib_Panel()
-
-<style>
-
-
-
-'=========================================================
-' PANEL
-'
-' Stronger visual grouping.
-' Ideal for architecture boundaries.
-'=========================================================
-
-.panel {
-
-    Padding $SPACING_4
-    Margin $SPACING_3
-
-    RoundCorner $ROUND_2
-
-    LineThickness $BORDER_2
-
-}
-
-.panelCompact {
-
-    Padding $SPACING_2
-    Margin $SPACING_2
-
-    RoundCorner $ROUND_1
-
-    LineThickness $BORDER_1
-
-}
-
-.panelLg {
-
-    Padding $SPACING_5
-    Margin $SPACING_4
-
-    RoundCorner $ROUND_3
-
-    LineThickness $BORDER_3
-
-}
-
-</style>
-!endprocedure
-
-!procedure Write_Lib_Style_Stdlib_Containers()
-
-<style>
-
-
-'=========================================================
-' ARCHITECTURE CONTAINERS
-'=========================================================
-
-.boundary {
-
-    Padding $SPACING_5
-    Margin $SPACING_3
-
-    RoundCorner $ROUND_2
-
-    LineThickness $BORDER_2
-
-}
-
-.boundaryLg {
-
-    Padding $SPACING_5
-    Margin $SPACING_5
-
-    RoundCorner $ROUND_4
-
-    LineThickness $BORDER_3
-
-}
-
-</style>
-
-!endprocedure
-
-
-'---------------------------------------------------------
-' Title Styles
-'---------------------------------------------------------
-
-!procedure Write_Lib_Style_Stdlib_Title()
-
-!$tBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_TITLE)
-!$tFontColor = $resolve_style_color($COLOR_FONT_TITLE, $COLOR_BACKGROUND_TITLE, $COLOR_BACKGROUND, $COLOR_BODY )
-
-<style>
-title {
-    BackgroundColor $tBackgroundColor
-    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
-    FontSize $SIZE_FONT_TITLE
-    FontColor $tFontColor
-    FontStyle $STYLE_FONT_TITLE
-    LineColor $tBackgroundColor
-
-
-    LineThickness $SIZE_LINE_TITLE
-    RoundCorner $ROUND_CORNER_TITLE
-    Margin $MARGIN_TITLE
-    Padding $PADDING_TITLE
-}
-</style>
-
-!endprocedure
-
-'---------------------------------------------------------
-' Title Element
-'---------------------------------------------------------
-
-
-'---------------------------------------------------------
-' Element Styles
-'---------------------------------------------------------
-
-!procedure Write_Lib_Style_Stdlib_Element()
-
-    !$cBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_ELEMENT)
-    !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
-
-    'COLOR_BACKGROUND_ELEMENT_COMPOSITE
-    !$ccBackgroundColor = $resolve_style_color("DARKEN", $cBackgroundColor)
-    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
-
-<style>
-
-element {
-    BackgroundColor $cBackgroundColor
-    LineColor $ccFontColor
-    FontColor $cFontColor
-
-    LineThickness $SIZE_LINE_ELEMENT
-    RoundCorner $ROUND_CORNER_ELEMENT
-    Margin $MARGIN_ELEMENT
-    Padding $PADDING_ELEMENT
-
-}
-
-component {
-
-}
-
-.composite-container {
-    BackgroundColor $ccBackgroundColor
-    LineColor $ccBackgroundColor
-    FontColor $ccFontColor
-}
-
-</style>
-
-!endprocedure
-
-
-'---------------------------------------------------------
-' Component Styles
-'---------------------------------------------------------
-
-!procedure Write_Lib_Style_Stdlib_Component()
-
-
-!endprocedure
-
-
-
-!procedure Load_Lib_Styles_Stdlib()
-
-    Write_Lib_Style_Stdlib_Utilities()
-
-    Write_Lib_Style_Stdlib_Card()
-    Write_Lib_Style_Stdlib_Panel()
-    Write_Lib_Style_Stdlib_Containers()
-
-    Write_Lib_Style_Stdlib_Title()
-    Write_Lib_Style_Stdlib_Element()
-    Write_Lib_Style_Stdlib_Component()
-    
-
-!endprocedure
-
-
-
-
-'STEP 6 :: Add to Load_Lib_All
-
-
 !procedure Load_Lib_Themes()
-    '--------------------------------------------    
     Load_Lib_Theme_BEFORE()
     
     Load_Lib_Theme_Stdlib()
@@ -5137,21 +3311,15 @@ component {
     
     Build_Registered_Theme_Derived_Variables()
     
-    ' *****
     Repair_Lib_Corruption()
     !if ($CORRUPTION_DIAGNOSTICS) 
         Detect_Lib_Corruption() 
     !endif
-    ' *****
-
 
     Load_Lib_Theme_AFTER()
-    '--------------------------------------------
 !endprocedure
 
-
 !procedure Load_Lib_Skinparams()
-    '--------------------------------------------    
     Load_Lib_Skinparams_BEFORE()
 
     Load_Lib_Skinparams_Stdlib()
@@ -5159,12 +3327,9 @@ component {
     Load_Registered_Skinparams()
 
     Load_Lib_Skinparams_AFTER()
-    '--------------------------------------------
 !endprocedure
 
-
 !procedure Load_Lib_Styles()
-    '--------------------------------------------    
     Load_Lib_Styles_BEFORE()
 
     Load_Lib_Styles_Stdlib()
@@ -5172,10 +3337,7 @@ component {
     Load_Registered_Styles()
 
     Load_Lib_Styles_AFTER()
-    '--------------------------------------------
 !endprocedure
-
-
 
 !procedure Load_Lib_All()
 
@@ -5184,9 +3346,3 @@ component {
     Load_Lib_Styles()
 !endprocedure
   
-
-
-
-
-
-

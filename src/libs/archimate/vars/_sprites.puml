@@ -1,0 +1,89 @@
+
+'=========================================================
+' Strategy
+'=========================================================
+sprite $sprite_arch_strategy_resource              jar:archimate/strategy-resource
+sprite $sprite_arch_strategy_capability            jar:archimate/strategy-capability
+sprite $sprite_arch_strategy_courseofaction        jar:archimate/strategy-courseofaction
+sprite $sprite_arch_strategy_valuestream           jar:archimate/strategy-valuestream
+
+'=========================================================
+' Business
+'=========================================================
+sprite $sprite_arch_business_actor                jar:archimate/business-actor
+sprite $sprite_arch_business_role                 jar:archimate/business-role
+sprite $sprite_arch_business_collaboration        jar:archimate/business-collaboration
+sprite $sprite_arch_business_interface            jar:archimate/business-interface
+sprite $sprite_arch_business_process              jar:archimate/business-process
+sprite $sprite_arch_business_function             jar:archimate/business-function
+sprite $sprite_arch_business_interaction          jar:archimate/business-interaction
+sprite $sprite_arch_business_event                jar:archimate/business-event
+sprite $sprite_arch_business_service              jar:archimate/business-service
+sprite $sprite_arch_business_object               jar:archimate/business-object
+sprite $sprite_arch_business_contract             jar:archimate/business-contract
+sprite $sprite_arch_business_representation       jar:archimate/business-representation
+sprite $sprite_arch_business_product              jar:archimate/business-product
+sprite $sprite_arch_business_location             jar:archimate/business-location
+
+'=========================================================
+' Application
+'=========================================================
+sprite $sprite_arch_application_component         jar:archimate/application-component
+sprite $sprite_arch_application_collaboration     jar:archimate/application-collaboration
+sprite $sprite_arch_application_interface         jar:archimate/application-interface
+sprite $sprite_arch_application_function          jar:archimate/application-function
+sprite $sprite_arch_application_interaction       jar:archimate/application-interaction
+sprite $sprite_arch_application_process           jar:archimate/application-process
+sprite $sprite_arch_application_event             jar:archimate/application-event
+sprite $sprite_arch_application_service           jar:archimate/application-service
+sprite $sprite_arch_application_dataobject        jar:archimate/application-dataobject
+
+'=========================================================
+' Technology
+'=========================================================
+sprite $sprite_arch_technology_node               jar:archimate/technology-node
+sprite $sprite_arch_technology_device             jar:archimate/technology-device
+sprite $sprite_arch_technology_systemsoftware     jar:archimate/technology-systemsoftware
+sprite $sprite_arch_technology_collaboration      jar:archimate/technology-collaboration
+sprite $sprite_arch_technology_interface          jar:archimate/technology-interface
+sprite $sprite_arch_technology_path               jar:archimate/technology-path
+sprite $sprite_arch_technology_communicationnetwork jar:archimate/technology-communicationnetwork
+sprite $sprite_arch_technology_function           jar:archimate/technology-function
+sprite $sprite_arch_technology_process            jar:archimate/technology-process
+sprite $sprite_arch_technology_interaction        jar:archimate/technology-interaction
+sprite $sprite_arch_technology_event              jar:archimate/technology-event
+sprite $sprite_arch_technology_service            jar:archimate/technology-service
+sprite $sprite_arch_technology_artifact           jar:archimate/technology-artifact
+sprite $sprite_arch_technology_equipment          jar:archimate/technology-equipment
+sprite $sprite_arch_technology_facility           jar:archimate/technology-facility
+sprite $sprite_arch_technology_distributionnetwork jar:archimate/technology-distributionnetwork
+sprite $sprite_arch_technology_material           jar:archimate/technology-material
+
+'=========================================================
+' Motivation
+'=========================================================
+sprite $sprite_arch_motivation_stakeholder        jar:archimate/motivation-stakeholder
+sprite $sprite_arch_motivation_driver             jar:archimate/motivation-driver
+sprite $sprite_arch_motivation_assessment         jar:archimate/motivation-assessment
+sprite $sprite_arch_motivation_goal               jar:archimate/motivation-goal
+sprite $sprite_arch_motivation_outcome            jar:archimate/motivation-outcome
+sprite $sprite_arch_motivation_principle          jar:archimate/motivation-principle
+sprite $sprite_arch_motivation_requirement        jar:archimate/motivation-requirement
+sprite $sprite_arch_motivation_constraint         jar:archimate/motivation-constraint
+sprite $sprite_arch_motivation_meaning            jar:archimate/motivation-meaning
+sprite $sprite_arch_motivation_value              jar:archimate/motivation-value
+
+'=========================================================
+' Implementation & Migration
+'=========================================================
+sprite $sprite_arch_implementation_workpackage    jar:archimate/implementation-workpackage
+sprite $sprite_arch_implementation_deliverable    jar:archimate/implementation-deliverable
+sprite $sprite_arch_implementation_event          jar:archimate/implementation-event
+sprite $sprite_arch_implementation_plateau        jar:archimate/implementation-plateau
+sprite $sprite_arch_implementation_gap            jar:archimate/implementation-gap
+
+'=========================================================
+' Other
+'=========================================================
+sprite $sprite_arch_other_grouping                jar:archimate/other-grouping
+sprite $sprite_arch_other_location                jar:archimate/other-location

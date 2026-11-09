@@ -3,7 +3,7 @@
 This tree maps out exactly how the source code files were evaluated and sequenced into the final `all.puml` production asset.
 
 ```text
-src/all.puml (Root Master)
+/c/dev/plantuml/src/all.puml (Root Master)
   └── index.puml
     └── libs/index.puml
       └── stdlib/framework/index.puml
@@ -22,6 +22,7 @@ src/all.puml (Root Master)
       └── archimate/vars/index.puml
         └── _root.puml
         └── _corruption_repair.puml
+        └── _sprites.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
@@ -33,8 +34,10 @@ src/all.puml (Root Master)
         └── _resolver.puml
         └── _corruption_detection.puml
       └── archimate/components/index.puml
-        └── _functions.puml
-        └── _colors.puml
+        └── _sprite.puml
+        └── _shapes.puml
+        └── _rectangle.puml
+        └── _element.puml
       └── stdlib/theme/index.puml
         └── _colors.puml
         └── _fonts.puml
@@ -54,7 +57,6 @@ src/all.puml (Root Master)
         └── _derived_variables.puml
         └── _corners.puml
         └── _widths.puml
-        └── _element.puml
       └── stdlib/skinparams/index.puml
       └── archimate/skinparams/index.puml
       └── stdlib/styles/index.puml
@@ -66,5 +68,6 @@ src/all.puml (Root Master)
         └── _element.puml
         └── _component.puml
       └── archimate/styles/index.puml
+        └── _element.puml
       └── _load.puml
 ```

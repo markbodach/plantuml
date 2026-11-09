@@ -8,7 +8,7 @@ Generated theme distribution bundles.
 ## theme-ontariohealth.puml
 
 ```text
-src/themes/ontariohealth/index.puml (Root Master)
+/c/dev/plantuml/src/themes/ontariohealth/index.puml (Root Master)
   └── vars/index.puml
     └── _root.puml
     └── _colors.puml
