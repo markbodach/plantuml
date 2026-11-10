@@ -13,10 +13,7 @@
 
     !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
 
-    Assert_If(
-        (%variable_exists($archElementColorName) == %false()),
-        "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)"
-    )
+    Assert_If( (%variable_exists($archElementColorName) == %false()), "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
 
     !if ($shape == "")
         !$shape = $archimate_shape_from_base_entity($baseEntity)
