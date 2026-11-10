@@ -50,3 +50,24 @@
 
 !endfunction
 
+
+!function $replace($text, $find, $replacement)
+
+    !$result = ""
+    !$remaining = $text
+
+    !while (%strpos($remaining, $find) >= 0)
+
+        !$pos = %strpos($remaining, $find)
+
+        !$result = $result + %substr($remaining, 0, $pos)
+
+        !$result = $result + $replacement
+
+        !$remaining = %substr( $remaining, $pos + %strlen($find) )
+
+    !endwhile
+
+    !return $result + $remaining
+
+!endfunction

@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-09 14:16:33 EST
-' Build Commit Hash: 941355f21d9588614b333e47725bedb4d838e6aa
-' Build Commit Comment: refactoring for sprites
+' Generated on: 2026-11-10 11:07:44 EST
+' Build Commit Hash: 62e5bd44fcac468f5a2d20fdfdc97e4ff64fe4a3
+' Build Commit Comment: sprites
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -612,6 +612,27 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
   !endif
 
   !return %false()
+
+!endfunction
+
+!function $replace($text, $find, $replacement)
+
+    !$result = ""
+    !$remaining = $text
+
+    !while (%strpos($remaining, $find) >= 0)
+
+        !$pos = %strpos($remaining, $find)
+
+        !$result = $result + %substr($remaining, 0, $pos)
+
+        !$result = $result + $replacement
+
+        !$remaining = %substr( $remaining, $pos + %strlen($find) )
+
+    !endwhile
+
+    !return $result + $remaining
 
 !endfunction
 
@@ -1992,21 +2013,15 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !function $archimate_sprite($stereotype)
 
     !$s = %lower($stereotype)
-
     !$pos = %strpos($s,"-")
-
     !if ($pos >= 0)
-        !return "sprite_arch_" + %replace($s,"-","_")
+        !return "sprite_arch_" + $replace($s,"-","_")
     !endif
-
     !return ""
-
 !endfunction
 
 !function $archimate_layer_from_stereotype($stereotype)
-
     !$s = %lower($stereotype)
-
     !$pos = %strpos($s,"-")
 
     !if ($pos >= 0)
