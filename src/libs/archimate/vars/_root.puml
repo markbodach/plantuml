@@ -4,3 +4,4 @@
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
+!global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()

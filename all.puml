@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-10 17:31:16 EST
-' Build Commit Hash: c4a2ca2b3403ab70363d0b7d045fd1d19bb6a60a
-' Build Commit Comment: multiline error
+' Generated on: 2026-11-10 17:49:05 EST
+' Build Commit Hash: f27c1741c2c40c19863dfa3cf00b8a9db43738a3
+' Build Commit Comment: replace function
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -473,6 +473,7 @@
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
+!global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()
 
 !procedure Register_Archimate_Corruption_Variables()
 
@@ -2112,7 +2113,16 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endfunction
 
-!unquoted procedure ArchRectangle( $alias, $label, $sprite, $layer )
+!function $archimate_sprite_base_entity($sprite)
+
+    !$entity = %substr($sprite,12)
+    !$entity = $replace($entity,"_","-")
+
+    !return $archimate_base_entity($entity)
+
+!endfunction
+
+!unquoted procedure ArchRectangle( $alias, $label, $sprite = "", $layer = "" )
 
     !if ($sprite == "")
         rectangle "$label" as $alias <<%lower($layer)>>
@@ -2396,24 +2406,6 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !else
 
         actor "$label" as $alias <<%lower($layer)>>
-
-    !endif
-
-!endprocedure
-
-!unquoted procedure ArchComponent( $alias, $label, $sprite, $layer )
-
-    !if ($sprite == "sprite_arch_application_component")
-
-        component "$label" as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_service")
-
-        component "$label" as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
-
-    !else
-
-        component "$label" as $alias <<%lower($layer)>>
 
     !endif
 

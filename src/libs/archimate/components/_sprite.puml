@@ -76,3 +76,11 @@
 
 !endfunction
 
+!function $archimate_sprite_base_entity($sprite)
+
+    !$entity = %substr($sprite,12)
+    !$entity = $replace($entity,"_","-")
+
+    !return $archimate_base_entity($entity)
+
+!endfunction

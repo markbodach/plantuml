@@ -93,24 +93,6 @@
 !endprocedure
 
 
-!unquoted procedure ArchComponent( $alias, $label, $sprite, $layer )
-
-    !if ($sprite == "sprite_arch_application_component")
-
-        component "$label" as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_service")
-
-        component "$label" as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
-
-    !else
-
-        component "$label" as $alias <<%lower($layer)>>
-
-    !endif
-
-!endprocedure
-
 
 !unquoted procedure ArchNode( $alias, $label, $sprite, $layer )
 

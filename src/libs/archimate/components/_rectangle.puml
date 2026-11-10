@@ -1,4 +1,4 @@
-!unquoted procedure ArchRectangle( $alias, $label, $sprite, $layer )
+!unquoted procedure ArchRectangle( $alias, $label, $sprite = "", $layer = "" )
 
     !if ($sprite == "")
         rectangle "$label" as $alias <<%lower($layer)>>

@@ -1,0 +1,21 @@
+!unquoted procedure ArchComponent($alias, $label, $sprite, $layer)
+
+    !if ($ARCHIMATE_COMPONENT_NO_SPRITE)
+
+        component "$label" as $alias <<%lower($layer)>>
+
+    !elseif ($sprite != "") && ($archimate_sprite_base_entity($sprite) != "component")
+
+        ArchRectangle($alias, $label, $sprite, $layer)
+
+    !else
+
+        component "$label" as $alias <<%lower($layer)>>
+
+    !endif
+
+!endprocedure
+
+
+
+
