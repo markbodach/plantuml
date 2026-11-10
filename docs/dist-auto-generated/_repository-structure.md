@@ -34,9 +34,10 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _resolver.puml
         └── _corruption_detection.puml
       └── archimate/components/index.puml
+        └── _sprite_registry.puml
         └── _sprite.puml
-        └── _shapes.puml
         └── _rectangle.puml
+        └── _shapes.puml
         └── _element.puml
       └── stdlib/theme/index.puml
         └── _colors.puml

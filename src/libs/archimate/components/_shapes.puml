@@ -1,3 +1,83 @@
+!function $archimate_shape_from_base_entity($entity)
+
+    !$s = $archimate_normalize_entity($entity)
+
+    !if ($s == "actor")
+        !return "actor"
+
+    !elseif ($s == "role")
+        !return "queue"
+
+    !elseif ($s == "product")
+        !return "frame"
+
+    !elseif ($s == "component")
+        !return "component"
+
+    !elseif ($s == "node")
+        !return "node"
+
+    !elseif ($s == "device")
+        !return "node"
+
+    !elseif ($s == "systemsoftware")
+        !return "node"
+
+    !elseif ($s == "collaboration")
+        !return "node"
+
+    !elseif ($s == "equipment")
+        !return "node"
+
+    !elseif ($s == "facility")
+        !return "node"
+
+    !elseif ($s == "artifact")
+        !return "file"
+
+    !elseif ($s == "communicationnetwork")
+        !return "cloud"
+
+    !elseif ($s == "distributionnetwork")
+        !return "cloud"
+
+    !elseif ($s == "meaning")
+        !return "cloud"
+
+    !elseif ($s == "value")
+        !return "usecase"
+
+    !elseif ($s == "workpackage")
+        !return "package"
+
+    !elseif ($s == "deliverable")
+        !return "file"
+
+    !elseif ($s == "plateau")
+        !return "package"
+
+    !elseif ($s == "grouping")
+        !return "folder"
+
+    !elseif ($s == "group")
+        !return "folder"
+
+    !elseif ($s == "and")
+        !return "circle"
+
+    !elseif ($s == "or")
+        !return "circle"
+
+    !elseif ($s == "valuestream")
+        !return "process"
+
+    !endif
+
+    !return "rectangle"
+
+!endfunction
+
+
 !unquoted procedure ArchActor( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_business_actor")

@@ -2,3 +2,5 @@
 !global $ARCHIMATE_LIB_ENABLED ?= %false()
 
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
+
+!global $ARCHIMATE_RECTANGLE_ONLY ?= %false()

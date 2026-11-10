@@ -1,0 +1,28 @@
+!function $archimate_base_entity($entity)
+    !$e = %lower($entity)
+    !$pos = %strpos($e,"-")
+    !if ($pos >= 0)
+        !return %substr($e,$pos + 1)
+    !endif
+    !return $e
+!endfunction
+
+
+!function $archimate_normalize_entity($entity)
+
+    !$e = %lower($entity)
+
+    !$e = %replace($e,"-","")
+
+    !$e = %replace($e," ","")
+
+    !return $e
+
+!endfunction
+
+
+!function $archimate_sprite_entity($entity)
+
+    !return %lower($entity)
+
+!endfunction

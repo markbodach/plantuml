@@ -1,94 +1,84 @@
-!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="")
+!unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
 
-    '------------------------------------------
-    ' Resolve Layer
-    '------------------------------------------
+    !$entity = $archimate_entity($stereotype)
+    !$baseEntity = $archimate_base_entity($entity)
 
     !if ($layer == "")
-        !$derivedLayer = $archimate_layer_from_stereotype($stereotype)
-        !if ($derivedLayer != "OTHER")
-            !$layer = $derivedLayer
-        !else
+        !$layer = $archimate_layer_from_entity($entity)
+
+        !if ($layer == "OTHER")
             !$layer = $ARCHIMATE_DEFAULT_LAYER
         !endif
     !endif
 
-
-    '------------------------------------------
-    ' Validate Layer
-    '------------------------------------------
     !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
-    Assert_If( (%variable_exists($archElementColorName) == %false()),  "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
 
-    '------------------------------------------
-    ' Resolve Shape
-    '------------------------------------------
+    Assert_If(
+        (%variable_exists($archElementColorName) == %false()),
+        "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)"
+    )
+
     !if ($shape == "")
-        !$shape = $archimate_shape($stereotype)
+        !$shape = $archimate_shape_from_base_entity($baseEntity)
+    !endif
+    !if ($ARCHIMATE_RECTANGLE_ONLY) 
+        !$shape = "rectangle" 
     !endif
 
-    '------------------------------------------
-    ' Build Label
-    '------------------------------------------
-    !$sprite = $archimate_sprite($stereotype)
+    !$sprite = $archimate_sprite_key($entity)
 
-    '------------------------------------------
-    ' Render Element
-    '------------------------------------------
-    
     !if (%lower($shape) == "actor")
 
-        ArchActor($alias,$label,$sprite,$layer)
+        ArchActor($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "queue")
 
-        ArchQueue($alias,$label,$sprite,$layer)
+        ArchQueue($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "frame")
 
-        ArchFrame($alias,$label,$sprite,$layer)
+        ArchFrame($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "component")
 
-        ArchComponent($alias,$label,$sprite,$layer)
+        ArchComponent($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "node")
 
-        ArchNode($alias,$label,$sprite,$layer)
+        ArchNode($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "file")
 
-        ArchFile($alias,$label,$sprite,$layer)
+        ArchFile($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "cloud")
 
-        ArchCloud($alias,$label,$sprite,$layer)
+        ArchCloud($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "usecase")
 
-        ArchUseCase($alias,$label,$sprite,$layer)
+        ArchUseCase($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "package")
 
-        ArchPackage($alias,$label,$sprite,$layer)
+        ArchPackage($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "process")
 
-        ArchProcess($alias,$label,$sprite,$layer)
+        ArchProcess($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "folder")
 
-        ArchFolder($alias,$label,$sprite,$layer)
+        ArchFolder($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "circle")
 
-        ArchCircle($alias,$label,$sprite,$layer)
+        ArchCircle($alias, $label, $sprite, $layer)
 
     !else
 
-        ArchRectangle($alias,$label,$sprite,$layer)
+        ArchRectangle($alias, $label, $sprite, $layer)
 
     !endif
-
 
 !endprocedure

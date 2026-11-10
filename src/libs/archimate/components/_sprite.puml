@@ -1,18 +1,14 @@
-
-!function $archimate_sprite($stereotype)
-
-    !$s = %lower($stereotype)
-    !$pos = %strpos($s,"-")
-    !if ($pos >= 0)
-        !return "sprite_arch_" + $replace($s,"-","_")
+!function $archimate_sprite_key($entity)
+    !$sprite = $archimate_sprite_entity( $entity )
+    !if ($sprite == "")
+        !return ""
     !endif
-    !return ""
+    !return "sprite_arch_" + $replace($sprite,"-","_")
 !endfunction
 
 
-
-!function $archimate_layer_from_stereotype($stereotype)
-    !$s = %lower($stereotype)
+!function $archimate_layer_from_entity($entity)
+    !$s = %lower($entity)
     !$pos = %strpos($s,"-")
 
     !if ($pos >= 0)
@@ -44,6 +40,12 @@
 !endfunction
 
 
+!function $archimate_entity($entity)
+
+    !return %lower($entity)
+
+!endfunction
+
 
 !function $archimate_type($stereotype)
 
@@ -71,93 +73,6 @@
     !endif
 
     !return $s
-
-!endfunction
-
-
-
-!function $archimate_shape($stereotype)
-
-    !$s = %lower($stereotype)
-
-    !$pos = %strpos($s, "-")
-
-    !if ($pos >= 0)
-        !$s = %substr($s, $pos + 1)
-    !endif
-
-    !if ($s == "actor")
-        !return "actor"
-
-    !elseif ($s == "role")
-        !return "queue"
-
-    !elseif ($s == "product")
-        !return "frame"
-
-    !elseif ($s == "component")
-        !return "component"
-
-    !elseif ($s == "node")
-        !return "node"
-
-    !elseif ($s == "device")
-        !return "node"
-
-    !elseif ($s == "systemsoftware")
-        !return "node"
-
-    !elseif ($s == "collaboration")
-        !return "node"
-
-    !elseif ($s == "equipment")
-        !return "node"
-
-    !elseif ($s == "facility")
-        !return "node"
-
-    !elseif ($s == "artifact")
-        !return "file"
-
-    !elseif ($s == "communicationnetwork")
-        !return "cloud"
-
-    !elseif ($s == "distributionnetwork")
-        !return "cloud"
-
-    !elseif ($s == "meaning")
-        !return "cloud"
-
-    !elseif ($s == "value")
-        !return "usecase"
-
-    !elseif ($s == "workpackage")
-        !return "package"
-
-    !elseif ($s == "deliverable")
-        !return "file"
-
-    !elseif ($s == "plateau")
-        !return "package"
-
-    !elseif ($s == "grouping")
-        !return "folder"
-
-    !elseif ($s == "group")
-        !return "folder"
-
-    !elseif ($s == "and")
-        !return "circle"
-
-    !elseif ($s == "or")
-        !return "circle"
-
-    !elseif ($s == "valuestream")
-        !return "process"
-
-    !endif
-
-    !return "rectangle"
 
 !endfunction
 

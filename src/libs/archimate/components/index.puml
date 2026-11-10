@@ -1,10 +1,11 @@
 ' src/libraries/archimate/index.puml
 ' Module Entry Point: Libraries / Archimate Component Pack 
 
-
+!include _sprite_registry.puml
 !include _sprite.puml
-!include _shapes.puml
+
 !include _rectangle.puml
 
+!include _shapes.puml
 !include _element.puml
 

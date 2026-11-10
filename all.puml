@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-10 11:19:10 EST
-' Build Commit Hash: ef0b3b8df8803343bc8678ceb56656b7cc15e6cd
-' Build Commit Comment: replace refactor
+' Generated on: 2026-11-10 17:19:32 EST
+' Build Commit Hash: 0d216eaf8f4518fa12e7232c045f34034c4677f7
+' Build Commit Comment: label in quotes
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -471,6 +471,8 @@
 !global $ARCHIMATE_LIB_ENABLED ?= %false()
 
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
+
+!global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
 
 !procedure Register_Archimate_Corruption_Variables()
 
@@ -2010,18 +2012,42 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endprocedure
 
-!function $archimate_sprite($stereotype)
-
-    !$s = %lower($stereotype)
-    !$pos = %strpos($s,"-")
+!function $archimate_base_entity($entity)
+    !$e = %lower($entity)
+    !$pos = %strpos($e,"-")
     !if ($pos >= 0)
-        !return "sprite_arch_" + $replace($s,"-","_")
+        !return %substr($e,$pos + 1)
     !endif
-    !return ""
+    !return $e
 !endfunction
 
-!function $archimate_layer_from_stereotype($stereotype)
-    !$s = %lower($stereotype)
+!function $archimate_normalize_entity($entity)
+
+    !$e = %lower($entity)
+
+    !$e = %replace($e,"-","")
+
+    !$e = %replace($e," ","")
+
+    !return $e
+
+!endfunction
+
+!function $archimate_sprite_entity($entity)
+
+    !return %lower($entity)
+
+!endfunction
+!function $archimate_sprite_key($entity)
+    !$sprite = $archimate_sprite_entity( $entity )
+    !if ($sprite == "")
+        !return ""
+    !endif
+    !return "sprite_arch_" + $replace($sprite,"-","_")
+!endfunction
+
+!function $archimate_layer_from_entity($entity)
+    !$s = %lower($entity)
     !$pos = %strpos($s,"-")
 
     !if ($pos >= 0)
@@ -2049,6 +2075,12 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !endif
 
     !return "OTHER"
+
+!endfunction
+
+!function $archimate_entity($entity)
+
+    !return %lower($entity)
 
 !endfunction
 
@@ -2080,15 +2112,205 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endfunction
 
-!function $archimate_shape($stereotype)
+!unquoted procedure ArchRectangle( $alias, $label, $sprite, $layer )
 
-    !$s = %lower($stereotype)
+    !if ($sprite == "")
+        rectangle "$label" as $alias <<%lower($layer)>>
 
-    !$pos = %strpos($s, "-")
+    !elseif ($sprite == "sprite_arch_strategy_resource")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_resource>> <<%lower($layer)>>
 
-    !if ($pos >= 0)
-        !$s = %substr($s, $pos + 1)
+    !elseif ($sprite == "sprite_arch_strategy_capability")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_capability>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_courseofaction")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_courseofaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_strategy_valuestream")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_valuestream>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_actor")
+        rectangle "$label" as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_role")
+        rectangle "$label" as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_business_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_interface")
+        rectangle "$label" as $alias <<$sprite_arch_business_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_process")
+        rectangle "$label" as $alias <<$sprite_arch_business_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_function")
+        rectangle "$label" as $alias <<$sprite_arch_business_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_business_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_event")
+        rectangle "$label" as $alias <<$sprite_arch_business_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_service")
+        rectangle "$label" as $alias <<$sprite_arch_business_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_object")
+        rectangle "$label" as $alias <<$sprite_arch_business_object>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_contract")
+        rectangle "$label" as $alias <<$sprite_arch_business_contract>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_representation")
+        rectangle "$label" as $alias <<$sprite_arch_business_representation>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_product")
+        rectangle "$label" as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_business_location")
+        rectangle "$label" as $alias <<$sprite_arch_business_location>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_component")
+        rectangle "$label" as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_application_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_interface")
+        rectangle "$label" as $alias <<$sprite_arch_application_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_function")
+        rectangle "$label" as $alias <<$sprite_arch_application_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_application_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_process")
+        rectangle "$label" as $alias <<$sprite_arch_application_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_event")
+        rectangle "$label" as $alias <<$sprite_arch_application_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_service")
+        rectangle "$label" as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_application_dataobject")
+        rectangle "$label" as $alias <<$sprite_arch_application_dataobject>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_node")
+        rectangle "$label" as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_device")
+        rectangle "$label" as $alias <<$sprite_arch_technology_device>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_systemsoftware")
+        rectangle "$label" as $alias <<$sprite_arch_technology_systemsoftware>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_technology_collaboration>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_interface")
+        rectangle "$label" as $alias <<$sprite_arch_technology_interface>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_path")
+        rectangle "$label" as $alias <<$sprite_arch_technology_path>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_communicationnetwork")
+        rectangle "$label" as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_function")
+        rectangle "$label" as $alias <<$sprite_arch_technology_function>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_process")
+        rectangle "$label" as $alias <<$sprite_arch_technology_process>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_technology_interaction>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_event")
+        rectangle "$label" as $alias <<$sprite_arch_technology_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_service")
+        rectangle "$label" as $alias <<$sprite_arch_technology_service>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_artifact")
+        rectangle "$label" as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_equipment")
+        rectangle "$label" as $alias <<$sprite_arch_technology_equipment>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_facility")
+        rectangle "$label" as $alias <<$sprite_arch_technology_facility>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+        rectangle "$label" as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_technology_material")
+        rectangle "$label" as $alias <<$sprite_arch_technology_material>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_stakeholder")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_stakeholder>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_driver")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_driver>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_assessment")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_assessment>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_goal")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_goal>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_outcome")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_outcome>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_principle")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_principle>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_requirement")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_requirement>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_constraint")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_constraint>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_motivation_value")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_workpackage")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_event")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_event>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_plateau")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_implementation_gap")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_gap>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_other_grouping")
+        rectangle "$label" as $alias <<$sprite_arch_other_grouping>> <<%lower($layer)>>
+
+    !elseif ($sprite == "sprite_arch_other_location")
+        rectangle "$label" as $alias <<$sprite_arch_other_location>> <<%lower($layer)>>
+
+    !else
+
+        rectangle "$label" as $alias <<%lower($layer)>>
+
     !endif
+
+!endprocedure
+
+!function $archimate_shape_from_base_entity($entity)
+
+    !$s = $archimate_normalize_entity($entity)
 
     !if ($s == "actor")
         !return "actor"
@@ -2328,273 +2550,86 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     circle "$label" as $alias <<%lower($layer)>>
 
 !endprocedure
-!unquoted procedure ArchRectangle( $alias, $label, $sprite, $layer )
+!unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
 
-    !if ($sprite == "")
-        rectangle "$label" as $alias <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_strategy_resource")
-        rectangle "$label" as $alias <<$sprite_arch_strategy_resource>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_strategy_capability")
-        rectangle "$label" as $alias <<$sprite_arch_strategy_capability>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_strategy_courseofaction")
-        rectangle "$label" as $alias <<$sprite_arch_strategy_courseofaction>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_strategy_valuestream")
-        rectangle "$label" as $alias <<$sprite_arch_strategy_valuestream>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_actor")
-        rectangle "$label" as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_role")
-        rectangle "$label" as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_collaboration")
-        rectangle "$label" as $alias <<$sprite_arch_business_collaboration>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_interface")
-        rectangle "$label" as $alias <<$sprite_arch_business_interface>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_process")
-        rectangle "$label" as $alias <<$sprite_arch_business_process>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_function")
-        rectangle "$label" as $alias <<$sprite_arch_business_function>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_interaction")
-        rectangle "$label" as $alias <<$sprite_arch_business_interaction>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_event")
-        rectangle "$label" as $alias <<$sprite_arch_business_event>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_service")
-        rectangle "$label" as $alias <<$sprite_arch_business_service>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_object")
-        rectangle "$label" as $alias <<$sprite_arch_business_object>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_contract")
-        rectangle "$label" as $alias <<$sprite_arch_business_contract>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_representation")
-        rectangle "$label" as $alias <<$sprite_arch_business_representation>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_product")
-        rectangle "$label" as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_business_location")
-        rectangle "$label" as $alias <<$sprite_arch_business_location>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_component")
-        rectangle "$label" as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_collaboration")
-        rectangle "$label" as $alias <<$sprite_arch_application_collaboration>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_interface")
-        rectangle "$label" as $alias <<$sprite_arch_application_interface>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_function")
-        rectangle "$label" as $alias <<$sprite_arch_application_function>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_interaction")
-        rectangle "$label" as $alias <<$sprite_arch_application_interaction>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_process")
-        rectangle "$label" as $alias <<$sprite_arch_application_process>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_event")
-        rectangle "$label" as $alias <<$sprite_arch_application_event>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_service")
-        rectangle "$label" as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_application_dataobject")
-        rectangle "$label" as $alias <<$sprite_arch_application_dataobject>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_node")
-        rectangle "$label" as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_device")
-        rectangle "$label" as $alias <<$sprite_arch_technology_device>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_systemsoftware")
-        rectangle "$label" as $alias <<$sprite_arch_technology_systemsoftware>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_collaboration")
-        rectangle "$label" as $alias <<$sprite_arch_technology_collaboration>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_interface")
-        rectangle "$label" as $alias <<$sprite_arch_technology_interface>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_path")
-        rectangle "$label" as $alias <<$sprite_arch_technology_path>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_communicationnetwork")
-        rectangle "$label" as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_function")
-        rectangle "$label" as $alias <<$sprite_arch_technology_function>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_process")
-        rectangle "$label" as $alias <<$sprite_arch_technology_process>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_interaction")
-        rectangle "$label" as $alias <<$sprite_arch_technology_interaction>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_event")
-        rectangle "$label" as $alias <<$sprite_arch_technology_event>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_service")
-        rectangle "$label" as $alias <<$sprite_arch_technology_service>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_artifact")
-        rectangle "$label" as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_equipment")
-        rectangle "$label" as $alias <<$sprite_arch_technology_equipment>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_facility")
-        rectangle "$label" as $alias <<$sprite_arch_technology_facility>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
-        rectangle "$label" as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_technology_material")
-        rectangle "$label" as $alias <<$sprite_arch_technology_material>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_stakeholder")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_stakeholder>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_driver")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_driver>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_assessment")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_assessment>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_goal")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_goal>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_outcome")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_outcome>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_principle")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_principle>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_requirement")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_requirement>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_constraint")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_constraint>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_meaning")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_motivation_value")
-        rectangle "$label" as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_workpackage")
-        rectangle "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_deliverable")
-        rectangle "$label" as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_event")
-        rectangle "$label" as $alias <<$sprite_arch_implementation_event>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_plateau")
-        rectangle "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_gap")
-        rectangle "$label" as $alias <<$sprite_arch_implementation_gap>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_other_grouping")
-        rectangle "$label" as $alias <<$sprite_arch_other_grouping>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_other_location")
-        rectangle "$label" as $alias <<$sprite_arch_other_location>> <<%lower($layer)>>
-
-    !else
-
-        rectangle "$label" as $alias <<%lower($layer)>>
-
-    !endif
-
-!endprocedure
-
-!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="")
+    !$entity = $archimate_entity($stereotype)
+    !$baseEntity = $archimate_base_entity($entity)
 
     !if ($layer == "")
-        !$derivedLayer = $archimate_layer_from_stereotype($stereotype)
-        !if ($derivedLayer != "OTHER")
-            !$layer = $derivedLayer
-        !else
+        !$layer = $archimate_layer_from_entity($entity)
+
+        !if ($layer == "OTHER")
             !$layer = $ARCHIMATE_DEFAULT_LAYER
         !endif
     !endif
 
     !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
-    Assert_If( (%variable_exists($archElementColorName) == %false()),  "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
+
+    Assert_If(
+        (%variable_exists($archElementColorName) == %false()),
+        "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)"
+    )
 
     !if ($shape == "")
-        !$shape = $archimate_shape($stereotype)
+        !$shape = $archimate_shape_from_base_entity($baseEntity)
+    !endif
+    !if ($ARCHIMATE_RECTANGLE_ONLY) 
+        !$shape = "rectangle" 
     !endif
 
-    !$sprite = $archimate_sprite($stereotype)
+    !$sprite = $archimate_sprite_key($entity)
 
     !if (%lower($shape) == "actor")
 
-        ArchActor($alias,$label,$sprite,$layer)
+        ArchActor($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "queue")
 
-        ArchQueue($alias,$label,$sprite,$layer)
+        ArchQueue($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "frame")
 
-        ArchFrame($alias,$label,$sprite,$layer)
+        ArchFrame($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "component")
 
-        ArchComponent($alias,$label,$sprite,$layer)
+        ArchComponent($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "node")
 
-        ArchNode($alias,$label,$sprite,$layer)
+        ArchNode($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "file")
 
-        ArchFile($alias,$label,$sprite,$layer)
+        ArchFile($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "cloud")
 
-        ArchCloud($alias,$label,$sprite,$layer)
+        ArchCloud($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "usecase")
 
-        ArchUseCase($alias,$label,$sprite,$layer)
+        ArchUseCase($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "package")
 
-        ArchPackage($alias,$label,$sprite,$layer)
+        ArchPackage($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "process")
 
-        ArchProcess($alias,$label,$sprite,$layer)
+        ArchProcess($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "folder")
 
-        ArchFolder($alias,$label,$sprite,$layer)
+        ArchFolder($alias, $label, $sprite, $layer)
 
     !elseif (%lower($shape) == "circle")
 
-        ArchCircle($alias,$label,$sprite,$layer)
+        ArchCircle($alias, $label, $sprite, $layer)
 
     !else
 
-        ArchRectangle($alias,$label,$sprite,$layer)
+        ArchRectangle($alias, $label, $sprite, $layer)
 
     !endif
 
