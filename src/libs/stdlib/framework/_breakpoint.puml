@@ -69,7 +69,7 @@
         !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
         !$token = $BREAKPOINTS_DEL + $name + $BREAKPOINTS_DEL
 
-        !$registry = %replace($registry, $token, $BREAKPOINTS_DEL)
+        !$registry = $replace($registry, $token, $BREAKPOINTS_DEL)
 
         Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
 

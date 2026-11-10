@@ -12,9 +12,9 @@
 
     !$e = %lower($entity)
 
-    !$e = %replace($e,"-","")
+    !$e = $replace($e,"-","")
 
-    !$e = %replace($e," ","")
+    !$e = $replace($e," ","")
 
     !return $e
 

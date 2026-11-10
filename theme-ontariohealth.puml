@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-11-10 17:26:55 EST
-' Build Commit Hash: 96630af325c7d7df00e460d170857a0e9529e730
-' Build Commit Comment: only rectangles
+' Generated on: 2026-11-10 17:31:16 EST
+' Build Commit Hash: c4a2ca2b3403ab70363d0b7d045fd1d19bb6a60a
+' Build Commit Comment: multiline error
 ' ========================================================
 
 !global $OH_THEME_NAME = "OntarioHealth"

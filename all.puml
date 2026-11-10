@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-10 17:26:55 EST
-' Build Commit Hash: 96630af325c7d7df00e460d170857a0e9529e730
-' Build Commit Comment: only rectangles
+' Generated on: 2026-11-10 17:31:16 EST
+' Build Commit Hash: c4a2ca2b3403ab70363d0b7d045fd1d19bb6a60a
+' Build Commit Comment: multiline error
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -173,7 +173,7 @@
         !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
         !$token = $BREAKPOINTS_DEL + $name + $BREAKPOINTS_DEL
 
-        !$registry = %replace($registry, $token, $BREAKPOINTS_DEL)
+        !$registry = $replace($registry, $token, $BREAKPOINTS_DEL)
 
         Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
 
@@ -2025,9 +2025,9 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$e = %lower($entity)
 
-    !$e = %replace($e,"-","")
+    !$e = $replace($e,"-","")
 
-    !$e = %replace($e," ","")
+    !$e = $replace($e," ","")
 
     !return $e
 
