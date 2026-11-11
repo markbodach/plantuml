@@ -1,20 +1,17 @@
-!function $archimate_sprite_key_from_entity($entity)
-    !$key = "sprite_arch_" + $replace(%lower($entity),"-","_")
-    !if (%variable_exists("$" + $key))
-        !return $key
-    !endif
-    !return ""
-!endfunction
 
 !function $archimate_sprite_key($entity)
-    !$resolved = $archimate_sprite_entity($entity)
-    !$key = $archimate_sprite_key_from_entity($resolved)
-    !if ($key != "")
-        !return $key
+
+    !$sprite = $archimate_sprite_entity($entity)
+    !if (%strpos($sprite,"-") < 0)
+        !$sprite = $archimate_default_sprite_entity($entity)
     !endif
-    !$resolved = $archimate_default_sprite_entity($entity)
-    !$key = $archimate_sprite_key_from_entity($resolved)
-    !return $key
+
+    !if ($sprite == "")
+        !return ""
+    !endif
+
+    !return "sprite_arch_" + $replace(%lower($sprite),"-","_")
+
 !endfunction
 
 

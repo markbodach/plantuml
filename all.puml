@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-11 13:40:43 EST
-' Build Commit Hash: 893b471f1c854fc44dbc468228fe19110c5dd157
-' Build Commit Comment: component built in sprite
+' Generated on: 2026-11-11 14:38:55 EST
+' Build Commit Hash: 15cef120a8ca589c6dad3a113dbbbad7285ce9bf
+' Build Commit Comment: entity to sprite map
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2039,23 +2039,20 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !return %lower($entity)
 
 !endfunction
-!function $archimate_sprite_key_from_entity($entity)
-    !$key = "sprite_arch_" + $replace(%lower($entity),"-","_")
-    !if (%variable_exists("$" + $key))
-        !return $key
-    !endif
-    !return ""
-!endfunction
 
 !function $archimate_sprite_key($entity)
-    !$resolved = $archimate_sprite_entity($entity)
-    !$key = $archimate_sprite_key_from_entity($resolved)
-    !if ($key != "")
-        !return $key
+
+    !$sprite = $archimate_sprite_entity($entity)
+    !if (%strpos($sprite,"-") < 0)
+        !$sprite = $archimate_default_sprite_entity($entity)
     !endif
-    !$resolved = $archimate_default_sprite_entity($entity)
-    !$key = $archimate_sprite_key_from_entity($resolved)
-    !return $key
+
+    !if ($sprite == "")
+        !return ""
+    !endif
+
+    !return "sprite_arch_" + $replace(%lower($sprite),"-","_")
+
 !endfunction
 
 !function $archimate_layer_from_entity($entity)

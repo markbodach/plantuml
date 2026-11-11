@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Theme: ontariohealth
-' Generated on: 2026-11-11 13:40:43 EST
-' Build Commit Hash: 893b471f1c854fc44dbc468228fe19110c5dd157
-' Build Commit Comment: component built in sprite
+' Generated on: 2026-11-11 14:38:55 EST
+' Build Commit Hash: 15cef120a8ca589c6dad3a113dbbbad7285ce9bf
+' Build Commit Comment: entity to sprite map
 ' ========================================================
 
 !global $OH_THEME_NAME = "OntarioHealth"
