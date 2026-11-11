@@ -6,6 +6,7 @@
 
 !include _rectangle.puml
 
+!include _component.puml
 !include _shapes.puml
 !include _element.puml
 

@@ -1,0 +1,46 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 16
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION"
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+
+'hide stereotype  
+
+left to right direction
+
+title "It finally works 2 [" + $ARCH_DEFAULT_FONTSIZE + ", " + $SIZE_FONT + "]"
+
+'rectangle "<$business-role-svg>" 
+'rectangle "<$business-role>" 
+'rectangle "<$application-component-svg>" 
+'rectangle "<$application-component>"
+
+'ArchElement(aeRole, "PanelApp GraphQL Services", "business-role" )
+ArchElement(aeActor, "PanelApp GraphQL Services", "business-actor" )
+'ArchElement(aeProduct, "PanelApp GraphQL Services 2", "business-component" )
+
+ArchElement(aeA,"User A", "node", "motivation") 
+ArchElement(aeB,"User b","business-actor") 
+ArchElement(aeC,"User C","application-actor")
+
+
+@enduml

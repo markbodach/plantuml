@@ -1,10 +1,23 @@
-!function $archimate_sprite_key($entity)
-    !$sprite = $archimate_sprite_entity( $entity )
-    !if ($sprite == "")
-        !return ""
+!function $archimate_sprite_key_from_entity($entity)
+    !$key = "sprite_arch_" + $replace(%lower($entity),"-","_")
+    !if (%variable_exists("$" + $key))
+        !return $key
     !endif
-    !return "sprite_arch_" + $replace($sprite,"-","_")
+    !return ""
 !endfunction
+
+!function $archimate_sprite_key($entity)
+    !$resolved = $archimate_sprite_entity($entity)
+    !$key = $archimate_sprite_key_from_entity($resolved)
+    !if ($key != "")
+        !return $key
+    !endif
+    !$resolved = $archimate_default_sprite_entity($entity)
+    !$key = $archimate_sprite_key_from_entity($resolved)
+    !return $key
+!endfunction
+
+
 
 
 !function $archimate_layer_from_entity($entity)
@@ -82,5 +95,112 @@
     !$entity = $replace($entity,"_","-")
 
     !return $archimate_base_entity($entity)
+
+!endfunction
+
+!function $archimate_default_sprite_entity($entity)
+
+    !$e = %lower($entity)
+
+    !if ($e == "resource")
+        !return "strategy-resource"
+    !elseif ($e == "capability")
+        !return "strategy-capability"
+    !elseif ($e == "courseofaction")
+        !return "strategy-courseofaction"
+    !elseif ($e == "valuestream")
+        !return "strategy-valuestream"
+
+    !elseif ($e == "actor")
+        !return "business-actor"
+    !elseif ($e == "role")
+        !return "business-role"
+    !elseif ($e == "collaboration")
+        !return "business-collaboration"
+    !elseif ($e == "interface")
+        !return "business-interface"
+    !elseif ($e == "process")
+        !return "business-process"
+    !elseif ($e == "function")
+        !return "business-function"
+    !elseif ($e == "interaction")
+        !return "business-interaction"
+    !elseif ($e == "event")
+        !return "business-event"
+    !elseif ($e == "service")
+        !return "business-service"
+    !elseif ($e == "object")
+        !return "business-object"
+    !elseif ($e == "contract")
+        !return "business-contract"
+    !elseif ($e == "representation")
+        !return "business-representation"
+    !elseif ($e == "product")
+        !return "business-product"
+    !elseif ($e == "location")
+        !return "business-location"
+
+    !elseif ($e == "component")
+        !return "application-component"
+    !elseif ($e == "dataobject")
+        !return "application-dataobject"
+
+    !elseif ($e == "node")
+        !return "technology-node"
+    !elseif ($e == "device")
+        !return "technology-device"
+    !elseif ($e == "systemsoftware")
+        !return "technology-systemsoftware"
+    !elseif ($e == "path")
+        !return "technology-path"
+    !elseif ($e == "communicationnetwork")
+        !return "technology-communicationnetwork"
+    !elseif ($e == "artifact")
+        !return "technology-artifact"
+
+    !elseif ($e == "equipment")
+        !return "technology-equipment"
+    !elseif ($e == "facility")
+        !return "technology-facility"
+    !elseif ($e == "distributionnetwork")
+        !return "technology-distributionnetwork"
+    !elseif ($e == "material")
+        !return "technology-material"
+
+    !elseif ($e == "stakeholder")
+        !return "motivation-stakeholder"
+    !elseif ($e == "driver")
+        !return "motivation-driver"
+    !elseif ($e == "assessment")
+        !return "motivation-assessment"
+    !elseif ($e == "goal")
+        !return "motivation-goal"
+    !elseif ($e == "outcome")
+        !return "motivation-outcome"
+    !elseif ($e == "principle")
+        !return "motivation-principle"
+    !elseif ($e == "requirement")
+        !return "motivation-requirement"
+    !elseif ($e == "constraint")
+        !return "motivation-constraint"
+    !elseif ($e == "meaning")
+        !return "motivation-meaning"
+    !elseif ($e == "value")
+        !return "motivation-value"
+
+    !elseif ($e == "workpackage")
+        !return "implementation-workpackage"
+    !elseif ($e == "deliverable")
+        !return "implementation-deliverable"
+    !elseif ($e == "plateau")
+        !return "implementation-plateau"
+    !elseif ($e == "gap")
+        !return "implementation-gap"
+
+    !elseif ($e == "grouping")
+        !return "other-grouping"
+    !endif
+
+    !return $e
 
 !endfunction

@@ -37,6 +37,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _sprite_registry.puml
         └── _sprite.puml
         └── _rectangle.puml
+        └── _component.puml
         └── _shapes.puml
         └── _element.puml
       └── stdlib/theme/index.puml

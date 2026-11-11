@@ -1,0 +1,158 @@
+@startuml
+title PanelApp - OpenShift and External AWS Workloads
+
+left to right direction
+
+<style>
+root {
+  BackgroundColor #FFFFFF
+  FontColor #1F2937
+  FontName Arial
+}
+
+title {
+  FontColor #1F2937
+  FontSize 20
+  FontStyle bold
+}
+
+element {
+  FontColor #1F2937
+  LineColor #5D6D7E
+  LineThickness 2
+  RoundCorner 14
+  Shadowing 0
+}
+
+arrow {
+  LineColor #5D6D7E
+  FontColor #34495E
+  LineThickness 2
+}
+
+package {
+  BackgroundColor #F8F9F9
+  FontColor #1F2937
+  LineColor #5D6D7E
+  LineThickness 2
+  RoundCorner 16
+}
+
+.OpenShiftBoundary {
+  BackgroundColor #F4F9FC
+  FontColor #1F2937
+  LineColor #2874A6
+  LineThickness 3
+}
+
+.AWSBoundary {
+  BackgroundColor #FFF8F0
+  FontColor #1F2937
+  LineColor #CA6F1E
+  LineThickness 3
+}
+
+.Deployment {
+  BackgroundColor #D6EAF8
+  FontColor #17202A
+  LineColor #2874A6
+  FontStyle bold
+  RoundCorner 14
+}
+
+.Pod {
+  BackgroundColor #D5F5E3
+  FontColor #17202A
+  LineColor #239B56
+  RoundCorner 14
+}
+
+.AWSService {
+  BackgroundColor #FAD7A0
+  FontColor #17202A
+  LineColor #CA6F1E
+  FontStyle bold
+  RoundCorner 14
+}
+
+.ExternalIdentity {
+  BackgroundColor #E8DAEF
+  FontColor #17202A
+  LineColor #7D3C98
+  FontStyle bold
+  RoundCorner 14
+}
+
+legend {
+  BackgroundColor #FFFFFF
+  FontColor #1F2937
+  LineColor #AAB7B8
+}
+</style>
+
+package "ECP OpenShift Namespace" as ECP_NAMESPACE <<OpenShiftBoundary>> {
+
+  package "PanelApp Web Deployment" as WEB_DEPLOYMENT <<Deployment>> {
+    rectangle "Web Pod 1" as WEB_POD_1 <<Pod>>
+    rectangle "Web Pod 2" as WEB_POD_2 <<Pod>>
+
+    WEB_POD_1 -[hidden]down-> WEB_POD_2
+  }
+
+  package "PanelApp REST API Deployment" as API_DEPLOYMENT <<Deployment>> {
+    rectangle "REST API Pod 1" as API_POD_1 <<Pod>>
+    rectangle "REST API Pod 2" as API_POD_2 <<Pod>>
+
+    API_POD_1 -[hidden]down-> API_POD_2
+  }
+
+  WEB_DEPLOYMENT -[hidden]down-> API_DEPLOYMENT
+}
+
+package "External to OpenShift - AWS" as AWS_EXTERNAL <<AWSBoundary>> {
+
+  rectangle "Aurora PostgreSQL" as AURORA <<AWSService>>
+
+  rectangle "AWS Cognito" as COGNITO <<AWSService>>
+
+  rectangle "Microsoft Entra ID" as ENTRA <<ExternalIdentity>>
+
+  rectangle "AWS SQS" as SQS <<AWSService>>
+
+  rectangle "AWS SES" as SES <<AWSService>>
+
+  rectangle "Background Worker" as WORKER <<AWSService>>
+
+  AURORA -[hidden]down-> COGNITO
+  COGNITO -[hidden]down-> SQS
+  SQS -[hidden]down-> SES
+  SES -[hidden]down-> WORKER
+}
+
+WEB_POD_1 --> AURORA : Application data
+WEB_POD_2 --> AURORA : Application data
+
+API_POD_1 --> AURORA : Application data
+API_POD_2 --> AURORA : Application data
+
+WEB_DEPLOYMENT --> COGNITO : Authentication
+API_DEPLOYMENT --> COGNITO : Authentication
+
+COGNITO --> ENTRA : OIDC federation
+
+WEB_DEPLOYMENT --> SQS : Queue work
+API_DEPLOYMENT --> SQS : Queue work
+
+SQS --> WORKER : Deliver messages
+WORKER --> AURORA : Process data
+WORKER --> SES : Send notifications
+
+legend bottom
+  |= Colour |= Meaning |
+  |<#D6EAF8> Light blue | OpenShift deployment |
+  |<#D5F5E3> Light green | OpenShift pod |
+  |<#FAD7A0> Light orange | AWS workload or managed service |
+  |<#E8DAEF> Light purple | External identity provider |
+endlegend
+
+@enduml

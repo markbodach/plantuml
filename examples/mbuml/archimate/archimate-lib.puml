@@ -1,0 +1,78 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+
+
+
+
+Register_Lib_All("OntarioHealth")
+
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/Archimate.puml
+
+
+Load_Lib_All()
+
+
+'hide stereotype  
+
+left to right direction
+
+title "It finally works"
+
+
+
+'=====================================================
+' Native ArchiMate Elements 
+'=====================================================
+
+Motivation_Goal(m1, "Motivation Goal")
+Strategy_Capability(s1, "Strategy Capability")
+Business_Process(b1, "Business Process")
+Application_Component(a1, "Application Component")
+Technology_Node(t1, "Technology Node")
+Physical_Equipment(p1, "Physical Equipment")
+Implementation_WorkPackage(i1, "Implementation Work Package")
+
+m1 -[hidden]-> s1
+s1 -[hidden]-> b1
+b1 -[hidden]-> a1
+a1 -[hidden]-> t1
+t1 -[hidden]-> p1
+p1 -[hidden]-> i1
+
+'=====================================================
+' Stereotype Validation
+'=====================================================
+
+rectangle "Motivation Stereotype" as sm1 <<motivation>>
+rectangle "Strategy Stereotype" as ss1 <<strategy>>
+
+rectangle "Business Stereotype" as sb1 <<business>>
+
+rectangle "Application Stereotype" as sa1 <<application>>
+
+rectangle "Technology Stereotype" as st1 <<technology>>
+
+rectangle "Physical Stereotype" as sp1 <<physical>>
+
+rectangle "Implementation Stereotype" as si1 <<implementation>>
+
+sm1 -[hidden]-> ss1
+ss1 -[hidden]-> sb1
+sb1 -[hidden]-> sa1
+sa1 -[hidden]-> st1
+st1 -[hidden]-> sp1
+sp1 -[hidden]-> si1
+
+@enduml

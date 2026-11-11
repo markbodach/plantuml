@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-10 17:49:05 EST**
-* Build Commit Hash: **f27c1741c2c40c19863dfa3cf00b8a9db43738a3**
-* Build Commit Comment: **replace function**
+* Generated on: **2026-11-11 13:40:43 EST**
+* Build Commit Hash: **893b471f1c854fc44dbc468228fe19110c5dd157**
+* Build Commit Comment: **component built in sprite**
 
 ## Usage
 
@@ -318,6 +318,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _sprite_registry.puml
         └── _sprite.puml
         └── _rectangle.puml
+        └── _component.puml
         └── _shapes.puml
         └── _element.puml
       └── stdlib/theme/index.puml
