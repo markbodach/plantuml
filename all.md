@@ -1,7 +1,7 @@
 ========================================================
 Bundle Documentation
 Bundle Name: Core Framework
-Generated on: 2026-11-13 13:47:53 EST
+Generated on: 2026-11-13 16:33:06 EST
 ========================================================
 
 ========================================================
@@ -1834,6 +1834,8 @@ Module Entry Point: Libraries / Archimate Component Pack
 FILE: /c/dev/plantuml/src/libs/archimate/components/_sprite_registry.puml
 ========================================================
 
+    'REMOVED to faciliate proper default layer handling
+    '!return "OTHER"
 ========================================================
 FILE: /c/dev/plantuml/src/libs/archimate/components/_sprite.puml
 ========================================================

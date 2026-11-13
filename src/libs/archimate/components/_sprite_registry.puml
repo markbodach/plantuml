@@ -34,5 +34,9 @@
     !if ($pos > 0)
         !return %upper(%substr($entity,0,$pos))
     !endif
-    !return "OTHER"
+    'REMOVED to faciliate proper default layer handling
+    '!return "OTHER"
+    
+    !return ""
+    
 !endfunction

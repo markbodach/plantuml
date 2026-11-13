@@ -5,6 +5,10 @@
 
     !if ($layer == "")
         !$layer = $archimate_entity_layer($entity)
+
+        !if ($layer == "") 
+            !$layer = $ARCHIMATE_DEFAULT_LAYER 
+        !endif
     !endif
 
 
