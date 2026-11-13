@@ -78,19 +78,14 @@
 !endfunction
 
 
-!unquoted procedure ArchActor( $alias, $label, $sprite, $layer )
-
-    !if ($sprite == "sprite_arch_business_actor")
-
+!unquoted procedure ArchActor($alias, $label, $sprite, $layer)
+    !if ($archimate_show_sprite_for_shape("actor",$sprite))
         actor "$label" as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
-
     !else
-
         actor "$label" as $alias <<%lower($layer)>>
-
     !endif
-
 !endprocedure
+
 
 
 

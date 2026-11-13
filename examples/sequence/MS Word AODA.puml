@@ -1,0 +1,56 @@
+@startuml
+title Word (.docx) Accessibility Pipeline using C#, Mammoth, Playwright, and axe-core
+
+autonumber
+skinparam BoxPadding 10
+
+actor "User / System" as User
+participant "C# Orchestrator" as App
+box "Step 1: OpenXML Prep" #LightBlue
+    participant "DocumentFormat.OpenXml" as OpenXML
+end box
+box "Step 2: HTML Bridge & Validation" #LightGreen
+    participant "Mammoth (.NET)" as Mammoth
+    participant "Playwright (Chromium)" as Browser
+    participant "axe-core (JS)" as Axe
+end box
+
+User -> App : Provide input.docx
+activate App
+
+== Phase 1: Tag & Convert to HTML ==
+App -> OpenXML : Open input.docx
+activate OpenXML
+OpenXML -> OpenXML : Inject tracking IDs / inspect structure
+OpenXML --> App : Return prepared stream
+deactivate OpenXML
+
+App -> Mammoth : Convert .docx stream to semantic HTML
+activate Mammoth
+Mammoth --> App : Return clean HTML string
+deactivate Mammoth
+
+== Phase 2: Headless Render & axe-core Audit ==
+App -> Browser : Launch headless browser & load HTML
+activate Browser
+Browser -> Axe : Inject axe.min.js & run axe.run()
+activate Axe
+Axe -> Axe : Evaluate DOM & computed CSS rules
+Axe --> Browser : Return JSON Violation Report
+deactivate Axe
+Browser --> App : Return parsed violations
+deactivate Browser
+
+== Phase 3: Remediate Original OpenXML ==
+loop For each accessibility violation
+    App -> OpenXML : Locate target node (e.g., <wp:docPr>, <w:tblPr>)
+    activate OpenXML
+    OpenXML -> OpenXML : Patch XML attributes (e.g., add alt text, <w:tblHeader/>)
+    deactivate OpenXML
+end
+
+App -> OpenXML : Save changes to fixed_output.docx
+App --> User : Return remediated .docx + Audit Report
+deactivate App
+
+@enduml

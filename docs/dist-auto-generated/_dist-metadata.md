@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-11 14:38:55 EST**
-* Build Commit Hash: **15cef120a8ca589c6dad3a113dbbbad7285ce9bf**
-* Build Commit Comment: **entity to sprite map**
+* Generated on: **2026-11-13 13:36:58 EST**
+* Build Commit Hash: **de4372ad4e845ebb3ac7ed1e1f48f7d805699dd4**
+* Build Commit Comment: **sprites**
 
 ## Usage
 

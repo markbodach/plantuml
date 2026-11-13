@@ -4,12 +4,12 @@
     !$baseEntity = $archimate_base_entity($entity)
 
     !if ($layer == "")
-        !$layer = $archimate_layer_from_entity($entity)
-
+        !$layer = $archimate_entity_layer($entity)
         !if ($layer == "OTHER")
             !$layer = $ARCHIMATE_DEFAULT_LAYER
         !endif
     !endif
+
 
     !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
 

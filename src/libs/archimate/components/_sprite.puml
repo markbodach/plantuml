@@ -201,3 +201,35 @@
     !return $e
 
 !endfunction
+
+
+!function $archimate_hide_sprite_for_shape($shape, $sprite)
+
+    !if ($ARCHIMATE_NO_SPRITE_OF_SHAPE == %false())
+        !return %false()
+    !endif
+
+    !$entity = $archimate_sprite_base_entity($sprite)
+    !$spriteShape = $archimate_shape_from_base_entity($entity)
+
+    !return (%lower($shape) == %lower($spriteShape))
+
+!endfunction
+
+
+!function $archimate_show_sprite_for_shape($shape,$sprite)
+    !if ($sprite == "")
+        !return %false()
+    !endif
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+!endfunction
+
+!function $archimate_show_sprite($shape,$sprite)
+
+    !if ($sprite == "")
+        !return %false()
+    !endif
+
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+
+!endfunction

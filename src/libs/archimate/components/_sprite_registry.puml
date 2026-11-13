@@ -26,3 +26,13 @@
     !return %lower($entity)
 
 !endfunction
+
+
+!function $archimate_entity_layer($entity)
+    !$entity = $archimate_default_sprite_entity($entity)
+    !$pos = %strpos($entity, "-")
+    !if ($pos > 0)
+        !return %upper(%substr($entity,0,$pos))
+    !endif
+    !return "OTHER"
+!endfunction
