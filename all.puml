@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-13 13:36:58 EST
-' Build Commit Hash: de4372ad4e845ebb3ac7ed1e1f48f7d805699dd4
-' Build Commit Comment: sprites
+' Generated on: 2026-11-13 13:47:53 EST
+' Build Commit Hash: 3b583fa905c924a8935110ada58b64a9ed938bcb
+' Build Commit Comment: No Default Layer assigned
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2716,9 +2716,6 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !if ($layer == "")
         !$layer = $archimate_entity_layer($entity)
-        !if ($layer == "OTHER")
-            !$layer = $ARCHIMATE_DEFAULT_LAYER
-        !endif
     !endif
 
     !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
