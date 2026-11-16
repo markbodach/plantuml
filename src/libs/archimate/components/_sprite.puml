@@ -14,6 +14,33 @@
 
 !endfunction
 
+!function $archimate_show_sprite($shape,$sprite)
+
+    !if ($ARCHIMATE_NO_SPRITES)
+        !return %false()
+    !endif
+
+    !if ($sprite == "")
+        !return %false()
+    !endif
+
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+
+!endfunction
+
+!function $archimate_show_sprite_for_shape($shape,$sprite)
+
+    !if ($ARCHIMATE_NO_SPRITES)
+        !return %false()
+    !endif
+
+    !if ($sprite == "")
+        !return %false()
+    !endif
+
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+
+!endfunction
 
 
 

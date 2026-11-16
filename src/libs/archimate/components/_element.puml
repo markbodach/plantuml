@@ -58,6 +58,12 @@
     !endif
 
     !$sprite = $archimate_sprite_key($entity)
+    !if ($ARCHIMATE_NO_SPRITES)
+        !$sprite = ""
+    !else
+        !$sprite = $archimate_sprite_key($entity)
+    !endif
+
 
     !if (%lower($shape) == "actor")
 

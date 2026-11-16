@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-16 14:37:27 EST**
-* Build Commit Hash: **fc4892e5a68ed08823ad8a2d00f539a057c2ed2c**
-* Build Commit Comment: **improved sterotypes in labels**
+* Generated on: **2026-11-16 16:08:20 EST**
+* Build Commit Hash: **b87070510714050d3543cea4344c14af8fdc6805**
+* Build Commit Comment: **fixes**
 
 ## Usage
 

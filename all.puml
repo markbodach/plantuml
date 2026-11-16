@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-16 14:37:27 EST
-' Build Commit Hash: fc4892e5a68ed08823ad8a2d00f539a057c2ed2c
-' Build Commit Comment: improved sterotypes in labels
+' Generated on: 2026-11-16 16:08:20 EST
+' Build Commit Hash: b87070510714050d3543cea4344c14af8fdc6805
+' Build Commit Comment: fixes
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -474,7 +474,7 @@
 
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
 !global $ARCHIMATE_NO_SPRITE_OF_SHAPE ?= %true()
-!global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()
+!global $ARCHIMATE_NO_SPRITES ?= %false()
 !global $ARCHIMATE_TYPE_IN_LABEL ?= %false()
 
 !global $ARCHIMATE_TYPE_IN_LABEL_PREFIX ?= "("
@@ -2071,6 +2071,34 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endfunction
 
+!function $archimate_show_sprite($shape,$sprite)
+
+    !if ($ARCHIMATE_NO_SPRITES)
+        !return %false()
+    !endif
+
+    !if ($sprite == "")
+        !return %false()
+    !endif
+
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+
+!endfunction
+
+!function $archimate_show_sprite_for_shape($shape,$sprite)
+
+    !if ($ARCHIMATE_NO_SPRITES)
+        !return %false()
+    !endif
+
+    !if ($sprite == "")
+        !return %false()
+    !endif
+
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+
+!endfunction
+
 !function $archimate_layer_from_entity($entity)
     !$s = %lower($entity)
     !$pos = %strpos($s,"-")
@@ -2481,11 +2509,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !unquoted procedure ArchComponent($alias, $label, $sprite, $layer)
 
-    !if ($ARCHIMATE_COMPONENT_NO_SPRITE)
-        
-        component "$label" as $alias <<%lower($layer)>>
-
-    !elseif ($sprite != "") && ($archimate_sprite_base_entity($sprite) != "component")
+    !if ($sprite != "") && ($archimate_sprite_base_entity($sprite) != "component")
 
         ArchRectangle($alias, $label, $sprite, $layer)
 
@@ -2770,6 +2794,11 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !endif
 
     !$sprite = $archimate_sprite_key($entity)
+    !if ($ARCHIMATE_NO_SPRITES)
+        !$sprite = ""
+    !else
+        !$sprite = $archimate_sprite_key($entity)
+    !endif
 
     !if (%lower($shape) == "actor")
 
