@@ -6,4 +6,8 @@
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
 !global $ARCHIMATE_NO_SPRITE_OF_SHAPE ?= %true()
 !global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()
+!global $ARCHIMATE_TYPE_IN_LABEL = %false()
+
+!global $ARCHIMATE_TYPE_IN_LABEL_PREFIX = "<<"
+!global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX = ">>"
 

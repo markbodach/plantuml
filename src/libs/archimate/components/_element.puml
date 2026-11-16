@@ -1,7 +1,35 @@
+!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX )
+
+    !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
+        !return $label
+    !endif
+
+    !if ($entity == "")
+        !return $label
+    !endif
+
+    !$type = $archimate_base_entity(
+        $archimate_default_sprite_entity($entity)
+    )
+
+    !if ($type == "")
+        !return $label
+    !endif
+
+    !$type = %upper(%substr($type,0,1)) + %substr($type,1)
+
+    !return $label + "\n" + $typePrefix + $type + $typeSuffix
+
+!endfunction
+
+
+
 !unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
 
     !$entity = $archimate_entity($stereotype)
     !$baseEntity = $archimate_base_entity($entity)
+
+    !$label = $archimate_label($label, $baseEntity)
 
     !if ($layer == "")
         !if (%strpos($entity,"-") >= 0)

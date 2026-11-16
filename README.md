@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-16 13:12:34 EST**
-* Build Commit Hash: **394e69c8ee9eb646a42f192b179f6b678c17d1fd**
-* Build Commit Comment: **fixed default ordering**
+* Generated on: **2026-11-16 13:44:12 EST**
+* Build Commit Hash: **c34bdc86edafca7298255b2a9d5f96ca1bb76c25**
+* Build Commit Comment: **layer**
 
 ## Usage
 

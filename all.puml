@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-16 13:12:34 EST
-' Build Commit Hash: 394e69c8ee9eb646a42f192b179f6b678c17d1fd
-' Build Commit Comment: fixed default ordering
+' Generated on: 2026-11-16 13:44:12 EST
+' Build Commit Hash: c34bdc86edafca7298255b2a9d5f96ca1bb76c25
+' Build Commit Comment: layer
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -475,6 +475,10 @@
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
 !global $ARCHIMATE_NO_SPRITE_OF_SHAPE ?= %true()
 !global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()
+!global $ARCHIMATE_TYPE_IN_LABEL = %false()
+
+!global $ARCHIMATE_TYPE_IN_LABEL_PREFIX = "<<"
+!global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX = ">>"
 
 !procedure Register_Archimate_Corruption_Variables()
 
@@ -2478,7 +2482,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchComponent($alias, $label, $sprite, $layer)
 
     !if ($ARCHIMATE_COMPONENT_NO_SPRITE)
-
+        
         component "$label" as $alias <<%lower($layer)>>
 
     !elseif ($sprite != "") && ($archimate_sprite_base_entity($sprite) != "component")
@@ -2711,10 +2715,36 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     circle "$label" as $alias <<%lower($layer)>>
 
 !endprocedure
+!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX )
+
+    !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
+        !return $label
+    !endif
+
+    !if ($entity == "")
+        !return $label
+    !endif
+
+    !$type = $archimate_base_entity(
+        $archimate_default_sprite_entity($entity)
+    )
+
+    !if ($type == "")
+        !return $label
+    !endif
+
+    !$type = %upper(%substr($type,0,1)) + %substr($type,1)
+
+    !return $label + "\n" + $typePrefix + $type + $typeSuffix
+
+!endfunction
+
 !unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
 
     !$entity = $archimate_entity($stereotype)
     !$baseEntity = $archimate_base_entity($entity)
+
+    !$label = $archimate_label($label, $baseEntity)
 
     !if ($layer == "")
         !if (%strpos($entity,"-") >= 0)
