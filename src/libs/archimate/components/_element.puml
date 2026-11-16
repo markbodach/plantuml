@@ -4,7 +4,9 @@
     !$baseEntity = $archimate_base_entity($entity)
 
     !if ($layer == "")
-        !if ($ARCHIMATE_DEFAULT_LAYER != "")
+        !if (%strpos($entity,"-") >= 0)
+            !$layer = $archimate_entity_layer($entity)
+        !elseif ($ARCHIMATE_DEFAULT_LAYER != "")
             !$layer = %upper($ARCHIMATE_DEFAULT_LAYER)
         !else
             !$layer = $archimate_entity_layer($entity)
