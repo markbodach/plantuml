@@ -1,8 +1,8 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-16 14:13:20 EST
-' Build Commit Hash: 0299b02a0390bd6941c9db99a9825baa522d5576
+' Generated on: 2026-11-16 14:24:13 EST
+' Build Commit Hash: 7cfb1d68324f821f9cef72b111d6b12813f2989f
 ' Build Commit Comment: label enhancements
 ' ========================================================
 
@@ -475,10 +475,10 @@
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
 !global $ARCHIMATE_NO_SPRITE_OF_SHAPE ?= %true()
 !global $ARCHIMATE_COMPONENT_NO_SPRITE ?= %false()
-!global $ARCHIMATE_TYPE_IN_LABEL = %false()
+!global $ARCHIMATE_TYPE_IN_LABEL ?= %false()
 
-!global $ARCHIMATE_TYPE_IN_LABEL_PREFIX = "<<"
-!global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX = ">>"
+!global $ARCHIMATE_TYPE_IN_LABEL_PREFIX ?= "<<"
+!global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX ?= ">>"
 
 !procedure Register_Archimate_Corruption_Variables()
 
@@ -2725,9 +2725,11 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !return $label
     !endif
 
-    !$type = $archimate_base_entity(
-        $archimate_default_sprite_entity($entity)
-    )
+    !if (%strpos($label, "\n" + $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+        !return $label
+    !endif
+
+    !$type = $archimate_base_entity( $archimate_default_sprite_entity($entity) )
 
     !if ($type == "")
         !return $label

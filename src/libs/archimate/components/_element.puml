@@ -8,9 +8,12 @@
         !return $label
     !endif
 
-    !$type = $archimate_base_entity(
-        $archimate_default_sprite_entity($entity)
-    )
+    ' User already supplied a type line
+    !if (%strpos($label, "\n" + $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+        !return $label
+    !endif
+
+    !$type = $archimate_base_entity( $archimate_default_sprite_entity($entity) )
 
     !if ($type == "")
         !return $label
@@ -21,6 +24,7 @@
     !return $label + "\n" + $typePrefix + $type + $typeSuffix
 
 !endfunction
+
 
 
 
