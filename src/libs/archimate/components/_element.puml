@@ -1,4 +1,4 @@
-!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX )
+!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX, , $stylePrefix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX, $styleSuffix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX )
 
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
@@ -9,7 +9,7 @@
     !endif
 
     ' User already supplied a type line
-    !if (%strpos($label, "\n" + $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+    !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
         !return $label
     !endif
 
@@ -21,7 +21,8 @@
 
     !$type = %upper(%substr($type,0,1)) + %substr($type,1)
 
-    !return $label + "\n" + $typePrefix + $type + $typeSuffix
+
+    !return $label + "\n\n<font size=" + $ARCH_TYPE_FONTSIZE + ">" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + "</font>"
 
 !endfunction
 
@@ -58,7 +59,7 @@
     !endif
 
     !$sprite = $archimate_sprite_key($entity)
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !$sprite = ""
     !else
         !$sprite = $archimate_sprite_key($entity)

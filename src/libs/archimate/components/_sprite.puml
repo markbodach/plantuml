@@ -16,7 +16,7 @@
 
 !function $archimate_show_sprite($shape,$sprite)
 
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !return %false()
     !endif
 
@@ -30,7 +30,7 @@
 
 !function $archimate_show_sprite_for_shape($shape,$sprite)
 
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !return %false()
     !endif
 
@@ -232,7 +232,7 @@
 
 !function $archimate_hide_sprite_for_shape($shape, $sprite)
 
-    !if ($ARCHIMATE_NO_SPRITE_OF_SHAPE == %false())
+    !if ($ARCHIMATE_HIDE_SPRITE_OF_SHAPE == %false())
         !return %false()
     !endif
 

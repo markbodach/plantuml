@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-16 16:08:20 EST**
-* Build Commit Hash: **b87070510714050d3543cea4344c14af8fdc6805**
-* Build Commit Comment: **fixes**
+* Generated on: **2026-11-17 02:36:43 EST**
+* Build Commit Hash: **2a33ebf8428cc25d1f8dac4fd1aef6dd34874ce2**
+* Build Commit Comment: **No Sprites support**
 
 ## Usage
 

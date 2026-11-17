@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-16 16:08:20 EST
-' Build Commit Hash: b87070510714050d3543cea4344c14af8fdc6805
-' Build Commit Comment: fixes
+' Generated on: 2026-11-17 02:36:43 EST
+' Build Commit Hash: 2a33ebf8428cc25d1f8dac4fd1aef6dd34874ce2
+' Build Commit Comment: No Sprites support
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -473,12 +473,9 @@
 !global $ARCHIMATE_DEFAULT_LAYER ?= ""
 
 !global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
-!global $ARCHIMATE_NO_SPRITE_OF_SHAPE ?= %true()
-!global $ARCHIMATE_NO_SPRITES ?= %false()
+!global $ARCHIMATE_HIDE_SPRITE_OF_SHAPE ?= %true()
+!global $ARCHIMATE_HIDE_SPRITES ?= %false()
 !global $ARCHIMATE_TYPE_IN_LABEL ?= %false()
-
-!global $ARCHIMATE_TYPE_IN_LABEL_PREFIX ?= "("
-!global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX ?= ")"
 
 !procedure Register_Archimate_Corruption_Variables()
 
@@ -2073,7 +2070,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !function $archimate_show_sprite($shape,$sprite)
 
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !return %false()
     !endif
 
@@ -2087,7 +2084,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !function $archimate_show_sprite_for_shape($shape,$sprite)
 
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !return %false()
     !endif
 
@@ -2283,7 +2280,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !function $archimate_hide_sprite_for_shape($shape, $sprite)
 
-    !if ($ARCHIMATE_NO_SPRITE_OF_SHAPE == %false())
+    !if ($ARCHIMATE_HIDE_SPRITE_OF_SHAPE == %false())
         !return %false()
     !endif
 
@@ -2739,7 +2736,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     circle "$label" as $alias <<%lower($layer)>>
 
 !endprocedure
-!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX )
+!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX, , $stylePrefix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX, $styleSuffix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX )
 
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
@@ -2749,7 +2746,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !return $label
     !endif
 
-    !if (%strpos($label, "\n" + $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+    !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
         !return $label
     !endif
 
@@ -2761,7 +2758,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$type = %upper(%substr($type,0,1)) + %substr($type,1)
 
-    !return $label + "\n" + $typePrefix + $type + $typeSuffix
+    !return $label + "\n\n<font size=" + $ARCH_TYPE_FONTSIZE + ">" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + "</font>"
 
 !endfunction
 
@@ -2794,7 +2791,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !endif
 
     !$sprite = $archimate_sprite_key($entity)
-    !if ($ARCHIMATE_NO_SPRITES)
+    !if ($ARCHIMATE_HIDE_SPRITES)
         !$sprite = ""
     !else
         !$sprite = $archimate_sprite_key($entity)
@@ -3085,9 +3082,16 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
     !global $ARCH_DEFAULT_FONT = $NAME_FONT
     !global $ARCH_DEFAULT_FONTSIZE = $SIZE_FONT
+    !global $ARCH_TYPE_FONTSIZE = $SIZE_FONT - 2
 
     !global $ARCH_RELATIONSHIP_FONTSIZE = $SIZE_FONT_ARROW
     !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE = $SIZE_FONT_LEGEND
+
+    !global $ARCHIMATE_TYPE_IN_LABEL_PREFIX ?= "("
+    !global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX ?= ")"
+
+    !global $ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX ?= "<i>"
+    !global $ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX ?= "</i>"
 
 !endprocedure
 
