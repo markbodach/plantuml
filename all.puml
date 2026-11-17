@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-17 15:33:20 EST
-' Build Commit Hash: 11fe78edb3abae686be3dbb7c153cf90473a9063
-' Build Commit Comment: label enhancements
+' Generated on: 2026-11-17 16:04:43 EST
+' Build Commit Hash: 53d9f497d206dd008091b45617e46df8464d7497
+' Build Commit Comment: composite
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -3202,7 +3202,7 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
 
     !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
-
+    !global $ARCH_GROUP_COMPOSITECOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
     !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)

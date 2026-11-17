@@ -72,7 +72,7 @@
     '=====================================================
 
     !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
-
+    !global $ARCH_GROUP_COMPOSITECOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
     !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
 
     '=====================================================
