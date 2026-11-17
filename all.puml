@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-17 14:36:41 EST
-' Build Commit Hash: 1c4f736a33f605aa820ad14aa8f69d1eb05390c4
-' Build Commit Comment: more fixes
+' Generated on: 2026-11-17 15:33:20 EST
+' Build Commit Hash: 11fe78edb3abae686be3dbb7c153cf90473a9063
+' Build Commit Comment: label enhancements
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -3169,24 +3169,31 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
     !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
     !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
+    !global $ARCH_MOTIVATION_COMPOSITECOLOR = $resolve_literal_color($COLOR_MOTIVATION_LIGHT)
 
     !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
     !global $ARCH_STRATEGY_BORDERCOLOR = $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_STRATEGY_COMPOSITECOLOR = $resolve_literal_color($COLOR_STRATEGY_LIGHT)
     
     !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
     !global $ARCH_BUSINESS_BORDERCOLOR = $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_BUSINESS_COMPOSITECOLOR = $resolve_literal_color($COLOR_BUSINESS_LIGHT)
     
     !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
     !global $ARCH_APPLICATION_BORDERCOLOR = $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_APPLICATION_COMPOSITECOLOR = $resolve_literal_color($COLOR_APPLICATION_LIGHT)
     
     !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
     !global $ARCH_TECHNOLOGY_BORDERCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+    !global $ARCH_TECHNOLOGY_COMPOSITECOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_LIGHT)
 
-    !global $ARCH_PHYSICAL_FILLCOLOR = $resolve_literal_color($COLOR_PHYSICAL)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $ARCH_TECHNOLOGY_FILLCOLOR
     !global $ARCH_PHYSICAL_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
+    !global $ARCH_PHYSICAL_COMPOSITECOLOR = $ARCH_TECHNOLOGY_COMPOSITECOLOR
   
-    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION)
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $ARCH_TECHNOLOGY_FILLCOLOR
     !global $ARCH_IMPLEMENTATION_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
+    !global $ARCH_IMPLEMENTATION_COMPOSITECOLOR = $ARCH_TECHNOLOGY_COMPOSITECOLOR
 
     !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
     !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
@@ -3584,10 +3591,7 @@ component {
     !$defaultFg = ""
     !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
 
-    Breakpoint_If( "ARCH_MOTIVATION_VALUE", %upper($ARCH_MOTIVATION_FILLCOLOR) == "#MOTIVATION", "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
     !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
-    Breakpoint_If( "ARCH_MOTIVATION_VALUE_BG", (%strpos(%upper($ARCH_MOTIVATION_FILLCOLOR), "#") == 0), "ARCH_MOTIVATION_FILLCOLOR=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
-    
     !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
     !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
     !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
@@ -3743,11 +3747,171 @@ component {
 !endif
 
 !endprocedure
+!procedure Write_Lib_Style_Archimate_Composite()
+
+    !$defaultBg = ""
+    !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
+
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_COMPOSITECOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
+    !endif
+    
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_COMPOSITECOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
+    !endif
+    
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_COMPOSITECOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
+    !endif
+    
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_COMPOSITECOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
+    !endif
+    
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_COMPOSITECOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
+    !endif
+    
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_COMPOSITECOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
+    !endif
+    
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_COMPOSITECOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
+    !endif
+    
+    !$otherBg = $resolve_style_color($ARCH_OTHER_COMPOSITECOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
+    !endif
+    
+    <style>
+    package {
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationLc
+        
+    }
+
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyLc
+        
+    }
+    
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessLc
+    }
+    
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationLc
+    }
+    
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyLc
+    }
+    
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalLc
+    }
+    
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationLc
+    }
+    
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherLc
+    }
+    }
+    
+</style>
+
+!if ($defaultBg != "") && ($defaultFg != "")
+<style>
+    package {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+    
+    .composite {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+</style>
+
+!endif
+
+!endprocedure
 
 !procedure Load_Lib_Styles_Archimate()
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
 
         Write_Lib_Style_Archimate_Element()
+        Write_Lib_Style_Archimate_Composite()
     !endif
 
 !endprocedure 

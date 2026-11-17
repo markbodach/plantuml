@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-17 14:36:41 EST**
-* Build Commit Hash: **1c4f736a33f605aa820ad14aa8f69d1eb05390c4**
-* Build Commit Comment: **more fixes**
+* Generated on: **2026-11-17 15:33:20 EST**
+* Build Commit Hash: **11fe78edb3abae686be3dbb7c153cf90473a9063**
+* Build Commit Comment: **label enhancements**
 
 ## Usage
 
@@ -352,6 +352,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _component.puml
       └── archimate/styles/index.puml
         └── _element.puml
+        └── _composite.puml
       └── _load.puml
 ```
 

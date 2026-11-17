@@ -71,5 +71,6 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _component.puml
       └── archimate/styles/index.puml
         └── _element.puml
+        └── _composite.puml
       └── _load.puml
 ```

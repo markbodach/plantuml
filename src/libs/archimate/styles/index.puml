@@ -1,11 +1,13 @@
 
 !include _element.puml
+!include _composite.puml
 
 
 !procedure Load_Lib_Styles_Archimate()
     !if ($ARCHIMATE_LIB_ENABLED == %true() )
 
         Write_Lib_Style_Archimate_Element()
+        Write_Lib_Style_Archimate_Composite()
     !endif
 
 !endprocedure 

@@ -1,7 +1,7 @@
 ' ========================================================
 ' Bundle Documentation
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-17 14:36:41 EST
+' Generated on: 2026-11-17 15:33:20 EST
 ' ========================================================
 
 ' ========================================================
@@ -2017,8 +2017,6 @@
     '=====================================================
     ' ArchiMate physical layer
     '=====================================================
-    '!global $ARCH_PHYSICAL_BORDERCOLOR = $resolve_literal_color($COLOR_PHYSICAL_DARK)
-    '!global $ARCH_IMPLEMENTATION_BORDERCOLOR = $resolve_literal_color($COLOR_IMPLEMENTATION_DARK)
     '=====================================================
     ' Other layer
     '=====================================================
@@ -2158,6 +2156,10 @@
 
 ' ========================================================
 ' FILE: /c/dev/plantuml/src/libs/archimate/styles/_element.puml
+' ========================================================
+
+' ========================================================
+' FILE: /c/dev/plantuml/src/libs/archimate/styles/_composite.puml
 ' ========================================================
 
 'STEP 6 :: Add to Load_Lib_All

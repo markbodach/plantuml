@@ -1,0 +1,168 @@
+!procedure Write_Lib_Style_Archimate_Composite()
+
+    
+    !$defaultBg = ""
+    !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
+
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_COMPOSITECOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
+    !endif
+    
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_COMPOSITECOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
+    !endif
+    
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_COMPOSITECOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
+    !endif
+    
+
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_COMPOSITECOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
+    !endif
+    
+
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_COMPOSITECOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
+    !endif
+    
+
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_COMPOSITECOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
+    !endif
+    
+
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_COMPOSITECOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
+    !endif
+    
+
+    !$otherBg = $resolve_style_color($ARCH_OTHER_COMPOSITECOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
+    !endif
+    
+    
+    <style>
+    package {
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationLc
+        
+    }
+
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyLc
+        
+    }
+    
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessLc
+    }
+    
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationLc
+    }
+    
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyLc
+    }
+    
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalLc
+    }
+    
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationLc
+    }
+    
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherLc
+    }
+    }
+    
+</style>
+
+
+!if ($defaultBg != "") && ($defaultFg != "")
+<style>
+    package {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+    
+    .composite {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+</style>
+
+!endif
+
+
+!endprocedure
