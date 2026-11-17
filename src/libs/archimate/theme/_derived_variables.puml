@@ -52,12 +52,8 @@
     ' Other layer
     '=====================================================
     !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    !global $ARCH_OTHER_COMPOSITECOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
     !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
-
-
-    '=====================================================
-    ' Composite Colors
-    '=====================================================
 
 
     '=====================================================
