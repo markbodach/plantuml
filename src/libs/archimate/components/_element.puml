@@ -19,7 +19,8 @@
         !return $label
     !endif
 
-    !$type = %upper(%substr($type,0,1)) + %substr($type,1)
+    '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
+    !$type = %lower($type)
 
     !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
     !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
@@ -29,7 +30,7 @@
     !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
     !$fontSuffix = "</font>"
 
-    !return $label + "\n\n" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix
+    !return $label + "\n\n" + $fontPrefix + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + $fontSuffix
 
 !endfunction
 

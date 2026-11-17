@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-17 03:10:39 EST**
-* Build Commit Hash: **f02c0b95d7f47c71fc293779ec39c86da0ab2f4e**
-* Build Commit Comment: **font size**
+* Generated on: **2026-11-17 03:14:21 EST**
+* Build Commit Hash: **d6df38e69b20c5b530ef8e79627343f18d2aa2c5**
+* Build Commit Comment: **Fix sterotype font size**
 
 ## Usage
 
