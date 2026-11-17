@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-17 02:36:43 EST
-' Build Commit Hash: 2a33ebf8428cc25d1f8dac4fd1aef6dd34874ce2
-' Build Commit Comment: No Sprites support
+' Generated on: 2026-11-17 03:10:39 EST
+' Build Commit Hash: f02c0b95d7f47c71fc293779ec39c86da0ab2f4e
+' Build Commit Comment: font size
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2736,7 +2736,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     circle "$label" as $alias <<%lower($layer)>>
 
 !endprocedure
-!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX, , $stylePrefix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX, $styleSuffix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX )
+!function $archimate_label( $label, $entity)
 
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
@@ -2758,7 +2758,15 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$type = %upper(%substr($type,0,1)) + %substr($type,1)
 
-    !return $label + "\n\n<font size=" + $ARCH_TYPE_FONTSIZE + ">" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + "</font>"
+    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
+    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
+    !$stylePrefix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX
+    !$styleSuffix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX
+
+    !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
+    !$fontSuffix = "</font>"
+
+    !return $label + "\n\n" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix
 
 !endfunction
 

@@ -1,4 +1,4 @@
-!function $archimate_label( $label, $entity, $typePrefix=$ARCHIMATE_TYPE_IN_LABEL_PREFIX, $typeSuffix=$ARCHIMATE_TYPE_IN_LABEL_SUFFIX, , $stylePrefix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX, $styleSuffix=$ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX )
+!function $archimate_label( $label, $entity)
 
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
@@ -21,8 +21,15 @@
 
     !$type = %upper(%substr($type,0,1)) + %substr($type,1)
 
+    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
+    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
+    !$stylePrefix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX
+    !$styleSuffix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX
 
-    !return $label + "\n\n<font size=" + $ARCH_TYPE_FONTSIZE + ">" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + "</font>"
+    !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
+    !$fontSuffix = "</font>"
+
+    !return $label + "\n\n" + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix
 
 !endfunction
 
