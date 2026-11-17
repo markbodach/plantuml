@@ -1,5 +1,17 @@
 !function $archimate_label( $label, $entity)
 
+    
+    !if (%strpos(%lower($label), "<font") < 0)
+        !if ($ARCH_LABEL_FONTSTYLE == "bold")
+            !$label = "<b>" + $label + "</b>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "italic")
+            !$label = "<i>" + $label + "</i>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "underline")
+            !$label = "<u>" + $label + "</u>"
+        !endif
+        !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
+    !endif
+
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
     !endif
@@ -7,6 +19,9 @@
     !if ($entity == "")
         !return $label
     !endif
+
+    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
+    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
 
     ' User already supplied a type line
     !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
@@ -22,15 +37,20 @@
     '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
     !$type = %lower($type)
 
-    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
-    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
-    !$stylePrefix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_PREFIX
-    !$styleSuffix = $ARCHIMATE_TYPE_IN_LABEL_STYLE_SUFFIX
-
+    
     !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
     !$fontSuffix = "</font>"
 
-    !return $label + "\n\n" + $fontPrefix + $stylePrefix + $typePrefix + $type + $typeSuffix + $styleSuffix + $fontSuffix
+    !$type = $typePrefix + $type + $typeSuffix
+    !if ($ARCH_TYPE_FONTSTYLE == "bold")
+        !$type = "<b>" + $type + "</b>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "italic")
+        !$type = "<i>" + $type + "</i>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "underline")
+        !$type = "<u>" + $type + "</u>"
+    !endif
+    
+    !return $label + "\n\n" + $fontPrefix + $type + $fontSuffix
 
 !endfunction
 
