@@ -1,7 +1,7 @@
 ========================================================
 Bundle Documentation
 Bundle Name: Core Framework
-Generated on: 2026-11-18 15:52:36 EST
+Generated on: 2026-11-18 15:59:12 EST
 ========================================================
 
 ========================================================
@@ -845,6 +845,10 @@ Register all variables that may be corrupted
 by external Archimate libraries.
 
 =========================================================
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/vars/_context.puml
+========================================================
+
 ========================================================
 FILE: /c/dev/plantuml/src/libs/archimate/vars/_sprites.puml
 ========================================================
@@ -1875,8 +1879,6 @@ FILE: /c/dev/plantuml/src/libs/archimate/components/_shapes.puml
 FILE: /c/dev/plantuml/src/libs/archimate/components/_element.puml
 ========================================================
 
-    ' User already supplied a type line
-    '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
 ========================================================
 FILE: /c/dev/plantuml/src/libs/archimate/components/_composite.puml
 ========================================================

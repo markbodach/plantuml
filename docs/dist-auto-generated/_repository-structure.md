@@ -22,6 +22,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/vars/index.puml
         └── _root.puml
         └── _corruption_repair.puml
+        └── _context.puml
         └── _sprites.puml
       └── stdlib/components/index.puml
         └── _strings.puml
@@ -39,6 +40,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _rectangle.puml
         └── _component.puml
         └── _shapes.puml
+        └── _resolve.puml
         └── _element.puml
         └── _composite.puml
       └── stdlib/theme/index.puml

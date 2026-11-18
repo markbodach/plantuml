@@ -1,0 +1,136 @@
+!function $archimate_label( $label, $entity)
+
+    
+    !if (%strpos(%lower($label), "<font") < 0)
+        !if ($ARCH_LABEL_FONTSTYLE == "bold")
+            !$label = "<b>" + $label + "</b>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "italic")
+            !$label = "<i>" + $label + "</i>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "underline")
+            !$label = "<u>" + $label + "</u>"
+        !endif
+        !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
+    !endif
+
+    !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
+        !return $label
+    !endif
+
+    !if ($entity == "")
+        !return $label
+    !endif
+
+    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
+    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
+
+    ' User already supplied a type line
+    !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+        !return $label
+    !endif
+
+    !$type = $archimate_base_entity( $archimate_default_sprite_entity($entity) )
+
+    !if ($type == "")
+        !return $label
+    !endif
+
+    '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
+    !$type = %lower($type)
+
+    
+    !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
+    !$fontSuffix = "</font>"
+
+    !$type = $typePrefix + $type + $typeSuffix
+    !if ($ARCH_TYPE_FONTSTYLE == "bold")
+        !$type = "<b>" + $type + "</b>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "italic")
+        !$type = "<i>" + $type + "</i>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "underline")
+        !$type = "<u>" + $type + "</u>"
+    !endif
+    
+    !return $label + "\n\n" + $fontPrefix + $type + $fontSuffix
+
+!endfunction
+
+!function $archimate_fillcolor_variable($layer)
+    !return "ARCH_" + %upper($layer) + "_FILLCOLOR"
+!endfunction
+
+!function $archimate_compositecolor_variable($layer)
+    !return "ARCH_" + %upper($layer) + "_COMPOSITECOLOR"
+!endfunction
+
+
+!procedure Validate_Archimate_Layer( $layer )
+    !$fillColorVar = $archimate_fillcolor_variable($layer)
+    Assert_If( (%variable_exists($to_var_name($fillColorVar)) == %false()), "Archimate layer not configured=[" + $layer + "] missing variable=[" + $fillColorVar + "]" )
+!endprocedure
+
+
+!function $archimate_resolve_layer( $entity, $layer="" )
+
+    !if ($layer != "")
+        !return %upper($layer)
+    !endif
+
+    !if (%strpos($entity,"-") >= 0)
+        !return $archimate_entity_layer($entity)
+    !endif
+
+    !if ($ARCHIMATE_DEFAULT_LAYER != "")
+        !return %upper($ARCHIMATE_DEFAULT_LAYER)
+    !endif
+
+    !return $archimate_entity_layer($entity)
+
+!endfunction
+
+!function $archimate_resolve_shape( $baseEntity, $shape="" )
+
+    !if ($shape != "")
+        !return %lower($shape)
+    !endif
+
+    !$shape = $archimate_shape_from_base_entity($baseEntity)
+
+    !if ($ARCHIMATE_RECTANGLE_ONLY)
+        !return "rectangle"
+    !endif
+
+    !return $shape
+
+!endfunction
+
+!function $archimate_resolve_sprite($entity)
+    !if ($ARCHIMATE_HIDE_SPRITES)
+        !return ""
+    !endif
+    !return $archimate_sprite_key($entity)
+
+!endfunction
+
+!function $archimate_resolve_label( $label, $baseEntity )
+
+    !return $archimate_label( $label, $baseEntity )
+
+!endfunction
+
+!procedure Archimate_Build_Context( $label, $stereotype="", $shape="", $layer="" )
+
+    !$ARCH_CTX_ENTITY = $archimate_entity($stereotype)
+
+    !$ARCH_CTX_BASEENTITY = $archimate_base_entity( $ARCH_CTX_ENTITY )
+
+    !$ARCH_CTX_LABEL = $archimate_resolve_label( $label, $ARCH_CTX_BASEENTITY )
+
+    !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
+    Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+    
+    !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
+
+    !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
+
+!endprocedure
+

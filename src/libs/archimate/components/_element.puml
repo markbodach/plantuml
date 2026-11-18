@@ -1,150 +1,61 @@
-!function $archimate_label( $label, $entity)
 
-    
-    !if (%strpos(%lower($label), "<font") < 0)
-        !if ($ARCH_LABEL_FONTSTYLE == "bold")
-            !$label = "<b>" + $label + "</b>"
-        !elseif ($ARCH_LABEL_FONTSTYLE == "italic")
-            !$label = "<i>" + $label + "</i>"
-        !elseif ($ARCH_LABEL_FONTSTYLE == "underline")
-            !$label = "<u>" + $label + "</u>"
-        !endif
-        !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
-    !endif
+!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="" )
 
-    !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
-        !return $label
-    !endif
+    Archimate_Build_Context( $label, $stereotype, $shape, $layer )
 
-    !if ($entity == "")
-        !return $label
-    !endif
+    !if ($ARCH_CTX_SHAPE == "actor")
 
-    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
-    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
+        ArchActor( $alias, $ARCH_CTX_LABEL,$ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    ' User already supplied a type line
-    !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
-        !return $label
-    !endif
+    !elseif ($ARCH_CTX_SHAPE == "queue")
 
-    !$type = $archimate_base_entity( $archimate_default_sprite_entity($entity) )
+        ArchQueue( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    !if ($type == "")
-        !return $label
-    !endif
+    !elseif ($ARCH_CTX_SHAPE == "frame")
 
-    '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
-    !$type = %lower($type)
+        ArchFrame( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    
-    !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
-    !$fontSuffix = "</font>"
+    !elseif ($ARCH_CTX_SHAPE == "component")
 
-    !$type = $typePrefix + $type + $typeSuffix
-    !if ($ARCH_TYPE_FONTSTYLE == "bold")
-        !$type = "<b>" + $type + "</b>"
-    !elseif ($ARCH_TYPE_FONTSTYLE == "italic")
-        !$type = "<i>" + $type + "</i>"
-    !elseif ($ARCH_TYPE_FONTSTYLE == "underline")
-        !$type = "<u>" + $type + "</u>"
-    !endif
-    
-    !return $label + "\n\n" + $fontPrefix + $type + $fontSuffix
+        ArchComponent( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-!endfunction
+    !elseif ($ARCH_CTX_SHAPE == "node")
 
+        ArchNode( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
+    !elseif ($ARCH_CTX_SHAPE == "file")
 
-!unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
+        ArchFile( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    !$entity = $archimate_entity($stereotype)
-    !$baseEntity = $archimate_base_entity($entity)
+    !elseif ($ARCH_CTX_SHAPE == "cloud")
 
-    !$label = $archimate_label($label, $baseEntity)
+        ArchCloud( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    !if ($layer == "")
-        !if (%strpos($entity,"-") >= 0)
-            !$layer = $archimate_entity_layer($entity)
-        !elseif ($ARCHIMATE_DEFAULT_LAYER != "")
-            !$layer = %upper($ARCHIMATE_DEFAULT_LAYER)
-        !else
-            !$layer = $archimate_entity_layer($entity)
-        !endif
-    !endif
+    !elseif ($ARCH_CTX_SHAPE == "usecase")
 
+        ArchUseCase( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    !$archElementColorName = "$ARCH_" + %upper($layer) + "_FILLCOLOR"
+    !elseif ($ARCH_CTX_SHAPE == "package")
 
-    Assert_If( (%variable_exists($archElementColorName) == %false()), "ArchElement color variable not found=[" + $archElementColorName + "] (p:ArchElement)" )
+        ArchPackage( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-    !if ($shape == "")
-        !$shape = $archimate_shape_from_base_entity($baseEntity)
-    !endif
-    !if ($ARCHIMATE_RECTANGLE_ONLY) 
-        !$shape = "rectangle" 
-    !endif
+    !elseif ($ARCH_CTX_SHAPE == "process")
 
-    !$sprite = $archimate_sprite_key($entity)
-    !if ($ARCHIMATE_HIDE_SPRITES)
-        !$sprite = ""
-    !else
-        !$sprite = $archimate_sprite_key($entity)
-    !endif
+        ArchProcess( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
+    !elseif ($ARCH_CTX_SHAPE == "folder")
 
-    !if (%lower($shape) == "actor")
+        ArchFolder( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
-        ArchActor($alias, $label, $sprite, $layer)
+    !elseif ($ARCH_CTX_SHAPE == "circle")
 
-    !elseif (%lower($shape) == "queue")
-
-        ArchQueue($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "frame")
-
-        ArchFrame($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "component")
-
-        ArchComponent($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "node")
-
-        ArchNode($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "file")
-
-        ArchFile($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "cloud")
-
-        ArchCloud($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "usecase")
-
-        ArchUseCase($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "package")
-
-        ArchPackage($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "process")
-
-        ArchProcess($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "folder")
-
-        ArchFolder($alias, $label, $sprite, $layer)
-
-    !elseif (%lower($shape) == "circle")
-
-        ArchCircle($alias, $label, $sprite, $layer)
+        ArchCircle( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
     !else
 
-        ArchRectangle($alias, $label, $sprite, $layer)
+        ArchRectangle( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
 
     !endif
 
 !endprocedure
+

@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-18 15:52:36 EST**
-* Build Commit Hash: **187c1ada3b0cbd9fe8c9fa722400d2576f104f5c**
-* Build Commit Comment: **composite**
+* Generated on: **2026-11-18 15:59:12 EST**
+* Build Commit Hash: **d4bd7826248e0238140e96804c2aeefc5420b305**
+* Build Commit Comment: **ArchElement refactor**
 
 ## Usage
 
@@ -303,6 +303,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/vars/index.puml
         └── _root.puml
         └── _corruption_repair.puml
+        └── _context.puml
         └── _sprites.puml
       └── stdlib/components/index.puml
         └── _strings.puml
@@ -320,6 +321,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _rectangle.puml
         └── _component.puml
         └── _shapes.puml
+        └── _resolve.puml
         └── _element.puml
         └── _composite.puml
       └── stdlib/theme/index.puml
