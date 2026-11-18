@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-18 15:59:12 EST**
-* Build Commit Hash: **d4bd7826248e0238140e96804c2aeefc5420b305**
-* Build Commit Comment: **ArchElement refactor**
+* Generated on: **2026-11-18 16:07:30 EST**
+* Build Commit Hash: **f1382f7655b0300e873cca0fbba6af6b4e7b8a2e**
+* Build Commit Comment: **ArchElement continued**
 
 ## Usage
 

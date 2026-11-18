@@ -1,7 +1,7 @@
 ========================================================
 Bundle Documentation
 Bundle Name: Core Framework
-Generated on: 2026-11-18 15:59:12 EST
+Generated on: 2026-11-18 16:07:30 EST
 ========================================================
 
 ========================================================
@@ -1875,6 +1875,12 @@ FILE: /c/dev/plantuml/src/libs/archimate/components/_component.puml
 FILE: /c/dev/plantuml/src/libs/archimate/components/_shapes.puml
 ========================================================
 
+========================================================
+FILE: /c/dev/plantuml/src/libs/archimate/components/_resolve.puml
+========================================================
+
+    ' User already supplied a type line
+    '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
 ========================================================
 FILE: /c/dev/plantuml/src/libs/archimate/components/_element.puml
 ========================================================
