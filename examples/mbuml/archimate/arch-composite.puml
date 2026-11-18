@@ -1,0 +1,54 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "BUSINESS"
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+!unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
+    package "<font size=20><b>$label</b></font>" as p1 <<application>> {
+    'package "$label" as $alias {
+    'ArchElement($alias, $label, "", "package", "application") {
+!endprocedure
+
+
+left to right direction
+
+title "ArchElement Shape vs Sprite Compatibility Matrix package 2"
+
+ArchComposite(p1, "ArchComposite", "package", "application")
+    ArchElement(s1, "Resource", "resource")
+End_ArchComposite()
+
+package "Strategy" {
+
+    ArchElement(s1, "Resource", "resource")
+    ArchElement(s2, "Capability", "capability")
+    ArchElement(s3, "CourseOfAction", "courseofaction")
+    ArchElement(s4, "ValueStream", "valuestream")
+}
+
+@enduml

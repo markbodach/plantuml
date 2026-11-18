@@ -1,0 +1,126 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "BUSINESS"
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+
+left to right direction
+
+title "ArchElement Shape vs Sprite Compatibility Matrix package 2"
+
+package "Strategy" {
+
+    ArchElement(s1, "Resource", "resource")
+    ArchElement(s2, "Capability", "capability")
+    ArchElement(s3, "CourseOfAction", "courseofaction")
+    ArchElement(s4, "ValueStream", "valuestream")
+}
+
+package "Business" {
+
+    ArchElement(b1, "Actor", "actor")
+    ArchElement(b2, "Role", "role")
+    ArchElement(b3, "Collaboration", "collaboration")
+    ArchElement(b4, "Interface", "interface")
+    ArchElement(b5, "Process", "process")
+    ArchElement(b6, "Function", "function")
+    ArchElement(b7, "Interaction", "interaction")
+    ArchElement(b8, "Event", "event")
+    ArchElement(b9, "Service", "service")
+    ArchElement(b10, "Object", "object")
+    ArchElement(b11, "Contract", "contract")
+    ArchElement(b12, "Representation", "representation")
+    ArchElement(b13, "Product", "product")
+    ArchElement(b14, "Location", "location")
+}
+
+package "Application" {
+
+    ArchElement(a1, "Component", "component")
+    ArchElement(a2, "Collaboration", "application-collaboration")
+    ArchElement(a3, "Interface", "application-interface")
+    ArchElement(a4, "Function", "application-function")
+    ArchElement(a5, "Interaction", "application-interaction")
+    ArchElement(a6, "Process", "application-process")
+    ArchElement(a7, "Event", "application-event")
+    ArchElement(a8, "Service", "application-service")
+    ArchElement(a9, "DataObject", "dataobject")
+}
+
+package "Technology" {
+
+    ArchElement(t1, "Node", "node")
+    ArchElement(t2, "Device", "device")
+    ArchElement(t3, "SystemSoftware", "systemsoftware")
+    ArchElement(t4, "Collaboration", "technology-collaboration")
+    ArchElement(t5, "Interface", "technology-interface")
+    ArchElement(t6, "Path", "path")
+    ArchElement(t7, "CommunicationNetwork", "communicationnetwork")
+    ArchElement(t8, "Function", "technology-function")
+    ArchElement(t9, "Process", "technology-process")
+    ArchElement(t10, "Interaction", "technology-interaction")
+    ArchElement(t11, "Event", "technology-event")
+    ArchElement(t12, "Service", "technology-service")
+    ArchElement(t13, "Artifact", "artifact")
+    ArchElement(t14, "Equipment", "equipment")
+    ArchElement(t15, "Facility", "facility")
+    ArchElement(t16, "DistributionNetwork", "distributionnetwork")
+    ArchElement(t17, "Material", "material")
+}
+
+package "Motivation" {
+
+    ArchElement(m1, "Stakeholder", "stakeholder")
+    ArchElement(m2, "Driver", "driver")
+    ArchElement(m3, "Assessment", "assessment")
+    ArchElement(m4, "Goal", "goal")
+    ArchElement(m5, "Outcome", "outcome")
+    ArchElement(m6, "Principle", "principle")
+    ArchElement(m7, "Requirement", "requirement")
+    ArchElement(m8, "Constraint", "constraint")
+    ArchElement(m9, "Meaning", "meaning")
+    ArchElement(m10, "Value", "value")
+}
+
+package "Implementation" {
+
+    ArchElement(i1, "WorkPackage", "workpackage")
+    ArchElement(i2, "Deliverable", "deliverable")
+    ArchElement(i3, "Event", "event")
+    ArchElement(i4, "Plateau", "plateau")
+    ArchElement(i5, "Gap", "gap")
+}
+
+package "Other" {
+
+    ArchElement(o1, "Grouping", "grouping")
+    ArchElement(o2, "Location", "other-location")
+}
+
+
+@enduml

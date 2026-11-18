@@ -56,7 +56,6 @@
 
 
 
-
 !unquoted procedure ArchElement($alias, $label, $stereotype="", $shape="", $layer="")
 
     !$entity = $archimate_entity($stereotype)
