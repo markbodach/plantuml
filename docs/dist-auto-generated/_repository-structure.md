@@ -40,6 +40,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _component.puml
         └── _shapes.puml
         └── _element.puml
+        └── _composite.puml
       └── stdlib/theme/index.puml
         └── _colors.puml
         └── _fonts.puml

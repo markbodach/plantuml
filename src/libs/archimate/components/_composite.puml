@@ -1,0 +1,9 @@
+!unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
+
+    ArchElement( $alias, $label, $layer, $containerShape, $layer ) {
+
+!endprocedure
+
+!procedure End_ArchComposite() 
+    } 
+!endprocedure
