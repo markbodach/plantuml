@@ -1,9 +1,14 @@
 !unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
-
-    ArchElement( $alias, $label, $layer, $containerShape, $layer ) {
-
+    
+    Archimate_Composite_Begin()
+    
+    ArchElement( $alias, $label, $layer, $containerShape, $layer ) 
+    Archimate_Composite_End()
 !endprocedure
 
 !procedure End_ArchComposite() 
-    } 
+    }
+    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
+    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth became negative")
+    
 !endprocedure

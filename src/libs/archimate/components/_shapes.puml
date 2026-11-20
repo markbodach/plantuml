@@ -192,19 +192,23 @@
 
 
 !unquoted procedure ArchPackage( $alias, $label, $sprite, $layer )
-
-    !if ($sprite == "sprite_arch_implementation_workpackage")
-
-        package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
-
-    !elseif ($sprite == "sprite_arch_implementation_plateau")
-
-        package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+    !if ($Archimate_Is_Composite())
+        !if ($sprite == "sprite_arch_implementation_workpackage")
+            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>> {
+        !elseif ($sprite == "sprite_arch_implementation_plateau")
+            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>> {
+        !else
+            package "$label" as $alias <<%lower($layer)>> {
+        !endif
 
     !else
-
-        package "$label" as $alias <<%lower($layer)>>
-
+        !if ($sprite == "sprite_arch_implementation_workpackage")
+            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+        !elseif ($sprite == "sprite_arch_implementation_plateau")
+            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+        !else
+            package "$label" as $alias <<%lower($layer)>>
+        !endif
     !endif
 
 !endprocedure

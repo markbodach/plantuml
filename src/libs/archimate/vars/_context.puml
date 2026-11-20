@@ -3,5 +3,7 @@
 !global $ARCH_CTX_LAYER       = ""
 !global $ARCH_CTX_SHAPE       = ""
 !global $ARCH_CTX_SPRITE      = ""
+
 !global $ARCH_CTX_LABEL       = ""
-!global $ARCH_CTX_DEPTH       = 0
+!global $ARCH_CTX_COMPOSITE_MODE = %false()
+!global $ARCH_CTX_COUNT       = 0
