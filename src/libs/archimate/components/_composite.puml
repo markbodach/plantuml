@@ -1,14 +1,30 @@
+
+
+!procedure Archimate_Composite_Open()
+    !$ARCH_CTX_COMPOSITE_MODE = %true() 
+    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
+!endprocedure
+
+!procedure Archimate_Composite_Close()
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+!endprocedure
+
+!function $Archimate_Is_Composite()
+    !return $ARCH_CTX_COMPOSITE_MODE
+!endfunction
+
+
 !unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
     
-    Archimate_Composite_Begin()
+    Archimate_Composite_Open()
     
     ArchElement( $alias, $label, $layer, $containerShape, $layer ) 
-    Archimate_Composite_End()
+    Archimate_Composite_Close()
 !endprocedure
 
 !procedure End_ArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
-    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth became negative")
+    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
     
 !endprocedure

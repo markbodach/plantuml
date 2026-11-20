@@ -1,5 +1,4 @@
-' src/libraries/archimate/index.puml
-' Module Entry Point: Libraries / Archimate Component Pack 
+
 
 !include _sprite_registry.puml
 !include _sprite.puml

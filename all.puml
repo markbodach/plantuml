@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 10:51:25 EST
-' Build Commit Hash: 27a12ba1d103d431f7eeb3721c7fc2b0451469b3
-' Build Commit Comment: ArchElement continued
+' Generated on: 2026-11-20 13:06:37 EST
+' Build Commit Hash: 043f957d6a4a4defb760c04b572ec75da6e60fb0
+' Build Commit Comment: Composite refactoring
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2881,20 +2881,6 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endprocedure
 
-!procedure Archimate_Composite_Begin()
-    !$ARCH_CTX_COMPOSITE_MODE = %true()
-    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
-!endprocedure
-
-!procedure Archimate_Composite_End()
-    !$ARCH_CTX_COMPOSITE_MODE = %false()
-    
-!endprocedure
-
-!function $Archimate_Is_Composite()
-    !return $ARCH_CTX_COMPOSITE_MODE
-!endfunction
-
 !unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="" )
 
     Archimate_Build_Context( $label, $stereotype, $shape, $layer )
@@ -2955,18 +2941,31 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endprocedure
 
+!procedure Archimate_Composite_Open()
+    !$ARCH_CTX_COMPOSITE_MODE = %true() 
+    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
+!endprocedure
+
+!procedure Archimate_Composite_Close()
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+!endprocedure
+
+!function $Archimate_Is_Composite()
+    !return $ARCH_CTX_COMPOSITE_MODE
+!endfunction
+
 !unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
     
-    Archimate_Composite_Begin()
+    Archimate_Composite_Open()
     
     ArchElement( $alias, $label, $layer, $containerShape, $layer ) 
-    Archimate_Composite_End()
+    Archimate_Composite_Close()
 !endprocedure
 
 !procedure End_ArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
-    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth became negative")
+    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
     
 !endprocedure
 

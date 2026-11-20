@@ -133,18 +133,3 @@
     !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
 
 !endprocedure
-
-
-!procedure Archimate_Composite_Begin()
-    !$ARCH_CTX_COMPOSITE_MODE = %true()
-    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
-!endprocedure
-
-!procedure Archimate_Composite_End()
-    !$ARCH_CTX_COMPOSITE_MODE = %false()
-    
-!endprocedure
-
-!function $Archimate_Is_Composite()
-    !return $ARCH_CTX_COMPOSITE_MODE
-!endfunction
