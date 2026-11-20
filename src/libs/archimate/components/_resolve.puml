@@ -132,10 +132,10 @@
 
 
     !$ARCH_CTX_STYLE_LAYER = ""
-    !$ARCH_CTX_STYLE_COMPOSITE = """
+    !$ARCH_CTX_STYLE_COMPOSITE = ""
     !if ( $Archimate_Is_Composite() )
-        !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT
-        !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT
+        !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT + ""
+        !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT + ""
     !endif
 
 

@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-20 15:20:41 EST**
-* Build Commit Hash: **e275020500bda85cf56f644f35c2e861d55ca378**
-* Build Commit Comment: **shadowing and title**
+* Generated on: **2026-11-20 15:26:44 EST**
+* Build Commit Hash: **49ed85c12771bfc93944356476862aa765cc8d2d**
+* Build Commit Comment: **shadowing and skinparam**
 
 ## Usage
 
