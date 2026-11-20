@@ -8,7 +8,7 @@ skinparam defaultTextAlignment center
    
 !$SKINPARAM_ENABLED = %false()
 !$ARCHIMATE_LIB_ENABLED = %true()
-'!$ARCHIMATE_DEFAULT_LAYER = "BUSINESS"
+!$ARCHIMATE_DEFAULT_LAYER = "BUSINESS"
 '!$ARCHIMATE_RECTANGLE_ONLY = %true()
 !$ARCHIMATE_TYPE_IN_LABEL = %true() 
 hide stereotype  
@@ -16,7 +16,6 @@ hide stereotype
 
 !define MBpuml https://markbodach.github.io/plantuml/
 !includeurl MBpuml/all.puml
-
 
 
 !includeurl MBpuml/theme-ontariohealth.puml 
@@ -29,20 +28,27 @@ Register_Lib_All("OntarioHealth")
 Load_Lib_All()
 
 
-left to right direction
+top to bottom direction
 
-title "ArchElement Shape vs Sprite Compatibility Matrix package 2"
+title "Nested Composites Alias 2"
 
-ArchComposite(p1, "ArchComposite", "package", "application")
+ArchComposite(po1, "ArchComposite Outer", "package")
+ArchComposite(pi1, "ArchComposite Inner", "package", "application")
     ArchElement(s1, "Resource", "resource")
-End_ArchComposite()
+    
+EndArchComposite()
+ArchElement(s2, "Capability", "capability")
 
-package "Strategy" {
+
+
+package "Package Outer" {
+package "Package Inner" {
 
     ArchElement(s1, "Resource", "resource")
     ArchElement(s2, "Capability", "capability")
     ArchElement(s3, "CourseOfAction", "courseofaction")
     ArchElement(s4, "ValueStream", "valuestream")
 }
-
+}
+EndArchComposite()
 @enduml
