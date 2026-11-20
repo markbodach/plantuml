@@ -159,7 +159,7 @@
         Shadowing true
     }
     .composite-1 {
-        LineThickness 4
+        LineThickness 5
     }
     .composite-2 {
         LineThickness 3

@@ -1,7 +1,7 @@
 ' ========================================================
 ' Bundle Documentation
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:16:06 EST
+' Generated on: 2026-11-20 15:20:41 EST
 ' ========================================================
 
 ' ========================================================
@@ -2065,6 +2065,13 @@
 '---------------------------------------------------------
 ' skinparam linetype polyline
 ' skinparam linetype ortho
+        'skinparam shadowing $SHADOWING
+        'skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
+        'skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
+        'skinparam actorStyle $STYLE_ACTOR
+        'skinparam actorBorderColor $COLOR_BORDER_ACTOR
+        'skinparam actorBorderThickness $SIZE_BORDER_ACTOR
+        'skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 ' ========================================================
 ' FILE: /c/dev/plantuml/src/libs/archimate/skinparams/index.puml
 ' ========================================================

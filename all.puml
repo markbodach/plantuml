@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:16:06 EST
-' Build Commit Hash: 9b69d5d6785ab963739f9702a0bb06608c8c45fd
-' Build Commit Comment: composite styling
+' Generated on: 2026-11-20 15:20:41 EST
+' Build Commit Hash: e275020500bda85cf56f644f35c2e861d55ca378
+' Build Commit Comment: shadowing and title
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2878,8 +2878,12 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
 
-    !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT
-    !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT
+    !$ARCH_CTX_STYLE_LAYER = ""
+    !$ARCH_CTX_STYLE_COMPOSITE = """
+    !if ( $Archimate_Is_Composite() )
+        !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT
+        !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT
+    !endif
 
     !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
 
@@ -3347,16 +3351,6 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
     skinparam ranksep $RANK_SEP
 
     !if ($SKINPARAM_ENABLED)
-
-        skinparam shadowing $SHADOWING
-        skinparam defaultTextAlignment $DEFAULT_TEXT_ALIGNMENT
-
-        skinparam rectangleBorderColor $COLOR_BORDER_RECTANGLE
-
-        skinparam actorStyle $STYLE_ACTOR
-        skinparam actorBorderColor $COLOR_BORDER_ACTOR
-        skinparam actorBorderThickness $SIZE_BORDER_ACTOR
-        skinparam actorBackgroundColor $COLOR_BACKGROUND_ACTOR
 
     !endif
 
@@ -3997,7 +3991,7 @@ component {
         Shadowing true
     }
     .composite-1 {
-        LineThickness 4
+        LineThickness 5
     }
     .composite-2 {
         LineThickness 3
