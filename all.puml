@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:45:38 EST
-' Build Commit Hash: ea042c9b387a74374d650ba17c13ddf5ee23dac7
-' Build Commit Comment: composite titles
+' Generated on: 2026-11-20 15:52:43 EST
+' Build Commit Hash: 66c16db7839c5e27b9ca9d811e88c20c1df8bab4
+' Build Commit Comment: refactoring label for composite
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
