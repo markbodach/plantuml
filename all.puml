@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:36:16 EST
-' Build Commit Hash: 13ec4244672b99f45ffb240cfc707bf132f0ff4c
-' Build Commit Comment: styling composite titles
+' Generated on: 2026-11-20 15:45:38 EST
+' Build Commit Hash: ea042c9b387a74374d650ba17c13ddf5ee23dac7
+' Build Commit Comment: composite titles
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2767,6 +2767,10 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
     !endif
 
+    !if ($Archimate_Is_Composite()) 
+        !$label = $pad_left($pad_right($label, 6),2)
+    !endif
+
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
     !endif
@@ -2802,12 +2806,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !$type = "<u>" + $type + "</u>"
     !endif
     
-    if ($Archimate_Is_Composite()) 
-        !$label = $pad_left($pad_right($label, 6),2) + "\n"
-    !else
-        !$label = $label + "\n\n"
-    !endif
-    !return $label + $fontPrefix + $type + $fontSuffix
+    !return $label + "\n" + $fontPrefix + $type + $fontSuffix
 
 !endfunction
 

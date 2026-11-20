@@ -12,6 +12,10 @@
         !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
     !endif
 
+    !if ($Archimate_Is_Composite()) 
+        !$label = $pad_left($pad_right($label, 6),2)
+    !endif
+
     !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
         !return $label
     !endif
@@ -50,12 +54,7 @@
         !$type = "<u>" + $type + "</u>"
     !endif
     
-    if ($Archimate_Is_Composite()) 
-        !$label = $pad_left($pad_right($label, 6),2) + "\n"
-    !else
-        !$label = $label + "\n\n"
-    !endif
-    !return $label + $fontPrefix + $type + $fontSuffix
+    !return $label + "\n" + $fontPrefix + $type + $fontSuffix
 
 !endfunction
 
