@@ -156,10 +156,16 @@
     }
     
     .composite {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
         Shadowing true
+    }
+    .composite-1 {
+        LineThickness 4
+    }
+    .composite-2 {
+        LineThickness 3
+    }
+    .composite-3 {
+        LineThickness 2
     }
 </style>
 
