@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:26:44 EST
-' Build Commit Hash: 49ed85c12771bfc93944356476862aa765cc8d2d
-' Build Commit Comment: shadowing and skinparam
+' Generated on: 2026-11-20 15:36:16 EST
+' Build Commit Hash: 13ec4244672b99f45ffb240cfc707bf132f0ff4c
+' Build Commit Comment: styling composite titles
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2802,7 +2802,12 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !$type = "<u>" + $type + "</u>"
     !endif
     
-    !return $label + "\n\n" + $fontPrefix + $type + $fontSuffix
+    if ($Archimate_Is_Composite()) 
+        !$label = $pad_left($pad_right($label, 6),2) + "\n"
+    !else
+        !$label = $label + "\n\n"
+    !endif
+    !return $label + $fontPrefix + $type + $fontSuffix
 
 !endfunction
 

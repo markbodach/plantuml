@@ -50,9 +50,12 @@
         !$type = "<u>" + $type + "</u>"
     !endif
     
-
-
-    !return $label + "\n\n" + $fontPrefix + $type + $fontSuffix
+    if ($Archimate_Is_Composite()) 
+        !$label = $pad_left($pad_right($label, 6),2) + "\n"
+    !else
+        !$label = $label + "\n\n"
+    !endif
+    !return $label + $fontPrefix + $type + $fontSuffix
 
 !endfunction
 
