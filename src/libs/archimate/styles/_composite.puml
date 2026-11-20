@@ -159,6 +159,7 @@
         BackgroundColor $defaultBg
         FontColor $defaultFg
         LineColor $defaultLc
+        Shadowing true
     }
 </style>
 

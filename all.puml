@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 13:06:37 EST
-' Build Commit Hash: 043f957d6a4a4defb760c04b572ec75da6e60fb0
-' Build Commit Comment: Composite refactoring
+' Generated on: 2026-11-20 14:42:44 EST
+' Build Commit Hash: 144d06bda3f08fcc950bcafda370a916859aa2a4
+' Build Commit Comment: composite refactoring
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -514,6 +514,8 @@
 !global $ARCH_CTX_LABEL       = ""
 !global $ARCH_CTX_COMPOSITE_MODE = %false()
 !global $ARCH_CTX_COUNT       = 0
+!global $ARCH_CTX_STYLE_LAYER = ""
+!global $ARCH_CTX_STYLE_COMPOSITE = ""
 
 sprite $sprite_arch_strategy_resource              jar:archimate/strategy-resource
 sprite $sprite_arch_strategy_capability            jar:archimate/strategy-capability
@@ -2713,12 +2715,13 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !unquoted procedure ArchPackage( $alias, $label, $sprite, $layer )
     !if ($Archimate_Is_Composite())
+
         !if ($sprite == "sprite_arch_implementation_workpackage")
-            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>> {
+            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
         !elseif ($sprite == "sprite_arch_implementation_plateau")
-            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>> {
+            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
         !else
-            package "$label" as $alias <<%lower($layer)>> {
+            package "$label" as $alias <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
         !endif
 
     !else
@@ -2874,7 +2877,10 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
-    
+
+    !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT
+    !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT
+
     !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
 
     !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
@@ -2962,7 +2968,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     Archimate_Composite_Close()
 !endprocedure
 
-!procedure End_ArchComposite() 
+!procedure EndArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
     Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
@@ -3991,6 +3997,7 @@ component {
         BackgroundColor $defaultBg
         FontColor $defaultFg
         LineColor $defaultLc
+        Shadowing true
     }
 </style>
 

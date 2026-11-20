@@ -127,6 +127,11 @@
 
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+
+    !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT
+    !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT
+
+
     
     !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
 

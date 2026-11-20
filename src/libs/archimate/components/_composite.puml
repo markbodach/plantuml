@@ -22,7 +22,7 @@
     Archimate_Composite_Close()
 !endprocedure
 
-!procedure End_ArchComposite() 
+!procedure EndArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
     Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
