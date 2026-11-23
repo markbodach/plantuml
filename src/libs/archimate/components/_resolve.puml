@@ -72,8 +72,7 @@
     Assert_If( (%variable_exists($to_var_name($fillColorVar)) == %false()), "Archimate layer not configured=[" + $layer + "] missing variable=[" + $fillColorVar + "]" )
 !endprocedure
 
-
-!function $archimate_resolve_layer( $entity, $layer="" )
+!function $archimate_resolve_layer($entity, $layer="")
 
     !if ($layer != "")
         !return %upper($layer)
@@ -87,9 +86,21 @@
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
 
-    !return $archimate_entity_layer($entity)
+    ' infer from sprite mapping
+    !$spriteEntity = $archimate_default_sprite_entity($entity)
+
+    !if ($spriteEntity != $entity)
+        !$inferred = $archimate_entity_layer($spriteEntity)
+
+        !if ($inferred != "")
+            !return $inferred
+        !endif
+    !endif
+
+    !return "OTHER"
 
 !endfunction
+
 
 !function $archimate_resolve_shape( $baseEntity, $shape="" )
 

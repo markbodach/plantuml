@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-20 15:52:43 EST
-' Build Commit Hash: 66c16db7839c5e27b9ca9d811e88c20c1df8bab4
-' Build Commit Comment: refactoring label for composite
+' Generated on: 2026-11-23 10:37:25 EST
+' Build Commit Hash: 1916b9cbf9cc2184a5e14c7e9e128b4c426b105f
+' Build Commit Comment: title
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2823,7 +2823,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     Assert_If( (%variable_exists($to_var_name($fillColorVar)) == %false()), "Archimate layer not configured=[" + $layer + "] missing variable=[" + $fillColorVar + "]" )
 !endprocedure
 
-!function $archimate_resolve_layer( $entity, $layer="" )
+!function $archimate_resolve_layer($entity, $layer="")
 
     !if ($layer != "")
         !return %upper($layer)
@@ -2837,7 +2837,17 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
 
-    !return $archimate_entity_layer($entity)
+    !$spriteEntity = $archimate_default_sprite_entity($entity)
+
+    !if ($spriteEntity != $entity)
+        !$inferred = $archimate_entity_layer($spriteEntity)
+
+        !if ($inferred != "")
+            !return $inferred
+        !endif
+    !endif
+
+    !return "OTHER"
 
 !endfunction
 
