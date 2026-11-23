@@ -74,39 +74,47 @@
 
 !function $archimate_resolve_layer($entity, $layer="")
 
+    ' Explicit layer always wins
     !if ($layer != "")
         !return %upper($layer)
     !endif
 
+    ' Explicit Archimate entity wins
     !if (%strpos($entity,"-") >= 0)
         !return $archimate_entity_layer($entity)
     !endif
 
-    !global $ARCH_CTX_LAYER       = ""
-    !if ($Archimate_In_Composite)
-        !if ($ARCH_CTX_LAYER != "")
-            !return %upper($ARCH_CTX_LAYER)
+    ' Composite inheritance
+    !if ($Archimate_In_Composite())
+
+        !if ($ARCH_CTX_DEFAULT_LAYER != "")
+            !return %upper($ARCH_CTX_DEFAULT_LAYER)
         !endif
+
     !endif
-    
+
+    ' Global default
     !if ($ARCHIMATE_DEFAULT_LAYER != "")
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
 
-    ' infer from sprite mapping
+    ' Sprite-derived fallback
     !$spriteEntity = $archimate_default_sprite_entity($entity)
 
     !if ($spriteEntity != $entity)
+
         !$inferred = $archimate_entity_layer($spriteEntity)
 
         !if ($inferred != "")
             !return $inferred
         !endif
+
     !endif
 
     !return "NONE"
 
 !endfunction
+
 
 
 !function $archimate_resolve_shape( $baseEntity, $shape="" )

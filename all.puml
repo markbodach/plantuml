@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-23 13:30:06 EST
-' Build Commit Hash: b6d9c26195798e57a8262bb6ac5078437965a244
-' Build Commit Comment: composite defined default layers
+' Generated on: 2026-11-23 13:37:20 EST
+' Build Commit Hash: bfdd75d2ca11bf1baed2c8f44e95657ea715971c
+' Build Commit Comment: CTX_DEFAULT_LAYER
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2842,13 +2842,14 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !return $archimate_entity_layer($entity)
     !endif
 
-    !global $ARCH_CTX_LAYER       = ""
-    !if ($Archimate_In_Composite)
-        !if ($ARCH_CTX_LAYER != "")
-            !return %upper($ARCH_CTX_LAYER)
+    !if ($Archimate_In_Composite())
+
+        !if ($ARCH_CTX_DEFAULT_LAYER != "")
+            !return %upper($ARCH_CTX_DEFAULT_LAYER)
         !endif
+
     !endif
-    
+
     !if ($ARCHIMATE_DEFAULT_LAYER != "")
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
@@ -2856,11 +2857,13 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !$spriteEntity = $archimate_default_sprite_entity($entity)
 
     !if ($spriteEntity != $entity)
+
         !$inferred = $archimate_entity_layer($spriteEntity)
 
         !if ($inferred != "")
             !return $inferred
         !endif
+
     !endif
 
     !return "NONE"

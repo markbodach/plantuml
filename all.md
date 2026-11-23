@@ -1,7 +1,7 @@
 ========================================================
 Bundle Documentation
 Bundle Name: Core Framework
-Generated on: 2026-11-23 13:30:06 EST
+Generated on: 2026-11-23 13:37:20 EST
 ========================================================
 
 ========================================================
@@ -1879,7 +1879,11 @@ FILE: /c/dev/plantuml/src/libs/archimate/components/_resolve.puml
 
     ' User already supplied a type line
     '!$type = %upper(%substr($type,0,1)) + %substr($type,1)
-    ' infer from sprite mapping
+    ' Explicit layer always wins
+    ' Explicit Archimate entity wins
+    ' Composite inheritance
+    ' Global default
+    ' Sprite-derived fallback
 ========================================================
 FILE: /c/dev/plantuml/src/libs/archimate/components/_element.puml
 ========================================================
