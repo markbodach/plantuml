@@ -9,6 +9,18 @@
 '=========================================================
 !procedure Register_Archimate_Corruption_Variables()
 
+    Register_Corruption_Variable("ARCH_NONE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_COMPOSITECOLOR")
+
+    
+    Register_Corruption_Variable("ARCH_INVISIBLE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_COMPOSITECOLOR")
+
+
+
+
     Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
     Register_Corruption_Variable("ARCH_MOTIVATION_BORDERCOLOR")
 

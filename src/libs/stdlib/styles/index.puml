@@ -1,5 +1,5 @@
 !include _utilities.puml
-
+!include _transparent.puml
 !include _card.puml
 !include _panel.puml
 !include _containers.puml
@@ -12,6 +12,7 @@
 !procedure Load_Lib_Styles_Stdlib()
 
     Write_Lib_Style_Stdlib_Utilities()
+    Write_Lib_Style_Stdlib_Transparent()
 
     Write_Lib_Style_Stdlib_Card()
     Write_Lib_Style_Stdlib_Panel()

@@ -97,7 +97,7 @@
         !endif
     !endif
 
-    !return "OTHER"
+    !return "NONE"
 
 !endfunction
 

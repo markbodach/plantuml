@@ -1,0 +1,21 @@
+!procedure Write_Lib_Style_Stdlib_Transparent()
+
+<style>
+
+.none {
+    BackgroundColor $COLOR_NONE
+}
+
+.transparent {
+    BackgroundColor $COLOR_NONE
+}
+
+.invisible {
+    BackgroundColor $COLOR_NONE
+    FontColor $COLOR_NONE
+    LineColor $COLOR_NONE
+}
+
+</style>
+
+!endprocedure

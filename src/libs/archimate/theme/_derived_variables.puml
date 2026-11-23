@@ -5,6 +5,17 @@
     '* HARD SET THE VALUES 
     '**********************
 
+    '=====================================================
+    ' Transparent Colors
+    '=====================================================
+    !global $ARCH_NONE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+
+    !global $ARCH_INVISIBLE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+
 
     '=====================================================
     ' Layer Colors

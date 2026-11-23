@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-23 10:37:25 EST**
-* Build Commit Hash: **1916b9cbf9cc2184a5e14c7e9e128b4c426b105f**
-* Build Commit Comment: **title**
+* Generated on: **2026-11-23 13:08:20 EST**
+* Build Commit Hash: **8b020196cc3613335b6bbce5b6799133a7c9951b**
+* Build Commit Comment: **resolved no default layer**
 
 ## Usage
 
@@ -347,6 +347,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/skinparams/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
+        └── _transparent.puml
         └── _card.puml
         └── _panel.puml
         └── _containers.puml

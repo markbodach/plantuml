@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-23 10:37:25 EST
-' Build Commit Hash: 1916b9cbf9cc2184a5e14c7e9e128b4c426b105f
-' Build Commit Comment: title
+' Generated on: 2026-11-23 13:08:20 EST
+' Build Commit Hash: 8b020196cc3613335b6bbce5b6799133a7c9951b
+' Build Commit Comment: resolved no default layer
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -478,6 +478,14 @@
 !global $ARCHIMATE_TYPE_IN_LABEL ?= %false()
 
 !procedure Register_Archimate_Corruption_Variables()
+
+    Register_Corruption_Variable("ARCH_NONE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_COMPOSITECOLOR")
+
+    Register_Corruption_Variable("ARCH_INVISIBLE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_COMPOSITECOLOR")
 
     Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
     Register_Corruption_Variable("ARCH_MOTIVATION_BORDERCOLOR")
@@ -2847,7 +2855,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !endif
     !endif
 
-    !return "OTHER"
+    !return "NONE"
 
 !endfunction
 
@@ -3281,6 +3289,14 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 
 !procedure Build_Lib_Derived_Variables_Archimate()
 
+    !global $ARCH_NONE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+
+    !global $ARCH_INVISIBLE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+
     !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
     !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
     !global $ARCH_MOTIVATION_COMPOSITECOLOR = $resolve_literal_color($COLOR_MOTIVATION_LIGHT)
@@ -3498,7 +3514,27 @@ Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
 </style>
 
 !endprocedure
+!procedure Write_Lib_Style_Stdlib_Transparent()
 
+<style>
+
+.none {
+    BackgroundColor $COLOR_NONE
+}
+
+.transparent {
+    BackgroundColor $COLOR_NONE
+}
+
+.invisible {
+    BackgroundColor $COLOR_NONE
+    FontColor $COLOR_NONE
+    LineColor $COLOR_NONE
+}
+
+</style>
+
+!endprocedure
 !procedure Write_Lib_Style_Stdlib_Card()
 
 <style>
@@ -3679,6 +3715,7 @@ component {
 !procedure Load_Lib_Styles_Stdlib()
 
     Write_Lib_Style_Stdlib_Utilities()
+    Write_Lib_Style_Stdlib_Transparent()
 
     Write_Lib_Style_Stdlib_Card()
     Write_Lib_Style_Stdlib_Panel()

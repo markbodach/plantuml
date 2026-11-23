@@ -66,6 +66,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/skinparams/index.puml
       └── stdlib/styles/index.puml
         └── _utilities.puml
+        └── _transparent.puml
         └── _card.puml
         └── _panel.puml
         └── _containers.puml

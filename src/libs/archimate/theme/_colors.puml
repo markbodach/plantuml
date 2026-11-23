@@ -13,6 +13,8 @@
     !global $COLOR_NEW ?= "#005700"
 
 
+
+
     'DERIVATES
     !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
     !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
