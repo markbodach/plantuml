@@ -1,6 +1,7 @@
 !global $ARCH_CTX_ENTITY      = ""
 !global $ARCH_CTX_BASEENTITY  = ""
 !global $ARCH_CTX_LAYER       = ""
+!global $ARCH_CTX_DEFAULT_LAYER = ""
 !global $ARCH_CTX_SHAPE       = ""
 !global $ARCH_CTX_SPRITE      = ""
 

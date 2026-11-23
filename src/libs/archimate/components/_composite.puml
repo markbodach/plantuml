@@ -1,7 +1,8 @@
 
 
 !procedure Archimate_Composite_Open()
-    !$ARCH_CTX_COMPOSITE_MODE = %true() 
+    !$ARCH_CTX_COMPOSITE_MODE = %true()
+    !$ARCH_CTX_DEFAULT_LAYER = "" 
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
 !endprocedure
 
@@ -11,6 +12,10 @@
 
 !function $Archimate_Is_Composite()
     !return $ARCH_CTX_COMPOSITE_MODE
+!endfunction
+
+!function $Archimate_In_Composite()
+    !return $ARCH_CTX_COUNT > 0
 !endfunction
 
 
@@ -25,6 +30,7 @@
 !procedure EndArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
+    !$ARCH_CTX_DEFAULT_LAYER = ""
     Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
     
 !endprocedure

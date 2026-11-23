@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-23 13:08:20 EST
-' Build Commit Hash: 8b020196cc3613335b6bbce5b6799133a7c9951b
-' Build Commit Comment: resolved no default layer
+' Generated on: 2026-11-23 13:26:14 EST
+' Build Commit Hash: 9ccf0a55bc31a154be215ecaa61735ea27c9f1d8
+' Build Commit Comment: none and inivisible
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -516,6 +516,7 @@
 !global $ARCH_CTX_ENTITY      = ""
 !global $ARCH_CTX_BASEENTITY  = ""
 !global $ARCH_CTX_LAYER       = ""
+!global $ARCH_CTX_DEFAULT_LAYER = ""
 !global $ARCH_CTX_SHAPE       = ""
 !global $ARCH_CTX_SPRITE      = ""
 
@@ -2841,6 +2842,13 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
         !return $archimate_entity_layer($entity)
     !endif
 
+    !global $ARCH_CTX_LAYER       = ""
+    !if ($Archimate_In_Composite)
+        !if ($ARCH_CTX_LAYER != "")
+            !return %upper($ARCH_CTX_LAYER)
+        !endif
+    !endif
+    
     !if ($ARCHIMATE_DEFAULT_LAYER != "")
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
@@ -2899,6 +2907,10 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+
+    !if ($ARCH_CTX_DEFAULT_LAYER == "")
+        !$ARCH_CTX_DEFAULT_LAYER = $ARCH_CTX_LAYER
+    !endif
 
     !$ARCH_CTX_STYLE_LAYER = ""
     !$ARCH_CTX_STYLE_COMPOSITE = ""
@@ -2974,7 +2986,8 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !endprocedure
 
 !procedure Archimate_Composite_Open()
-    !$ARCH_CTX_COMPOSITE_MODE = %true() 
+    !$ARCH_CTX_COMPOSITE_MODE = %true()
+    !$ARCH_CTX_DEFAULT_LAYER = "" 
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
 !endprocedure
 
@@ -2984,6 +2997,10 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !function $Archimate_Is_Composite()
     !return $ARCH_CTX_COMPOSITE_MODE
+!endfunction
+
+!function $Archimate_In_Composite()
+    !return $ARCH_CTX_COUNT > 0
 !endfunction
 
 !unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
@@ -2997,6 +3014,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !procedure EndArchComposite() 
     }
     !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
+    !$ARCH_CTX_DEFAULT_LAYER = ""
     Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
     
 !endprocedure

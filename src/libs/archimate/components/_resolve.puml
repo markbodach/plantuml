@@ -82,6 +82,13 @@
         !return $archimate_entity_layer($entity)
     !endif
 
+    !global $ARCH_CTX_LAYER       = ""
+    !if ($Archimate_In_Composite)
+        !if ($ARCH_CTX_LAYER != "")
+            !return %upper($ARCH_CTX_LAYER)
+        !endif
+    !endif
+    
     !if ($ARCHIMATE_DEFAULT_LAYER != "")
         !return %upper($ARCHIMATE_DEFAULT_LAYER)
     !endif
@@ -143,6 +150,9 @@
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
 
+    !if ($ARCH_CTX_DEFAULT_LAYER == "")
+        !$ARCH_CTX_DEFAULT_LAYER = $ARCH_CTX_LAYER
+    !endif
 
     !$ARCH_CTX_STYLE_LAYER = ""
     !$ARCH_CTX_STYLE_COMPOSITE = ""
