@@ -1,0 +1,7 @@
+!procedure Load_Lib_I18n_Stdlib_EN()
+
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Archimate Layers")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Sample")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Meaning")
+
+!endprocedure

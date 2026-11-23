@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-23 13:37:20 EST**
-* Build Commit Hash: **bfdd75d2ca11bf1baed2c8f44e95657ea715971c**
-* Build Commit Comment: **CTX_DEFAULT_LAYER**
+* Generated on: **2026-11-23 17:35:58 EST**
+* Build Commit Hash: **3e797a42ea9c5d5c48075e2cc666eddd20e16a6a**
+* Build Commit Comment: **arch_ctx_default**
 
 ## Usage
 
@@ -295,10 +295,12 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _helpers.puml
         └── _corruption.puml
         └── _extensions.puml
+        └── _i18n.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _corruption_registry.puml
         └── _extension_registry.puml
+        └── _i18n.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
@@ -357,6 +359,12 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/styles/index.puml
         └── _element.puml
         └── _composite.puml
+      └── stdlib/i18n/index.puml
+        └── _en.puml
+        └── _fr.puml
+      └── archimate/i18n/index.puml
+        └── _en.puml
+        └── _fr.puml
       └── _load.puml
 ```
 

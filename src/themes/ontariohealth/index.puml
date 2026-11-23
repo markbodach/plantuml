@@ -15,3 +15,6 @@
 
 'STEP 5 :: STYLES includes
 !include styles/index.puml
+
+'STEP 5 :: I18N includes
+!include i18n/index.puml

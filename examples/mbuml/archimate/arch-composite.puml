@@ -8,7 +8,7 @@ skinparam defaultTextAlignment center
    
 !$SKINPARAM_ENABLED = %false()
 !$ARCHIMATE_LIB_ENABLED = %true()
-!$ARCHIMATE_DEFAULT_LAYER = "BUSINESS"
+'!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION" 
 '!$ARCHIMATE_RECTANGLE_ONLY = %true()
 !$ARCHIMATE_TYPE_IN_LABEL = %true() 
 hide stereotype  
@@ -30,7 +30,8 @@ Load_Lib_All()
 
 top to bottom direction
 
-title "Nested Composites Alias 2"
+title "Nested Composites"
+
 
 ArchComposite(po1, "ArchComposite Outer", "package")
 ArchComposite(pi1, "ArchComposite Inner", "package", "application")
@@ -44,10 +45,10 @@ ArchElement(s2, "Capability", "capability")
 package "Package Outer" {
 package "Package Inner" {
 
-    ArchElement(s1, "Resource", "resource")
-    ArchElement(s2, "Capability", "capability")
-    ArchElement(s3, "CourseOfAction", "courseofaction")
-    ArchElement(s4, "ValueStream", "valuestream")
+    ArchElement(sp1, "Resource", "technology-resource")
+    ArchElement(sp2, "Capability", "capability")
+    ArchElement(sp3, "CourseOfAction", "courseofaction")
+    ArchElement(sp4, "ValueStream", "valuestream")
 }
 }
 EndArchComposite()

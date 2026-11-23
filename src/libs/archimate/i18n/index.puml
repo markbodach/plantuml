@@ -1,0 +1,13 @@
+!include _en.puml
+!include _fr.puml
+
+!procedure Load_Lib_I18n_Archimate()
+
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Archimate_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Archimate_FR()
+    !endif
+
+
+!endprocedure 

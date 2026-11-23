@@ -1,0 +1,8 @@
+!procedure Load_Lib_I18n_Stdlib_FR()
+
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Couches Archimate")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Exemple")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Description")
+
+
+!endprocedure

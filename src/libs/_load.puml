@@ -49,12 +49,26 @@
 !endprocedure
 
 
+!procedure Load_Lib_I18n()
+    '--------------------------------------------    
+    Load_Lib_I18n_BEFORE()
+
+    Load_Lib_I18n_Stdlib()
+    Load_Lib_I18n_Archimate()
+    Load_Registered_I18n()
+
+    Load_Lib_I18n_AFTER()
+    '--------------------------------------------
+!endprocedure
+
+
 
 !procedure Load_Lib_All()
 
     Load_Lib_Themes()
     Load_Lib_Skinparams()
     Load_Lib_Styles()
+    Load_Lib_I18n()
 !endprocedure
   
 

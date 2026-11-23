@@ -27,12 +27,21 @@
 !global $REGISTRY_DEL = "|" 
 
 !global $THEMES = "" + $REGISTRY_DEL + ""
+!global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
+
 !global $SKINPARAMS = "" + $REGISTRY_DEL + ""
 !global $STYLES = "" + $REGISTRY_DEL + ""
-!global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
+!global $I18N = "" + $REGISTRY_DEL + ""
+!global $I18N_WORDS = "" + $REGISTRY_DEL + ""
 
 
 !global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
+
 !global $REGISTRY_SKINPARAMS = "SKINPARAMS"
 !global $REGISTRY_STYLES = "STYLES"
-!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
+!global $REGISTRY_I18N = "I18N"
+!global $REGISTRY_I18N_WORDS = "I18N_WORDS"
+
+
+

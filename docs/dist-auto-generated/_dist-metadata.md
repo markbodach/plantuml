@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-23 13:37:20 EST**
-* Build Commit Hash: **bfdd75d2ca11bf1baed2c8f44e95657ea715971c**
-* Build Commit Comment: **CTX_DEFAULT_LAYER**
+* Generated on: **2026-11-23 17:35:58 EST**
+* Build Commit Hash: **3e797a42ea9c5d5c48075e2cc666eddd20e16a6a**
+* Build Commit Comment: **arch_ctx_default**
 
 ## Usage
 

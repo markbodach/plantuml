@@ -26,5 +26,8 @@ Generated theme distribution bundles.
   └── skinparams/index.puml
   └── styles/index.puml
     └── _title.puml
+  └── i18n/index.puml
+    └── _en.puml
+    └── _fr.puml
 ```
 

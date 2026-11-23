@@ -1,0 +1,16 @@
+!include _en.puml
+!include _fr.puml
+
+!procedure Load_I18n_OntarioHealth()
+
+    !if ($Is_Style_Registered($OH_THEME_NAME) == %true() )
+        
+        !if $I18N_CODE == "EN"
+            Load_Lib_I18n_OntarioHealth_EN()
+        !elseif $I18N_CODE == "FR"
+            Load_Lib_I18n_OntarioHealth_FR()
+        !endif
+    !endif
+
+
+!endprocedure 

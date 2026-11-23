@@ -1,0 +1,15 @@
+!procedure Load_Lib_I18n_Archimate_FR()
+
+    Register_Word_If_Missing("LAYER_NONE","Aucune")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+
+    Register_Word_If_Missing("LAYER_MOTIVATION","Couche de motivation")
+    Register_Word_If_Missing("LAYER_STRATEGY","Couche stratégique")
+    Register_Word_If_Missing("LAYER_BUSINESS","Couche métier")
+    Register_Word_If_Missing("LAYER_APPLICATION","Couche applicative")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Couche technologique")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Couche physique")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Couche de mise en œuvre")
+    Register_Word_If_Missing("LAYER_OTHER","Autre couche")
+
+!endprocedure

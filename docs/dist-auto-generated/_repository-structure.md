@@ -14,10 +14,12 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _helpers.puml
         └── _corruption.puml
         └── _extensions.puml
+        └── _i18n.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _corruption_registry.puml
         └── _extension_registry.puml
+        └── _i18n.puml
         └── _colors.puml
       └── archimate/vars/index.puml
         └── _root.puml
@@ -76,5 +78,11 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── archimate/styles/index.puml
         └── _element.puml
         └── _composite.puml
+      └── stdlib/i18n/index.puml
+        └── _en.puml
+        └── _fr.puml
+      └── archimate/i18n/index.puml
+        └── _en.puml
+        └── _fr.puml
       └── _load.puml
 ```

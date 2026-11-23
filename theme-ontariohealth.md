@@ -1,7 +1,7 @@
 ========================================================
 Bundle Documentation
 Bundle Name: Theme: ontariohealth
-Generated on: 2026-11-23 13:37:20 EST
+Generated on: 2026-11-23 17:35:58 EST
 ========================================================
 
 ========================================================
@@ -117,5 +117,18 @@ FILE: /c/dev/plantuml/src/themes/ontariohealth/styles/index.puml
 
 ========================================================
 FILE: /c/dev/plantuml/src/themes/ontariohealth/styles/_title.puml
+========================================================
+
+STEP 5 :: I18N includes
+========================================================
+FILE: /c/dev/plantuml/src/themes/ontariohealth/i18n/index.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/themes/ontariohealth/i18n/_en.puml
+========================================================
+
+========================================================
+FILE: /c/dev/plantuml/src/themes/ontariohealth/i18n/_fr.puml
 ========================================================
 

@@ -62,10 +62,15 @@
     Register_Lib_Object($name, $REGISTRY_STYLES)
 !endprocedure
 
+!procedure Register_Lib_I18n($name)
+    Register_Lib_Object($name, $REGISTRY_I18N)
+!endprocedure
+
 !procedure Register_Lib_All($name)
     Register_Lib_Theme($name)
     Register_Lib_Skinparam($name)
     Register_Lib_Style($name)
+    Register_Lib_I18n($name)
     
 !endprocedure
 
@@ -90,6 +95,14 @@
     For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
 
 !endprocedure
+
+
+!procedure Load_Registered_I18n()
+
+    For_Each_Lib_Object("Load_I18n_",$REGISTRY_I18N)
+
+!endprocedure
+
 
 
 !procedure Register_Lib_Theme_Derived($name)
@@ -227,6 +240,15 @@
 !procedure Load_Lib_Styles_AFTER()
 'DO NOT ADD CODE
 !endprocedure
+
+!procedure Load_Lib_I18n_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_I18n_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
 '
 '=========================================================
 

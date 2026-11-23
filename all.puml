@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-23 13:37:20 EST
-' Build Commit Hash: bfdd75d2ca11bf1baed2c8f44e95657ea715971c
-' Build Commit Comment: CTX_DEFAULT_LAYER
+' Generated on: 2026-11-23 17:35:58 EST
+' Build Commit Hash: 3e797a42ea9c5d5c48075e2cc666eddd20e16a6a
+' Build Commit Comment: arch_ctx_default
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -382,10 +382,15 @@
     Register_Lib_Object($name, $REGISTRY_STYLES)
 !endprocedure
 
+!procedure Register_Lib_I18n($name)
+    Register_Lib_Object($name, $REGISTRY_I18N)
+!endprocedure
+
 !procedure Register_Lib_All($name)
     Register_Lib_Theme($name)
     Register_Lib_Skinparam($name)
     Register_Lib_Style($name)
+    Register_Lib_I18n($name)
     
 !endprocedure
 
@@ -404,6 +409,12 @@
 !procedure Load_Registered_Styles()
 
     For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
+
+!endprocedure
+
+!procedure Load_Registered_I18n()
+
+    For_Each_Lib_Object("Load_I18n_",$REGISTRY_I18N)
 
 !endprocedure
 
@@ -433,6 +444,49 @@
 !procedure Load_Lib_Styles_AFTER()
 !endprocedure
 
+!procedure Load_Lib_I18n_BEFORE()
+!endprocedure
+
+!procedure Load_Lib_I18n_AFTER()
+!endprocedure
+
+!procedure Register_Word($key, $value)
+
+    Assert_Blank($key, "Word key cannot be blank")
+
+    !$var = "WORD_" + %upper($key)
+
+    %set_variable_value( $to_var_name($var), $value)
+
+    Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+
+!endprocedure
+
+!procedure Register_Word_If_Missing($key, $value)
+
+    Assert_Blank($key, "Word key cannot be blank")
+
+    !$var = "WORD_" + %upper($key)
+
+    !if ($variable_exists_safe($var) == %false())
+
+        %set_variable_value( $to_var_name($var), $value )
+        Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+
+    !endif
+
+!endprocedure
+
+!function $get_word($key)
+
+    !$var = "WORD_" + %upper($key)
+    !if ($variable_exists_safe($var))
+        !return %get_variable_value( $to_var_name($var) )
+    !endif
+    !return "??" + %upper($key) + "??"
+
+!endfunction
+
 !global $SKINPARAM_ENABLED ?= %false()
 
 !global $UNSET ?= "__UML_UNSET__"
@@ -449,14 +503,22 @@
 !global $REGISTRY_DEL = "|" 
 
 !global $THEMES = "" + $REGISTRY_DEL + ""
-!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
-!global $STYLES = "" + $REGISTRY_DEL + ""
 !global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
 
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
+!global $I18N = "" + $REGISTRY_DEL + ""
+!global $I18N_WORDS = "" + $REGISTRY_DEL + ""
+
 !global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
+
 !global $REGISTRY_SKINPARAMS = "SKINPARAMS"
 !global $REGISTRY_STYLES = "STYLES"
-!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
+!global $REGISTRY_I18N = "I18N"
+!global $REGISTRY_I18N_WORDS = "I18N_WORDS"
+
+!global $I18N_CODE ?= "EN"
 
 !global $CONTRAST_THRESHOLD ?= 128
 
@@ -4088,6 +4150,71 @@ component {
 
 !endprocedure 
 
+!procedure Load_Lib_I18n_Stdlib_EN()
+
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Archimate Layers")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Sample")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Meaning")
+
+!endprocedure
+!procedure Load_Lib_I18n_Stdlib_FR()
+
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Couches Archimate")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Exemple")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Description")
+
+!endprocedure
+
+!procedure Load_Lib_I18n_Stdlib()
+
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Stdlib_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Stdlib_FR()
+    !endif
+
+!endprocedure 
+!procedure Load_Lib_I18n_Archimate_EN()
+
+    Register_Word_If_Missing("LAYER_NONE","None")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+
+    Register_Word_If_Missing("LAYER_MOTIVATION","Motivation Layer")
+    Register_Word_If_Missing("LAYER_STRATEGY","Strategy Layer")
+    Register_Word_If_Missing("LAYER_BUSINESS","Business Layer")
+    Register_Word_If_Missing("LAYER_APPLICATION","Application Layer")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Technology Layer")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Physical Layer")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Implementation Layer")
+    Register_Word_If_Missing("LAYER_OTHER","Other Layer")
+
+!endprocedure
+!procedure Load_Lib_I18n_Archimate_FR()
+
+    Register_Word_If_Missing("LAYER_NONE","Aucune")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+
+    Register_Word_If_Missing("LAYER_MOTIVATION","Couche de motivation")
+    Register_Word_If_Missing("LAYER_STRATEGY","Couche stratégique")
+    Register_Word_If_Missing("LAYER_BUSINESS","Couche métier")
+    Register_Word_If_Missing("LAYER_APPLICATION","Couche applicative")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Couche technologique")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Couche physique")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Couche de mise en œuvre")
+    Register_Word_If_Missing("LAYER_OTHER","Autre couche")
+
+!endprocedure
+
+!procedure Load_Lib_I18n_Archimate()
+
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Archimate_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Archimate_FR()
+    !endif
+
+!endprocedure 
+
 !procedure Load_Lib_Themes()
     Load_Lib_Theme_BEFORE()
     
@@ -4125,10 +4252,21 @@ component {
     Load_Lib_Styles_AFTER()
 !endprocedure
 
+!procedure Load_Lib_I18n()
+    Load_Lib_I18n_BEFORE()
+
+    Load_Lib_I18n_Stdlib()
+    Load_Lib_I18n_Archimate()
+    Load_Registered_I18n()
+
+    Load_Lib_I18n_AFTER()
+!endprocedure
+
 !procedure Load_Lib_All()
 
     Load_Lib_Themes()
     Load_Lib_Skinparams()
     Load_Lib_Styles()
+    Load_Lib_I18n()
 !endprocedure
   

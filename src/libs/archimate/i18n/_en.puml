@@ -1,0 +1,15 @@
+!procedure Load_Lib_I18n_Archimate_EN()
+
+    Register_Word_If_Missing("LAYER_NONE","None")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+
+    Register_Word_If_Missing("LAYER_MOTIVATION","Motivation Layer")
+    Register_Word_If_Missing("LAYER_STRATEGY","Strategy Layer")
+    Register_Word_If_Missing("LAYER_BUSINESS","Business Layer")
+    Register_Word_If_Missing("LAYER_APPLICATION","Application Layer")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Technology Layer")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Physical Layer")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Implementation Layer")
+    Register_Word_If_Missing("LAYER_OTHER","Other Layer")
+
+!endprocedure

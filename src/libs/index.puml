@@ -24,6 +24,11 @@
 !include stdlib/styles/index.puml
 !include archimate/styles/index.puml
 
+'STEP 6 :: I18n includes
+!include stdlib/i18n/index.puml
+!include archimate/i18n/index.puml
+
+
 'STEP 6 :: Add to Load_Lib_All
 !include _load.puml
 

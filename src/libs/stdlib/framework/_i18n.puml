@@ -1,0 +1,39 @@
+!procedure Register_Word($key, $value)
+
+    Assert_Blank($key, "Word key cannot be blank")
+
+    !$var = "WORD_" + %upper($key)
+
+    %set_variable_value( $to_var_name($var), $value)
+
+    Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+
+!endprocedure
+
+
+!procedure Register_Word_If_Missing($key, $value)
+
+    Assert_Blank($key, "Word key cannot be blank")
+
+    !$var = "WORD_" + %upper($key)
+
+    !if ($variable_exists_safe($var) == %false())
+
+        %set_variable_value( $to_var_name($var), $value )
+        Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+
+    !endif
+
+!endprocedure
+
+
+!function $get_word($key)
+
+    !$var = "WORD_" + %upper($key)
+    !if ($variable_exists_safe($var))
+        !return %get_variable_value( $to_var_name($var) )
+    !endif
+    !return "??" + %upper($key) + "??"
+
+!endfunction
+

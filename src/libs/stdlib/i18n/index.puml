@@ -1,0 +1,13 @@
+!include _en.puml
+!include _fr.puml
+
+!procedure Load_Lib_I18n_Stdlib()
+
+
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Stdlib_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Stdlib_FR()
+    !endif
+
+!endprocedure 
