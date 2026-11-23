@@ -151,7 +151,9 @@
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
 
     !if ($ARCH_CTX_DEFAULT_LAYER == "")
-        !$ARCH_CTX_DEFAULT_LAYER = $ARCH_CTX_LAYER
+        !if ($ARCH_CTX_LAYER != "NONE" && $ARCH_CTX_LAYER != "INVISIBLE")
+            !$ARCH_CTX_DEFAULT_LAYER = $ARCH_CTX_LAYER
+        !endif
     !endif
 
     !$ARCH_CTX_STYLE_LAYER = ""
