@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-23 17:35:58 EST
-' Build Commit Hash: 3e797a42ea9c5d5c48075e2cc666eddd20e16a6a
-' Build Commit Comment: arch_ctx_default
+' Generated on: 2026-11-24 10:56:43 EST
+' Build Commit Hash: 35949f9cf502282310dbf75bb49e3a23a5923511
+' Build Commit Comment: i18n
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -346,6 +346,58 @@
 
 !endprocedure
 
+!function $token_registered($token,$registry)
+    !return %strpos(%upper($registry), $REGISTRY_DEL + %upper($token) + $REGISTRY_DEL) >= 0
+!endfunction
+
+!procedure For_Each_Token_Value($proc,$registry)
+
+    !$remaining = $registry
+
+    !while ($remaining != $REGISTRY_DEL)
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+
+        !$token = %substr($remaining,0,$pos)
+
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+
+        !if ($token != "")
+            %invoke_procedure($proc,$token)
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+!procedure For_Each_Token($prefix,$registry)
+
+    !$remaining = $registry
+
+    !while ($remaining != $REGISTRY_DEL)
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+
+        !$token = %substr($remaining,0,$pos)
+
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+
+        !if ($token != "")
+
+            !$proc = $prefix + $token
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
+
+!endprocedure
+
 !procedure Detect_Lib_Corruption()
 
     Detect_Registered_Corruption_Variables( "CORRUPTED_VARIABLE")
@@ -392,6 +444,10 @@
     Register_Lib_Style($name)
     Register_Lib_I18n($name)
     
+!endprocedure
+
+!procedure Register_Lib_Page_Reset($name)
+    Register_Lib_Object($name,$REGISTRY_PAGE_RESET)
 !endprocedure
 
 !procedure Load_Registered_Themes()
@@ -448,6 +504,12 @@
 !endprocedure
 
 !procedure Load_Lib_I18n_AFTER()
+!endprocedure
+
+!procedure New_Page_BEFORE()
+!endprocedure
+
+!procedure New_Page_AFTER()
 !endprocedure
 
 !procedure Register_Word($key, $value)
@@ -517,6 +579,9 @@
 !global $REGISTRY_STYLES = "STYLES"
 !global $REGISTRY_I18N = "I18N"
 !global $REGISTRY_I18N_WORDS = "I18N_WORDS"
+
+!global $PAGE_RESET = $REGISTRY_DEL
+!global $REGISTRY_PAGE_RESET = "PAGE_RESET"
 
 !global $I18N_CODE ?= "EN"
 
@@ -655,6 +720,12 @@ sprite $sprite_arch_implementation_gap            jar:archimate/implementation-g
 
 sprite $sprite_arch_other_grouping                jar:archimate/other-grouping
 sprite $sprite_arch_other_location                jar:archimate/other-location
+
+!global $ARCHIMATE_LEGEND_LAYERS = "|" 
+!global $REGISTRY_ARCHIMATE_LEGEND_LAYERS = "ARCHIMATE_LEGEND_LAYERS"
+
+!global $ARCHIMATE_LEGEND_ORDER ?= "|MOTIVATION|STRATEGY|BUSINESS|APPLICATION|TECHNOLOGY|PHYSICAL|IMPLEMENTATION|"
+!global $ARCHIMATE_LEGEND_EXCLUDE ?= "|NONE|INVISIBLE|OTHER|"
 
 !function $strip_prefix($value, $prefix)
 
@@ -2098,6 +2169,86 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
 !endprocedure
 
+!function $Legend_Column_Count($c1="",$c2="",$c3="",$c4="",$c5="")
+
+    !if ($c5 != "")
+        !return 5
+    !elseif ($c4 != "")
+        !return 4
+    !elseif ($c3 != "")
+        !return 3
+    !elseif ($c2 != "")
+        !return 2
+    !endif
+
+    !return 1
+
+!endfunction
+
+!procedure Legend_Begin($title="",$col1="",$col2="",$col3="",$col4="",$col5="")
+
+    !if ($title != "")
+        legend
+        |= $title |
+    !else
+        legend
+    !endif
+
+    Legend_Row($col1,$col2,$col3,$col4,$col5)
+
+!endprocedure
+
+!procedure Legend_Row($col1="",$col2="",$col3="",$col4="",$col5="")
+
+    !$columns = $Legend_Column_Count($col1,$col2,$col3,$col4,$col5)
+
+    !if ($columns == 1)
+
+        | $col1 |
+
+    !elseif ($columns == 2)
+
+        | $col1 | $col2 |
+
+    !elseif ($columns == 3)
+
+        | $col1 | $col2 | $col3 |
+
+    !elseif ($columns == 4)
+
+        | $col1 | $col2 | $col3 | $col4 |
+
+    !elseif ($columns == 5)
+
+        | $col1 | $col2 | $col3 | $col4 | $col5 |
+
+    !endif
+
+!endprocedure
+
+!procedure Legend_End()
+
+    endlegend
+
+!endprocedure
+
+!procedure Execute_Page_Resets()
+
+    For_Each_Lib_Object( "Reset_Page_", $REGISTRY_PAGE_RESET )
+
+!endprocedure
+
+!procedure New_Page()
+
+    New_Page_BEFORE()
+
+    Execute_Page_Resets()
+    newpage
+    
+    New_Page_AFTER()
+
+!endprocedure
+
 !function $archimate_base_entity($entity)
     !$e = %lower($entity)
     !$pos = %strpos($e,"-")
@@ -2972,6 +3123,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+    Archimate_Register_Legend_Layer($ARCH_CTX_LAYER)
 
     !if ($ARCH_CTX_DEFAULT_LAYER == "")
         !if ($ARCH_CTX_LAYER != "NONE" && $ARCH_CTX_LAYER != "INVISIBLE")
@@ -2989,6 +3141,27 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
 
     !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
+
+!endprocedure
+
+!procedure Reset_Archimate_Context()
+
+    !$ARCH_CTX_ENTITY = ""
+    !$ARCH_CTX_BASEENTITY = ""
+
+    !$ARCH_CTX_LAYER = ""
+    !$ARCH_CTX_DEFAULT_LAYER = ""
+
+    !$ARCH_CTX_SHAPE = ""
+    !$ARCH_CTX_SPRITE = ""
+
+    !$ARCH_CTX_LABEL = ""
+
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+    !$ARCH_CTX_COUNT = 0
+
+    !$ARCH_CTX_STYLE_LAYER = ""
+    !$ARCH_CTX_STYLE_COMPOSITE = ""
 
 !endprocedure
 
@@ -3084,6 +3257,70 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !$ARCH_CTX_DEFAULT_LAYER = ""
     Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
     
+!endprocedure
+
+!procedure Archimate_Register_Legend_Layer($layer)
+
+    !$layer = %upper($layer)
+    !if ($token_registered($layer,$ARCHIMATE_LEGEND_EXCLUDE) == %false())
+        Register_Lib_Object($layer,$REGISTRY_ARCHIMATE_LEGEND_LAYERS)
+    !endif
+
+!endprocedure
+
+!function $Archimate_Legend_Layer_Used($layer)
+    !return $object_registered($layer,$REGISTRY_ARCHIMATE_LEGEND_LAYERS)
+!endfunction
+
+!procedure Archimate_Legend_Row($layer,$color,$label)
+
+    !if ($Archimate_Legend_Layer_Used($layer))
+
+        Legend_Row("<back:" + $color + ">       </back>", $label )
+
+    !endif
+
+!endprocedure
+
+!procedure Archimate_Legend_Layer($layer)
+
+    !$layer = %upper($layer)
+
+    !if ($Archimate_Legend_Layer_Used($layer))
+
+        !$colorVar = "ARCH_" + $layer + "_FILLCOLOR"
+        !$labelKey = "LAYER_" + $layer
+
+        Legend_Row( "<back:" + $resolve_variable($colorVar) + ">      </back>", $get_word($labelKey) )
+
+    !endif
+
+!endprocedure
+
+!procedure Archimate_Legend()
+
+    Legend_Begin( $get_word("LEGEND_TITLE_ARCHIMATE"), $get_word("LEGEND_COLUMN_SAMPLE"), $get_word("LEGEND_COLUMN_MEANING") )
+
+    For_Each_Token_Value( "Archimate_Legend_Layer", $ARCHIMATE_LEGEND_ORDER )
+
+    Legend_End()
+
+!endprocedure
+
+!procedure Clear_Archimate_Legend()
+
+    Registry_Set( $REGISTRY_ARCHIMATE_LEGEND_LAYERS, $REGISTRY_DEL )
+
+!endprocedure
+
+!procedure Reset_Page_Archimate()
+
+    Breakpoint_If( "ARCHIMATE_PAGE_RESET_COMPOSITE", ($ARCH_CTX_COUNT > 0), "Resetting page while composite depth=[" + $ARCH_CTX_COUNT + "]" )
+
+    Clear_Archimate_Legend()
+
+    Reset_Archimate_Context()
+
 !endprocedure
 
 !procedure Load_Lib_Theme_StdLib_Colors()
@@ -4262,11 +4499,18 @@ component {
     Load_Lib_I18n_AFTER()
 !endprocedure
 
+!procedure Load_Lib_Page_Resets()
+    
+    Register_Lib_Page_Reset("Archimate")
+
+!endprocedure
+
 !procedure Load_Lib_All()
 
     Load_Lib_Themes()
     Load_Lib_Skinparams()
     Load_Lib_Styles()
     Load_Lib_I18n()
+    Load_Lib_Page_Resets()
 !endprocedure
   

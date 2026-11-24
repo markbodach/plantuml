@@ -66,5 +66,8 @@
 
 !include _helpers.puml
 !include _corruption.puml
+
+!include _extension_registry.puml
 !include _extensions.puml
+!include _extension_hooks.puml
 !include _i18n.puml

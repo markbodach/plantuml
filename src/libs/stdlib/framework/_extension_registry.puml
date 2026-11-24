@@ -1,0 +1,79 @@
+'=========================================================
+' Extension Registry Framework
+'=========================================================
+'
+' Provides registration and invocation support for themes, styles, skinparams, and future extension types.
+'
+' Themes are processed in registration order.
+'
+' Example:
+'
+'   Register_Lib_All("ThemeA")
+'   Register_Lib_All("ThemeB")
+'
+' Execution Order:
+'
+'   ThemeA
+'       ↓
+'   ThemeB
+'
+' Registered extensions may provide:
+'
+'   Load_Theme_<Theme>()
+'
+'       Used for:
+'           - Variables
+'           - Theme initialization
+'           - Configuration
+'
+'   Load_Styles_<Theme>()
+'
+'       Used for:
+'           - Styles
+'           - Stereotypes
+'           - Formatting
+'
+'=========================================================
+
+
+
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
+
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
+
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
+!endfunction
+
+
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
+
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
+
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
+
+!procedure Register_Lib_I18n($name)
+    Register_Lib_Object($name, $REGISTRY_I18N)
+!endprocedure
+
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    Register_Lib_I18n($name)
+    
+!endprocedure
+
+!procedure Register_Lib_Page_Reset($name)
+    Register_Lib_Object($name,$REGISTRY_PAGE_RESET)
+!endprocedure

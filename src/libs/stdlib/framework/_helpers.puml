@@ -91,3 +91,57 @@
     !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
 
 !endprocedure
+
+
+!function $token_registered($token,$registry)
+    !return %strpos(%upper($registry), $REGISTRY_DEL + %upper($token) + $REGISTRY_DEL) >= 0
+!endfunction
+
+!procedure For_Each_Token_Value($proc,$registry)
+
+    !$remaining = $registry
+
+    !while ($remaining != $REGISTRY_DEL)
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+
+        !$token = %substr($remaining,0,$pos)
+
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+
+        !if ($token != "")
+            %invoke_procedure($proc,$token)
+        !endif
+
+    !endwhile
+
+!endprocedure
+
+
+!procedure For_Each_Token($prefix,$registry)
+
+    !$remaining = $registry
+
+    !while ($remaining != $REGISTRY_DEL)
+
+        !$remaining = %substr($remaining,1)
+
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+
+        !$token = %substr($remaining,0,$pos)
+
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+
+        !if ($token != "")
+
+            !$proc = $prefix + $token
+
+            %invoke_procedure($proc)
+
+        !endif
+
+    !endwhile
+
+!endprocedure

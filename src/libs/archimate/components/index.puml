@@ -11,3 +11,6 @@
 !include _resolve.puml
 !include _element.puml
 !include _composite.puml
+
+!include _legend.puml
+!include _new_page.puml

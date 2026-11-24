@@ -6,4 +6,5 @@
 !include _corruption_repair.puml
 !include _context.puml
 !include _sprites.puml
+!include _legend.puml
 

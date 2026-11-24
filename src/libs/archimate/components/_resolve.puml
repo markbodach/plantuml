@@ -157,6 +157,7 @@
 
     !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
     Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+    Archimate_Register_Legend_Layer($ARCH_CTX_LAYER)
 
     !if ($ARCH_CTX_DEFAULT_LAYER == "")
         !if ($ARCH_CTX_LAYER != "NONE" && $ARCH_CTX_LAYER != "INVISIBLE")
@@ -176,5 +177,27 @@
     !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
 
     !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
+
+!endprocedure
+
+
+!procedure Reset_Archimate_Context()
+
+    !$ARCH_CTX_ENTITY = ""
+    !$ARCH_CTX_BASEENTITY = ""
+
+    !$ARCH_CTX_LAYER = ""
+    !$ARCH_CTX_DEFAULT_LAYER = ""
+
+    !$ARCH_CTX_SHAPE = ""
+    !$ARCH_CTX_SPRITE = ""
+
+    !$ARCH_CTX_LABEL = ""
+
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+    !$ARCH_CTX_COUNT = 0
+
+    !$ARCH_CTX_STYLE_LAYER = ""
+    !$ARCH_CTX_STYLE_COMPOSITE = ""
 
 !endprocedure

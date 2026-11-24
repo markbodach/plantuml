@@ -1,0 +1,20 @@
+
+!procedure Execute_Page_Resets()
+
+    For_Each_Lib_Object( "Reset_Page_", $REGISTRY_PAGE_RESET )
+
+!endprocedure
+
+
+!procedure New_Page()
+
+    New_Page_BEFORE()
+
+    Execute_Page_Resets()
+    newpage
+    
+
+    New_Page_AFTER()
+
+!endprocedure
+

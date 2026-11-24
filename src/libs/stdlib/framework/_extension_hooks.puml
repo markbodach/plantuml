@@ -1,0 +1,150 @@
+
+'=========================================================
+' STYLE EXTENSION HOOKS
+'=========================================================
+'
+' The toolkit provides four optional extension procedures that
+' allow consumers to customize variables and styles without
+' modifying the toolkit source code.
+'
+'=========================================================
+'
+' LOADING ORDER
+'
+'   Load_Lib_Theme_BEFORE()
+'       ↓
+'   Load_Lib_Theme_Stdlib()
+'   Load_Lib_Theme_Archimate()
+'   Registered Theme Procedures
+'       ↓
+'   Load_Lib_Theme_AFTER()
+'
+'       ↓
+'   Load_Lib_Skinparams_BEFORE()
+'       ↓
+'   Load_Lib_Skinparams_Stdlib()
+'   Load_Lib_Skinparams_Archimate()
+'   Registered Skinparams Procedures
+'       ↓
+'
+'   Load_Lib_Styles_BEFORE()
+'       ↓
+'   Load_Lib_Styles_Stdlib()
+'   Load_Lib_Styles_Archimate()
+'   Registered Theme Style Procedures
+'       ↓
+'   Load_Lib_Styles_AFTER()
+'
+'=========================================================
+'
+' BEFORE HOOKS
+'
+' Intended for:
+'
+'   - Override toolkit defaults
+'   - Configure variables
+'   - Select active themes
+'   - Replace framework values
+'
+' Example:
+'
+'   !procedure Load_Lib_Theme_BEFORE()
+'
+'       !$SPACING_UNIT = 8
+'
+'       !$ROUND_2 = 12
+'
+'   !endprocedure
+'
+'=========================================================
+'
+' AFTER HOOKS
+'
+' Intended for:
+'
+'   - Final overrides
+'   - Project-specific stereotypes
+'   - Local utility styles
+'   - Style customizations
+'
+' Example:
+'
+'   !procedure Load_Lib_Styles_AFTER()
+'
+'   <style>
+'
+'   .projectCard {
+'       Padding 20
+'       RoundCorner 10
+'   }
+'
+'   </style>
+'
+'   !endprocedure
+'
+'=========================================================
+'
+' RECOMMENDATIONS
+'
+'   Variables -> PRELOAD hooks
+'
+'   Styles    -> LOAD hooks
+'
+'   BEFORE    -> Configure toolkit behavior
+'
+'   AFTER     -> Override toolkit defaults
+'
+'=========================================================
+'
+' DEFAULT IMPLEMENTATIONS
+'
+' Consumers may redefine these procedures.
+'
+!procedure Load_Lib_Theme_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+
+!procedure Load_Lib_Theme_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Skinparams_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_Styles_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_I18n_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure Load_Lib_I18n_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+
+!procedure New_Page_BEFORE()
+'DO NOT ADD CODE
+!endprocedure
+
+!procedure New_Page_AFTER()
+'DO NOT ADD CODE
+!endprocedure
+
+
+'
+'=========================================================
+
+
+

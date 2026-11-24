@@ -1,0 +1,12 @@
+!procedure Reset_Page_Archimate()
+
+    Breakpoint_If( "ARCHIMATE_PAGE_RESET_COMPOSITE", ($ARCH_CTX_COUNT > 0), "Resetting page while composite depth=[" + $ARCH_CTX_COUNT + "]" )
+
+    Clear_Archimate_Legend()
+
+    Reset_Archimate_Context()
+
+!endprocedure
+
+
+

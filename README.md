@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-23 17:35:58 EST**
-* Build Commit Hash: **3e797a42ea9c5d5c48075e2cc666eddd20e16a6a**
-* Build Commit Comment: **arch_ctx_default**
+* Generated on: **2026-11-24 10:56:43 EST**
+* Build Commit Hash: **35949f9cf502282310dbf75bb49e3a23a5923511**
+* Build Commit Comment: **i18n**
 
 ## Usage
 
@@ -294,7 +294,9 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _apply.puml
         └── _helpers.puml
         └── _corruption.puml
+        └── _extension_registry.puml
         └── _extensions.puml
+        └── _extension_hooks.puml
         └── _i18n.puml
       └── stdlib/vars/index.puml
         └── _root.puml
@@ -307,6 +309,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _corruption_repair.puml
         └── _context.puml
         └── _sprites.puml
+        └── _legend.puml
       └── stdlib/components/index.puml
         └── _strings.puml
         └── _variables.puml
@@ -317,6 +320,8 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _lighten.puml
         └── _resolver.puml
         └── _corruption_detection.puml
+        └── _legend.puml
+        └── _new_page.puml
       └── archimate/components/index.puml
         └── _sprite_registry.puml
         └── _sprite.puml
@@ -326,6 +331,8 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _resolve.puml
         └── _element.puml
         └── _composite.puml
+        └── _legend.puml
+        └── _new_page.puml
       └── stdlib/theme/index.puml
         └── _colors.puml
         └── _fonts.puml

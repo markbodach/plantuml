@@ -168,6 +168,8 @@ compile_file() {
     local current_dir
     current_dir=$(dirname "$target_file")
 
+    echo "└──>>> $target_file"
+
     if [[ ! -f "$target_file" ]]; then
         echo "└──X Warning: File not found -> $target_file" >&2
         return

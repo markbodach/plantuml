@@ -62,6 +62,12 @@
 !endprocedure
 
 
+!procedure Load_Lib_Page_Resets()
+    
+    Register_Lib_Page_Reset("Archimate")
+
+!endprocedure
+
 
 !procedure Load_Lib_All()
 
@@ -69,6 +75,7 @@
     Load_Lib_Skinparams()
     Load_Lib_Styles()
     Load_Lib_I18n()
+    Load_Lib_Page_Resets()
 !endprocedure
   
 

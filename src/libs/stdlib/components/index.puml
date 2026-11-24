@@ -143,3 +143,6 @@
 '
 '---------------------------------------------------------
 !include _corruption_detection.puml
+
+!include _legend.puml
+!include _new_page.puml

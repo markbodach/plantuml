@@ -1,0 +1,69 @@
+' ========================================================
+' LEGEND
+' ========================================================
+
+!function $Legend_Column_Count($c1="",$c2="",$c3="",$c4="",$c5="")
+
+    !if ($c5 != "")
+        !return 5
+    !elseif ($c4 != "")
+        !return 4
+    !elseif ($c3 != "")
+        !return 3
+    !elseif ($c2 != "")
+        !return 2
+    !endif
+
+    !return 1
+
+!endfunction
+
+
+!procedure Legend_Begin($title="",$col1="",$col2="",$col3="",$col4="",$col5="")
+
+    !if ($title != "")
+        legend
+        |= $title |
+    !else
+        legend
+    !endif
+
+    Legend_Row($col1,$col2,$col3,$col4,$col5)
+
+!endprocedure
+
+
+!procedure Legend_Row($col1="",$col2="",$col3="",$col4="",$col5="")
+
+    !$columns = $Legend_Column_Count($col1,$col2,$col3,$col4,$col5)
+
+    !if ($columns == 1)
+
+        | $col1 |
+
+    !elseif ($columns == 2)
+
+        | $col1 | $col2 |
+
+    !elseif ($columns == 3)
+
+        | $col1 | $col2 | $col3 |
+
+    !elseif ($columns == 4)
+
+        | $col1 | $col2 | $col3 | $col4 |
+
+    !elseif ($columns == 5)
+
+        | $col1 | $col2 | $col3 | $col4 | $col5 |
+
+    !endif
+
+!endprocedure
+
+
+!procedure Legend_End()
+
+    endlegend
+
+!endprocedure
