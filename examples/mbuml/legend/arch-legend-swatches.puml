@@ -1,0 +1,104 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION" 
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+
+top to bottom direction
+
+title "Nested Composites"
+
+
+ArchComposite(po1, "ArchComposite Outer", "package")
+ArchComposite(pi1, "ArchComposite Inner", "package", "application")
+    ArchElement(s1, "Resource", "resource")
+    
+EndArchComposite()
+ArchElement(s2, "Capability", "capability")
+
+
+
+package "Package Outer" as pk1 {
+package "Package Inner"  as pk2 {
+
+    ArchElement(sp1, "Resource", "technology-resource")
+    ArchElement(sp2, "Capability", "capability")
+    ArchElement(sp3, "CourseOfAction", "courseofaction")
+    ArchElement(sp4, "ValueStream", "valuestream")
+}
+}
+EndArchComposite()
+
+' --------------------------------------------------
+' Legend
+' --------------------------------------------------
+
+<style>
+.legend {
+    RoundCorner $ROUND_CORNER_TITLE
+    LineThickness 0.25
+    Padding 0
+    Margin 0
+}
+
+.legendItems {
+    BackgroundColor $COLOR_NONE
+    LineColor $COLOR_NONE
+    FontName Consolas
+    HorizontalAlignment left
+    LineThickness 0
+    Padding 0
+    Margin 0
+}
+</style>
+
+!$LINE_SIZE_1 = "\n<font size=1> </font>\n"
+
+!$legendLabel = "<font size=1> </font>\n" + "<b>Archimate Layers</b>"
+!$legendItems = "<font color=#99FFFF>██</font> Application" + $LINE_SIZE_1 + "<font color=#AFFFAF>██</font> Technology" + $LINE_SIZE_1 + "<font color=#FFFF99>██</font> Strategy"
+
+node "$legendLabel" as ARCH_LEGEND <<legend>> {
+    rectangle "$legendItems" as ARCH_LEGEND_ITEMS <<legendItems>>
+}
+
+' --------------------------------------------------
+' Force legend below diagram
+' --------------------------------------------------
+
+rectangle "Hidden" as LEGEND_ANCHOR
+hide LEGEND_ANCHOR
+
+po1 -[hidden]down-> LEGEND_ANCHOR
+pk1 -[hidden]down-> LEGEND_ANCHOR
+
+LEGEND_ANCHOR -[hidden]down-> ARCH_LEGEND
+
+
+
+
+
+@enduml

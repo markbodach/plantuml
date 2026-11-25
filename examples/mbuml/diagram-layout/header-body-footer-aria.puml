@@ -1,0 +1,143 @@
+@startuml
+skinparam shadowing false
+'skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$NODE_SEP = 12
+!$RANK_SEP = 2
+
+!global $DOC_WIDTH ?= 1350
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %true()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION" 
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+<style>
+.legend {
+    RoundCorner 0
+    LineThickness 2
+    Padding 0
+    Margin 0
+}
+
+.legendItemRect {
+    FontSize 14
+    MinimumWidth 200
+    FontStyle bold
+    'Padding 5
+    'Margin 0
+    LineThickness 5
+}
+
+.ariaHidden {
+    ' Marker class -> SVG parser emits aria-hidden="true"
+}
+.ariaPresentation {
+    ' Marker class -> SVG parser emits role="presentation" (preserves children)
+}
+
+
+.diagramWidth {
+    MinimumWidth $DOC_WIDTH
+}
+
+.diagramDocument {
+    RoundCorner 0
+    Padding 0
+    Margin 0
+    FontSize 1
+    LineThickness 0
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+}
+
+.layoutAnchor {
+    MinimumHeight 0
+    MaximumHeight 0
+    Padding 0
+    Margin 0
+    FontSize 0
+    LineThickness 0
+    'BackgroundColor black
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+    FontSize 1
+}
+</style>
+
+top to bottom direction
+
+title "Using DiagramWidth, ariaHidden, label.anchor, size0"
+
+rectangle " " as diagramHeader <<diagramDocument>> <<diagramWidth>> <<ariaPresentation>> {
+    card " " as hAnchor <<layoutAnchor>> <<diagramWidth>> <<ariaHidden>>
+}
+
+rectangle " " as diagramBody <<diagramDocument>> <<diagramWidth>> <<ariaPresentation>> {
+    card " " as bAnchor <<layoutAnchor>> <<diagramWidth>> <<ariaHidden>>
+
+    ArchComposite(po1, "ArchComposite Outer", "package")
+        ArchComposite(pi1, "ArchComposite Inner", "package", "application")
+            ArchElement(s1, "Resource", "resource")
+        EndArchComposite()
+        ArchElement(s2, "Capability", "capability")
+
+        package "Package Outer" as pk1 {
+            package "Package Inner" as pk2 {
+                ArchElement(sp1, "Resource", "technology-resource")
+                ArchElement(sp2, "Capability", "capability")
+                ArchElement(sp3, "CourseOfAction", "courseofaction")
+                ArchElement(sp4, "ValueStream", "valuestream")
+            }
+        }
+    EndArchComposite()
+
+    card " " as bBottomAnchor <<layoutAnchor>> <<diagramWidth>> <<ariaHidden>>
+
+    ' Single unbranched path through B:
+    bAnchor -[hidden]down-> sp2
+    sp3 -[hidden]down-> bBottomAnchor
+}
+
+rectangle " " as diagramFooter <<diagramDocument>> <<diagramWidth>> <<ariaPresentation>> {
+    card " " as fAnchor <<layoutAnchor>> <<diagramWidth>> <<ariaHidden>>
+
+    card "<b>Archimate Layers</b>" as ARCH_LEGEND <<legend>> {
+        rectangle "Application Item" as legend_application <<application>> <<legendItemRect>>
+        rectangle "Business Item" as legend_business <<business>> <<legendItemRect>>
+        rectangle "Technology Item" as legend_technology <<technology>> <<legendItemRect>>
+
+        legend_application -[hidden]left-> legend_business
+        legend_business -[hidden]left-> legend_technology
+    }
+
+    ' Center the legend beneath fAnchor:
+    fAnchor -[hidden]down-> legend_business
+}
+
+' Connect the containers via their full-width anchors (1 link per anchor):
+hAnchor -[hidden]down-> bAnchor
+bBottomAnchor -[hidden]down-> fAnchor
+
+@enduml

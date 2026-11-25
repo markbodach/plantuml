@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-24 10:56:43 EST
-' Build Commit Hash: 35949f9cf502282310dbf75bb49e3a23a5923511
-' Build Commit Comment: i18n
+' Generated on: 2026-11-25 15:34:52 EST
+' Build Commit Hash: 9d13850f1d95f632f4d5f7dd1f095dd4117e70d3
+' Build Commit Comment: newpage functionality
 ' ========================================================
 
 !procedure Trigger_Assert($message = "")
@@ -2199,37 +2199,22 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !endprocedure
 
 !procedure Legend_Row($col1="",$col2="",$col3="",$col4="",$col5="")
-
     !$columns = $Legend_Column_Count($col1,$col2,$col3,$col4,$col5)
-
     !if ($columns == 1)
-
         | $col1 |
-
     !elseif ($columns == 2)
-
         | $col1 | $col2 |
-
     !elseif ($columns == 3)
-
         | $col1 | $col2 | $col3 |
-
     !elseif ($columns == 4)
-
         | $col1 | $col2 | $col3 | $col4 |
-
     !elseif ($columns == 5)
-
         | $col1 | $col2 | $col3 | $col4 | $col5 |
-
     !endif
-
 !endprocedure
 
 !procedure Legend_End()
-
     endlegend
-
 !endprocedure
 
 !procedure Execute_Page_Resets()
@@ -2842,11 +2827,8 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchNode( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_technology_node")
-
         node "$label" as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
-
     !else
-
         node "$label" as $alias <<%lower($layer)>>
 
     !endif
@@ -2856,13 +2838,9 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchQueue( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_business_role")
-
         queue "$label" as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
-
     !else
-
         queue "$label" as $alias <<%lower($layer)>>
-
     !endif
 
 !endprocedure
@@ -2870,11 +2848,8 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchFrame( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_business_product")
-
         frame "$label" as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
-
     !else
-
         frame "$label" as $alias <<%lower($layer)>>
 
     !endif
@@ -2884,17 +2859,11 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchFile( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_technology_artifact")
-
         file "$label" as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
-
     !elseif ($sprite == "sprite_arch_implementation_deliverable")
-
         file "$label" as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
-
     !else
-
         file "$label" as $alias <<%lower($layer)>>
-
     !endif
 
 !endprocedure
@@ -2902,21 +2871,13 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchCloud( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_technology_communicationnetwork")
-
         cloud "$label" as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
-
     !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
-
         cloud "$label" as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
-
     !elseif ($sprite == "sprite_arch_motivation_meaning")
-
         cloud "$label" as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
-
     !else
-
         cloud "$label" as $alias <<%lower($layer)>>
-
     !endif
 
 !endprocedure
@@ -2924,13 +2885,9 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !unquoted procedure ArchUseCase( $alias, $label, $sprite, $layer )
 
     !if ($sprite == "sprite_arch_motivation_value")
-
         usecase "$label" as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
-
     !else
-
         usecase "$label" as $alias <<%lower($layer)>>
-
     !endif
 
 !endprocedure
@@ -3275,9 +3232,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !procedure Archimate_Legend_Row($layer,$color,$label)
 
     !if ($Archimate_Legend_Layer_Used($layer))
-
         Legend_Row("<back:" + $color + ">       </back>", $label )
-
     !endif
 
 !endprocedure
@@ -3287,12 +3242,9 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
     !$layer = %upper($layer)
 
     !if ($Archimate_Legend_Layer_Used($layer))
-
         !$colorVar = "ARCH_" + $layer + "_FILLCOLOR"
         !$labelKey = "LAYER_" + $layer
-
         Legend_Row( "<back:" + $resolve_variable($colorVar) + ">      </back>", $get_word($labelKey) )
-
     !endif
 
 !endprocedure
@@ -3300,9 +3252,7 @@ sprite $sprite_arch_other_location                jar:archimate/other-location
 !procedure Archimate_Legend()
 
     Legend_Begin( $get_word("LEGEND_TITLE_ARCHIMATE"), $get_word("LEGEND_COLUMN_SAMPLE"), $get_word("LEGEND_COLUMN_MEANING") )
-
     For_Each_Token_Value( "Archimate_Legend_Layer", $ARCHIMATE_LEGEND_ORDER )
-
     Legend_End()
 
 !endprocedure
@@ -3990,6 +3940,20 @@ title {
     Margin $MARGIN_TITLE
     Padding $PADDING_TITLE
 }
+
+.title {
+    BackgroundColor $tBackgroundColor
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
+    FontColor $tFontColor
+    FontStyle $STYLE_FONT_TITLE
+    LineColor $tBackgroundColor
+
+    LineThickness $SIZE_LINE_TITLE
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
 </style>
 
 !endprocedure
@@ -4188,25 +4152,27 @@ component {
     
 </style>
 
-!if ($defaultBg != "") && ($defaultFg != "")
-<style>
-    element {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-    rectangle {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
+!if ($defaultBg != "")
+    !$defaultFg = $resolve_style_color("AUTO", $defaultBg)
+    
+    <style>
+        element {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+        rectangle {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
 
-    .default {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-</style>
+        .default {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+    </style>
 
 !endif
 

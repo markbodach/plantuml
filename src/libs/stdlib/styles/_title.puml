@@ -22,6 +22,21 @@ title {
     Margin $MARGIN_TITLE
     Padding $PADDING_TITLE
 }
+
+.title {
+    BackgroundColor $tBackgroundColor
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
+    FontColor $tFontColor
+    FontStyle $STYLE_FONT_TITLE
+    LineColor $tBackgroundColor
+
+
+    LineThickness $SIZE_LINE_TITLE
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
 </style>
 
 !endprocedure

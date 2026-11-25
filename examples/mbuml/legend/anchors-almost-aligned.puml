@@ -1,0 +1,160 @@
+@startuml
+skinparam shadowing false
+'skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$NODE_SEP = 0
+!$RANK_SEP = 0
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION" 
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+' --------------------------------------------------
+' Legend
+' --------------------------------------------------
+
+<style>
+.legend {
+    RoundCorner $ROUND_CORNER_TITLE
+    LineThickness 0.25
+    Padding 0
+    Margin 0
+}
+
+.legendItems {
+    BackgroundColor $COLOR_NONE
+    LineColor $COLOR_NONE
+    FontName Consolas
+    HorizontalAlignment left
+    LineThickness 0
+    Padding 0
+    Margin 0
+}
+
+.legendSwatch {
+    MinimumWidth 200
+
+    Padding 0
+    Margin 0
+}
+.legendLabel {
+    BackgroundColor transparent
+    LineColor transparent
+
+    Padding 0
+    Margin 0
+
+    HorizontalAlignment left
+}
+
+.diagramDocument {
+    Padding 10
+    Margin 0
+
+}
+.layoutAnchor {
+    MinimumWidth 1180
+    Padding 0
+    Margin 0
+    BackgroundColor #transparent
+    LineColor #transparent
+    FontColor #transparent
+}
+</style>
+
+
+top to bottom direction
+'left to right direction
+
+title "Nested Composites" 
+
+rectangle "H                                                                        " as diagramHeader <<diagramDocument>>  { 
+rectangle " " as hAnchor <<layoutAnchor>>
+} 
+
+rectangle "B                                                                        " as diagramBody <<diagramDocument>> { 
+' actual diagram here 
+rectangle " " as bAnchor <<layoutAnchor>>
+
+ArchComposite(po1, "ArchComposite Outer", "package")
+ArchComposite(pi1, "ArchComposite Inner", "package", "application")
+    ArchElement(s1, "Resource", "resource")
+    
+EndArchComposite()
+ArchElement(s2, "Capability", "capability")
+
+
+
+package "Package Outer" as pk1 {
+package "Package Inner"  as pk2 {
+
+    ArchElement(sp1, "Resource", "technology-resource")
+    ArchElement(sp2, "Capability", "capability")
+    ArchElement(sp3, "CourseOfAction", "courseofaction")
+    ArchElement(sp4, "ValueStream", "valuestream")
+}
+}
+EndArchComposite()
+
+
+bAnchor -[hidden]down-> s2
+} 
+
+
+
+rectangle "F                                                                        " as diagramFooter <<diagramDocument>> { 
+' legend here
+rectangle " " as fAnchor <<layoutAnchor>>
+
+
+!$LINE_SIZE_1 = "\n<font size=1> </font>\n"
+
+!$legendLabel = "<font size=1> </font>\n" + "<b>Archimate Layers</b>"
+
+node "<b>Archimate Layers</b>" as ARCH_LEGEND <<legend>> {
+  rectangle "Application Item" as legend_application <<application>><<legendSwatch>>
+  rectangle "Business Item" as legend_business <<business>><<legendSwatch>>
+  rectangle "Technology Item" as legend_technology <<technology>><<legendSwatch>>
+
+  legend_application  -[hidden]left-> legend_business
+  legend_business -[hidden]left-> legend_technology
+
+}
+
+fAnchor -[hidden]down-> legend_business
+'sp4 -[hidden]down-> fAnchor
+
+}
+
+
+hAnchor -[hidden]down-> bAnchor
+bAnchor -[hidden]down---> fAnchor
+
+
+'diagramHeader -[hidden]down-> diagramBody
+'diagramBody -[hidden]down-> diagramFooter
+
+
+
+@enduml

@@ -34,36 +34,21 @@
 
 
 !procedure Legend_Row($col1="",$col2="",$col3="",$col4="",$col5="")
-
     !$columns = $Legend_Column_Count($col1,$col2,$col3,$col4,$col5)
-
     !if ($columns == 1)
-
         | $col1 |
-
     !elseif ($columns == 2)
-
         | $col1 | $col2 |
-
     !elseif ($columns == 3)
-
         | $col1 | $col2 | $col3 |
-
     !elseif ($columns == 4)
-
         | $col1 | $col2 | $col3 | $col4 |
-
     !elseif ($columns == 5)
-
         | $col1 | $col2 | $col3 | $col4 | $col5 |
-
     !endif
-
 !endprocedure
 
 
 !procedure Legend_End()
-
     endlegend
-
 !endprocedure

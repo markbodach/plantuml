@@ -1,0 +1,120 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+
+!$SIZE_FONT_TITLE = 18
+!$ARCH_DEFAULT_FONTSIZE = 20
+   
+!$SKINPARAM_ENABLED = %false()
+!$ARCHIMATE_LIB_ENABLED = %true()
+'!$ARCHIMATE_DEFAULT_LAYER = "APPLICATION" 
+'!$ARCHIMATE_RECTANGLE_ONLY = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true() 
+hide stereotype  
+
+
+!define MBpuml https://markbodach.github.io/plantuml/
+!includeurl MBpuml/all.puml
+
+
+!includeurl MBpuml/theme-ontariohealth.puml 
+Register_Lib_All("OntarioHealth")
+
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+
+Load_Lib_All()
+
+
+top to bottom direction
+
+title "Nested Composites"
+
+
+ArchComposite(po1, "ArchComposite Outer", "package")
+ArchComposite(pi1, "ArchComposite Inner", "package", "application")
+    ArchElement(s1, "Resource", "resource")
+    
+EndArchComposite()
+ArchElement(s2, "Capability", "capability")
+
+
+
+package "Package Outer" as pk1 {
+package "Package Inner"  as pk2 {
+
+    ArchElement(sp1, "Resource", "technology-resource")
+    ArchElement(sp2, "Capability", "capability")
+    ArchElement(sp3, "CourseOfAction", "courseofaction")
+    ArchElement(sp4, "ValueStream", "valuestream")
+}
+}
+EndArchComposite()
+
+' --------------------------------------------------
+' Legend
+' --------------------------------------------------
+
+<style>
+.legend {
+    RoundCorner $ROUND_CORNER_TITLE
+    LineThickness 0.25
+    Padding 0
+    Margin 0
+}
+
+.legendItems {
+    BackgroundColor $COLOR_NONE
+    LineColor $COLOR_NONE
+    FontName Consolas
+    HorizontalAlignment left
+    LineThickness 0
+    Padding 0
+    Margin 0
+}
+
+.legendSwatch {
+    MinimumWidth 25
+    MaximumWidth 25
+
+    Padding 0
+    Margin 0
+}
+.legendLabel {
+    BackgroundColor transparent
+    LineColor transparent
+
+    Padding 0
+    Margin 0
+
+    HorizontalAlignment left
+}
+</style>
+
+!$LINE_SIZE_1 = "\n<font size=1> </font>\n"
+
+!$legendLabel = "<font size=1> </font>\n" + "<b>Archimate Layers</b>"
+!$legendItems = "<font color=#99FFFF>██</font> Application" + $LINE_SIZE_1 + "<font color=#AFFFAF>██</font> Technology" + $LINE_SIZE_1 + "<font color=#FFFF99>██</font> Strategy"
+
+node "<b>Archimate Layers</b>" as ARCH_LEGEND <<legend>>
+
+rectangle " " as legend_application <<application>><<legendSwatch>>
+rectangle " " as legend_business <<business>><<legendSwatch>>
+
+rectangle "Application" as label_application <<legendLabel>>
+rectangle "Business" as label_business <<legendLabel>>
+
+legend_application -[hidden]right-> legend_business
+label_application -[hidden]right-> label_business
+
+legend_application -[hidden]down-> label_application
+legend_business -[hidden]down-> label_business
+
+ARCH_LEGEND -[hidden]down-> legend_application
+
+
+
+
+@enduml

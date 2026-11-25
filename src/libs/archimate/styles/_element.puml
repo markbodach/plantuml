@@ -147,25 +147,27 @@
 </style>
 
 
-!if ($defaultBg != "") && ($defaultFg != "")
-<style>
-    element {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-    rectangle {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
+!if ($defaultBg != "")
+    !$defaultFg = $resolve_style_color("AUTO", $defaultBg)
+    
+    <style>
+        element {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+        rectangle {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
 
-    .default {
-        BackgroundColor $defaultBg
-        FontColor $defaultFg
-        LineColor $defaultLc
-    }
-</style>
+        .default {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+    </style>
 
 !endif
 

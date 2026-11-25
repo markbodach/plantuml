@@ -17,9 +17,7 @@
 !procedure Archimate_Legend_Row($layer,$color,$label)
 
     !if ($Archimate_Legend_Layer_Used($layer))
-
         Legend_Row("<back:" + $color + ">       </back>", $label )
-
     !endif
 
 !endprocedure
@@ -29,12 +27,9 @@
     !$layer = %upper($layer)
 
     !if ($Archimate_Legend_Layer_Used($layer))
-
         !$colorVar = "ARCH_" + $layer + "_FILLCOLOR"
         !$labelKey = "LAYER_" + $layer
-
         Legend_Row( "<back:" + $resolve_variable($colorVar) + ">      </back>", $get_word($labelKey) )
-
     !endif
 
 !endprocedure
@@ -43,9 +38,7 @@
 !procedure Archimate_Legend()
 
     Legend_Begin( $get_word("LEGEND_TITLE_ARCHIMATE"), $get_word("LEGEND_COLUMN_SAMPLE"), $get_word("LEGEND_COLUMN_MEANING") )
-
     For_Each_Token_Value( "Archimate_Legend_Layer", $ARCHIMATE_LEGEND_ORDER )
-
     Legend_End()
 
 !endprocedure
