@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-27 14:38:58 EST
-' Build Commit Hash: 9a0ddcacecba837e547b153d81cba10a4df185d3
-' Build Commit Comment: dlm update 2
+' Generated on: 2026-11-27 14:53:34 EST
+' Build Commit Hash: 172d5f4db726f3fd232d725ba1a0f4c7cfa36e62
+' Build Commit Comment: dlm update 3
 ' ========================================================
 !procedure Trigger_Assert($message = "")
     !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
@@ -350,7 +350,7 @@ top to bottom direction
 !else 
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>> <<documentRegionHeader>> {
 !endif
-Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $widthStero, $debug_tf)
+Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $widthStereo, $debug_tf)
 !endprocedure
 !procedure Document_HeaderEnd()
     }
@@ -365,14 +365,14 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
     !else 
         rectangle "$debug_body" as DOC_BODY <<documentRegion>> <<documentRegionBody>> {
     !endif
-    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStero $debug_tf) 
+    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStereo $debug_tf) 
 !endprocedure
 !procedure Document_BodyEnd($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
     !$debug_anchor = " "
     !if ($debug_tf)
         !$debug_anchor = "Document_Body_Anchor_Bottom"
     !endif
-    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $widthStero, $debug_tf) 
+    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $widthStereo, $debug_tf) 
     Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
 }
 !endprocedure
@@ -386,7 +386,7 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
 !else 
     rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
 !endif
-Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStero, $debug_tf) 
+Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStereo, $debug_tf) 
 !endprocedure
 !procedure Document_FooterEnd()
     }

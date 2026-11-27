@@ -27,7 +27,7 @@ top to bottom direction
 !else 
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>> <<documentRegionHeader>> {
 !endif
-Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $widthStero, $debug_tf)
+Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $widthStereo, $debug_tf)
 !endprocedure
 
 !procedure Document_HeaderEnd()
@@ -44,7 +44,7 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
     !else 
         rectangle "$debug_body" as DOC_BODY <<documentRegion>> <<documentRegionBody>> {
     !endif
-    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStero $debug_tf) 
+    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStereo $debug_tf) 
 !endprocedure
 
 !procedure Document_BodyEnd($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
@@ -52,7 +52,7 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
     !if ($debug_tf)
         !$debug_anchor = "Document_Body_Anchor_Bottom"
     !endif
-    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $widthStero, $debug_tf) 
+    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $widthStereo, $debug_tf) 
     
     Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
     
@@ -71,7 +71,7 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
 !else 
     rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
 !endif
-Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStero, $debug_tf) 
+Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStereo, $debug_tf) 
 
 !endprocedure
 
