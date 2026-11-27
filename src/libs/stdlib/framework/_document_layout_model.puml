@@ -1,4 +1,6 @@
 
+
+
 !procedure Document_CreateAnchor($name, $alias, $stereotype, $widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
     !if ($debug_tf)
         card "$name" as $alias <<layoutAnchor>> <<$stereotype>> <<$widthStereo>> <<layoutAnchorDebug>>
@@ -14,15 +16,91 @@
 !endprocedure
 
 
+'==============================================================================
+' Sets the current document region.
+'==============================================================================
+!procedure Document_SetCurrentRegion($region)
+    %set_variable_value( "$DOC_CURRENT_REGION", $region )
+!endprocedure
+
+!function $RegionTopAnchor($region)
+    !if ($region == "HEADER")
+        !return "DOC_HEADER_ANCHOR_TOP"
+    !elseif ($region == "BODY")
+        !return "DOC_BODY_ANCHOR_TOP"
+    !elseif ($region == "FOOTER")
+        !return "DOC_FOOTER_ANCHOR_TOP"
+    !endif
+    !error "Unknown document region: " + $region
+!endfunction
+
+!function $RegionBottomAnchor($region)
+    !if ($region == "HEADER")
+        !return "DOC_HEADER_ANCHOR_BOTTOM"
+    !elseif ($region == "BODY")
+        !return "DOC_BODY_ANCHOR_BOTTOM"
+    !elseif ($region == "FOOTER")
+        !return "DOC_FOOTER_ANCHOR_BOTTOM"
+    !endif
+    !error "Unknown document region: " + $region
+!endfunction
+
+
+!procedure RegionFirst($element)
+    !$vn = "$DOC_" + $DOC_CURRENT_REGION + "_EMPTY"
+    %set_variable_value($vn, %false())
+
+    !$vn = "$DOC_" + $DOC_CURRENT_REGION + "_HAS_FIRST" 
+    %set_variable_value($vn, %true())
+
+    Document_CreateRel( $RegionTopAnchor($DOC_CURRENT_REGION), $element )
+!endprocedure
+
+!procedure RegionLast($element)
+
+    !$vn = "$DOC_" + $DOC_CURRENT_REGION + "_EMPTY"
+    %set_variable_value($vn, %false())
+    
+    !$vn = "$DOC_" + $DOC_CURRENT_REGION + "_HAS_LAST" 
+    %set_variable_value($vn, %true())
+
+    Document_CreateRel( $element, $RegionBottomAnchor($DOC_CURRENT_REGION) )
+
+!endprocedure
+
+!procedure Document_ValidateRegion($region)
+
+    !$hasFirstVar = "$DOC_" + $region + "_HAS_FIRST"
+    !$hasLastVar  = "$DOC_" + $region + "_HAS_LAST"
+
+    !$hasFirst = %get_variable_value($hasFirstVar)
+    !$hasLast  = %get_variable_value($hasLastVar)
+
+    !if ($hasFirst and !$hasLast)
+
+        !error $region + " region contains RegionFirst() but no matching RegionLast()"
+
+    !elseif (!$hasFirst and $hasLast)
+
+        !error $region + " region contains RegionLast() but no matching RegionFirst()"
+
+    !endif
+
+!endprocedure
+
+
+
+
 !procedure Document_Header($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
 
 top to bottom direction
 
+Document_SetCurrentRegion("HEADER")
 !$debug_header = " "
 !$debug_anchor = " "
 !if ($debug_tf) 
     !$debug_header = "Document_Header"
-    !$debug_anchor = "Document_Header_Anchor"
+    !$debug_anchor = "Document_Header_Anchor_TOP"
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>> <<documentRegionHeader>> <<documentRegionDebug>> {
 !else 
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>> <<documentRegionHeader>> {
@@ -30,11 +108,25 @@ top to bottom direction
 Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $widthStereo, $debug_tf)
 !endprocedure
 
-!procedure Document_HeaderEnd()
+!procedure Document_HeaderEnd($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
+    
+    !$debug_anchor = " "
+    !if ($debug_tf)
+        !$debug_anchor = "Document_Header_Anchor_Bottom"
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_HEADER_BOTTOM, layoutAnchorHeader, $widthStereo, $debug_tf) 
+     
+
     }
+    
+    Document_ValidateRegion("HEADER")
+    !if ($DOC_HEADER_EMPTY == %true() )
+        Document_CreateRel(DOC_HEADER_ANCHOR_TOP, DOC_HEADER_ANCHOR_BOTTOM)
+    !endif
 !endprocedure
 
 !procedure Document_Body($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
+    Document_SetCurrentRegion("BODY")
     !$debug_body = " "
     !$debug_anchor = " "
     !if ($debug_tf) 
@@ -44,7 +136,7 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
     !else 
         rectangle "$debug_body" as DOC_BODY <<documentRegion>> <<documentRegionBody>> {
     !endif
-    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStereo $debug_tf) 
+    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $widthStereo,  $debug_tf) 
 !endprocedure
 
 !procedure Document_BodyEnd($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
@@ -53,58 +145,56 @@ Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $wid
         !$debug_anchor = "Document_Body_Anchor_Bottom"
     !endif
     Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $widthStereo, $debug_tf) 
+        
+    }
     
-    Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
-    
-}
+    Document_ValidateRegion("BODY")
+    !if ($DOC_BODY_EMPTY == %true() )
+        Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
+    !endif 
 !endprocedure
 
 
 
 !procedure Document_Footer($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
-!$debug_footer = " "
-!$debug_anchor = " "
-!if ($debug_tf) 
-    !$debug_footer = "Document_Footer"
-    !$debug_anchor = "Document_Footer_Anchor"
-    rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>><<documentRegionDebug>> {
-!else 
-    rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
-!endif
-Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStereo, $debug_tf) 
+    Document_SetCurrentRegion("FOOTER")
+    !$debug_footer = " "
+    !$debug_anchor = " "
+    !if ($debug_tf) 
+        !$debug_footer = "Document_Footer"
+        !$debug_anchor = "Document_Footer_Anchor_TOP"
+        rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>><<documentRegionDebug>> {
+    !else 
+        rectangle "$debug_footer" as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $widthStereo, $debug_tf) 
 
 !endprocedure
 
-!procedure Document_FooterEnd()
+!procedure Document_FooterEnd($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)
+    !$debug_anchor = " "
+    !if ($debug_tf)
+        !$debug_anchor = "Document_Footer_Anchor_Bottom"
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_FOOTER_BOTTOM, layoutAnchorFooter, $widthStereo, $debug_tf) 
+    
     }
+
+    Document_ValidateRegion("FOOTER")
+    !if ($DOC_FOOTER_EMPTY == %true() )
+        Document_CreateRel(DOC_FOOTER_TOP, DOC_FOOTER_BOTTOM)
+    !endif 
+
 !endprocedure
+
 
 !procedure DocumentEnd()
 
-    Document_CreateRel(DOC_HEADER_ANCHOR, DOC_BODY_TOP)
+    
+    Document_CreateRel(DOC_HEADER_ANCHOR_BOTTOM, DOC_BODY_TOP)
     Document_CreateRel(DOC_BODY_BOTTOM, DOC_FOOTER_TOP)
+    
     
 !endprocedure
 
 
-'==============================================================================
-' Connect first body element to the body top anchor.
-'==============================================================================
-!procedure Body_AnchorToTop($element)
-    Document_CreateRel(DOC_BODY_TOP, $element)
-!endprocedure
-
-'==============================================================================
-' Connect last body element to the body bottom anchor.
-'==============================================================================
-!procedure Body_AnchorToBottom($element)
-    Document_CreateRel($element, DOC_BODY_BOTTOM)
-!endprocedure
-
-'==============================================================================
-' Connect body anchors to first and last content elements.
-'==============================================================================
-!procedure Body_AnchorTo($top, $bottom)
-    Body_AnchorToTop($top)
-    Body_AnchorToBottom($bottom)
-!endprocedure

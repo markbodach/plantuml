@@ -8,3 +8,17 @@
 
 !global $DOC_WIDTH ?= 1350
 !global $DOC_DEBUG ?= %false()
+
+!global $DOC_CURRENT_REGION = ""
+
+!global $DOC_HEADER_EMPTY = %true()
+!global $DOC_HEADER_HAS_FIRST = %false()
+!global $DOC_HEADER_HAS_LAST  = %false()
+
+!global $DOC_BODY_EMPTY = %true()
+!global $DOC_BODY_HAS_FIRST = %false()
+!global $DOC_BODY_HAS_LAST  = %false()
+
+!global $DOC_FOOTER_EMPTY = %true()
+!global $DOC_FOOTER_HAS_FIRST = %false()
+!global $DOC_FOOTER_HAS_LAST  = %false()
