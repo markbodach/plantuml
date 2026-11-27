@@ -1,0 +1,20 @@
+DocumentInit()
+Document_Header()
+
+    Document_Title("Nested Composites")
+
+Document_HeaderEnd()
+
+Document_Body()
+
+    ArchComposite(...)
+
+Document_BodyEnd()
+
+Document_Footer()
+
+    Archimate_Legend()
+
+Document_FooterEnd()
+
+DocumentEnd()

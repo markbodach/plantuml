@@ -26,9 +26,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-25 15:34:52 EST**
-* Build Commit Hash: **9d13850f1d95f632f4d5f7dd1f095dd4117e70d3**
-* Build Commit Comment: **newpage functionality**
+* Generated on: **2026-11-27 11:35:11 EST**
+* Build Commit Hash: **caa5ecf9d7f7a6b29a6c712a4b18ad09c41d2307**
+* Build Commit Comment: **legend and diagramModel**
 
 ## Usage
 
@@ -298,6 +298,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _extensions.puml
         └── _extension_hooks.puml
         └── _i18n.puml
+        └── _document_layout_model.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _corruption_registry.puml
@@ -357,6 +358,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _transparent.puml
+        └── _document_layout_model.puml
         └── _card.puml
         └── _panel.puml
         └── _containers.puml

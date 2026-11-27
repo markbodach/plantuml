@@ -5,3 +5,6 @@
 !global $UNSET ?= "__UML_UNSET__"
 
 !global $POUND ?= "#"
+
+!global $DOC_WIDTH ?= 1350
+!global $DOC_DEBUG ?= %false()

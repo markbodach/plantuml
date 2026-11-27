@@ -1,0 +1,79 @@
+!procedure Write_Lib_Style_Stdlib_Document_Layout_Model()
+
+
+
+<style>
+
+.diagramWidth {
+    MinimumWidth $DOC_WIDTH
+}
+
+.documentRegion {
+    RoundCorner 0
+    Padding 0
+    Margin 0
+
+    FontSize 1
+
+    LineThickness 0
+
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+}
+
+.documentRegionHeader {
+}
+.documentRegionBody {
+}
+.documentRegionFooter {
+}
+
+
+.layoutAnchor {
+
+    MinimumHeight 1
+    MaximumHeight 1
+
+    Padding 0
+    Margin 0
+
+    LineThickness 0
+
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+
+    FontSize 1
+}
+
+.layoutAnchorHeader {
+}
+.layoutAnchorBody {
+}
+.layoutAnchorFooter {
+}
+
+
+
+.documentRegionDebug {
+    BackgroundColor #FFF8DC
+    LineColor #FF0000
+    FontColor #000000
+    FontSize 16
+    LineThickness 2
+}
+
+.layoutAnchorDebug {
+    BackgroundColor #ADD8E6
+    LineColor #0000FF
+    FontColor #0000FF
+    FontSize 12
+    LineThickness 1
+    MinimumHeight 15
+}
+
+
+</style>
+
+!endprocedure 

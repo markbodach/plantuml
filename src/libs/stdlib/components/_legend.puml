@@ -2,6 +2,23 @@
 ' LEGEND
 ' ========================================================
 
+!procedure Document_LegendComposite($title)
+    card $title as DOC_LEGEND <<legend>> {
+!endprocedure
+
+
+!procedure Document_LegendCompositeEnd()
+    }
+!endprocedure
+
+
+
+
+
+
+
+
+
 !function $Legend_Column_Count($c1="",$c2="",$c3="",$c4="",$c5="")
 
     !if ($c5 != "")

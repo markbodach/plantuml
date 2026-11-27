@@ -78,6 +78,15 @@ collapse_blank_lines() {
     mv "${file}.tmp" "$file"
 }
 
+remove_blank_lines() {
+
+    local file="$1"
+
+    grep -v '^[[:space:]]*$' "$file" > "${file}.tmp"
+
+    mv "${file}.tmp" "$file"
+}
+
 convert_readme_to_md() {
 
     local input_file="$1"
@@ -94,6 +103,12 @@ convert_readme_to_md() {
 # =========================================================
 # Generic Bundle Compiler
 # =========================================================
+
+compact_bundle() {
+    local file="$1"
+    awk 'NF' "$file" > "${file}.tmp"
+    mv "${file}.tmp" "$file"
+}
 
 compile_bundle() {
 
@@ -142,7 +157,7 @@ compile_bundle() {
         "$tree_file"
 
 
-    collapse_blank_lines "$output_file"
+    compact_bundle "$output_file"
     collapse_blank_lines "$readme_file"
 
     convert_readme_to_md \
@@ -168,10 +183,10 @@ compile_file() {
     local current_dir
     current_dir=$(dirname "$target_file")
 
-    echo "└──>>> $target_file"
+    echo "└──[ + $target_file"
 
     if [[ ! -f "$target_file" ]]; then
-        echo "└──X Warning: File not found -> $target_file" >&2
+        echo "└──| X Warning: File not found -> $target_file" >&2
         return
     fi
 

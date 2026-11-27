@@ -1,0 +1,23 @@
+
+!procedure Document_Title_Rel()
+    DOC_HEADER_ANCHOR -[hidden]down-> DOC_TITLE
+!endprocedure
+
+!procedure Document_Title($title)
+    rectangle $title as DOC_TITLE <<title>><<diagramWidth>>
+    Document_Title_Rel()
+!endprocedure
+
+
+!procedure Document_TitleComposite($title)
+    rectangle $title as DOC_TITLE <<title>><<diagramWidth>> {
+!endprocedure
+
+!procedure Document_TitleCompositeEnd($title)
+    }
+Document_Title_Rel()
+!endprocedure
+
+
+
+

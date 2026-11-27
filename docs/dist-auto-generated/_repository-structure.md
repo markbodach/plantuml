@@ -17,6 +17,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
         └── _extensions.puml
         └── _extension_hooks.puml
         └── _i18n.puml
+        └── _document_layout_model.puml
       └── stdlib/vars/index.puml
         └── _root.puml
         └── _corruption_registry.puml
@@ -76,6 +77,7 @@ This tree maps out exactly how the source code files were evaluated and sequence
       └── stdlib/styles/index.puml
         └── _utilities.puml
         └── _transparent.puml
+        └── _document_layout_model.puml
         └── _card.puml
         └── _panel.puml
         └── _containers.puml

@@ -79,26 +79,16 @@
 '
 '=========================================================
 !function $debug_variables_flat($pairs)
-
     !$result = ""
-
     !$count = %size($pairs)
-
     !$i = 0
-
     !while ($i < $count)
-
         !$name = $pairs[$i]
         !$value = $pairs[$i + 1]
-
         !$result = $result + $name + " = " + $value + "\n"
-
         !$i = $i + 2
-
     !endwhile
-
     !return $result
-
 !endfunction
 
 
@@ -129,31 +119,18 @@
 '
 '=========================================================
 !function $debug_variables_nested($pairs)
-
     !$result = ""
-
     !$count = %size($pairs)
-
     !$i = 0
-
     !while ($i < $count)
-
         !$pair = $pairs[$i]
-
         !$name = $pair[0]
         !$value = $pair[1]
-
         !$result = $result + $name + " = " + $value + "\n"
-
         !$i = $i + 1
-
     !endwhile
-
     !return $result
-
 !endfunction
-
-
 
 '=========================================================
 ' Debug Panel

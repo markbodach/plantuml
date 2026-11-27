@@ -71,3 +71,4 @@
 !include _extensions.puml
 !include _extension_hooks.puml
 !include _i18n.puml
+!include _document_layout_model.puml
