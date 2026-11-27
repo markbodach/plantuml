@@ -1,0 +1,3132 @@
+' ========================================================
+' Combined PlantUML Library Bundle
+' Bundle Name: Core Framework
+' Generated on: 2026-11-27 14:21:14 EST
+' Build Commit Hash: 2b933b1bab603ddf1530f9c8c75892119ad00407
+' Build Commit Comment: diagram layout model
+' ========================================================
+!procedure Trigger_Assert($message = "")
+    !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
+!endprocedure
+!procedure Assert_If($condition, $message = "")
+    !if ($condition)
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+!procedure Assert_Blank($value, $message = "")
+    !if ($value == "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+!procedure Assert_Not_Blank($value, $message = "")
+    !if ($value != "")
+        Trigger_Assert($message)
+    !endif
+!endprocedure
+!procedure Assert_Variable_Exists($name, $message = "")
+    !if ($variable_exists_safe($name) == %false())
+        Trigger_Assert( $first_defined( $message, "Variable does not exist=[" + $name + "]" ) )
+    !endif
+!endprocedure
+!procedure Assert_Variable_Missing($name, $message = "")
+    !if ($variable_exists_safe($name))
+        Trigger_Assert( $first_defined( $message, "Variable already exists=[" + $name + "]" ) )
+    !endif
+!endprocedure
+!procedure Assert_Literal_Color($value, $message = "")
+    !if ($is_literal_color($value) == %false())
+        Trigger_Assert( $first_defined( $message, "Invalid literal color=[" + $value + "]" ) )
+    !endif
+!endprocedure
+!procedure Assert_Hash_Token($value, $message = "")
+    !if (%strpos(%upper($value), "#" ) == 0)
+        Trigger_Assert( $first_defined( $message, "Hash token detected=[" + $value + "]" ) )
+    !endif
+!endprocedure
+!procedure Trigger_Internal_Error($message="")
+    !assert 0 == 1 : "MB_PUML :: <<INTERNAL>> " + $message
+!endprocedure
+!function $debug_color( $name, $backgroundColor, $fontColor, $lineColor )
+    !return $surround($name) + "\nBackground = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor
+!endfunction
+!function $debug_variables_flat($pairs)
+    !$result = ""
+    !$count = %size($pairs)
+    !$i = 0
+    !while ($i < $count)
+        !$name = $pairs[$i]
+        !$value = $pairs[$i + 1]
+        !$result = $result + $name + " = " + $value + "\n"
+        !$i = $i + 2
+    !endwhile
+    !return $result
+!endfunction
+!function $debug_variables_nested($pairs)
+    !$result = ""
+    !$count = %size($pairs)
+    !$i = 0
+    !while ($i < $count)
+        !$pair = $pairs[$i]
+        !$name = $pair[0]
+        !$value = $pair[1]
+        !$result = $result + $name + " = " + $value + "\n"
+        !$i = $i + 1
+    !endwhile
+    !return $result
+!endfunction
+!function $debug_panel( $title, $content )
+    !return $surround($title) + "\n" + $content
+!endfunction
+!function $debug_variable( $name, $value )
+    !return $name + " = " + $value
+!endfunction
+!function $debug_style( $name, $backgroundColor="", $fontColor="", $lineColor="")
+    !return $debug_panel( $name, "Background = " + $backgroundColor + "\nFont       = " + $fontColor + "\nLine       = " + $lineColor )
+!endfunction
+!global $BREAKPOINTS_DEL = "|"
+!global $BREAKPOINTS ?= "" + $BREAKPOINTS_DEL + ""
+!global $REGISTRY_BREAKPOINTS = "BREAKPOINTS"
+!procedure Enable_Breakpoint($name)
+    Register_Lib_Object($name,$REGISTRY_BREAKPOINTS)
+!endprocedure
+!function $Breakpoint_Enabled($name)
+    !return $object_registered($name,$REGISTRY_BREAKPOINTS)
+!endfunction
+!procedure Trigger_Breakpoint_Dump()
+    !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> Log Dump [" + $Registry_Get($REGISTRY_BREAKPOINTS) + "]"
+!endprocedure
+!procedure Trigger_Breakpoint($name, $message = "" )
+    !if ( $Breakpoint_Enabled( $name ) )
+        !assert 0 == 1 : "MB_PUML :: <<BREAKPOINT>> [" + $name + "] " + $message
+    !endif
+!endprocedure
+!procedure Breakpoint_If( $name, $condition, $message = "" )
+    !if ( $Breakpoint_Enabled($name))
+        !if ($condition)
+            Trigger_Breakpoint($name, $message)
+        !endif
+    !endif
+!endprocedure
+!procedure Disable_Breakpoint($name)
+    Assert_Blank( $name, "Breakpoint name cannot be blank (p:Disable_Breakpoint)" )
+    !if ($Breakpoint_Enabled($name))
+        !$registry = $Registry_Get($REGISTRY_BREAKPOINTS)
+        !$token = $BREAKPOINTS_DEL + $name + $BREAKPOINTS_DEL
+        !$registry = $replace($registry, $token, $BREAKPOINTS_DEL)
+        Registry_Set( $REGISTRY_BREAKPOINTS, $registry )
+    !endif
+!endprocedure
+!procedure Disable_Breakpoint_If( $name, $condition)
+    !if ($condition)
+        Disable_Breakpoint($name)
+    !endif
+!endprocedure
+!procedure Clear_Breakpoints()
+    Registry_Set($REGISTRY_BREAKPOINTS, $BREAKPOINTS_DEL )
+!endprocedure
+!function $Breakpoint_Count()
+    !$remaining = $Registry_Get( $REGISTRY_BREAKPOINTS )
+    !$count = 0
+    !while ($remaining != $BREAKPOINTS_DEL)
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,$BREAKPOINTS_DEL)
+        !$remaining = $BREAKPOINTS_DEL + %substr($remaining,$pos + 1)
+        !$count = $count + 1
+    !endwhile
+    !return $count
+!endfunction
+!procedure Enable_Breakpoint_If($name, $condition)
+    !if ($condition)
+        Enable_Breakpoint($name)
+    !endif
+!endprocedure
+!procedure Apply_If( $target, $source, $strictTarget = %false() )
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Apply_If)" )
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Apply_If)" )
+    !if ($variable_exists_safe($source))
+        !if ($strictTarget)
+            Assert_If( ($variable_exists_safe($target) == %false()), "Target variable does not exist=[" + $target + "] (p:Apply_If)" )
+        !endif
+        !$sourceValue = %get_variable_value( $to_var_name($source) )
+        Assert_Blank( $sourceValue, "Source variable is blank=[" + $source + "] (p:Apply_If)" )
+        %set_variable_value( $to_var_name($target), $sourceValue )
+    !endif
+!endprocedure
+!procedure Apply_If_Strict($target,$source)
+    Apply_If( $target, $source, %true() )
+!endprocedure
+!procedure Inherit_If($target,$source)
+    Assert_If( ($is_valid_variable_name($to_var_name($target)) == %false()), "Invalid target variable=[" + $target + "] (p:Inherit_If)" )
+    Assert_If( ($is_valid_variable_name($to_var_name($source)) == %false()), "Invalid source variable=[" + $source + "] (p:Inherit_If)" )
+    Assert_Variable_Exists( $source, "Inheritance source missing=[" + $source + "] (p:Inherit_If)" )
+    !if ($variable_exists_safe($target) == %false())
+        %set_variable_value( $to_var_name($target), %get_variable_value($to_var_name($source)) )
+    !endif
+!endprocedure
+!function $Registry_Get($registryName)
+    !$varName = "$" + $registryName
+    Assert_If( (%variable_exists($varName) == %false()), "Registry variable not found=[" + $registryName + "] (f:Registry_Get)" )
+    !return %get_variable_value($varName)
+!endfunction
+!procedure Registry_Set($registryName, $value)
+    !$varName = "$" + $registryName
+    %set_variable_value($varName, $value)
+!endprocedure
+!function $object_registered($name, $registryName)
+    !if ($name == "")
+        !return %false()
+    !endif
+    !$registry = $Registry_Get($registryName)
+    !return (%strpos($registry, $REGISTRY_DEL + $name + $REGISTRY_DEL) >= 0)
+!endfunction
+!procedure Register_Lib_Object($name, $registryName)
+    Assert_Blank( $name, "Registering type[" + $registryName + "] name cannot be blank (p:Register_Lib_Object)" )
+    !if ($object_registered($name, $registryName) == %false())
+        !$registry = $Registry_Get($registryName)
+        !$registry = $registry + $name + $REGISTRY_DEL
+        Registry_Set($registryName, $registry)
+    !endif
+!endprocedure
+!procedure For_Each_Lib_Object($prefix, $registryName)
+    !$remaining = $Registry_Get($registryName)
+    !while ($remaining != $REGISTRY_DEL)
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+        !$name = %substr($remaining,0,$pos)
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+        !if ($name != "")
+            !$proc = $prefix + $name
+            !log "[" + $registryName + "] " + $proc
+            %invoke_procedure($proc)
+        !endif
+    !endwhile
+!endprocedure
+!procedure Dump_Registries()
+    !log "THEMES=[" + $Registry_Get($REGISTRY_THEMES) + "]"
+    !log "SKINPARAMS=[" + $Registry_Get($REGISTRY_SKINPARAMS) + "]"
+    !log "STYLES=[" + $Registry_Get($REGISTRY_STYLES) + "]"
+!endprocedure
+!function $token_registered($token,$registry)
+    !return %strpos(%upper($registry), $REGISTRY_DEL + %upper($token) + $REGISTRY_DEL) >= 0
+!endfunction
+!procedure For_Each_Token_Value($proc,$registry)
+    !$remaining = $registry
+    !while ($remaining != $REGISTRY_DEL)
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+        !$token = %substr($remaining,0,$pos)
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+        !if ($token != "")
+            %invoke_procedure($proc,$token)
+        !endif
+    !endwhile
+!endprocedure
+!procedure For_Each_Token($prefix,$registry)
+    !$remaining = $registry
+    !while ($remaining != $REGISTRY_DEL)
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining,$REGISTRY_DEL)
+        !$token = %substr($remaining,0,$pos)
+        !$remaining = $REGISTRY_DEL + %substr($remaining,$pos + 1)
+        !if ($token != "")
+            !$proc = $prefix + $token
+            %invoke_procedure($proc)
+        !endif
+    !endwhile
+!endprocedure
+!procedure Detect_Lib_Corruption()
+    Detect_Registered_Corruption_Variables( "CORRUPTED_VARIABLE")
+!endprocedure
+!procedure Repair_Lib_Corruption()
+    Repair_Registered_Color_Variables()
+!endprocedure
+!function $Is_Theme_Registered($name)
+    !return $object_registered($name, $REGISTRY_THEMES)
+!endfunction
+!function $Is_Skinparam_Registered($name)
+    !return $object_registered($name, $REGISTRY_SKINPARAMS)
+!endfunction
+!function $Is_Style_Registered($name)
+    !return $object_registered($name, $REGISTRY_STYLES)
+!endfunction
+!procedure Register_Lib_Theme($name)
+    Register_Lib_Object($name, $REGISTRY_THEMES)
+!endprocedure
+!procedure Register_Lib_Skinparam($name)
+    Register_Lib_Object($name, $REGISTRY_SKINPARAMS)
+!endprocedure
+!procedure Register_Lib_Style($name)
+    Register_Lib_Object($name, $REGISTRY_STYLES)
+!endprocedure
+!procedure Register_Lib_I18n($name)
+    Register_Lib_Object($name, $REGISTRY_I18N)
+!endprocedure
+!procedure Register_Lib_All($name)
+    Register_Lib_Theme($name)
+    Register_Lib_Skinparam($name)
+    Register_Lib_Style($name)
+    Register_Lib_I18n($name)
+!endprocedure
+!procedure Register_Lib_Page_Reset($name)
+    Register_Lib_Object($name,$REGISTRY_PAGE_RESET)
+!endprocedure
+!procedure Load_Registered_Themes()
+    For_Each_Lib_Object("Load_Theme_", $REGISTRY_THEMES)
+!endprocedure
+!procedure Load_Registered_Skinparams()
+    For_Each_Lib_Object("Load_Skinparams_", $REGISTRY_SKINPARAMS)
+!endprocedure
+!procedure Load_Registered_Styles()
+    For_Each_Lib_Object("Load_Styles_", $REGISTRY_STYLES)
+!endprocedure
+!procedure Load_Registered_I18n()
+    For_Each_Lib_Object("Load_I18n_",$REGISTRY_I18N)
+!endprocedure
+!procedure Register_Lib_Theme_Derived($name)
+    Register_Lib_Object($name, $REGISTRY_THEME_DERIVED)
+!endprocedure
+!procedure Build_Registered_Theme_Derived_Variables()
+    For_Each_Lib_Object("Build_Lib_Derived_Variables_", $REGISTRY_THEME_DERIVED )
+!endprocedure
+!procedure Load_Lib_Theme_BEFORE()
+!endprocedure
+!procedure Load_Lib_Theme_AFTER()
+!endprocedure
+!procedure Load_Lib_Skinparams_BEFORE()
+!endprocedure
+!procedure Load_Lib_Skinparams_AFTER()
+!endprocedure
+!procedure Load_Lib_Styles_BEFORE()
+!endprocedure
+!procedure Load_Lib_Styles_AFTER()
+!endprocedure
+!procedure Load_Lib_I18n_BEFORE()
+!endprocedure
+!procedure Load_Lib_I18n_AFTER()
+!endprocedure
+!procedure New_Page_BEFORE()
+!endprocedure
+!procedure New_Page_AFTER()
+!endprocedure
+!procedure Register_Word($key, $value)
+    Assert_Blank($key, "Word key cannot be blank")
+    !$var = "WORD_" + %upper($key)
+    %set_variable_value( $to_var_name($var), $value)
+    Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+!endprocedure
+!procedure Register_Word_If_Missing($key, $value)
+    Assert_Blank($key, "Word key cannot be blank")
+    !$var = "WORD_" + %upper($key)
+    !if ($variable_exists_safe($var) == %false())
+        %set_variable_value( $to_var_name($var), $value )
+        Register_Lib_Object( %upper($key), $REGISTRY_I18N_WORDS )
+    !endif
+!endprocedure
+!function $get_word($key)
+    !$var = "WORD_" + %upper($key)
+    !if ($variable_exists_safe($var))
+        !return %get_variable_value( $to_var_name($var) )
+    !endif
+    !return "??" + %upper($key) + "??"
+!endfunction
+!procedure Document_CreateAnchor($name, $alias, $stereotype, $debug_tf)
+    !if ($debug_tf)
+        card $name as $alias <<layoutAnchor>> <<$stereotype>> <<layoutAnchorDebug>>
+    !else
+        card "" as $alias <<layoutAnchor>> <<$stereotype>>
+    !endif
+!endprocedure
+!procedure Document_CreateRel($top, $bottom)
+    $top -[hidden]down-> $bottom
+!endprocedure
+!procedure Document_Header($debug_tf=$DOC_DEBUG)
+top to bottom direction
+!$debug_header = " "
+!$debug_anchor = " "
+!if ($debug_tf) 
+    !$debug_header = "Document_Header"
+    !$debug_anchor = "Document_Header_Anchor"
+    rectangle "$debug_header" as DOC_HEADER <<documentRegion>><<documentRegionHeader>><<documentRegionDebug>> {
+!else 
+    rectangle "$debug_header" as DOC_HEADER <<documentRegion>><<documentRegionHeader>> {
+!endif
+Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $debug_tf)
+!endprocedure
+!procedure Document_HeaderEnd()
+    }
+!endprocedure
+!procedure Document_Body($debug_tf=$DOC_DEBUG)
+    !$debug_body = " "
+    !$debug_anchor = " "
+    !if ($debug_tf) 
+        !$debug_body = "Document_Body"
+        !$debug_anchor = "Document_Body_Anchor_Top"
+        rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>><<documentRegionDebug>> {
+    !else 
+        rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>> {
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $debug_tf) 
+!endprocedure
+!procedure Document_BodyEnd($debug_tf=$DOC_DEBUG)
+    !$debug_anchor = " "
+    !if ($debug_tf)
+        !$debug_anchor = "Document_Body_Anchor_Bottom"
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $debug_tf) 
+    Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
+}
+!endprocedure
+!procedure Document_Footer($debug_tf=$DOC_DEBUG)
+!$debug_footer = " "
+!$debug_anchor = " "
+!if ($debug_tf) 
+    !$debug_footer = "Document_Footer"
+    !$debug_anchor = "Document_Footer_Anchor"
+    rectangle $debug_footer as DOC_FOOTER <<documentRegion>><<documentRegionFooter>><<documentRegionDebug>> {
+!else 
+    rectangle $debug_footer as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
+!endif
+Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $debug_tf) 
+!endprocedure
+!procedure Document_FooterEnd()
+    }
+!endprocedure
+!procedure DocumentEnd()
+    Document_CreateRel(DOC_HEADER_ANCHOR, DOC_BODY_TOP)
+    Document_CreateRel(DOC_BODY_BOTTOM, DOC_FOOTER_TOP)
+!endprocedure
+!procedure Body_AnchorToTop($element)
+    Document_CreateRel(DOC_BODY_TOP, $element)
+!endprocedure
+!procedure Body_AnchorToBottom($element)
+    Document_CreateRel($element, DOC_BODY_BOTTOM)
+!endprocedure
+!procedure Body_AnchorTo($top, $bottom)
+    Body_AnchorToTop($element)
+    Body_AnchorToBottom($element)
+!endprocedure
+!global $SKINPARAM_ENABLED ?= %false()
+!global $UNSET ?= "__UML_UNSET__"
+!global $POUND ?= "#"
+!global $DOC_WIDTH ?= 1350
+!global $DOC_DEBUG ?= %false()
+!global $CORRUPTION_DIAGNOSTICS ?= %false()
+!global $CORRUPTION_VARIABLE_DEL = "|"
+!global $CORRUPTION_VARIABLES ?= "" + $CORRUPTION_VARIABLE_DEL + ""
+!global $REGISTRY_CORRUPTION_VARIABLES = "CORRUPTION_VARIABLES"
+!global $REGISTRY_DEL = "|" 
+!global $THEMES = "" + $REGISTRY_DEL + ""
+!global $THEME_DERIVED = "" + $REGISTRY_DEL + ""
+!global $SKINPARAMS = "" + $REGISTRY_DEL + ""
+!global $STYLES = "" + $REGISTRY_DEL + ""
+!global $I18N = "" + $REGISTRY_DEL + ""
+!global $I18N_WORDS = "" + $REGISTRY_DEL + ""
+!global $REGISTRY_THEMES = "THEMES"
+!global $REGISTRY_THEME_DERIVED = "THEME_DERIVED"
+!global $REGISTRY_SKINPARAMS = "SKINPARAMS"
+!global $REGISTRY_STYLES = "STYLES"
+!global $REGISTRY_I18N = "I18N"
+!global $REGISTRY_I18N_WORDS = "I18N_WORDS"
+!global $PAGE_RESET = $REGISTRY_DEL
+!global $REGISTRY_PAGE_RESET = "PAGE_RESET"
+!global $I18N_CODE ?= "EN"
+!global $CONTRAST_THRESHOLD ?= 128
+!global $DARKEN_DEFAULT_PERCENT = 5
+!global $DARKNESS_THRESHOLD = 32
+!global $LIGHTEN_DEFAULT_PERCENT = 5
+!global $LIGHTNESS_THRESHOLD = 223
+!global $ARCHIMATE_LIB_ENABLED ?= %false()
+!global $ARCHIMATE_DEFAULT_LAYER ?= ""
+!global $ARCHIMATE_RECTANGLE_ONLY ?= %false()
+!global $ARCHIMATE_HIDE_SPRITE_OF_SHAPE ?= %true()
+!global $ARCHIMATE_HIDE_SPRITES ?= %false()
+!global $ARCHIMATE_TYPE_IN_LABEL ?= %false()
+!procedure Register_Archimate_Corruption_Variables()
+    Register_Corruption_Variable("ARCH_NONE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_NONE_COMPOSITECOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_INVISIBLE_COMPOSITECOLOR")
+    Register_Corruption_Variable("ARCH_MOTIVATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_MOTIVATION_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_STRATEGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_STRATEGY_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_BUSINESS_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_BUSINESS_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_APPLICATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_APPLICATION_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_TECHNOLOGY_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_PHYSICAL_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_PHYSICAL_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_IMPLEMENTATION_BORDERCOLOR")
+    Register_Corruption_Variable("ARCH_OTHER_FILLCOLOR")
+    Register_Corruption_Variable("ARCH_OTHER_BORDERCOLOR")
+!endprocedure
+!global $ARCH_CTX_ENTITY      = ""
+!global $ARCH_CTX_BASEENTITY  = ""
+!global $ARCH_CTX_LAYER       = ""
+!global $ARCH_CTX_DEFAULT_LAYER = ""
+!global $ARCH_CTX_SHAPE       = ""
+!global $ARCH_CTX_SPRITE      = ""
+!global $ARCH_CTX_LABEL       = ""
+!global $ARCH_CTX_COMPOSITE_MODE = %false()
+!global $ARCH_CTX_COUNT       = 0
+!global $ARCH_CTX_STYLE_LAYER = ""
+!global $ARCH_CTX_STYLE_COMPOSITE = ""
+sprite $sprite_arch_strategy_resource              jar:archimate/strategy-resource
+sprite $sprite_arch_strategy_capability            jar:archimate/strategy-capability
+sprite $sprite_arch_strategy_courseofaction        jar:archimate/strategy-courseofaction
+sprite $sprite_arch_strategy_valuestream           jar:archimate/strategy-valuestream
+sprite $sprite_arch_business_actor                jar:archimate/business-actor
+sprite $sprite_arch_business_role                 jar:archimate/business-role
+sprite $sprite_arch_business_collaboration        jar:archimate/business-collaboration
+sprite $sprite_arch_business_interface            jar:archimate/business-interface
+sprite $sprite_arch_business_process              jar:archimate/business-process
+sprite $sprite_arch_business_function             jar:archimate/business-function
+sprite $sprite_arch_business_interaction          jar:archimate/business-interaction
+sprite $sprite_arch_business_event                jar:archimate/business-event
+sprite $sprite_arch_business_service              jar:archimate/business-service
+sprite $sprite_arch_business_object               jar:archimate/business-object
+sprite $sprite_arch_business_contract             jar:archimate/business-contract
+sprite $sprite_arch_business_representation       jar:archimate/business-representation
+sprite $sprite_arch_business_product              jar:archimate/business-product
+sprite $sprite_arch_business_location             jar:archimate/business-location
+sprite $sprite_arch_application_component         jar:archimate/application-component
+sprite $sprite_arch_application_collaboration     jar:archimate/application-collaboration
+sprite $sprite_arch_application_interface         jar:archimate/application-interface
+sprite $sprite_arch_application_function          jar:archimate/application-function
+sprite $sprite_arch_application_interaction       jar:archimate/application-interaction
+sprite $sprite_arch_application_process           jar:archimate/application-process
+sprite $sprite_arch_application_event             jar:archimate/application-event
+sprite $sprite_arch_application_service           jar:archimate/application-service
+sprite $sprite_arch_application_dataobject        jar:archimate/application-dataobject
+sprite $sprite_arch_technology_node               jar:archimate/technology-node
+sprite $sprite_arch_technology_device             jar:archimate/technology-device
+sprite $sprite_arch_technology_systemsoftware     jar:archimate/technology-systemsoftware
+sprite $sprite_arch_technology_collaboration      jar:archimate/technology-collaboration
+sprite $sprite_arch_technology_interface          jar:archimate/technology-interface
+sprite $sprite_arch_technology_path               jar:archimate/technology-path
+sprite $sprite_arch_technology_communicationnetwork jar:archimate/technology-communicationnetwork
+sprite $sprite_arch_technology_function           jar:archimate/technology-function
+sprite $sprite_arch_technology_process            jar:archimate/technology-process
+sprite $sprite_arch_technology_interaction        jar:archimate/technology-interaction
+sprite $sprite_arch_technology_event              jar:archimate/technology-event
+sprite $sprite_arch_technology_service            jar:archimate/technology-service
+sprite $sprite_arch_technology_artifact           jar:archimate/technology-artifact
+sprite $sprite_arch_technology_equipment          jar:archimate/technology-equipment
+sprite $sprite_arch_technology_facility           jar:archimate/technology-facility
+sprite $sprite_arch_technology_distributionnetwork jar:archimate/technology-distributionnetwork
+sprite $sprite_arch_technology_material           jar:archimate/technology-material
+sprite $sprite_arch_motivation_stakeholder        jar:archimate/motivation-stakeholder
+sprite $sprite_arch_motivation_driver             jar:archimate/motivation-driver
+sprite $sprite_arch_motivation_assessment         jar:archimate/motivation-assessment
+sprite $sprite_arch_motivation_goal               jar:archimate/motivation-goal
+sprite $sprite_arch_motivation_outcome            jar:archimate/motivation-outcome
+sprite $sprite_arch_motivation_principle          jar:archimate/motivation-principle
+sprite $sprite_arch_motivation_requirement        jar:archimate/motivation-requirement
+sprite $sprite_arch_motivation_constraint         jar:archimate/motivation-constraint
+sprite $sprite_arch_motivation_meaning            jar:archimate/motivation-meaning
+sprite $sprite_arch_motivation_value              jar:archimate/motivation-value
+sprite $sprite_arch_implementation_workpackage    jar:archimate/implementation-workpackage
+sprite $sprite_arch_implementation_deliverable    jar:archimate/implementation-deliverable
+sprite $sprite_arch_implementation_event          jar:archimate/implementation-event
+sprite $sprite_arch_implementation_plateau        jar:archimate/implementation-plateau
+sprite $sprite_arch_implementation_gap            jar:archimate/implementation-gap
+sprite $sprite_arch_other_grouping                jar:archimate/other-grouping
+sprite $sprite_arch_other_location                jar:archimate/other-location
+!global $ARCHIMATE_LEGEND_LAYERS = "|" 
+!global $REGISTRY_ARCHIMATE_LEGEND_LAYERS = "ARCHIMATE_LEGEND_LAYERS"
+!global $ARCHIMATE_LEGEND_ORDER ?= "|MOTIVATION|STRATEGY|BUSINESS|APPLICATION|TECHNOLOGY|PHYSICAL|IMPLEMENTATION|"
+!global $ARCHIMATE_LEGEND_EXCLUDE ?= "|NONE|INVISIBLE|OTHER|"
+!function $strip_prefix($value, $prefix)
+    !$prefixWithSeparator = $prefix + "_"
+    !if %strpos($value, $prefixWithSeparator) == 0
+        !return %substr( $value, %strlen($prefixWithSeparator) )
+    !endif
+    !return $value
+!endfunction
+!function $ends_with($value, $suffix)
+  !$suffix_len = %strlen($suffix)
+  !$value_len = %strlen($value)
+  !if $value_len < $suffix_len
+    !return %false()
+  !endif
+  !return %substr($value, $value_len - $suffix_len, $suffix_len) == $suffix
+!endfunction
+!function $ends_with_text($value)
+  !return $ends_with($value, "_TEXT")
+!endfunction
+!function $is_special_style_token($token)
+  !$tokenU = %upper($token)
+  !if $tokenU == "AUTO" 
+    !return %true()
+  !elseif $tokenU == "CURRENT"
+    !return %true()
+  !elseif %strpos($tokenU,"DARKEN") == 0
+    !return %true()
+  !elseif %strpos($tokenU,"LIGHTEN") == 0
+    !return %true()
+  !endif
+  !return %false()
+!endfunction
+!function $replace($text, $find, $replacement)
+    !$result = ""
+    !$remaining = $text
+    !while (%strpos($remaining, $find) >= 0)
+        !$pos = %strpos($remaining, $find)
+        !$result = $result + %substr($remaining, 0, $pos)
+        !$result = $result + $replacement
+        !$remaining = %substr( $remaining, $pos + %strlen($find) )
+    !endwhile
+    !return $result + $remaining
+!endfunction
+!function $has_dollar($name)
+    !return (%strlen($name) > 0) && (%substr($name, 0, 1) == %chr(36))
+!endfunction
+!function $strip_dollar($name)
+    !if ($has_dollar($name) == %false())
+        !return $name
+    !endif
+    !$clean = %substr($name, 1)
+    Assert_If( ($has_dollar($clean)), "Variable name has multiple leading dollar signs=[" + $name + "] (f:strip_dollar)" )
+    !return $clean
+!endfunction
+!function $to_var_name($name)
+    !return %chr(36) + $strip_dollar($name)
+!endfunction
+!function $is_valid_variable_name($name)
+    !if ($name == "")
+        !return %false()
+    !endif
+    !if ($has_dollar($name) == %false())
+        !return %false()
+    !endif
+    !$clean = $strip_dollar($name)
+    !if $clean == ""
+        !return %false()
+    !endif
+    !if ($clean != %upper($clean))
+        !return %false()
+    !endif
+    !return %true()
+!endfunction
+!function $variable_exists_safe($name, $raise_error = %false(), $trace_error = "")
+    !$variable_name = $to_var_name($name)
+    !if ($is_valid_variable_name($variable_name) == %false())
+        !if ($raise_error == %true())
+            !if ($variable_name != %upper($variable_name))
+                Trigger_Assert("Variable names must be uppercase=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
+            !else 
+                Trigger_Assert( "Invalid variable name=[" + $variable_name + "] (" + $trace_error + "f:variable_exists_safe)" )
+            !endif
+        !endif
+        !return %false()
+    !endif
+    !return %variable_exists($variable_name)
+!endfunction
+!function $resolve_variable($name, $raise_error = %true(), $trace_error = "")
+    Assert_If( $is_literal_color($name), "Literal color passed where variable name expected=[" + $name + "] (" + $trace_error + "f:resolve_variable)" )
+    !$variable_name = $to_var_name($name)
+    !$value = ""
+    !if ($variable_exists_safe($variable_name, $raise_error, $trace_error + "f:resolve_variable -> ") == %false())
+        !if ($raise_error == %true())
+            Trigger_Assert( "Invalid variable name or undefined variable=[" + $variable_name + ", " + $name + "] (" + $trace_error + "f:resolve_variable)" )
+        !endif
+        !return ""
+    !endif
+    !$value = %get_variable_value($variable_name)
+    !return $value
+!endfunction
+!function $first_defined( $value0=$UNSET, $value1=$UNSET, $value2=$UNSET, $value3=$UNSET, $value4=$UNSET, $value5=$UNSET, $value6=$UNSET, $value7=$UNSET )
+    !if ($value0 != $UNSET)
+        !return $value0
+    !endif
+    !if ($value1 != $UNSET)
+        !return $value1
+    !endif
+    !if ($value2 != $UNSET)
+        !return $value2
+    !endif
+    !if ($value3 != $UNSET)
+        !return $value3
+    !endif
+    !if ($value4 != $UNSET)
+        !return $value4
+    !endif
+    !if ($value5 != $UNSET)
+        !return $value5
+    !endif
+    !if ($value6 != $UNSET)
+        !return $value6
+    !endif
+    !if ($value7 != $UNSET)
+        !return $value7
+    !endif
+    !return $UNSET
+!endfunction
+!function $first_defined_variable( $var0="", $var1="", $var2="", $var3="", $var4="", $var5="", $var6="", $var7="" )
+    !$v = $UNSET
+    !if ($var0 != "")
+        !$v = $resolve_variable($var0,%false())
+        !if ($variable_exists_safe($var0))
+            !return $v
+        !endif
+    !endif
+    !if ($var1 != "")
+        !$v = $resolve_variable($var1,%false())
+        !if ($variable_exists_safe($var1))
+            !return $v
+        !endif
+    !endif
+    !if ($var2 != "")
+        !$v = $resolve_variable($var2,%false())
+        !if ($variable_exists_safe($var2))
+            !return $v
+        !endif
+    !endif
+        !if ($var3 != "")
+        !$v = $resolve_variable($var3,%false())
+        !if ($variable_exists_safe($var3))
+            !return $v
+        !endif
+    !endif
+    !if ($var4 != "")
+        !$v = $resolve_variable($var4,%false())
+        !if ($variable_exists_safe($var4))
+            !return $v
+        !endif
+    !endif
+    !if ($var5 != "")
+        !$v = $resolve_variable($var5,%false())
+        !if ($variable_exists_safe($var5))
+            !return $v
+        !endif
+    !endif
+    !if ($var6 != "")
+        !$v = $resolve_variable($var6,%false())
+        !if ($variable_exists_safe($var6))
+            !return $v
+        !endif
+    !endif
+    !if ($var7 != "")
+        !$v = $resolve_variable($var7,%false())
+        !if ($variable_exists_safe($var7))
+            !return $v
+        !endif
+    !endif
+    !return $UNSET
+!endfunction
+!function $repeat($text, $count)
+    !$result = ""
+    !while ($count > 0)
+        !$result = $result + $text
+        !$count = $count - 1
+    !endwhile
+    !return $result
+!endfunction
+!function $nl($count = 1)
+    !return $repeat("\n", $count)
+!endfunction
+!function $pad_left($text, $count, $padding = " ")
+    !return $repeat($padding, $count) + $text
+!endfunction
+!function $pad_right($text, $count, $padding = " ")
+    !return $text + $repeat($padding, $count)
+!endfunction
+!function $pad_both($text, $count, $padding = " ")
+    !$pad = $repeat($padding, $count)
+    !return $pad + $text + $pad
+!endfunction
+!function $center_text($text, $width = 40, $padding = " " )
+    !$length = %strlen($text)
+    !if ($length >= $width)
+        !return $text
+    !endif
+    !$left = %intval(($width - $length) / 2)
+    !return $pad_left($text, $left, $padding )
+!endfunction
+!function $line_above($text, $count = 1)
+    !return $nl($count) + $text
+!endfunction
+!function $line_below( $text, $count = 1 )
+    !return $text + $nl($count)
+!endfunction
+!function $line_wrap( $text, $count = 1 )
+    !$lines = $nl($count)
+    !return $lines + $text + $lines
+!endfunction
+!function $surround( $text, $horizontal = 4, $vertical = 1, $padding = " " )
+    !$body = $pad_both( $text, $horizontal, $padding )
+    !$lines = $nl($vertical)
+    !return $lines + $body + $lines
+!endfunction
+!function $framed_title( $text, $width = 60, $horizontal = 2, $vertical = 1 )
+    !$centered = $center_text( $text, $width )
+    !return $surround( $centered, $horizontal, $vertical )
+!endfunction
+!function $is_hex_digit($c)
+  !$c = %upper($c)
+  !if %strpos("0123456789ABCDEF", $c) != -1
+    !return %true()
+  !endif
+  !return %false()
+!endfunction
+!function $is_literal_color($value)
+    Trigger_Breakpoint("IS_LITERAL_COLOR", "value=[" + $value + "] len=[" + %strlen($value) + "]")
+    !$value = %upper($value)
+    !$POUNDlen = %strlen($POUND)
+    !if (%substr($value,0,$POUNDlen) != $POUND )
+        !return %false()
+    !endif
+    !$len = %strlen($value)
+    !if ($len != 4) && ($len != 7) && ($len != 9)
+        !return %false()
+    !endif
+    !$i = $POUNDlen
+    !while ($i < $len)
+        !if ($is_hex_digit(%substr($value,$i,1)) == %false())
+            !return %false()
+        !endif
+        !$i = $i + 1
+    !endwhile
+    !return %true()
+!endfunction
+!function $normalize_hex_rgb($hex)
+  Assert_Literal_Color($hex, "f.normalize_hex_rgb")
+  !$len = %strlen($hex)
+  !if ($len == 4)
+    !$r = %substr($hex,1,1)
+    !$g = %substr($hex,2,1)
+    !$b = %substr($hex,3,1)
+    !return $POUND + $r + $r + $g + $g + $b + $b
+  !endif
+  !if ($len == 9)
+    !return $POUND + %substr($hex,1,6)
+  !endif
+  !return %upper($hex)
+!endfunction
+!function $hex_digit_value($c)
+    !$c = %upper($c)
+    !if ($c == "0")
+        !return 0
+    !elseif ($c == "1")
+        !return 1
+    !elseif ($c == "2")
+        !return 2
+    !elseif ($c == "3")
+        !return 3
+    !elseif ($c == "4")
+        !return 4
+    !elseif ($c == "5")
+        !return 5
+    !elseif ($c == "6")
+        !return 6
+    !elseif ($c == "7")
+        !return 7
+    !elseif ($c == "8")
+        !return 8
+    !elseif ($c == "9")
+        !return 9
+    !elseif ($c == "A")
+        !return 10
+    !elseif ($c == "B")
+        !return 11
+    !elseif ($c == "C")
+        !return 12
+    !elseif ($c == "D")
+        !return 13
+    !elseif ($c == "E")
+        !return 14
+    !elseif ($c == "F")
+        !return 15
+    !endif
+    Trigger_Internal_Error( "Invalid hex digit=[" + $c + "]")
+    !return -1
+!endfunction
+!function $int_to_hex_digit($n)
+    Assert_If( ($n < 0) || ($n > 15), "Hex digit out of range=[" + $n + "]" )
+    !if $n == 0
+        !return "0"
+    !elseif $n == 1
+        !return "1"
+    !elseif $n == 2
+        !return "2"
+    !elseif $n == 3
+        !return "3"
+    !elseif $n == 4
+        !return "4"
+    !elseif $n == 5
+        !return "5"
+    !elseif $n == 6
+        !return "6"
+    !elseif $n == 7
+        !return "7"
+    !elseif $n == 8
+        !return "8"
+    !elseif $n == 9
+        !return "9"
+    !elseif $n == 10
+        !return "A"
+    !elseif $n == 11
+        !return "B"
+    !elseif $n == 12
+        !return "C"
+    !elseif $n == 13
+        !return "D"
+    !elseif $n == 14
+        !return "E"
+    !else
+        !return "F"
+    !endif
+!endfunction
+!function $byte_to_hex($n)
+    Assert_If( ($n < 0) || ($n > 255), "Hex digit out of range=[" + $n + "]")
+    !$hi = %intval($n / 16)
+    !$lo = $n - ($hi * 16)
+    !return $int_to_hex_digit($hi) + $int_to_hex_digit($lo)
+!endfunction
+!function $hex_byte_to_int($hexByte)
+  !if (%strlen($hexByte) != 2)
+      Trigger_Internal_Error("Invalid hex byte=[" + $hexByte + "]" )
+  !endif
+  !$hi = $hex_digit_value(%substr($hexByte,0,1))
+  !$lo = $hex_digit_value(%substr($hexByte,1,1))
+  !return ($hi * 16) + $lo
+!endfunction
+!function $hex_red($hex)
+  !$hex = $normalize_hex_rgb($hex)
+  !return $hex_byte_to_int( %substr($hex,1,2) )
+!endfunction
+!function $hex_green($hex)
+  !$hex = $normalize_hex_rgb($hex)
+  !return $hex_byte_to_int( %substr($hex,3,2))
+!endfunction
+!function $hex_blue($hex)
+  !$hex = $normalize_hex_rgb($hex)
+  !return $hex_byte_to_int(%substr($hex,5,2) )
+!endfunction
+!function $rgb_luminance($r,$g,$b)
+  !return ( ((299 * $r) + (587 * $g) + (114 * $b)) / 1000)
+!endfunction
+!function $hex_luminance($hex)
+  !$r = $hex_red($hex)
+  !$g = $hex_green($hex)
+  !$b = $hex_blue($hex)
+  !return $rgb_luminance($r, $g, $b )
+!endfunction
+!function $rgb_to_hex($r,$g,$b)
+  !return $POUND + $byte_to_hex($r) + $byte_to_hex($g) + $byte_to_hex($b)
+!endfunction
+!function $get_text_color( $bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+  !return $get_variable_text_color($bg_var_name, $dark_text_var_name, $light_text_var_name )
+!endfunction
+!function $normalize_color_name($name)
+  !$clean = %upper($strip_dollar($name))
+  !if %substr($clean, 0, 6) == "COLOR_"
+    !return %substr($clean, 6)
+  !endif
+  !return $clean
+!endfunction
+!function $semantic_color_variable( $name, $raise_error = %false(), $trace_error = "" )
+  Breakpoint_If( "MOTIVATION_HASH_TOKEN", %strpos(%upper($name), "#MOTIVATION") >= 0, "name=[" + $name + "]" )
+  Breakpoint_If( "SEMANTIC_COLOR_VARIABLE_LITERAL", $is_literal_color($name), "semantic_color_variable literal=[" + $name + "] trace=[" + $trace_error + "]" )  
+  !if ($is_literal_color($name))
+      !return %upper($name)
+  !endif
+  !$normalized = $normalize_color_name($name)
+  !if ($variable_exists_safe($normalized))
+      !return $normalized
+  !endif
+  !$candidate = "COLOR_" + $normalized
+  !if ($variable_exists_safe($candidate))
+      !return $candidate
+  !endif
+  !if ($raise_error == %true() )
+    Trigger_Assert( "Semantic color variable not found. " + "input=[" + $name + "] " + "normalized=[" + $normalized + "] " + "candidate=[" + $candidate + "] " + "(" + $trace_error + "f:semantic_color_variable)" )
+  !endif
+  !return ""
+!endfunction
+!function $get_semantic_text_color( $semantic_suffix, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+  !$semantic_color = $semantic_color_variable( $semantic_suffix, %true(), "f:get_semantic_text_color" )
+  !return $get_text_color( $semantic_color, $dark_text_var_name, $light_text_var_name )
+!endfunction
+!function $get_color($value)
+  Assert_Blank($value, "get_color() received blank value (f:get_color)" )
+  !if ($is_literal_color($value))
+      !return %upper($value)
+  !endif
+  !$resolved = $resolve_variable($value, %false(), "f:get_color ->")
+  !if $resolved != ""
+      !return $resolved
+  !endif
+  !return $value
+!endfunction
+!function $get_semantic_color($semantic_suffix, $raise_error=%false(), $trace_error="")
+  Breakpoint_If( "HASH_TOKEN_TRACE", (%strpos(%upper($semantic_suffix), $POUND ) == 0), "semantic_suffix=[" + $semantic_suffix + "] trace=[" + $trace_error + "]" )
+  Assert_Hash_Token( $semantic_suffix, "Hash Token Detected=[" + $semantic_suffix + "] trace=[" + $trace_error + "] (f:get_semantic_color)" )
+  Assert_Blank( $semantic_suffix, "Function received blank semantic suffix (f:get_semantic_color)" )
+  Breakpoint_If( "SEMANTIC_COLOR_LITERAL", $is_literal_color($semantic_suffix), "(f:get_semantic_color." + $trace_error + ") received literal color=[" + $semantic_suffix + "]" )
+  !if $is_special_style_token($semantic_suffix)
+      !return $semantic_suffix
+  !endif
+  !$candidate = $semantic_color_variable($semantic_suffix, %true(), "f:get_semantic_color")
+  Assert_If( ($candidate == "COLOR_"), "Invalid semantic token=[" + $semantic_suffix + "] (f:get_semantic_color." + $trace_error + ")" )
+  !return $get_color($candidate)
+!endfunction
+!function $needs_light_text($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum <= $CONTRAST_THRESHOLD)
+!endfunction
+!function $get_contrast_text_color($backgroundColor, $darkTextColor="#000000", $lightTextColor="#FFFFFF" )
+    !if ($needs_light_text($backgroundColor))
+        !return $lightTextColor
+    !endif
+    !return $darkTextColor
+!endfunction
+!function $get_auto_text_color($background, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT")
+  !if ($is_literal_color($background))
+    !$dark = $resolve_variable($dark_text_var_name, %true(), "f:get_auto_text_color -> ")
+    !$light = $resolve_variable($light_text_var_name, %true(), "f:get_auto_text_color -> ")
+    !return $get_contrast_text_color($background, $dark, $light)
+  !endif
+  !return $get_semantic_text_color( $background, $dark_text_var_name, $light_text_var_name )
+!endfunction
+!function $get_variable_text_color($bg_var_name, $dark_text_var_name="COLOR_TEXT", $light_text_var_name="COLOR_TEXT_LIGHT" )
+  !if ($is_literal_color($bg_var_name)) 
+    !$bg_val = %upper($bg_var_name) 
+  !else 
+    !$bg_val = $resolve_variable($bg_var_name, %true(), "f:get_variable_text_color.bg_val -> ")
+  !endif
+  !$dark_val  = $resolve_variable($dark_text_var_name, %true(), "f:get_variable_text_color.dark_val -> ")
+  !$light_val = $resolve_variable($light_text_var_name, %true(), "f:get_variable_text_color.light_val -> ")
+  !return $get_contrast_text_color($bg_val, $dark_val,$light_val )
+!endfunction
+!function $get_darken_percent($token)
+  !$token = %upper($token)
+  !if $token == "DARKEN"
+    !return $DARKEN_DEFAULT_PERCENT
+  !endif
+  !if %strpos($token, "DARKEN_") == 0
+    !return %intval(%substr($token, 7))
+  !endif
+  !return $DARKEN_DEFAULT_PERCENT
+!endfunction
+!function $is_too_dark($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum <= $DARKNESS_THRESHOLD)
+!endfunction
+!function $normalize_darkness_floor($hex, $darkness_floor = $DARKNESS_THRESHOLD, $minimum_lighten_percent = 1)
+    Assert_Literal_Color($hex, "f.normalize_darkness_floor")
+    !$color = $normalize_hex_rgb($hex)
+    !$darkness = $hex_luminance($color)
+    Assert_If( ($darkness_floor < 0) || ($darkness_floor > 255), "Darkness floor must be between 0 and 255=[" + $darkness_floor + "] (f:normalize_darkness_floor)" )
+    Assert_If( ($minimum_lighten_percent < 0) || ($minimum_lighten_percent > 100), "Minimum lighten percent must be between 0 and 100=[" + $minimum_lighten_percent + "] (f:normalize_darkness_floor)" )
+    !if ($darkness <= 0)
+        !return %upper($color)
+    !endif
+    !if ($darkness >= $darkness_floor)
+        !return %upper($color)
+    !endif
+    !$shortfall = $darkness_floor - $darkness
+    !$lighten_percent = %intval( ($shortfall * 100) / $darkness_floor )
+    !if ($lighten_percent < $minimum_lighten_percent)
+        !$lighten_percent = $minimum_lighten_percent
+    !endif
+    !if ($lighten_percent > 100)
+        !$lighten_percent = 100
+    !endif
+    !$normalized = %lighten( $color, $lighten_percent )
+    !$normalized = $normalize_hex_rgb($normalized)
+    !$normalized_darkness = $hex_luminance($normalized)
+    !$correction_count = 0
+    !$maximum_corrections = 100
+    !while ($normalized_darkness < $darkness_floor) && ($correction_count < $maximum_corrections)
+        !$previous = $normalized
+        !$normalized = %lighten($normalized,1)
+        !$normalized = $normalize_hex_rgb($normalized)
+        !if ($normalized == $previous)
+            !$correction_count = $maximum_corrections
+        !else
+            !$normalized_darkness = $hex_luminance($normalized)
+            !$correction_count = $correction_count + 1
+        !endif
+    !endwhile
+    Assert_Literal_Color($normalized, "f.normalize_darkness_floor:upper:normalized")
+    !return %upper($normalized)
+!endfunction
+!function $get_darker_semantic_token($token)
+  !$token = %upper($token)
+  Breakpoint_If( "DARKER_TOKEN_LITERAL", $is_literal_color($token), "get_darker_semantic_token token=[" + $token + "]" )
+  !if ($is_literal_color($token))
+      !return ""
+  !endif
+  !if $ends_with($token, "_LIGHT")
+    !$candidate = %substr( $token,0,%strlen($token)-6 )
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !elseif $ends_with($token, "_DARK")
+    !$base = %substr( $token, 0, %strlen($token)-5 )
+    !$candidate = $base + "_DARKEST"
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !elseif $ends_with($token, "_DARKEST")
+    !return ""
+  !else
+    !$candidate = $token + "_DARK"
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !endif
+  !return ""
+!endfunction
+!function $darken_color($token, $darken_token = "DARKEN")
+  Breakpoint_If( "DARKEN_MOTIVATION", %upper($token) == "#CCCCFF", "darken_color token=[" + $token + "] mode=[" + $darken_token + "]" )
+  Assert_If( $is_special_style_token($token), "DARKEN cannot operate on special token=[" + $token + "] (f:darken_color)" )
+  !if (%upper($darken_token) == "DARKEN")
+    !$darker = $get_darker_semantic_token($token)
+    !if $darker != ""
+        !return $get_semantic_color($darker)
+    !endif
+  !endif
+  !$color = $resolve_literal_color($token)
+  !$pct = $get_darken_percent($darken_token)
+  !$dark = %darken($color, $pct)
+  !if ($normalize_hex_rgb($color) == "#FFFFFF") && ($normalize_hex_rgb($dark) == "#FFFFFF")
+      !$dark = %darken("#FEFEFE", $pct)
+  !endif
+  Assert_Literal_Color($dark, "f.darken_color")
+  !$dark = $normalize_hex_rgb($dark)
+  !return $normalize_darkness_floor($dark)
+!endfunction
+!function $get_lighten_percent($token)
+  !$token = %upper($token)
+  !if $token == "LIGHTEN"
+    !return $LIGHTEN_DEFAULT_PERCENT
+  !endif
+  !if %strpos($token, "LIGHTEN_") == 0
+    !return %intval(%substr($token, 8))
+  !endif
+  !return $LIGHTEN_DEFAULT_PERCENT
+!endfunction
+!function $is_too_light($hex)
+  !$lum = $hex_luminance($hex)
+  !return ($lum >= $LIGHTNESS_THRESHOLD)
+!endfunction
+!function $normalize_lightness_ceiling($hex, $lightness_ceiling = $LIGHTNESS_THRESHOLD, $minimum_darken_percent = 1)
+    Assert_Literal_Color($hex, "f.normalize_lightness_ceiling")
+    !$color = $normalize_hex_rgb($hex)
+    !$lightness = $hex_luminance($color)
+    Assert_If( ($lightness_ceiling < 0) || ($lightness_ceiling > 255), "Lightness ceiling must be between 0 and 255=[" + $lightness_ceiling + "] (f:normalize_lightness_ceiling)" )
+    Assert_If( ($minimum_darken_percent < 0) || ($minimum_darken_percent > 100), "Minimum darken percent must be between 0 and 100=[" + $minimum_darken_percent + "] (f:normalize_lightness_ceiling)" )
+    !if ($lightness <= 0)
+        !return %upper($color)
+    !endif
+    !if ($lightness <= $lightness_ceiling)
+        !return %upper($color)
+    !endif
+    !$overage = $lightness - $lightness_ceiling
+    !$darken_percent = %intval( ($overage * 100) / $lightness )
+    !if ($darken_percent < $minimum_darken_percent)
+        !$darken_percent = $minimum_darken_percent
+    !endif
+    !if ($darken_percent > 100)
+        !$darken_percent = 100
+    !endif
+    !$normalized = %darken($color, $darken_percent)
+    !$normalized = $normalize_hex_rgb($normalized)
+    !$normalized_lightness = $hex_luminance($normalized)
+    !$correction_count = 0
+    !$maximum_corrections = 100
+    !while ($normalized_lightness > $lightness_ceiling) && ($correction_count < $maximum_corrections)
+        !$previous = $normalized
+        !$normalized = %darken($normalized,1)
+        !$normalized = $normalize_hex_rgb($normalized)
+        !if ($normalized == $previous)
+            !$correction_count = $maximum_corrections
+        !else
+            !$normalized_lightness = $hex_luminance($normalized)
+            !$correction_count = $correction_count + 1
+        !endif
+    !endwhile
+    Assert_Literal_Color($normalized, "f.normalize_lightness_ceiling")
+    !return %upper($normalized)
+!endfunction
+!function $get_lighter_semantic_token($token)
+  !$token = %upper($token)
+  Breakpoint_If( "LIGHTER_TOKEN_LITERAL", $is_literal_color($token), "get_lighter_semantic_token token=[" + $token + "]" )
+  !if ($is_literal_color($token))
+      !return ""
+  !endif
+  !if $ends_with($token, "_DARKEST")
+    !$base = %substr($token, 0, %strlen($token) - 8)
+    !$candidate = $base + "_DARK"
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !elseif $ends_with($token, "_DARK")
+    !$candidate = %substr( $token, 0, %strlen($token) - 5 )
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !elseif $ends_with($token, "_LIGHTEST")
+    !return ""
+  !elseif $ends_with($token, "_LIGHT")
+    !$candidate = $token + "EST"
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !else
+    !$candidate = $token + "_LIGHT"
+    !if $resolve_variable( $semantic_color_variable($candidate), %false() ) != ""
+      !return $candidate
+    !endif
+  !endif
+  !return ""
+!endfunction
+!function $lighten_color($token, $lighten_token = "LIGHTEN")
+  Breakpoint_If( "LIGHTEN_MOTIVATION", %upper($token) == "#CCCCFF", "lighten_color token=[" + $token + "] mode=[" + $lighten_token + "]" )
+  Assert_If( $is_special_style_token($token), "LIGHTEN cannot operate on special token=[" + $token + "] (f:lighten_color)" )
+  !if (%upper($lighten_token) == "LIGHTEN")
+    !$lighter = $get_lighter_semantic_token($token)
+    !if $lighter != ""
+        !return $get_semantic_color($lighter)
+    !endif
+  !endif
+  !$color = $resolve_literal_color($token)
+  !$pct = $get_lighten_percent($lighten_token)
+  !$light = %lighten($color, $pct)
+  !if ($normalize_hex_rgb($color) == "#000000") && ($normalize_hex_rgb($light) == "#000000")
+      !$light = %lighten("#010101", $pct)
+  !endif
+  Assert_Literal_Color($light, "f.lighten_color")
+  !$light = $normalize_hex_rgb($light)
+  !return $normalize_lightness_ceiling($light)
+!endfunction
+!function $first_context_color($context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
+  !if ($context0 != "") && ($is_special_style_token($context0) == %false())
+      !return $context0
+  !endif
+  !if ($context1 != "") && ($is_special_style_token($context1) == %false())
+      !return $context1
+  !endif
+  !if ($context2 != "") && ($is_special_style_token($context2) == %false())
+      !return $context2
+  !endif
+  !if ($context3 != "") && ($is_special_style_token($context3) == %false())
+      !return $context3
+  !endif
+  !if ($context4 != "") && ($is_special_style_token($context4) == %false())
+      !return $context4
+  !endif
+  !if ($context5 != "") && ($is_special_style_token($context5) == %false())
+      !return $context5
+  !endif
+  !if ($context6 != "") && ($is_special_style_token($context6) == %false())
+      !return $context6
+  !endif
+  !if ($context7 != "") && ($is_special_style_token($context7) == %false())
+      !return $context7
+  !endif
+  !return ""
+!endfunction
+!function $resolve_style_color($tokenOrColor, $context0="", $context1="", $context2="", $context3="", $context4="", $context5="", $context6="", $context7="" )
+  !$contextColor = $first_context_color($context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  Breakpoint_If( "STYLE_COLOR_HASH_TOKEN", (%strpos(%upper($tokenOrColor), "#") == 0) && ($is_literal_color($tokenOrColor) == %false()), "token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+  !$contextAsToken = %upper($contextColor)
+  !$token = %upper($tokenOrColor)
+  Breakpoint_If("STYLE_COLOR_MOTIVATION.48", %strpos(%upper($tokenOrColor),"#MOTIVATION") >= 0, "token=[" + $tokenOrColor + "]")
+  Breakpoint_If( "STYLE_COLOR_MOTIVATION.50", %upper($tokenOrColor) == "#CCCCFF", "resolve_style_color token=[" + $tokenOrColor + "] context=[" + $contextColor + "]" )
+  Assert_If( ($tokenOrColor == "") && ($contextColor == ""), "BLANK.BLANK[" + $tokenOrColor + "] requires token or context (f:resolve_style_color)" )
+  !if ($has_dollar($tokenOrColor))
+    !$resolved = $resolve_variable( $tokenOrColor, %false() )
+    !if ($resolved != "")
+        !if (%upper("" + $resolved + "") == %upper("" + $tokenOrColor + ""))
+            Trigger_Assert( "Recursive variable resolution detected. " + "variable=[" + $tokenOrColor + "] " + "value=[" + $resolved + "] " + "(f:resolve_style_color)" )
+        !endif
+        !return $resolve_style_color($resolved, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7 )
+    !else
+        Trigger_Assert( "Variable reference could not be resolved. token=[" + $tokenOrColor + "] context=[" + $contextColor + "] (f:resolve_style_color)")
+    !endif
+  !endif
+  !if ($is_literal_color($tokenOrColor))
+    Trigger_Breakpoint( "STYLE_COLOR_LITERAL", "token=[" + $tokenOrColor + "]" )
+    !return %upper($tokenOrColor)
+  !endif
+  !if ($token == "AUTO")
+    Assert_Blank( $contextColor, "AUTO requires a context color (f:resolve_style_color)" )
+    !return $get_auto_text_color($contextColor)
+  !elseif ($token == "CURRENT")
+      Assert_Blank($contextAsToken, "CURRENT requires a context color to determine CURRENT (f:resolve_style_color)" )
+      Assert_If( ($contextAsToken == "CURRENT"), "CURRENT recursively calls CURRENT (f:resolve_style_color)" )
+      !return $resolve_style_color($contextColor, $context0, $context1, $context2, $context3, $context4, $context5, $context6, $context7)
+  !elseif (%strpos($token, "DARKEN") == 0)
+      Assert_Blank( $contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
+      !return $darken_color( $contextColor, $tokenOrColor )
+  !elseif (%strpos($token, "LIGHTEN") == 0)
+      Assert_Blank($contextColor, $tokenOrColor + " requires a context color (f:resolve_style_color)" )
+      !return $lighten_color($contextColor, $tokenOrColor )
+  !elseif ($ends_with_text($tokenOrColor) == %true())
+      !$base = %substr($tokenOrColor, 0,%strlen($tokenOrColor) - 5 )
+      !return $get_semantic_text_color($base)
+  !else
+    Breakpoint_If( "STYLE_COLOR_SEMANTIC_HASH", (%strpos(%upper($tokenOrColor), "#") == 0), "HASH TOKEN=[" + $tokenOrColor + "]" )
+    Assert_Hash_Token( $tokenOrColor, "resolve_style_color received hash token=[" + $tokenOrColor + "]" )
+    !return $get_semantic_color($tokenOrColor)
+  !endif
+!endfunction
+!function $resolve_literal_color($tokenOrColor)
+  !$color = $resolve_style_color($tokenOrColor)
+  Assert_Literal_Color($color, "f.resolve_literal_color")
+  !return %upper($color)
+!endfunction
+!function $is_corrupted_hash_token($value)
+    !if ($is_literal_color($value))
+        !return %false()
+    !endif
+    !if (%strpos(%upper($value),$POUND) != 0)
+        !return %false()
+    !endif
+    !return %true()
+!endfunction
+!function $is_corrupted_semantic_hash($value)
+    !if ($is_literal_color($value))
+        !return %false()
+    !endif
+    !if (%strpos(%upper($value),$POUND) != 0)
+        !return %false()
+    !endif
+    !$candidate = %substr($value,%strlen($POUND))
+    !if ($semantic_color_variable($candidate,%false()) != "")
+        !return %true()
+    !endif
+    !return %false()
+!endfunction
+!function $Next_Corruption_Variable($remaining)
+    !$remaining = %substr($remaining,1)
+    !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
+    !if ($pos < 0)
+        Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+    !endif
+    !return %substr($remaining,0,$pos)
+!endfunction
+!procedure Breakpoint_Corrupted_Hash_Token($breakpoint_name,$variable_name,$value)
+    Breakpoint_If($breakpoint_name,$is_corrupted_hash_token($value),"variable=[" + $variable_name + "] value=[" + $value + "]")
+!endprocedure
+!procedure Detect_Corrupted_Variable($breakpoint_name,$variable_name)
+    !if ($variable_exists_safe($variable_name))
+        !$value = %get_variable_value($to_var_name($variable_name))
+        Breakpoint_Corrupted_Hash_Token($breakpoint_name,$variable_name,$value)
+    !endif
+!endprocedure
+!procedure Breakpoint_Corrupted_Color_Variable($variable_name)
+    Detect_Corrupted_Variable("CORRUPTED_VARIABLE",$variable_name)
+!endprocedure
+!function $remove_hash_prefix($value)
+    !if ($is_corrupted_hash_token($value))
+        !return %substr($value,%strlen($POUND))
+    !endif
+    !return $value
+!endfunction
+!function $repair_corrupted_semantic_hash($value)
+    !if ($is_corrupted_semantic_hash($value) == %false())
+        !return $value
+    !endif
+    !$semantic = %substr($value,%strlen($POUND))
+    !return $get_semantic_color($semantic)
+!endfunction
+!procedure Repair_Corrupted_Variable($variable_name)
+    !if ($variable_exists_safe($variable_name))
+        !$current = %get_variable_value( $to_var_name($variable_name) )
+        !if ($is_corrupted_hash_token($current))
+            %set_variable_value( $to_var_name($variable_name), $remove_hash_prefix($current) )
+        !endif
+    !endif
+!endprocedure
+!procedure Repair_Color_Variable($variable_name)
+    !if ($variable_exists_safe($variable_name))
+        !$current = %get_variable_value( $to_var_name($variable_name) )
+        !$fixed = $repair_corrupted_semantic_hash($current)
+        !if ($fixed != $current)
+            Breakpoint_If( "CORRUPTION_REPAIR", %true(), "variable=[" + $variable_name + "] old=[" + $current + "] new=[" + $fixed + "]" )
+            %set_variable_value( $to_var_name($variable_name), $fixed )
+        !endif
+    !endif
+!endprocedure
+!procedure Sanitize_Resolved_Color($variable_name)
+    !if ($variable_exists_safe($variable_name))
+        !$value = %get_variable_value($to_var_name($variable_name))
+        !if ($is_corrupted_semantic_hash($value))
+            %set_variable_value($to_var_name($variable_name),$repair_corrupted_semantic_hash($value))
+        !endif
+    !endif
+!endprocedure
+!procedure Register_Corruption_Variable($variable_name)
+    Register_Lib_Object($variable_name,$REGISTRY_CORRUPTION_VARIABLES)
+!endprocedure
+!function $Is_Corruption_Variable_Registered($variable_name)
+    !return $object_registered($variable_name,$REGISTRY_CORRUPTION_VARIABLES)
+!endfunction
+!procedure Detect_Registered_Corruption_Variables( $breakpoint_name )
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+    !$iteration = 0
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
+        !$iteration = $iteration + 1
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Corruption registry iteration limit exceeded" )
+        !endif
+        !$remainingBody = %substr($remaining,1)
+        !$pos = %strpos($remainingBody, $CORRUPTION_VARIABLE_DEL)
+        !if ($pos < 0) 
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remainingBody + "]" )
+        !endif
+        !$variable_name = %substr($remainingBody,0,$pos)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remainingBody,$pos+1)
+        !if ($variable_name != "")
+            Detect_Corrupted_Variable( $breakpoint_name, $variable_name )
+        !endif
+    !endwhile
+!endprocedure
+!procedure Repair_Registered_Corruption_Variables()
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+    !$iteration = 0
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
+        !$iteration = $iteration + 1
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Corruption registry iteration limit exceeded" )
+        !endif
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
+        !if ($pos < 0)
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+        !endif
+        !$variable_name = %substr($remaining,0,$pos)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
+        !if ($variable_name != "")
+            Repair_Corrupted_Variable( $variable_name )
+        !endif
+    !endwhile
+!endprocedure
+!procedure Repair_Registered_Color_Variables()
+    !$remaining = $Registry_Get( $REGISTRY_CORRUPTION_VARIABLES )
+    !$iteration = 0
+    !while ($remaining != $CORRUPTION_VARIABLE_DEL)
+        !$iteration = $iteration + 1
+        !if ($iteration > 100)
+            Trigger_Internal_Error( "Color repair registry iteration limit exceeded" )
+        !endif
+        !$remaining = %substr($remaining,1)
+        !$pos = %strpos($remaining, $CORRUPTION_VARIABLE_DEL)
+        !if ($pos < 0)
+            Trigger_Internal_Error( "Malformed corruption registry=[" + $remaining + "]" )
+        !endif
+        !$variable_name = %substr($remaining,0,$pos)
+        !$remaining = $CORRUPTION_VARIABLE_DEL + %substr($remaining,$pos + 1)
+        !if ($variable_name != "")
+            Repair_Color_Variable( $variable_name )
+        !endif
+    !endwhile
+!endprocedure
+!procedure Dump_Corruption_Registry()
+    Trigger_Breakpoint("CORRUPTION_REGISTRY","variables=[" + $Registry_Get($REGISTRY_CORRUPTION_VARIABLES) + "]")
+!endprocedure
+!procedure Document_LegendComposite($title)
+    card $title as DOC_LEGEND <<legend>> {
+!endprocedure
+!procedure Document_LegendCompositeEnd()
+    }
+!endprocedure
+!function $Legend_Column_Count($c1="",$c2="",$c3="",$c4="",$c5="")
+    !if ($c5 != "")
+        !return 5
+    !elseif ($c4 != "")
+        !return 4
+    !elseif ($c3 != "")
+        !return 3
+    !elseif ($c2 != "")
+        !return 2
+    !endif
+    !return 1
+!endfunction
+!procedure Legend_Begin($title="",$col1="",$col2="",$col3="",$col4="",$col5="")
+    !if ($title != "")
+        legend
+        |= $title |
+    !else
+        legend
+    !endif
+    Legend_Row($col1,$col2,$col3,$col4,$col5)
+!endprocedure
+!procedure Legend_Row($col1="",$col2="",$col3="",$col4="",$col5="")
+    !$columns = $Legend_Column_Count($col1,$col2,$col3,$col4,$col5)
+    !if ($columns == 1)
+        | $col1 |
+    !elseif ($columns == 2)
+        | $col1 | $col2 |
+    !elseif ($columns == 3)
+        | $col1 | $col2 | $col3 |
+    !elseif ($columns == 4)
+        | $col1 | $col2 | $col3 | $col4 |
+    !elseif ($columns == 5)
+        | $col1 | $col2 | $col3 | $col4 | $col5 |
+    !endif
+!endprocedure
+!procedure Legend_End()
+    endlegend
+!endprocedure
+!procedure Execute_Page_Resets()
+    For_Each_Lib_Object( "Reset_Page_", $REGISTRY_PAGE_RESET )
+!endprocedure
+!procedure New_Page()
+    New_Page_BEFORE()
+    Execute_Page_Resets()
+    newpage
+    New_Page_AFTER()
+!endprocedure
+!function $archimate_base_entity($entity)
+    !$e = %lower($entity)
+    !$pos = %strpos($e,"-")
+    !if ($pos >= 0)
+        !return %substr($e,$pos + 1)
+    !endif
+    !return $e
+!endfunction
+!function $archimate_normalize_entity($entity)
+    !$e = %lower($entity)
+    !$e = $replace($e,"-","")
+    !$e = $replace($e," ","")
+    !return $e
+!endfunction
+!function $archimate_sprite_entity($entity)
+    !return %lower($entity)
+!endfunction
+!function $archimate_entity_layer($entity)
+    !$entity = $archimate_default_sprite_entity($entity)
+    !$pos = %strpos($entity, "-")
+    !if ($pos > 0)
+        !return %upper(%substr($entity,0,$pos))
+    !endif
+    !return ""
+!endfunction
+!function $archimate_sprite_key($entity)
+    !$sprite = $archimate_sprite_entity($entity)
+    !if (%strpos($sprite,"-") < 0)
+        !$sprite = $archimate_default_sprite_entity($entity)
+    !endif
+    !if ($sprite == "")
+        !return ""
+    !endif
+    !return "sprite_arch_" + $replace(%lower($sprite),"-","_")
+!endfunction
+!function $archimate_show_sprite($shape,$sprite)
+    !if ($ARCHIMATE_HIDE_SPRITES)
+        !return %false()
+    !endif
+    !if ($sprite == "")
+        !return %false()
+    !endif
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+!endfunction
+!function $archimate_show_sprite_for_shape($shape,$sprite)
+    !if ($ARCHIMATE_HIDE_SPRITES)
+        !return %false()
+    !endif
+    !if ($sprite == "")
+        !return %false()
+    !endif
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+!endfunction
+!function $archimate_layer_from_entity($entity)
+    !$s = %lower($entity)
+    !$pos = %strpos($s,"-")
+    !if ($pos >= 0)
+        !return %upper(%substr($s,0,$pos))
+    !endif
+    !if ($s == "business")
+        !return "BUSINESS"
+    !elseif ($s == "application")
+        !return "APPLICATION"
+    !elseif ($s == "technology")
+        !return "TECHNOLOGY"
+    !elseif ($s == "strategy")
+        !return "STRATEGY"
+    !elseif ($s == "motivation")
+        !return "MOTIVATION"
+    !elseif ($s == "implementation")
+        !return "IMPLEMENTATION"
+    !endif
+    !return "OTHER"
+!endfunction
+!function $archimate_entity($entity)
+    !return %lower($entity)
+!endfunction
+!function $archimate_type($stereotype)
+    !$s = %lower($stereotype)
+    !$pos = %strpos($s, "-")
+    !if ($pos >= 0)
+        !return %substr($s, $pos + 1)
+    !endif
+    !if ($s == "business")
+        !return ""
+    !elseif ($s == "application")
+        !return ""
+    !elseif ($s == "technology")
+        !return ""
+    !elseif ($s == "motivation")
+        !return ""
+    !elseif ($s == "strategy")
+        !return ""
+    !elseif ($s == "implementation")
+        !return ""
+    !endif
+    !return $s
+!endfunction
+!function $archimate_sprite_base_entity($sprite)
+    !$entity = %substr($sprite,12)
+    !$entity = $replace($entity,"_","-")
+    !return $archimate_base_entity($entity)
+!endfunction
+!function $archimate_default_sprite_entity($entity)
+    !$e = %lower($entity)
+    !if ($e == "resource")
+        !return "strategy-resource"
+    !elseif ($e == "capability")
+        !return "strategy-capability"
+    !elseif ($e == "courseofaction")
+        !return "strategy-courseofaction"
+    !elseif ($e == "valuestream")
+        !return "strategy-valuestream"
+    !elseif ($e == "actor")
+        !return "business-actor"
+    !elseif ($e == "role")
+        !return "business-role"
+    !elseif ($e == "collaboration")
+        !return "business-collaboration"
+    !elseif ($e == "interface")
+        !return "business-interface"
+    !elseif ($e == "process")
+        !return "business-process"
+    !elseif ($e == "function")
+        !return "business-function"
+    !elseif ($e == "interaction")
+        !return "business-interaction"
+    !elseif ($e == "event")
+        !return "business-event"
+    !elseif ($e == "service")
+        !return "business-service"
+    !elseif ($e == "object")
+        !return "business-object"
+    !elseif ($e == "contract")
+        !return "business-contract"
+    !elseif ($e == "representation")
+        !return "business-representation"
+    !elseif ($e == "product")
+        !return "business-product"
+    !elseif ($e == "location")
+        !return "business-location"
+    !elseif ($e == "component")
+        !return "application-component"
+    !elseif ($e == "dataobject")
+        !return "application-dataobject"
+    !elseif ($e == "node")
+        !return "technology-node"
+    !elseif ($e == "device")
+        !return "technology-device"
+    !elseif ($e == "systemsoftware")
+        !return "technology-systemsoftware"
+    !elseif ($e == "path")
+        !return "technology-path"
+    !elseif ($e == "communicationnetwork")
+        !return "technology-communicationnetwork"
+    !elseif ($e == "artifact")
+        !return "technology-artifact"
+    !elseif ($e == "equipment")
+        !return "technology-equipment"
+    !elseif ($e == "facility")
+        !return "technology-facility"
+    !elseif ($e == "distributionnetwork")
+        !return "technology-distributionnetwork"
+    !elseif ($e == "material")
+        !return "technology-material"
+    !elseif ($e == "stakeholder")
+        !return "motivation-stakeholder"
+    !elseif ($e == "driver")
+        !return "motivation-driver"
+    !elseif ($e == "assessment")
+        !return "motivation-assessment"
+    !elseif ($e == "goal")
+        !return "motivation-goal"
+    !elseif ($e == "outcome")
+        !return "motivation-outcome"
+    !elseif ($e == "principle")
+        !return "motivation-principle"
+    !elseif ($e == "requirement")
+        !return "motivation-requirement"
+    !elseif ($e == "constraint")
+        !return "motivation-constraint"
+    !elseif ($e == "meaning")
+        !return "motivation-meaning"
+    !elseif ($e == "value")
+        !return "motivation-value"
+    !elseif ($e == "workpackage")
+        !return "implementation-workpackage"
+    !elseif ($e == "deliverable")
+        !return "implementation-deliverable"
+    !elseif ($e == "plateau")
+        !return "implementation-plateau"
+    !elseif ($e == "gap")
+        !return "implementation-gap"
+    !elseif ($e == "grouping")
+        !return "other-grouping"
+    !endif
+    !return $e
+!endfunction
+!function $archimate_hide_sprite_for_shape($shape, $sprite)
+    !if ($ARCHIMATE_HIDE_SPRITE_OF_SHAPE == %false())
+        !return %false()
+    !endif
+    !$entity = $archimate_sprite_base_entity($sprite)
+    !$spriteShape = $archimate_shape_from_base_entity($entity)
+    !return (%lower($shape) == %lower($spriteShape))
+!endfunction
+!function $archimate_show_sprite_for_shape($shape,$sprite)
+    !if ($sprite == "")
+        !return %false()
+    !endif
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+!endfunction
+!function $archimate_show_sprite($shape,$sprite)
+    !if ($sprite == "")
+        !return %false()
+    !endif
+    !return ($archimate_hide_sprite_for_shape($shape,$sprite) == %false())
+!endfunction
+!unquoted procedure ArchRectangle( $alias, $label, $sprite = "", $layer = "" )
+    !if ($sprite == "")
+        rectangle "$label" as $alias <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_strategy_resource")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_resource>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_strategy_capability")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_capability>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_strategy_courseofaction")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_courseofaction>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_strategy_valuestream")
+        rectangle "$label" as $alias <<$sprite_arch_strategy_valuestream>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_actor")
+        rectangle "$label" as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_role")
+        rectangle "$label" as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_business_collaboration>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_interface")
+        rectangle "$label" as $alias <<$sprite_arch_business_interface>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_process")
+        rectangle "$label" as $alias <<$sprite_arch_business_process>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_function")
+        rectangle "$label" as $alias <<$sprite_arch_business_function>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_business_interaction>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_event")
+        rectangle "$label" as $alias <<$sprite_arch_business_event>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_service")
+        rectangle "$label" as $alias <<$sprite_arch_business_service>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_object")
+        rectangle "$label" as $alias <<$sprite_arch_business_object>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_contract")
+        rectangle "$label" as $alias <<$sprite_arch_business_contract>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_representation")
+        rectangle "$label" as $alias <<$sprite_arch_business_representation>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_product")
+        rectangle "$label" as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_business_location")
+        rectangle "$label" as $alias <<$sprite_arch_business_location>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_component")
+        rectangle "$label" as $alias <<$sprite_arch_application_component>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_application_collaboration>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_interface")
+        rectangle "$label" as $alias <<$sprite_arch_application_interface>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_function")
+        rectangle "$label" as $alias <<$sprite_arch_application_function>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_application_interaction>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_process")
+        rectangle "$label" as $alias <<$sprite_arch_application_process>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_event")
+        rectangle "$label" as $alias <<$sprite_arch_application_event>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_service")
+        rectangle "$label" as $alias <<$sprite_arch_application_service>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_application_dataobject")
+        rectangle "$label" as $alias <<$sprite_arch_application_dataobject>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_node")
+        rectangle "$label" as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_device")
+        rectangle "$label" as $alias <<$sprite_arch_technology_device>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_systemsoftware")
+        rectangle "$label" as $alias <<$sprite_arch_technology_systemsoftware>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_collaboration")
+        rectangle "$label" as $alias <<$sprite_arch_technology_collaboration>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_interface")
+        rectangle "$label" as $alias <<$sprite_arch_technology_interface>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_path")
+        rectangle "$label" as $alias <<$sprite_arch_technology_path>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_communicationnetwork")
+        rectangle "$label" as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_function")
+        rectangle "$label" as $alias <<$sprite_arch_technology_function>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_process")
+        rectangle "$label" as $alias <<$sprite_arch_technology_process>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_interaction")
+        rectangle "$label" as $alias <<$sprite_arch_technology_interaction>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_event")
+        rectangle "$label" as $alias <<$sprite_arch_technology_event>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_service")
+        rectangle "$label" as $alias <<$sprite_arch_technology_service>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_artifact")
+        rectangle "$label" as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_equipment")
+        rectangle "$label" as $alias <<$sprite_arch_technology_equipment>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_facility")
+        rectangle "$label" as $alias <<$sprite_arch_technology_facility>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+        rectangle "$label" as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_material")
+        rectangle "$label" as $alias <<$sprite_arch_technology_material>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_stakeholder")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_stakeholder>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_driver")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_driver>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_assessment")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_assessment>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_goal")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_goal>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_outcome")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_outcome>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_principle")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_principle>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_requirement")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_requirement>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_constraint")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_constraint>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_value")
+        rectangle "$label" as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_workpackage")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_event")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_event>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_plateau")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_gap")
+        rectangle "$label" as $alias <<$sprite_arch_implementation_gap>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_other_grouping")
+        rectangle "$label" as $alias <<$sprite_arch_other_grouping>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_other_location")
+        rectangle "$label" as $alias <<$sprite_arch_other_location>> <<%lower($layer)>>
+    !else
+        rectangle "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchComponent($alias, $label, $sprite, $layer)
+    !if ($sprite != "") && ($archimate_sprite_base_entity($sprite) != "component")
+        ArchRectangle($alias, $label, $sprite, $layer)
+    !else
+        component "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!function $archimate_shape_from_base_entity($entity)
+    !$s = $archimate_normalize_entity($entity)
+    !if ($s == "actor")
+        !return "actor"
+    !elseif ($s == "role")
+        !return "queue"
+    !elseif ($s == "product")
+        !return "frame"
+    !elseif ($s == "component")
+        !return "component"
+    !elseif ($s == "node")
+        !return "node"
+    !elseif ($s == "device")
+        !return "node"
+    !elseif ($s == "systemsoftware")
+        !return "node"
+    !elseif ($s == "collaboration")
+        !return "node"
+    !elseif ($s == "equipment")
+        !return "node"
+    !elseif ($s == "facility")
+        !return "node"
+    !elseif ($s == "artifact")
+        !return "file"
+    !elseif ($s == "communicationnetwork")
+        !return "cloud"
+    !elseif ($s == "distributionnetwork")
+        !return "cloud"
+    !elseif ($s == "meaning")
+        !return "cloud"
+    !elseif ($s == "value")
+        !return "usecase"
+    !elseif ($s == "workpackage")
+        !return "package"
+    !elseif ($s == "deliverable")
+        !return "file"
+    !elseif ($s == "plateau")
+        !return "package"
+    !elseif ($s == "grouping")
+        !return "folder"
+    !elseif ($s == "group")
+        !return "folder"
+    !elseif ($s == "and")
+        !return "circle"
+    !elseif ($s == "or")
+        !return "circle"
+    !elseif ($s == "valuestream")
+        !return "process"
+    !endif
+    !return "rectangle"
+!endfunction
+!unquoted procedure ArchActor($alias, $label, $sprite, $layer)
+    !if ($archimate_show_sprite_for_shape("actor",$sprite))
+        actor "$label" as $alias <<$sprite_arch_business_actor>> <<%lower($layer)>>
+    !else
+        actor "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchNode( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_technology_node")
+        node "$label" as $alias <<$sprite_arch_technology_node>> <<%lower($layer)>>
+    !else
+        node "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchQueue( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_business_role")
+        queue "$label" as $alias <<$sprite_arch_business_role>> <<%lower($layer)>>
+    !else
+        queue "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchFrame( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_business_product")
+        frame "$label" as $alias <<$sprite_arch_business_product>> <<%lower($layer)>>
+    !else
+        frame "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchFile( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_technology_artifact")
+        file "$label" as $alias <<$sprite_arch_technology_artifact>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_implementation_deliverable")
+        file "$label" as $alias <<$sprite_arch_implementation_deliverable>> <<%lower($layer)>>
+    !else
+        file "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchCloud( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_technology_communicationnetwork")
+        cloud "$label" as $alias <<$sprite_arch_technology_communicationnetwork>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_technology_distributionnetwork")
+        cloud "$label" as $alias <<$sprite_arch_technology_distributionnetwork>> <<%lower($layer)>>
+    !elseif ($sprite == "sprite_arch_motivation_meaning")
+        cloud "$label" as $alias <<$sprite_arch_motivation_meaning>> <<%lower($layer)>>
+    !else
+        cloud "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchUseCase( $alias, $label, $sprite, $layer )
+    !if ($sprite == "sprite_arch_motivation_value")
+        usecase "$label" as $alias <<$sprite_arch_motivation_value>> <<%lower($layer)>>
+    !else
+        usecase "$label" as $alias <<%lower($layer)>>
+    !endif
+!endprocedure
+!unquoted procedure ArchPackage( $alias, $label, $sprite, $layer )
+    !if ($Archimate_Is_Composite())
+        !if ($sprite == "sprite_arch_implementation_workpackage")
+            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
+        !elseif ($sprite == "sprite_arch_implementation_plateau")
+            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
+        !else
+            package "$label" as $alias <<%lower($layer)>> <<$ARCH_CTX_STYLE_LAYER>> <<composite>> <<$ARCH_CTX_STYLE_COMPOSITE>> {
+        !endif
+    !else
+        !if ($sprite == "sprite_arch_implementation_workpackage")
+            package "$label" as $alias <<$sprite_arch_implementation_workpackage>> <<%lower($layer)>>
+        !elseif ($sprite == "sprite_arch_implementation_plateau")
+            package "$label" as $alias <<$sprite_arch_implementation_plateau>> <<%lower($layer)>>
+        !else
+            package "$label" as $alias <<%lower($layer)>>
+        !endif
+    !endif
+!endprocedure
+!unquoted procedure ArchProcess( $alias, $label, $sprite, $layer )
+    ArchRectangle( $alias, $label, $sprite, $layer )
+!endprocedure
+!unquoted procedure ArchFolder( $alias, $label, $sprite, $layer )
+    folder "$label" as $alias <<%lower($layer)>>
+!endprocedure
+!unquoted procedure ArchCircle( $alias, $label, $sprite, $layer )
+    circle "$label" as $alias <<%lower($layer)>>
+!endprocedure
+!function $archimate_label( $label, $entity)
+    !if (%strpos(%lower($label), "<font") < 0)
+        !if ($ARCH_LABEL_FONTSTYLE == "bold")
+            !$label = "<b>" + $label + "</b>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "italic")
+            !$label = "<i>" + $label + "</i>"
+        !elseif ($ARCH_LABEL_FONTSTYLE == "underline")
+            !$label = "<u>" + $label + "</u>"
+        !endif
+        !$label = "<font size=" + $ARCH_LABEL_FONTSIZE + ">" + $label + "</font>"
+    !endif
+    !if ($Archimate_Is_Composite()) 
+        !$label = $pad_left($pad_right($label, 6),2)
+    !endif
+    !if ($ARCHIMATE_TYPE_IN_LABEL == %false())
+        !return $label
+    !endif
+    !if ($entity == "")
+        !return $label
+    !endif
+    !$typePrefix = $ARCHIMATE_TYPE_IN_LABEL_PREFIX
+    !$typeSuffix = $ARCHIMATE_TYPE_IN_LABEL_SUFFIX
+    !if (%strpos($label, $typePrefix) >= 0) && (%strpos($label, $typeSuffix) >= 0)
+        !return $label
+    !endif
+    !$type = $archimate_base_entity( $archimate_default_sprite_entity($entity) )
+    !if ($type == "")
+        !return $label
+    !endif
+    !$type = %lower($type)
+    !$fontPrefix = "<font size=" + $ARCH_TYPE_FONTSIZE + ">"
+    !$fontSuffix = "</font>"
+    !$type = $typePrefix + $type + $typeSuffix
+    !if ($ARCH_TYPE_FONTSTYLE == "bold")
+        !$type = "<b>" + $type + "</b>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "italic")
+        !$type = "<i>" + $type + "</i>"
+    !elseif ($ARCH_TYPE_FONTSTYLE == "underline")
+        !$type = "<u>" + $type + "</u>"
+    !endif
+    !return $label + "\n" + $fontPrefix + $type + $fontSuffix
+!endfunction
+!function $archimate_fillcolor_variable($layer)
+    !return "ARCH_" + %upper($layer) + "_FILLCOLOR"
+!endfunction
+!function $archimate_compositecolor_variable($layer)
+    !return "ARCH_" + %upper($layer) + "_COMPOSITECOLOR"
+!endfunction
+!procedure Validate_Archimate_Layer( $layer )
+    !$fillColorVar = $archimate_fillcolor_variable($layer)
+    Assert_If( (%variable_exists($to_var_name($fillColorVar)) == %false()), "Archimate layer not configured=[" + $layer + "] missing variable=[" + $fillColorVar + "]" )
+!endprocedure
+!function $archimate_resolve_layer($entity, $layer="")
+    !if ($layer != "")
+        !return %upper($layer)
+    !endif
+    !if (%strpos($entity,"-") >= 0)
+        !return $archimate_entity_layer($entity)
+    !endif
+    !if ($Archimate_In_Composite())
+        !if ($ARCH_CTX_DEFAULT_LAYER != "")
+            !return %upper($ARCH_CTX_DEFAULT_LAYER)
+        !endif
+    !endif
+    !if ($ARCHIMATE_DEFAULT_LAYER != "")
+        !return %upper($ARCHIMATE_DEFAULT_LAYER)
+    !endif
+    !$spriteEntity = $archimate_default_sprite_entity($entity)
+    !if ($spriteEntity != $entity)
+        !$inferred = $archimate_entity_layer($spriteEntity)
+        !if ($inferred != "")
+            !return $inferred
+        !endif
+    !endif
+    !return "NONE"
+!endfunction
+!function $archimate_resolve_shape( $baseEntity, $shape="" )
+    !if ($shape != "")
+        !return %lower($shape)
+    !endif
+    !$shape = $archimate_shape_from_base_entity($baseEntity)
+    !if ($ARCHIMATE_RECTANGLE_ONLY)
+        !return "rectangle"
+    !endif
+    !return $shape
+!endfunction
+!function $archimate_resolve_sprite($entity)
+    !if ($ARCHIMATE_HIDE_SPRITES)
+        !return ""
+    !endif
+    !return $archimate_sprite_key($entity)
+!endfunction
+!function $archimate_resolve_label( $label, $baseEntity )
+    !return $archimate_label( $label, $baseEntity )
+!endfunction
+!procedure Archimate_Build_Context( $label, $stereotype="", $shape="", $layer="" )
+    !$ARCH_CTX_ENTITY = $archimate_entity($stereotype)
+    !$ARCH_CTX_BASEENTITY = $archimate_base_entity( $ARCH_CTX_ENTITY )
+    !$ARCH_CTX_LABEL = $archimate_resolve_label( $label, $ARCH_CTX_BASEENTITY )
+    !$ARCH_CTX_LAYER = $archimate_resolve_layer( $ARCH_CTX_ENTITY, $layer )
+    Validate_Archimate_Layer( $ARCH_CTX_LAYER )
+    Archimate_Register_Legend_Layer($ARCH_CTX_LAYER)
+    !if ($ARCH_CTX_DEFAULT_LAYER == "")
+        !if ($ARCH_CTX_LAYER != "NONE" && $ARCH_CTX_LAYER != "INVISIBLE")
+            !$ARCH_CTX_DEFAULT_LAYER = $ARCH_CTX_LAYER
+        !endif
+    !endif
+    !$ARCH_CTX_STYLE_LAYER = ""
+    !$ARCH_CTX_STYLE_COMPOSITE = ""
+    !if ( $Archimate_Is_Composite() )
+        !$ARCH_CTX_STYLE_LAYER = "" + %lower($ARCH_CTX_LAYER) + "-" + $ARCH_CTX_COUNT + ""
+        !$ARCH_CTX_STYLE_COMPOSITE = "composite-" + $ARCH_CTX_COUNT + ""
+    !endif
+    !$ARCH_CTX_SHAPE = $archimate_resolve_shape( $ARCH_CTX_BASEENTITY, $shape )
+    !$ARCH_CTX_SPRITE = $archimate_resolve_sprite( $ARCH_CTX_ENTITY )
+!endprocedure
+!procedure Reset_Archimate_Context()
+    !$ARCH_CTX_ENTITY = ""
+    !$ARCH_CTX_BASEENTITY = ""
+    !$ARCH_CTX_LAYER = ""
+    !$ARCH_CTX_DEFAULT_LAYER = ""
+    !$ARCH_CTX_SHAPE = ""
+    !$ARCH_CTX_SPRITE = ""
+    !$ARCH_CTX_LABEL = ""
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+    !$ARCH_CTX_COUNT = 0
+    !$ARCH_CTX_STYLE_LAYER = ""
+    !$ARCH_CTX_STYLE_COMPOSITE = ""
+!endprocedure
+!unquoted procedure ArchElement( $alias, $label, $stereotype="", $shape="", $layer="" )
+    Archimate_Build_Context( $label, $stereotype, $shape, $layer )
+    !if ($ARCH_CTX_SHAPE == "actor")
+        ArchActor( $alias, $ARCH_CTX_LABEL,$ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "queue")
+        ArchQueue( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "frame")
+        ArchFrame( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "component")
+        ArchComponent( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "node")
+        ArchNode( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "file")
+        ArchFile( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "cloud")
+        ArchCloud( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "usecase")
+        ArchUseCase( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "package")
+        ArchPackage( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "process")
+        ArchProcess( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "folder")
+        ArchFolder( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !elseif ($ARCH_CTX_SHAPE == "circle")
+        ArchCircle( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !else
+        ArchRectangle( $alias, $ARCH_CTX_LABEL, $ARCH_CTX_SPRITE, $ARCH_CTX_LAYER )
+    !endif
+!endprocedure
+!procedure Archimate_Composite_Open()
+    !$ARCH_CTX_COMPOSITE_MODE = %true()
+    !$ARCH_CTX_DEFAULT_LAYER = "" 
+    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT + 1
+!endprocedure
+!procedure Archimate_Composite_Close()
+    !$ARCH_CTX_COMPOSITE_MODE = %false()
+!endprocedure
+!function $Archimate_Is_Composite()
+    !return $ARCH_CTX_COMPOSITE_MODE
+!endfunction
+!function $Archimate_In_Composite()
+    !return $ARCH_CTX_COUNT > 0
+!endfunction
+!unquoted procedure ArchComposite( $alias, $label, $containerShape="package", $layer="")
+    Archimate_Composite_Open()
+    ArchElement( $alias, $label, $layer, $containerShape, $layer ) 
+    Archimate_Composite_Close()
+!endprocedure
+!procedure EndArchComposite() 
+    }
+    !$ARCH_CTX_COUNT = $ARCH_CTX_COUNT - 1
+    !$ARCH_CTX_DEFAULT_LAYER = ""
+    Assert_If( ($ARCH_CTX_COUNT < 0),"Archimate Composite depth (" + $ARCH_CTX_COUNT + ") became negative")
+!endprocedure
+!procedure Archimate_Register_Legend_Layer($layer)
+    !$layer = %upper($layer)
+    !if ($token_registered($layer,$ARCHIMATE_LEGEND_EXCLUDE) == %false())
+        Register_Lib_Object($layer,$REGISTRY_ARCHIMATE_LEGEND_LAYERS)
+    !endif
+!endprocedure
+!function $Archimate_Legend_Layer_Used($layer)
+    !return $object_registered($layer,$REGISTRY_ARCHIMATE_LEGEND_LAYERS)
+!endfunction
+!procedure Archimate_Legend_Row($layer,$color,$label)
+    !if ($Archimate_Legend_Layer_Used($layer))
+        Legend_Row("<back:" + $color + ">       </back>", $label )
+    !endif
+!endprocedure
+!procedure Archimate_Legend_Layer($layer)
+    !$layer = %upper($layer)
+    !if ($Archimate_Legend_Layer_Used($layer))
+        !$colorVar = "ARCH_" + $layer + "_FILLCOLOR"
+        !$labelKey = "LAYER_" + $layer
+        Legend_Row( "<back:" + $resolve_variable($colorVar) + ">      </back>", $get_word($labelKey) )
+    !endif
+!endprocedure
+!procedure Archimate_Legend()
+    Legend_Begin( $get_word("LEGEND_TITLE_ARCHIMATE"), $get_word("LEGEND_COLUMN_SAMPLE"), $get_word("LEGEND_COLUMN_MEANING") )
+    For_Each_Token_Value( "Archimate_Legend_Layer", $ARCHIMATE_LEGEND_ORDER )
+    Legend_End()
+!endprocedure
+!procedure Clear_Archimate_Legend()
+    Registry_Set( $REGISTRY_ARCHIMATE_LEGEND_LAYERS, $REGISTRY_DEL )
+!endprocedure
+!procedure Reset_Page_Archimate()
+    Breakpoint_If( "ARCHIMATE_PAGE_RESET_COMPOSITE", ($ARCH_CTX_COUNT > 0), "Resetting page while composite depth=[" + $ARCH_CTX_COUNT + "]" )
+    Clear_Archimate_Legend()
+    Reset_Archimate_Context()
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Colors()
+!global $COLOR_BODY ?= "#ffffff"
+!global $COLOR_TEXT ?= "#000000"
+!global $COLOR_TEXT_LIGHT ?= $COLOR_BODY
+!global $COLOR_TRANSPARENT = "#FFFFFF00"
+!global $COLOR_NONE ?= $COLOR_TRANSPARENT
+!global $COLOR_PRIMARY ?= "#D6EAF8"
+!global $COLOR_PRIMARY_LIGHT ?= "#D6EAF8"
+!global $COLOR_PRIMARY_DARK ?= "#D6EAF8"
+!global $COLOR_WARNING ?= "#FCF3CF"
+!global $COLOR_WARNING_LIGHT ?= "#FCF3CF"
+!global $COLOR_WARNING_DARK ?= "#FCF3CF"
+!global $COLOR_SUCCESS ?= "#D5F5E3"
+!global $COLOR_SUCCESS_LIGHT ?= "#D5F5E3"
+!global $COLOR_SUCCESS_DARK ?= "#D5F5E3"
+!global $COLOR_ERROR ?= "#CD0000"
+!global $COLOR_ERROR_LIGHT ?= "#CD0000"
+!global $COLOR_ERROR_DARK ?= "#CD0000"
+!global $COLOR_BACKGROUND ?= $COLOR_PRIMARY_LIGHT
+!global $COLOR_BORDER ?= "#5D6D7E"
+!global $COLOR_EMPHASIS ?= "#E0B8D4"
+!global $COLOR_EMPHASIS_LIGHT ?= "#F3D7E8"
+!global $COLOR_EMPHASIS_DARK ?= "#C38AAF"
+!global $COLOR_DISABLED_DARK ?= "#4D4D4D"
+!global $COLOR_DISABLED ?= "#737373"
+!global $COLOR_DISABLED_LIGHT ?= "#737373"
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Fonts()
+!global $NAME_FONT ?= "Segoe UI"
+!global $SIZE_FONT ?= 16
+!global $SIZE_FONT_TITLE ?= 18
+!global $SIZE_FONT_LEGEND ?= 11
+!global $SIZE_FONT_ARROW ?= 11
+!global $COLOR_FONT ?= $COLOR_TEXT
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Spacing()
+!global $SPACING_UNIT_ENABLED ?= %true()
+!global $SPACING_UNIT ?= 5
+!if $SPACING_UNIT_ENABLED == %true()
+    !global $SPACING_0 ?= 0
+    !global $SPACING_1 ?= ($SPACING_UNIT * 1)
+    !global $SPACING_2 ?= ($SPACING_UNIT * 2)
+    !global $SPACING_3 ?= ($SPACING_UNIT * 3)
+    !global $SPACING_4 ?= ($SPACING_UNIT * 4)
+    !global $SPACING_5 ?= ($SPACING_UNIT * 6)
+!else
+    !global $SPACING_0 ?= 0
+    !global $SPACING_1 ?= 5
+    !global $SPACING_2 ?= 10
+    !global $SPACING_3 ?= 15
+    !global $SPACING_4 ?= 20
+    !global $SPACING_5 ?= 30
+!endif
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Borders()
+!global $BORDER_THICKNESS ?= 1
+!global $BORDER_THICKNESS_BOLD ?= 2
+!global $BORDER_THICKNESS_POD ?= 2
+!global $BORDER_0 ?= 0
+!global $BORDER_1 ?= 1
+!global $BORDER_2 ?= 2
+!global $BORDER_3 ?= 3
+!global $BORDER_4 ?= 4
+!global $BORDER_5 ?= 5
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Corners()
+!global $ROUND_SHARP ?= 1
+!global $ROUND_DIAGONAL ?= 12
+!global $ROUND_STANDARD ?= 25
+!global $ROUND_LARGE ?= 80
+!global $ROUND_0 ?= $ROUND_SHARP
+!global $ROUND_1 ?= 6
+!global $ROUND_2 ?= $ROUND_DIAGONAL
+!global $ROUND_3 ?= 18
+!global $ROUND_4 ?= $ROUND_STANDARD
+!global $ROUND_5 ?= 40
+!global $ROUND_PILL ?= 100
+!global $ROUND_CIRCLE ?= 200
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Widths()
+!global $WIDTH_XS ?= 75
+!global $WIDTH_SM ?= 150
+!global $WIDTH_MD ?= 250
+!global $WIDTH_LG ?= 400
+!global $WIDTH_XL ?= 600
+!global $WIDTH_XXL ?= 800
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Heights()
+!global $HEIGHT_XS ?= 50
+!global $HEIGHT_SM ?= 75
+!global $HEIGHT_MD ?= 100
+!global $HEIGHT_LG ?= 150
+!global $HEIGHT_XL ?= 200
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Element()
+    !global $COLOR_FONT_ELEMENT ?= $COLOR_FONT
+    !global $STYLE_FONT_ELEMENT ?= ""
+    !global $COLOR_BACKGROUND_ELEMENT_COMPOSITE ?= $COLOR_PRIMARY_LIGHT
+    !global $COLOR_BACKGROUND_ELEMENT ?= $COLOR_PRIMARY
+    !global $ALIGNMENT_HORIZONTAL_ELEMENT ?= "left"
+    !global $MARGIN_ELEMENT ?= 20
+    !global $PADDING_ELEMENT ?= 15
+    Inherit_If("ROUND_CORNER_ELEMENT","ROUND_CORNER") 
+    Inherit_If("COLOR_LINE_ELEMENT","COLOR_LINE") 
+    Inherit_If("SIZE_LINE_ELEMENT","SIZE_LINE")
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Layout()
+!global $NODE_SEP ?= 75
+!global $RANK_SEP ?= 75
+!global $ROUND_CORNER ?= 10
+!global $MARGIN ?= 15
+!global $PADDING ?= 10
+!global $SHADOWING ?= %false()
+!global $LINE_TYPE ?= "ortho"
+!global $COLOR_LINE ?= $COLOR_TEXT
+!global $SIZE_LINE ?= 2
+!global $DEFAULT_TEXT_ALIGNMENT ?= "center"
+!global $COLOR_BORDER_RECTANGLE ?= $COLOR_NONE
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Icons()
+!global $STYLE_ACTOR ?= awesome
+!global $COLOR_BORDER_ACTOR ?= "#0D47A1"
+!global $SIZE_BORDER_ACTOR ?= 3
+!global $COLOR_BACKGROUND_ACTOR ?= "#90CAF9"
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Title()
+!global $COLOR_FONT_TITLE ?= $COLOR_FONT
+!global $STYLE_FONT_TITLE ?= "bold"
+!global $COLOR_BACKGROUND_TITLE ?= $COLOR_PRIMARY_LIGHT
+!global $ALIGNMENT_HORIZONTAL_TITLE ?= "center"
+!global $MARGIN_TITLE ?= 20
+!global $PADDING_TITLE ?= 15
+Inherit_If("ROUND_CORNER_TITLE", "ROUND_CORNER")
+Inherit_If("COLOR_LINE_TITLE", "COLOR_LINE")
+Inherit_If("SIZE_LINE_TITLE", "SIZE_LINE")
+!endprocedure
+!procedure Load_Lib_Theme_StdLib_Component()
+    !global $COLOR_FONT_COMPONENT ?= $COLOR_FONT
+    !global $STYLE_FONT_COMPONENT ?= ""
+    !global $COLOR_BACKGROUND_COMPONENT ?= $COLOR_PRIMARY
+    !global $ALIGNMENT_HORIZONTAL_COMPONENT ?= "left"
+    !global $MARGIN_COMPONENT ?= 20
+    !global $PADDING_COMPONENT ?= 15
+    Inherit_If("ROUND_CORNER_COMPONENT","ROUND_CORNER") 
+    Inherit_If("COLOR_LINE_COMPONENT","COLOR_LINE") 
+    Inherit_If("SIZE_LINE_COMPONENT","SIZE_LINE")
+!endprocedure
+!procedure Load_Lib_Theme_Stdlib()
+    Load_Lib_Theme_StdLib_Colors()
+    Load_Lib_Theme_StdLib_Fonts()
+    Load_Lib_Theme_StdLib_Spacing()
+    Load_Lib_Theme_StdLib_Borders()
+    Load_Lib_Theme_StdLib_Corners()
+    Load_Lib_Theme_StdLib_Widths()
+    Load_Lib_Theme_StdLib_Heights()
+    Load_Lib_Theme_StdLib_Layout()
+    Load_Lib_Theme_StdLib_Element()
+    Load_Lib_Theme_StdLib_Icons()
+    Load_Lib_Theme_StdLib_Title()
+    Load_Lib_Theme_StdLib_Component()
+!endprocedure
+!procedure Load_Lib_Theme_Archimate_Fonts()
+    !global $ARCH_DEFAULT_BACKGROUND = $COLOR_BACKGROUND
+    !global $ARCH_DEFAULT_FONT ?= $NAME_FONT
+    !global $ARCH_DEFAULT_FONTSIZE ?= $SIZE_FONT
+    !global $ARCH_TYPE_FONTSIZE ?= $SIZE_FONT - 3
+    !global $ARCH_TYPE_FONTSTYLE ?= "italic"
+    !global $ARCH_LABEL_FONTSTYLE ?= "bold"
+    !global $ARCH_LABEL_FONTSIZE ?= $ARCH_DEFAULT_FONTSIZE
+    !global $ARCH_RELATIONSHIP_FONTSIZE ?= $SIZE_FONT_ARROW
+    !global $ARCH_TECHNOLOGY_TYPE_FONTSIZE ?= $SIZE_FONT_LEGEND
+    !global $ARCHIMATE_TYPE_IN_LABEL_PREFIX ?= "("
+    !global $ARCHIMATE_TYPE_IN_LABEL_SUFFIX ?= ")"
+!endprocedure
+!procedure Load_Lib_Theme_Archimate_Colors()
+    !global $COLOR_MOTIVATION ?= "#CCCCFF"
+    !global $COLOR_STRATEGY ?= "#F5DEAA"
+    !global $COLOR_BUSINESS ?= "#FFFF99"
+    !global $COLOR_APPLICATION ?= "#99FFFF"
+    !global $COLOR_LOGICAL ?= "#99FFFF"
+    !global $COLOR_TECHNOLOGY ?= "#AFFFAF"
+    !global $COLOR_PHYSICAL ?= $COLOR_TECHNOLOGY
+    !global $COLOR_IMPLEMENTATION ?= "#FFE0E0"
+    !global $COLOR_HIGHLIGHTED ?= "#005DEF"
+    !global $COLOR_NEW ?= "#005700"
+    !global $COLOR_MOTIVATION_LIGHT ?= $lighten_color($COLOR_MOTIVATION)
+    !global $COLOR_MOTIVATION_DARK ?= $darken_color($COLOR_MOTIVATION)
+    !global $COLOR_STRATEGY_LIGHT ?= $lighten_color($COLOR_STRATEGY)
+    !global $COLOR_STRATEGY_DARK ?= $darken_color($COLOR_STRATEGY)
+    !global $COLOR_BUSINESS_LIGHT ?= $lighten_color($COLOR_BUSINESS)
+    !global $COLOR_BUSINESS_DARK ?= $darken_color($COLOR_BUSINESS)
+    !global $COLOR_APPLICATION_LIGHT ?= $lighten_color($COLOR_APPLICATION)
+    !global $COLOR_APPLICATION_DARK ?= $darken_color($COLOR_APPLICATION)
+    !global $COLOR_TECHNOLOGY_LIGHT ?= $lighten_color($COLOR_TECHNOLOGY)
+    !global $COLOR_TECHNOLOGY_DARK ?= $darken_color($COLOR_TECHNOLOGY)
+    !global $COLOR_PHYSICAL_LIGHT ?= $lighten_color($COLOR_PHYSICAL)
+    !global $COLOR_PHYSICAL_DARK ?= $darken_color($COLOR_PHYSICAL)
+    !global $COLOR_IMPLEMENTATION_LIGHT ?= $lighten_color($COLOR_IMPLEMENTATION)
+    !global $COLOR_IMPLEMENTATION_DARK ?= $darken_color($COLOR_IMPLEMENTATION)
+    !global $COLOR_HIGHLIGHTED_LIGHT ?= $lighten_color($COLOR_HIGHLIGHTED)
+    !global $COLOR_HIGHLIGHTED_DARK ?= $darken_color($COLOR_HIGHLIGHTED)
+    !global $COLOR_NEW_LIGHT ?= $lighten_color($COLOR_NEW)
+    !global $COLOR_NEW_DARK ?= $darken_color($COLOR_NEW)
+!endprocedure
+!procedure Build_Lib_Derived_Variables_Archimate()
+    !global $ARCH_NONE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_NONE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_FILLCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_BORDERCOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_INVISIBLE_COMPOSITECOLOR = $COLOR_TRANSPARENT
+    !global $ARCH_MOTIVATION_FILLCOLOR = $resolve_literal_color($COLOR_MOTIVATION)
+    !global $ARCH_MOTIVATION_BORDERCOLOR = $resolve_literal_color($COLOR_MOTIVATION_DARK)
+    !global $ARCH_MOTIVATION_COMPOSITECOLOR = $resolve_literal_color($COLOR_MOTIVATION_LIGHT)
+    !global $ARCH_STRATEGY_FILLCOLOR = $resolve_literal_color($COLOR_STRATEGY)
+    !global $ARCH_STRATEGY_BORDERCOLOR = $resolve_literal_color($COLOR_STRATEGY_DARK)
+    !global $ARCH_STRATEGY_COMPOSITECOLOR = $resolve_literal_color($COLOR_STRATEGY_LIGHT)
+    !global $ARCH_BUSINESS_FILLCOLOR = $resolve_literal_color($COLOR_BUSINESS)
+    !global $ARCH_BUSINESS_BORDERCOLOR = $resolve_literal_color($COLOR_BUSINESS_DARK)
+    !global $ARCH_BUSINESS_COMPOSITECOLOR = $resolve_literal_color($COLOR_BUSINESS_LIGHT)
+    !global $ARCH_APPLICATION_FILLCOLOR = $resolve_literal_color($COLOR_APPLICATION)
+    !global $ARCH_APPLICATION_BORDERCOLOR = $resolve_literal_color($COLOR_APPLICATION_DARK)
+    !global $ARCH_APPLICATION_COMPOSITECOLOR = $resolve_literal_color($COLOR_APPLICATION_LIGHT)
+    !global $ARCH_TECHNOLOGY_FILLCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY)
+    !global $ARCH_TECHNOLOGY_BORDERCOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_DARK)
+    !global $ARCH_TECHNOLOGY_COMPOSITECOLOR = $resolve_literal_color($COLOR_TECHNOLOGY_LIGHT)
+    !global $ARCH_PHYSICAL_FILLCOLOR = $ARCH_TECHNOLOGY_FILLCOLOR
+    !global $ARCH_PHYSICAL_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
+    !global $ARCH_PHYSICAL_COMPOSITECOLOR = $ARCH_TECHNOLOGY_COMPOSITECOLOR
+    !global $ARCH_IMPLEMENTATION_FILLCOLOR = $ARCH_TECHNOLOGY_FILLCOLOR
+    !global $ARCH_IMPLEMENTATION_BORDERCOLOR = $ARCH_TECHNOLOGY_BORDERCOLOR
+    !global $ARCH_IMPLEMENTATION_COMPOSITECOLOR = $ARCH_TECHNOLOGY_COMPOSITECOLOR
+    !global $ARCH_OTHER_FILLCOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    !global $ARCH_OTHER_COMPOSITECOLOR = $resolve_literal_color($COLOR_EMPHASIS_LIGHT)
+    !global $ARCH_OTHER_BORDERCOLOR = $resolve_literal_color($COLOR_EMPHASIS_DARK)
+    !global $ARCH_JUNCTIONOR_FILLCOLOR = $resolve_literal_color($COLOR_BODY)
+    !global $ARCH_JUNCTIONAND_FILLCOLOR = $resolve_literal_color($COLOR_TEXT)
+    !global $ARCH_GROUP_FILLCOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_GROUP_COMPOSITECOLOR = $resolve_literal_color($COLOR_DISABLED_LIGHT)
+    !global $ARCH_FOLDER_LINECOLOR = $resolve_literal_color($COLOR_BORDER)
+    !global $ARCH_RELATIONSHIP_LINECOLOR = $resolve_literal_color($COLOR_LINE)
+    !global $ARCH_RELATIONSHIP_FONTCOLOR = $resolve_literal_color($COLOR_TEXT)
+!endprocedure
+!procedure Load_Lib_Theme_Archimate_Corners()
+    !global $ARCH_SHARP_CORNER = $ROUND_SHARP
+    !global $ARCH_DIAGONAL_CORNER = $ROUND_DIAGONAL
+    !global $ARCH_ROUND_CORNER = $ROUND_STANDARD
+    !global $ARCH_ROUND_CORNER_LARGE = $ROUND_LARGE
+!endprocedure
+!procedure Load_Lib_Theme_Archimate_Widths()
+    !global $ARCH_MINIMUM_WIDTH = $WIDTH_SM
+    !global $ARCH_MAXIMUM_WIDTH = $WIDTH_XL
+!endprocedure
+!procedure Load_Lib_Theme_Archimate()
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        Register_Archimate_Corruption_Variables()
+        Register_Lib_Theme_Derived("Archimate")
+        Load_Lib_Theme_Archimate_Colors()
+        Breakpoint_If( "ARCH_MOTIVATION_VALUE", %true(), "AFTER_MAPPED=[" + $ARCH_MOTIVATION_FILLCOLOR + "]" )
+        Load_Lib_Theme_Archimate_Fonts()
+        Load_Lib_Theme_Archimate_Corners()
+        Load_Lib_Theme_Archimate_Widths()
+    !endif
+!endprocedure 
+!procedure Load_Lib_Skinparams_Stdlib()
+    skinparam linetype $LINE_TYPE
+    skinparam nodesep $NODE_SEP
+    skinparam ranksep $RANK_SEP
+    !if ($SKINPARAM_ENABLED)
+    !endif
+!endprocedure
+!procedure Load_Lib_Skinparams_Archimate()
+    !if ($SKINPARAM_ENABLED)
+    !endif
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Utilities()
+<style>
+.p0 { Padding $SPACING_0 }
+.p1 { Padding $SPACING_1 }
+.p2 { Padding $SPACING_2 }
+.p3 { Padding $SPACING_3 }
+.p4 { Padding $SPACING_4 }
+.p5 { Padding $SPACING_5 }
+.pt0 { PaddingTop $SPACING_0 }
+.pt1 { PaddingTop $SPACING_1 }
+.pt2 { PaddingTop $SPACING_2 }
+.pt3 { PaddingTop $SPACING_3 }
+.pt4 { PaddingTop $SPACING_4 }
+.pt5 { PaddingTop $SPACING_5 }
+.pb0 { PaddingBottom $SPACING_0 }
+.pb1 { PaddingBottom $SPACING_1 }
+.pb2 { PaddingBottom $SPACING_2 }
+.pb3 { PaddingBottom $SPACING_3 }
+.pb4 { PaddingBottom $SPACING_4 }
+.pb5 { PaddingBottom $SPACING_5 }
+.pl0 { PaddingLeft $SPACING_0 }
+.pl1 { PaddingLeft $SPACING_1 }
+.pl2 { PaddingLeft $SPACING_2 }
+.pl3 { PaddingLeft $SPACING_3 }
+.pl4 { PaddingLeft $SPACING_4 }
+.pl5 { PaddingLeft $SPACING_5 }
+.pr0 { PaddingRight $SPACING_0 }
+.pr1 { PaddingRight $SPACING_1 }
+.pr2 { PaddingRight $SPACING_2 }
+.pr3 { PaddingRight $SPACING_3 }
+.pr4 { PaddingRight $SPACING_4 }
+.pr5 { PaddingRight $SPACING_5 }
+.m0 { Margin $SPACING_0 }
+.m1 { Margin $SPACING_1 }
+.m2 { Margin $SPACING_2 }
+.m3 { Margin $SPACING_3 }
+.m4 { Margin $SPACING_4 }
+.m5 { Margin $SPACING_5 }
+.mt0 { MarginTop $SPACING_0 }
+.mt1 { MarginTop $SPACING_1 }
+.mt2 { MarginTop $SPACING_2 }
+.mt3 { MarginTop $SPACING_3 }
+.mt4 { MarginTop $SPACING_4 }
+.mt5 { MarginTop $SPACING_5 }
+.mb0 { MarginBottom $SPACING_0 }
+.mb1 { MarginBottom $SPACING_1 }
+.mb2 { MarginBottom $SPACING_2 }
+.mb3 { MarginBottom $SPACING_3 }
+.mb4 { MarginBottom $SPACING_4 }
+.mb5 { MarginBottom $SPACING_5 }
+.ml0 { MarginLeft $SPACING_0 }
+.ml1 { MarginLeft $SPACING_1 }
+.ml2 { MarginLeft $SPACING_2 }
+.ml3 { MarginLeft $SPACING_3 }
+.ml4 { MarginLeft $SPACING_4 }
+.ml5 { MarginLeft $SPACING_5 }
+.mr0 { MarginRight $SPACING_0 }
+.mr1 { MarginRight $SPACING_1 }
+.mr2 { MarginRight $SPACING_2 }
+.mr3 { MarginRight $SPACING_3 }
+.mr4 { MarginRight $SPACING_4 }
+.mr5 { MarginRight $SPACING_5 }
+.border0 { LineThickness $BORDER_0 }
+.border1 { LineThickness $BORDER_1 }
+.border2 { LineThickness $BORDER_2 }
+.border3 { LineThickness $BORDER_3 }
+.border4 { LineThickness $BORDER_4 }
+.border5 { LineThickness $BORDER_5 }
+.rounded0 { RoundCorner $ROUND_0 }
+.rounded1 { RoundCorner $ROUND_1 }
+.rounded2 { RoundCorner $ROUND_2 }
+.rounded3 { RoundCorner $ROUND_3 }
+.rounded4 { RoundCorner $ROUND_4 }
+.rounded5 { RoundCorner $ROUND_5 }
+.roundedPill {
+    RoundCorner $ROUND_PILL
+}
+.roundedCircle {
+    RoundCorner $ROUND_CIRCLE
+}
+.shadow {
+    Shadowing true
+}
+.noShadow {
+    Shadowing false
+}
+.wXs { MinimumWidth $WIDTH_XS }
+.wSm { MinimumWidth $WIDTH_SM }
+.wMd { MinimumWidth $WIDTH_MD }
+.wLg { MinimumWidth $WIDTH_LG }
+.wXl { MinimumWidth $WIDTH_XL }
+.wXxl { MinimumWidth $WIDTH_XXL }
+.hXs { MinimumHeight $HEIGHT_XS }
+.hSm { MinimumHeight $HEIGHT_SM }
+.hMd { MinimumHeight $HEIGHT_MD }
+.hLg { MinimumHeight $HEIGHT_LG }
+.hXl { MinimumHeight $HEIGHT_XL }
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Transparent()
+<style>
+.none {
+    BackgroundColor $COLOR_NONE
+}
+.transparent {
+    BackgroundColor $COLOR_NONE
+}
+.invisible {
+    BackgroundColor $COLOR_NONE
+    FontColor $COLOR_NONE
+    LineColor $COLOR_NONE
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Document_Layout_Model()
+<style>
+.diagramWidth {
+    MinimumWidth $DOC_WIDTH
+}
+.documentRegion {
+    RoundCorner 0
+    Padding 0
+    Margin 0
+    FontSize 1
+    LineThickness 0
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+}
+.documentRegionHeader {
+}
+.documentRegionBody {
+}
+.documentRegionFooter {
+}
+.layoutAnchor {
+    MinimumHeight 1
+    MaximumHeight 1
+    Padding 0
+    Margin 0
+    LineThickness 0
+    BackgroundColor transparent
+    LineColor transparent
+    FontColor transparent
+    FontSize 1
+}
+.layoutAnchorHeader {
+}
+.layoutAnchorBody {
+}
+.layoutAnchorFooter {
+}
+.documentRegionDebug {
+    BackgroundColor #FFF8DC
+    LineColor #FF0000
+    FontColor #000000
+    FontSize 16
+    LineThickness 2
+}
+.layoutAnchorDebug {
+    BackgroundColor #ADD8E6
+    LineColor #0000FF
+    FontColor #0000FF
+    FontSize 12
+    LineThickness 1
+    MinimumHeight 15
+}
+</style>
+!endprocedure 
+!procedure Write_Lib_Style_Stdlib_Card()
+<style>
+.card {
+    Padding $SPACING_3
+    Margin $SPACING_2
+    RoundCorner $ROUND_2
+    LineThickness $BORDER_1
+    Shadowing true
+}
+.cardCompact {
+    Padding $SPACING_2
+    Margin $SPACING_1
+    RoundCorner $ROUND_1
+    LineThickness $BORDER_1
+    Shadowing true
+}
+.cardLg {
+    Padding $SPACING_4
+    Margin $SPACING_3
+    RoundCorner $ROUND_3
+    LineThickness $BORDER_2
+    Shadowing true
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Panel()
+<style>
+.panel {
+    Padding $SPACING_4
+    Margin $SPACING_3
+    RoundCorner $ROUND_2
+    LineThickness $BORDER_2
+}
+.panelCompact {
+    Padding $SPACING_2
+    Margin $SPACING_2
+    RoundCorner $ROUND_1
+    LineThickness $BORDER_1
+}
+.panelLg {
+    Padding $SPACING_5
+    Margin $SPACING_4
+    RoundCorner $ROUND_3
+    LineThickness $BORDER_3
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Containers()
+<style>
+.boundary {
+    Padding $SPACING_5
+    Margin $SPACING_3
+    RoundCorner $ROUND_2
+    LineThickness $BORDER_2
+}
+.boundaryLg {
+    Padding $SPACING_5
+    Margin $SPACING_5
+    RoundCorner $ROUND_4
+    LineThickness $BORDER_3
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Title()
+!$tBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_TITLE)
+!$tFontColor = $resolve_style_color($COLOR_FONT_TITLE, $COLOR_BACKGROUND_TITLE, $COLOR_BACKGROUND, $COLOR_BODY )
+<style>
+title {
+    BackgroundColor $tBackgroundColor
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
+    FontColor $tFontColor
+    FontStyle $STYLE_FONT_TITLE
+    LineColor $tBackgroundColor
+    LineThickness $SIZE_LINE_TITLE
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+.title {
+    BackgroundColor $tBackgroundColor
+    HorizontalAlignment $ALIGNMENT_HORIZONTAL_TITLE
+    FontSize $SIZE_FONT_TITLE
+    FontColor $tFontColor
+    FontStyle $STYLE_FONT_TITLE
+    LineColor $tBackgroundColor
+    LineThickness $SIZE_LINE_TITLE
+    RoundCorner $ROUND_CORNER_TITLE
+    Margin $MARGIN_TITLE
+    Padding $PADDING_TITLE
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Element()
+    !$cBackgroundColor = $resolve_style_color($COLOR_BACKGROUND_ELEMENT)
+    !$cFontColor = $resolve_style_color($COLOR_FONT_ELEMENT, $cBackgroundColor, $COLOR_BACKGROUND_ELEMENT, $COLOR_BACKGROUND, $COLOR_BODY )
+    !$ccBackgroundColor = $resolve_style_color("DARKEN", $cBackgroundColor)
+    !$ccFontColor = $resolve_style_color("AUTO", $ccBackgroundColor)
+<style>
+element {
+    BackgroundColor $cBackgroundColor
+    LineColor $ccFontColor
+    FontColor $cFontColor
+    LineThickness $SIZE_LINE_ELEMENT
+    RoundCorner $ROUND_CORNER_ELEMENT
+    Margin $MARGIN_ELEMENT
+    Padding $PADDING_ELEMENT
+}
+component {
+}
+.composite-container {
+    BackgroundColor $ccBackgroundColor
+    LineColor $ccBackgroundColor
+    FontColor $ccFontColor
+}
+</style>
+!endprocedure
+!procedure Write_Lib_Style_Stdlib_Component()
+!endprocedure
+!procedure Load_Lib_Styles_Stdlib()
+    Write_Lib_Style_Stdlib_Utilities()
+    Write_Lib_Style_Stdlib_Transparent()
+    Write_Lib_Style_Stdlib_Document_Layout_Model()
+    Write_Lib_Style_Stdlib_Card()
+    Write_Lib_Style_Stdlib_Panel()
+    Write_Lib_Style_Stdlib_Containers()
+    Write_Lib_Style_Stdlib_Title()
+    Write_Lib_Style_Stdlib_Element()
+    Write_Lib_Style_Stdlib_Component()
+!endprocedure
+!procedure Write_Lib_Style_Archimate_Element()
+    !$defaultBg = ""
+    !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_FILLCOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
+    !endif
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_FILLCOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
+    !endif
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_FILLCOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
+    !endif
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_FILLCOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
+    !endif
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_FILLCOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
+    !endif
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_FILLCOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
+    !endif
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_FILLCOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
+    !endif
+    !$otherBg = $resolve_style_color($ARCH_OTHER_FILLCOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
+    !endif
+    <style>
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationLc
+    }
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyLc
+    }
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessLc
+    }
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationLc
+    }
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyLc
+    }
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalLc
+    }
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationLc
+    }
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherLc
+    }
+</style>
+!if ($defaultBg != "")
+    !$defaultFg = $resolve_style_color("AUTO", $defaultBg)
+    <style>
+        element {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+        rectangle {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+        .default {
+            BackgroundColor $defaultBg
+            FontColor $defaultFg
+            LineColor $defaultLc
+        }
+    </style>
+!endif
+!endprocedure
+!procedure Write_Lib_Style_Archimate_Composite()
+    !$defaultBg = ""
+    !$defaultFg = ""
+    !$ARCHIMATE_DEFAULT_LAYER = %upper("" + $ARCHIMATE_DEFAULT_LAYER + "")
+    !$motivationBg = $resolve_style_color($ARCH_MOTIVATION_COMPOSITECOLOR)
+    !$motivationFg = $resolve_style_color("AUTO", $motivationBg)
+    !$motivationLc = $first_defined($resolve_style_color($ARCH_MOTIVATION_BORDERCOLOR), $motivationFg )
+    !if ($ARCHIMATE_DEFAULT_LAYER == "MOTIVATION")
+        !$defaultBg = $motivationBg
+        !$defaultFg = $motivationFg
+        !$defaultLc = $motivationLc
+    !endif
+    !$strategyBg = $resolve_style_color($ARCH_STRATEGY_COMPOSITECOLOR)
+    !$strategyFg = $resolve_style_color("AUTO", $strategyBg)
+    !$strategyLc = $first_defined($resolve_style_color($ARCH_STRATEGY_BORDERCOLOR ), $strategyFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "STRATEGY")
+        !$defaultBg = $strategyBg
+        !$defaultFg = $strategyFg
+        !$defaultLc = $strategyLc
+    !endif
+    !$businessBg = $resolve_style_color($ARCH_BUSINESS_COMPOSITECOLOR)
+    !$businessFg = $resolve_style_color("AUTO", $businessBg)
+    !$businessLc = $first_defined($darken_color($resolve_style_color($ARCH_BUSINESS_BORDERCOLOR ), "DARKEN_10"), $businessFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "BUSINESS")
+        !$defaultBg = $businessBg
+        !$defaultFg = $businessFg
+        !$defaultLc = $businessLc
+    !endif
+    !$applicationBg = $resolve_style_color($ARCH_APPLICATION_COMPOSITECOLOR)
+    !$applicationFg = $resolve_style_color("AUTO", $applicationBg)
+    !$applicationLc = $first_defined($resolve_style_color($ARCH_APPLICATION_BORDERCOLOR ), $applicationFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "APPLICATION")
+        !$defaultBg = $applicationBg
+        !$defaultFg = $applicationFg
+        !$defaultLc = $applicationLc
+    !endif
+    !$technologyBg = $resolve_style_color($ARCH_TECHNOLOGY_COMPOSITECOLOR)
+    !$technologyFg = $resolve_style_color("AUTO", $technologyBg)
+    !$technologyLc = $first_defined($resolve_style_color( $ARCH_TECHNOLOGY_BORDERCOLOR ), $technologyFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "TECHNOLOGY")
+        !$defaultBg = $technologyBg
+        !$defaultFg = $technologyFg
+        !$defaultLc = $technologyLc
+    !endif
+    !$physicalBg = $resolve_style_color($ARCH_PHYSICAL_COMPOSITECOLOR)
+    !$physicalFg = $resolve_style_color("AUTO", $physicalBg)
+    !$physicalLc = $first_defined($resolve_style_color( $ARCH_PHYSICAL_BORDERCOLOR ), $physicalFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "PHYSICAL")
+        !$defaultBg = $physicalBg
+        !$defaultFg = $physicalFg
+        !$defaultLc = $physicalLc
+    !endif
+    !$implementationBg = $resolve_style_color($ARCH_IMPLEMENTATION_COMPOSITECOLOR)
+    !$implementationFg = $resolve_style_color("AUTO", $implementationBg)
+    !$implementationLc = $first_defined($resolve_style_color( $ARCH_IMPLEMENTATION_BORDERCOLOR ), $implementationFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "IMPLEMENTATION")
+        !$defaultBg = $implementationBg
+        !$defaultFg = $implementationFg
+        !$defaultLc = $implementationLc
+    !endif
+    !$otherBg = $resolve_style_color($ARCH_OTHER_COMPOSITECOLOR)
+    !$otherFg = $resolve_style_color("AUTO", $otherBg)
+    !$otherLc = $first_defined($resolve_style_color( $ARCH_OTHER_BORDERCOLOR ), $otherFg)
+    !if ($ARCHIMATE_DEFAULT_LAYER == "OTHER")
+        !$defaultBg = $otherBg
+        !$defaultFg = $otherFg
+        !$defaultLc = $otherLc
+    !endif
+    <style>
+    package {
+    .motivation {
+        BackgroundColor $motivationBg
+        FontColor $motivationFg
+        LineColor $motivationLc
+    }
+    .strategy {
+        BackgroundColor $strategyBg
+        FontColor $strategyFg
+        LineColor $strategyLc
+    }
+    .business {
+        BackgroundColor $businessBg
+        FontColor $businessFg
+        LineColor $businessLc
+    }
+    .application {
+        BackgroundColor $applicationBg
+        FontColor $applicationFg
+        LineColor $applicationLc
+    }
+    .technology {
+        BackgroundColor $technologyBg
+        FontColor $technologyFg
+        LineColor $technologyLc
+    }
+    .physical {
+        BackgroundColor $physicalBg
+        FontColor $physicalFg
+        LineColor $physicalLc
+    }
+    .implementation {
+        BackgroundColor $implementationBg
+        FontColor $implementationFg
+        LineColor $implementationLc
+    }
+    .other {
+        BackgroundColor $otherBg
+        FontColor $otherFg
+        LineColor $otherLc
+    }
+    }
+</style>
+!if ($defaultBg != "") && ($defaultFg != "")
+<style>
+    package {
+        BackgroundColor $defaultBg
+        FontColor $defaultFg
+        LineColor $defaultLc
+    }
+    .composite {
+        Shadowing true
+    }
+    .composite-1 {
+        LineThickness 5
+    }
+    .composite-2 {
+        LineThickness 3
+    }
+    .composite-3 {
+        LineThickness 2
+    }
+</style>
+!endif
+!endprocedure
+!procedure Load_Lib_Styles_Archimate()
+    !if ($ARCHIMATE_LIB_ENABLED == %true() )
+        Write_Lib_Style_Archimate_Element()
+        Write_Lib_Style_Archimate_Composite()
+    !endif
+!endprocedure 
+!procedure Load_Lib_I18n_Stdlib_EN()
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Archimate Layers")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Sample")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Meaning")
+!endprocedure
+!procedure Load_Lib_I18n_Stdlib_FR()
+    Register_Word_If_Missing("LEGEND_TITLE_ARCHIMATE","Couches Archimate")
+    Register_Word_If_Missing("LEGEND_COLUMN_SAMPLE","Exemple")
+    Register_Word_If_Missing("LEGEND_COLUMN_MEANING","Description")
+!endprocedure
+!procedure Load_Lib_I18n_Stdlib()
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Stdlib_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Stdlib_FR()
+    !endif
+!endprocedure 
+!procedure Load_Lib_I18n_Archimate_EN()
+    Register_Word_If_Missing("LAYER_NONE","None")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+    Register_Word_If_Missing("LAYER_MOTIVATION","Motivation Layer")
+    Register_Word_If_Missing("LAYER_STRATEGY","Strategy Layer")
+    Register_Word_If_Missing("LAYER_BUSINESS","Business Layer")
+    Register_Word_If_Missing("LAYER_APPLICATION","Application Layer")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Technology Layer")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Physical Layer")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Implementation Layer")
+    Register_Word_If_Missing("LAYER_OTHER","Other Layer")
+!endprocedure
+!procedure Load_Lib_I18n_Archimate_FR()
+    Register_Word_If_Missing("LAYER_NONE","Aucune")
+    Register_Word_If_Missing("LAYER_INVISIBLE","Invisible")
+    Register_Word_If_Missing("LAYER_MOTIVATION","Couche de motivation")
+    Register_Word_If_Missing("LAYER_STRATEGY","Couche stratégique")
+    Register_Word_If_Missing("LAYER_BUSINESS","Couche métier")
+    Register_Word_If_Missing("LAYER_APPLICATION","Couche applicative")
+    Register_Word_If_Missing("LAYER_TECHNOLOGY","Couche technologique")
+    Register_Word_If_Missing("LAYER_PHYSICAL","Couche physique")
+    Register_Word_If_Missing("LAYER_IMPLEMENTATION","Couche de mise en œuvre")
+    Register_Word_If_Missing("LAYER_OTHER","Autre couche")
+!endprocedure
+!procedure Load_Lib_I18n_Archimate()
+    !if $I18N_CODE == "EN"
+        Load_Lib_I18n_Archimate_EN()
+    !elseif $I18N_CODE == "FR"
+        Load_Lib_I18n_Archimate_FR()
+    !endif
+!endprocedure 
+!procedure Load_Lib_Themes()
+    Load_Lib_Theme_BEFORE()
+    Load_Lib_Theme_Stdlib()
+    Load_Lib_Theme_Archimate()
+    Load_Registered_Themes()
+    Build_Registered_Theme_Derived_Variables()
+    Repair_Lib_Corruption()
+    !if ($CORRUPTION_DIAGNOSTICS) 
+        Detect_Lib_Corruption() 
+    !endif
+    Load_Lib_Theme_AFTER()
+!endprocedure
+!procedure Load_Lib_Skinparams()
+    Load_Lib_Skinparams_BEFORE()
+    Load_Lib_Skinparams_Stdlib()
+    Load_Lib_Skinparams_Archimate()
+    Load_Registered_Skinparams()
+    Load_Lib_Skinparams_AFTER()
+!endprocedure
+!procedure Load_Lib_Styles()
+    Load_Lib_Styles_BEFORE()
+    Load_Lib_Styles_Stdlib()
+    Load_Lib_Styles_Archimate()
+    Load_Registered_Styles()
+    Load_Lib_Styles_AFTER()
+!endprocedure
+!procedure Load_Lib_I18n()
+    Load_Lib_I18n_BEFORE()
+    Load_Lib_I18n_Stdlib()
+    Load_Lib_I18n_Archimate()
+    Load_Registered_I18n()
+    Load_Lib_I18n_AFTER()
+!endprocedure
+!procedure Load_Lib_Page_Resets()
+    Register_Lib_Page_Reset("Archimate")
+!endprocedure
+!procedure Load_Lib_All()
+    Load_Lib_Themes()
+    Load_Lib_Skinparams()
+    Load_Lib_Styles()
+    Load_Lib_I18n()
+    Load_Lib_Page_Resets()
+!endprocedure
