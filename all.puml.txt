@@ -1,7 +1,7 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-27 11:22:10 EST
+' Generated on: 2026-11-27 11:35:11 EST
 ' Build Commit Hash: caa5ecf9d7f7a6b29a6c712a4b18ad09c41d2307
 ' Build Commit Comment: legend and diagramModel
 ' ========================================================
@@ -329,6 +329,18 @@
     !endif
     !return "??" + %upper($key) + "??"
 !endfunction
+!function $Document_DebugStereo($debug_tf=$DOC_DEBUG)
+    !if ($debug_tf)
+        !return "<<documentRegionDebug>>"
+    !endif
+    !return ""
+!endfunction
+!function $Document_LayoutAnchorDebugStereo($debug_tf=$DOC_DEBUG)
+    !if ($debug_tf)
+        !return "<<layoutAnchorDebug>>"
+    !endif
+    !return ""
+!endfunction
 !procedure Document_Header($debug_tf=$DOC_DEBUG)
 top to bottom direction
 !$debug_header = " "
@@ -373,7 +385,7 @@ top to bottom direction
 !$debug_footer = " "
 !$debug_anchor = " "
 !if ($debug_tf) 
-    !$debug_header = "Document_Footer"
+    !$debug_footer = "Document_Footer"
     !$debug_anchor = "Document_Footer_Anchor"
     rectangle $debug_footer as DOC_FOOTER <<documentRegion>><<documentRegionFooter>><<documentRegionDebug>> {
         card $debug_anchor as DOC_FOOTER_TOP <<layoutAnchor>><<layoutAnchorFooter>><<diagramWidth>>

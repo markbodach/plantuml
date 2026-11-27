@@ -23,9 +23,9 @@ theme-panelapp.puml
 
 ## Build Metadata
 
-* Generated on: **2026-11-27 11:35:11 EST**
-* Build Commit Hash: **caa5ecf9d7f7a6b29a6c712a4b18ad09c41d2307**
-* Build Commit Comment: **legend and diagramModel**
+* Generated on: **2026-11-27 14:21:14 EST**
+* Build Commit Hash: **2b933b1bab603ddf1530f9c8c75892119ad00407**
+* Build Commit Comment: **diagram layout model**
 
 ## Usage
 

@@ -1,16 +1,17 @@
-!function $Document_DebugStereo($debug_tf=$DOC_DEBUG)
-    !if ($debug_tf)
-        !return "<<documentRegionDebug>>"
-    !endif
-    !return ""
-!endfunction
 
-!function $Document_LayoutAnchorDebugStereo($debug_tf=$DOC_DEBUG)
+!procedure Document_CreateAnchor($name, $alias, $stereotype, $debug_tf)
     !if ($debug_tf)
-        !return "<<layoutAnchorDebug>>"
+        card $name as $alias <<layoutAnchor>> <<$stereotype>> <<layoutAnchorDebug>>
+    !else
+        card "" as $alias <<layoutAnchor>> <<$stereotype>>
     !endif
-    !return ""
-!endfunction
+!endprocedure
+
+!procedure Document_CreateRel($top, $bottom)
+
+    $top -[hidden]down-> $bottom
+
+!endprocedure
 
 
 !procedure Document_Header($debug_tf=$DOC_DEBUG)
@@ -23,12 +24,10 @@ top to bottom direction
     !$debug_header = "Document_Header"
     !$debug_anchor = "Document_Header_Anchor"
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>><<documentRegionHeader>><<documentRegionDebug>> {
-        card "$debug_anchor" as DOC_HEADER_ANCHOR <<layoutAnchor>><<layoutAnchorHeader>><<diagramWidth>><<layoutAnchorDebug>>
 !else 
     rectangle "$debug_header" as DOC_HEADER <<documentRegion>><<documentRegionHeader>> {
-        card "$debug_anchor" as DOC_HEADER_ANCHOR <<layoutAnchor>><<layoutAnchorHeader>><<diagramWidth>>
-
-!endif 
+!endif
+Document_CreateAnchor($debug_anchor, DOC_HEADER_ANCHOR, layoutAnchorHeader, $debug_tf)
 !endprocedure
 
 !procedure Document_HeaderEnd()
@@ -36,29 +35,30 @@ top to bottom direction
 !endprocedure
 
 !procedure Document_Body($debug_tf=$DOC_DEBUG)
-!$debug_body = " "
-!$debug_anchor = " "
-!if ($debug_tf) 
-    !$debug_body = "Document_Body"
-    !$debug_anchor = "Document_Body_Anchor_Top"
-    rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>><<documentRegionDebug>> {
-        card "$debug_anchor" as DOC_BODY_TOP <<layoutAnchor>><<layoutAnchorBody>><<diagramWidth>><<layoutAnchorDebug>>
-!else 
-    rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>> {
-        card "$debug_anchor" as DOC_BODY_TOP <<layoutAnchor>><<layoutAnchorBody>><<diagramWidth>>
-!endif 
+    !$debug_body = " "
+    !$debug_anchor = " "
+    !if ($debug_tf) 
+        !$debug_body = "Document_Body"
+        !$debug_anchor = "Document_Body_Anchor_Top"
+        rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>><<documentRegionDebug>> {
+    !else 
+        rectangle "$debug_body" as DOC_BODY <<documentRegion>><<documentRegionBody>> {
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_BODY_TOP, layoutAnchorBody, $debug_tf) 
 !endprocedure
 
 !procedure Document_BodyEnd($debug_tf=$DOC_DEBUG)
-!$debug_anchor = " "
-!if ($debug_tf) 
-    !$debug_anchor = "Document_Body_Anchor_Bottom"
-        card "$debug_anchor" as DOC_BODY_BOTTOM <<layoutAnchor>><<layoutAnchorBody>><<diagramWidth>><<layoutAnchorDebug>>
-!else 
-        card "$debug_anchor" as DOC_BODY_BOTTOM <<layoutAnchor>><<layoutAnchorBody>><<diagramWidth>>
-!endif 
-    }
+    !$debug_anchor = " "
+    !if ($debug_tf)
+        !$debug_anchor = "Document_Body_Anchor_Bottom"
+    !endif
+    Document_CreateAnchor($debug_anchor, DOC_BODY_BOTTOM, layoutAnchorBody, $debug_tf) 
+    
+    Document_CreateRel(DOC_BODY_TOP, DOC_BODY_BOTTOM)
+    
+}
 !endprocedure
+
 
 
 !procedure Document_Footer($debug_tf=$DOC_DEBUG)
@@ -68,11 +68,10 @@ top to bottom direction
     !$debug_footer = "Document_Footer"
     !$debug_anchor = "Document_Footer_Anchor"
     rectangle $debug_footer as DOC_FOOTER <<documentRegion>><<documentRegionFooter>><<documentRegionDebug>> {
-        card $debug_anchor as DOC_FOOTER_TOP <<layoutAnchor>><<layoutAnchorFooter>><<diagramWidth>>
 !else 
     rectangle $debug_footer as DOC_FOOTER <<documentRegion>><<documentRegionFooter>> {
-        card $debug_anchor as DOC_FOOTER_TOP <<layoutAnchor>><<layoutAnchorFooter>><<diagramWidth>>
-!endif 
+!endif
+Document_CreateAnchor($debug_anchor, DOC_FOOTER_TOP, layoutAnchorFooter, $debug_tf) 
 
 !endprocedure
 
@@ -82,7 +81,30 @@ top to bottom direction
 
 !procedure DocumentEnd()
 
-    DOC_HEADER_ANCHOR -[hidden]down-> DOC_BODY_TOP
-    DOC_BODY_BOTTOM -[hidden]down-> DOC_FOOTER_TOP
+    Document_CreateRel(DOC_HEADER_ANCHOR, DOC_BODY_TOP)
+    Document_CreateRel(DOC_BODY_BOTTOM, DOC_FOOTER_TOP)
+    
+!endprocedure
 
+
+'==============================================================================
+' Connect first body element to the body top anchor.
+'==============================================================================
+!procedure Body_AnchorToTop($element)
+    Document_CreateRel(DOC_BODY_TOP, $element)
+!endprocedure
+
+'==============================================================================
+' Connect last body element to the body bottom anchor.
+'==============================================================================
+!procedure Body_AnchorToBottom($element)
+    Document_CreateRel($element, DOC_BODY_BOTTOM)
+!endprocedure
+
+'==============================================================================
+' Connect body anchors to first and last content elements.
+'==============================================================================
+!procedure Body_AnchorTo($top, $bottom)
+    Body_AnchorToTop($element)
+    Body_AnchorToBottom($element)
 !endprocedure

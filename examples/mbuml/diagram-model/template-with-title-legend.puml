@@ -1,0 +1,88 @@
+@startuml
+
+skinparam shadowing false
+
+!$NODE_SEP = 12
+!$RANK_SEP = 2
+
+!$DOC_WIDTH = 1350
+
+!$SKINPARAM_ENABLED = %true()
+!$ARCHIMATE_LIB_ENABLED = %true()
+!$ARCHIMATE_TYPE_IN_LABEL = %true()
+
+hide stereotype
+
+!define MBpuml https://markbodach.github.io/plantuml/
+
+!includeurl MBpuml/all.puml
+!includeurl MBpuml/theme-ontariohealth.puml
+
+Register_Lib_All("OntarioHealth")
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/Archimate-PlantUML/master/dist/plantuml-stdlib/stdlib/archimate/Archimate.puml
+
+Load_Lib_All()
+
+Document_Header()
+
+rectangle "Using DiagramWidth, ariaHidden, label.anchor, size0" as diagramTitle <<title>>
+
+DOC_HEADER_ANCHOR -[hidden]down-> diagramTitle
+
+Document_HeaderEnd()
+
+Document_Body()
+
+ArchComposite(po1, "ArchComposite Outer", "package")
+
+    ArchComposite(pi1, "ArchComposite Inner", "package", "application")
+
+        ArchElement(s1, "Resource", "resource")
+
+    EndArchComposite()
+
+    ArchElement(s2, "Capability", "capability")
+
+    package "Package Outer" as pk1 {
+
+        package "Package Inner" as pk2 {
+
+            ArchElement(sp1, "Resource", "technology-resource")
+            ArchElement(sp2, "Capability", "capability")
+            ArchElement(sp3, "CourseOfAction", "courseofaction")
+            ArchElement(sp4, "ValueStream", "valuestream")
+
+        }
+
+    }
+
+EndArchComposite()
+
+DOC_BODY_TOP -[hidden]down-> sp2
+sp3 -[hidden]down-> DOC_BODY_BOTTOM
+
+Document_BodyEnd()
+
+Document_Footer()
+
+Document_LegendComposite("<b>Archimate Layers</b>")
+
+rectangle "Application Item" as legend_application <<application>><<legendItemRect>>
+rectangle "Business Item" as legend_business <<business>><<legendItemRect>>
+rectangle "Technology Item" as legend_technology <<technology>><<legendItemRect>>
+
+legend_application -[hidden]left-> legend_business
+legend_business -[hidden]left-> legend_technology
+
+DOC_FOOTER_TOP -[hidden]down-> legend_business
+
+Document_LegendCompositeEnd()
+
+Document_FooterEnd()
+
+diagramTitle      -[hidden]down-> DOC_BODY_TOP
+
+DocumentEnd()
+
+@enduml
