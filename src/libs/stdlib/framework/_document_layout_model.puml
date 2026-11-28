@@ -76,11 +76,11 @@
     !$hasFirst = %get_variable_value($hasFirstVar)
     !$hasLast  = %get_variable_value($hasLastVar)
 
-    !if ($hasFirst and !$hasLast)
+    !if ($hasFirst == %true()) &&  ($hasLast == %false())
         Trigger_Internal_Error( "Region contains RegionFirst() but no matching RegionLast() [" + $region + "]" )
         
 
-    !elseif (!$hasFirst and $hasLast)
+    !elseif ($hasFirst == %false()) &&  ($hasLast == %true())
         Trigger_Internal_Error( "Region contains RegionLast() but no matching RegionFirst() [" + $region + "]" )
 
     !endif
