@@ -1,9 +1,9 @@
 ' ========================================================
 ' Combined PlantUML Library Bundle
 ' Bundle Name: Core Framework
-' Generated on: 2026-11-27 16:28:03 EST
-' Build Commit Hash: fdf517d55664d41f7f92e14399d47d6b9cfb34c3
-' Build Commit Comment: dlm update 4
+' Generated on: 2026-11-28 10:55:44 EST
+' Build Commit Hash: c8a219ce7a97ccd7db9019985b99a0bf3ff6c400
+' Build Commit Comment: dlm update 5
 ' ========================================================
 !procedure Trigger_Assert($message = "")
     !assert 0 == 1 : "MB_PUML :: <<ASSERT>> " + $message
@@ -350,7 +350,7 @@
     !elseif ($region == "FOOTER")
         !return "DOC_FOOTER_ANCHOR_TOP"
     !endif
-    !error "Unknown document region: " + $region
+    Trigger_Internal_Error( "Unknown document region for RegionTopAnchor [" + $region + "]" )
 !endfunction
 !function $RegionBottomAnchor($region)
     !if ($region == "HEADER")
@@ -360,7 +360,7 @@
     !elseif ($region == "FOOTER")
         !return "DOC_FOOTER_ANCHOR_BOTTOM"
     !endif
-    !error "Unknown document region: " + $region
+    Trigger_Internal_Error( "Unknown document region for RegionBottomAnchor [" + $region + "]" )
 !endfunction
 !procedure RegionFirst($element)
     !$vn = "$DOC_" + $DOC_CURRENT_REGION + "_EMPTY"
@@ -382,9 +382,9 @@
     !$hasFirst = %get_variable_value($hasFirstVar)
     !$hasLast  = %get_variable_value($hasLastVar)
     !if ($hasFirst and !$hasLast)
-        !error $region + " region contains RegionFirst() but no matching RegionLast()"
+        Trigger_Internal_Error( "Region contains RegionFirst() but no matching RegionLast() [" + $region + "]" )
     !elseif (!$hasFirst and $hasLast)
-        !error $region + " region contains RegionLast() but no matching RegionFirst()"
+        Trigger_Internal_Error( "Region contains RegionLast() but no matching RegionFirst() [" + $region + "]" )
     !endif
 !endprocedure
 !procedure Document_Header($widthStereo="diagramWidth", $debug_tf=$DOC_DEBUG)

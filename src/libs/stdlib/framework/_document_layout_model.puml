@@ -31,7 +31,7 @@
     !elseif ($region == "FOOTER")
         !return "DOC_FOOTER_ANCHOR_TOP"
     !endif
-    !error "Unknown document region: " + $region
+    Trigger_Internal_Error( "Unknown document region for RegionTopAnchor [" + $region + "]" )
 !endfunction
 
 !function $RegionBottomAnchor($region)
@@ -42,7 +42,7 @@
     !elseif ($region == "FOOTER")
         !return "DOC_FOOTER_ANCHOR_BOTTOM"
     !endif
-    !error "Unknown document region: " + $region
+    Trigger_Internal_Error( "Unknown document region for RegionBottomAnchor [" + $region + "]" )
 !endfunction
 
 
@@ -77,12 +77,11 @@
     !$hasLast  = %get_variable_value($hasLastVar)
 
     !if ($hasFirst and !$hasLast)
-
-        !error $region + " region contains RegionFirst() but no matching RegionLast()"
+        Trigger_Internal_Error( "Region contains RegionFirst() but no matching RegionLast() [" + $region + "]" )
+        
 
     !elseif (!$hasFirst and $hasLast)
-
-        !error $region + " region contains RegionLast() but no matching RegionFirst()"
+        Trigger_Internal_Error( "Region contains RegionLast() but no matching RegionFirst() [" + $region + "]" )
 
     !endif
 
